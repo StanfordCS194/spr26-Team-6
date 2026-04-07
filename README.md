@@ -9,7 +9,7 @@ Synopsis of Project: We will build an LLM "Audit Trail", addressing the Governan
 Team Member Matrix:
 Member | Photo | Skills | Personal Traits | Desired Growth | Weaknesses | Email
 --- | --- | --- | --- | --- | --- | ---
-Grace | | Organization, Systems, C++ | Likes taking breaks, Works in bursts | Practical SWE, Learning OCAML | Sleepy, Hungry, Would do anything for cats | gracejxq@stanford.edu
+Grace | ![Grace_Jin](https://github.com/user-attachments/assets/566f382d-81e3-49c0-a10a-686a070e6bff) | Systems, C++, System Design | Likes taking breaks, Works in bursts, Organized | Practical SWE, Learning OCAML | Sleepy, Hungry, Would do anything for cats | gracejxq@stanford.edu
 Ethan | ![Ethan Picture](https://github.com/user-attachments/assets/b0601c15-c368-4798-847f-7e88a8413e27) | Full-stack, Mobile, Python | Disciplined, Curious | Better documentation, Communication | Will do anything for food/caffeine | ethanhhr@stanford.edu
 Isabella | ![Headshot Crop](https://github.com/user-attachments/assets/da3e6bad-79d9-47b5-8c44-30032ecc5c46) | AI, Theory, Strategy | Organized, Always hungry | Better sleep schedule | Late bedtimes, Programming | leeij@stanford.edu
 Andrew | ![Andrew_PIC](https://github.com/user-attachments/assets/4254921c-cf9f-467e-8a4d-42bfaf3062e8) | Team facilitation, ML, Systems | Willing to suffer | Programming | Programming, Sleep Schedule | andrewxz@stanford.edu
