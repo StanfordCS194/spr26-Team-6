@@ -11,7 +11,7 @@ Member | Skills | Personal Traits | Desired Growth | Weaknesses | Email
 --- | --- | --- | --- | --- | ---
 Grace | Organization, Systems, C++ | Likes taking breaks, Works in bursts | Practical SWE, Learning OCAML | Sleepy, Hungry, Would do anything for cats | gracejxq@stanford.edu
 Ethan | Full stack, Mobile development | Disciplined | Better documentation, Communication | Will do anything for food | ethanhhr@stanford.edu
-Isabella | AI, Theory, Strategy | Organized, Always hungry | Better sleep schedule | Late bedtimes, Programming | leeij@stanford.edu
+Isabella ![Headshot Crop](https://github.com/user-attachments/assets/da3e6bad-79d9-47b5-8c44-30032ecc5c46) | AI, Theory, Strategy | Organized, Always hungry | Better sleep schedule | Late bedtimes, Programming | leeij@stanford.edu
 Andrew | Team facilitation, ML, Systems | Willing to suffer | Programming | Programming, Sleep Schedule | andrewxz@stanford.edu
 Aliyan | Applied AI, SWE | Learning, Exploring new ideas | Starting and finishing a project | Consistency, Discipline | aliyan@stanford.edu
 
