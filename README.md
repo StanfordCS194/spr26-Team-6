@@ -1,6 +1,6 @@
 Team Name: BAGEA
 
-Team Logo: 
+Team Logo: <img width="711" height="625" alt="Team Logo" src="https://github.com/user-attachments/assets/f1266175-b3e9-45a7-98c3-4a455bdebee4" />
 
 Team Music: Self-Aware by Temper City
 
@@ -15,6 +15,6 @@ Isabella | ![Headshot Crop](https://github.com/user-attachments/assets/da3e6bad-
 Andrew | ![Andrew_PIC](https://github.com/user-attachments/assets/4254921c-cf9f-467e-8a4d-42bfaf3062e8) | Team facilitation, ML, Systems | Willing to suffer | Programming | Programming, Sleep Schedule | andrewxz@stanford.edu
 Aliyan | | Applied AI, SWE | Learning, Exploring new ideas | Starting and finishing a project | Consistency, Discipline | aliyan@stanford.edu
 
-Links for team communication: Please see the team member matrix for email addresses. The Slack channel is created by our CA.
+Links for team communication: Please see the team member matrix for email addresses. The Slack channel is available at https://app.slack.com/client/E7SAV7LAD/C0AR0PK6CFM?_gl=1*ocofpn*_gcl_au*MTg0NjMzNjU0Ni4xNzcwOTM0NTc0Ljc3NzE1NTE4My4xNzcwOTM2NjE0LjE3NzA5MzY2MTQ.
 
 Link to Wiki home page: https://github.com/StanfordCS194/spr26-Team-6/wiki
