@@ -22,6 +22,6 @@ Links for team communication: Please see the team member matrix for email addres
 
 Link to Wiki home page: [https://github.com/StanfordCS194/spr26-Team-6/wiki](https://github.com/StanfordCS194/spr26-Team-6/wiki)
 
+Isabella Lee
 Ethan Hans Harianto
-
 Aliyan Ishfaq
