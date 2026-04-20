@@ -11,6 +11,7 @@ Team Member Matrix:
 
 Link to Wiki home page: https://github.com/StanfordCS194/spr26-Team-6/wiki
 
+Ethan Hans Harianto
 | Member   | Photo           | Skills                         | Personal Traits                                 | Desired Growth                      | Weaknesses                                 | Email                                                 |
 | -------- | --------------- | ------------------------------ | ----------------------------------------------- | ----------------------------------- | ------------------------------------------ | ----------------------------------------------------- |
 | Grace    | Grace_Jin       | Systems, C++, System Design    | Likes taking breaks, Works in bursts, Organized | Practical SWE, Learning OCAML       | Sleepy, Hungry, Would do anything for cats | [gracejxq@stanford.edu](mailto:gracejxq@stanford.edu) |
@@ -26,5 +27,6 @@ Link to Wiki home page: [https://github.com/StanfordCS194/spr26-Team-6/wiki](htt
 
 Isabella Lee
 Ethan Hans Harianto
+Andrew Zhang 
 Aliyan Ishfaq
 Grace Jin
