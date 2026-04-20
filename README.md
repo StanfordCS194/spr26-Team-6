@@ -18,3 +18,8 @@ Aliyan | ![1755486638807-2](https://github.com/user-attachments/assets/94a26478-
 Links for team communication: Please see the team member matrix for email addresses. The Slack channel is available at https://app.slack.com/client/E7SAV7LAD/C0AR0PK6CFM?_gl=1*ocofpn*_gcl_au*MTg0NjMzNjU0Ni4xNzcwOTM0NTc0Ljc3NzE1NTE4My4xNzcwOTM2NjE0LjE3NzA5MzY2MTQ.
 
 Link to Wiki home page: https://github.com/StanfordCS194/spr26-Team-6/wiki
+
+
+
+Edits (For Source Control with Git):
+Isabella Lee
