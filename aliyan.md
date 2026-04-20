@@ -1,0 +1,1 @@
+Hi, this is Aliyan. I am a student at Stanford University. I am a senior studying Computer Science. I am really excited to work on this project with you all. 
