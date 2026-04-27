@@ -25,6 +25,16 @@ Links for team communication: Please see the team member matrix for email addres
 
 Link to Wiki home page: [https://github.com/StanfordCS194/spr26-Team-6/wiki](https://github.com/StanfordCS194/spr26-Team-6/wiki)
 
+## Next.js client dashboard (`web/`)
+
+Issues [#13](https://github.com/StanfordCS194/spr26-Team-6/issues/13)–[#15](https://github.com/StanfordCS194/spr26-Team-6/issues/15) are implemented in the **`web/`** Next.js app. From the repo root:
+
+```bash
+cd web && npm install && npm run dev
+```
+
+Then open [http://localhost:3000](http://localhost:3000). Engineering documentation for the dashboard lives in the **[wiki](https://github.com/StanfordCS194/spr26-Team-6/wiki)** — start with [Frontend Implementation Plan](https://github.com/StanfordCS194/spr26-Team-6/wiki/Frontend-Implementation-Plan) and [`web/README.md`](web/README.md). The older static prototype (`index.html`, `script.js`, `styles.css`) remains for comparison.
+
 Isabella Lee
 Ethan Hans Harianto
 Andrew Zhang 
