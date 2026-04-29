@@ -1,9 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import dynamic from "next/dynamic";
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import ReactMarkdown from "react-markdown";
 import { useDashboard } from "@/context/DashboardContext";
+import { isPdfUrl } from "@/lib/pdf";
 import type { Rfp } from "@/lib/types";
+import { SourceDocumentEmbed } from "./SourceDocumentEmbed";
+
+const RfpPdfViewer = dynamic(
+  () => import("./RfpPdfViewer").then((m) => m.RfpPdfViewer),
+  {
+    ssr: false,
+    loading: () => (
+      <p className="py-8 text-center text-sm text-govbid-text-muted">
+        Loading PDF viewer…
+      </p>
+    ),
+  },
+);
 
 export function DetailPanel() {
   const { selectedRfp } = useDashboard();
@@ -21,10 +36,96 @@ export function DetailPanel() {
   return <DetailPanelBody key={selectedRfp.id} rfp={selectedRfp} />;
 }
 
+type DetailTab = "overview" | "document" | "ai";
+
+function DocumentTabContent({
+  rfp,
+  activePdfIndex,
+  setActivePdfIndex,
+}: {
+  rfp: Rfp;
+  activePdfIndex: number;
+  setActivePdfIndex: Dispatch<SetStateAction<number>>;
+}) {
+  const urls = rfp.pdfUrls;
+  const idx = urls.length
+    ? Math.min(Math.max(0, activePdfIndex), urls.length - 1)
+    : 0;
+  const current = urls[idx] ?? "";
+
+  if (urls.length === 0) {
+    return (
+      <div className="mx-auto flex min-h-[min(50vh,480px)] max-w-3xl flex-col gap-3">
+        <p className="text-center text-sm leading-relaxed text-govbid-text-muted">
+          No PDF URLs on this RFP. Populate{" "}
+          <code className="rounded bg-govbid-primary-muted/50 px-1">pdf_url_1</code>{" "}
+          through{" "}
+          <code className="rounded bg-govbid-primary-muted/50 px-1">pdf_url_10</code>{" "}
+          in Supabase (non-empty strings are shown in order).
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mx-auto flex min-h-[min(50vh,480px)] max-w-3xl flex-col gap-3">
+      {urls.length > 1 && (
+        <div
+          className="flex flex-wrap gap-1.5"
+          role="tablist"
+          aria-label="Attached PDFs"
+        >
+          {urls.map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              role="tab"
+              aria-selected={idx === i}
+              onClick={() => setActivePdfIndex(i)}
+              className={`rounded-lg border px-2.5 py-1 text-xs font-semibold transition ${
+                idx === i
+                  ? "border-govbid-primary bg-govbid-primary-muted text-govbid-primary"
+                  : "border-govbid-border bg-govbid-surface text-govbid-text-muted hover:border-govbid-border-strong hover:text-govbid-text"
+              }`}
+            >
+              PDF {i + 1}
+            </button>
+          ))}
+        </div>
+      )}
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <p className="text-xs text-govbid-text-muted">
+          {isPdfUrl(current)
+            ? "In-app PDF viewer (CORS permitting). On failure we can fall back to a browser embed."
+            : "Embedded page or viewer link. If the frame is blank, the site may block iframes — use Open in new tab."}
+        </p>
+        <a
+          href={current}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs font-semibold text-govbid-primary underline"
+        >
+          Open in new tab
+        </a>
+      </div>
+      {isPdfUrl(current) ? (
+        <RfpPdfViewer key={current} url={current} />
+      ) : (
+        <SourceDocumentEmbed url={current} title={`RFP source ${idx + 1}`} />
+      )}
+    </div>
+  );
+}
+
 function DetailPanelBody({ rfp }: { rfp: Rfp }) {
   const { toggleSaveRfp, isSaved, showToast, tryLoadCachedSummary } =
     useDashboard();
-  const [tab, setTab] = useState<"overview" | "ai">("overview");
+  const [tab, setTab] = useState<DetailTab>("overview");
+  const [activePdfIndex, setActivePdfIndex] = useState(0);
+
+  useEffect(() => {
+    setActivePdfIndex(0);
+  }, [rfp.id]);
 
   const saved = isSaved(rfp.id);
 
@@ -55,10 +156,16 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
     );
   };
 
+  const tabs: { id: DetailTab; label: string }[] = [
+    { id: "overview", label: "Overview" },
+    { id: "document", label: "Source PDF" },
+    { id: "ai", label: "AI analysis" },
+  ];
+
   return (
     <section className="flex min-h-0 flex-1 flex-col bg-govbid-surface">
       <div className="flex shrink-0 gap-8 border-b border-govbid-border px-4 pt-3 lg:px-5">
-        {(["overview", "ai"] as const).map((id) => (
+        {tabs.map(({ id, label }) => (
           <button
             key={id}
             type="button"
@@ -69,7 +176,7 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
                 : "text-govbid-text-muted hover:text-govbid-text"
             }`}
           >
-            {id === "overview" ? "Overview" : "AI analysis"}
+            {label}
             {tab === id && (
               <span className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-govbid-primary" />
             )}
@@ -107,7 +214,7 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
       </div>
 
       <div className="min-h-0 flex-1 overflow-y-auto p-4 lg:p-5">
-        {tab === "overview" ? (
+        {tab === "overview" && (
           <div className="mx-auto max-w-2xl space-y-4">
             <div>
               <p className="text-xs font-medium uppercase tracking-wide text-govbid-text-muted">
@@ -120,7 +227,7 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
                 {rfp.description}
               </p>
             </div>
-            <dl className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
+            <dl className="grid grid-cols-2 gap-3 text-sm">
               <div>
                 <dt className="text-govbid-text-muted">Location</dt>
                 <dd className="font-semibold text-govbid-text">{rfp.location}</dd>
@@ -128,10 +235,6 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
               <div>
                 <dt className="text-govbid-text-muted">Due date</dt>
                 <dd className="font-semibold text-govbid-text">{rfp.dueDate}</dd>
-              </div>
-              <div>
-                <dt className="text-govbid-text-muted">Value</dt>
-                <dd className="text-lg font-bold tabular-nums text-govbid-primary">{rfp.contract}</dd>
               </div>
             </dl>
             <div className="rounded-xl border border-govbid-border bg-govbid-surface p-4">
@@ -143,7 +246,17 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
               </div>
             </div>
           </div>
-        ) : (
+        )}
+
+        {tab === "document" && (
+          <DocumentTabContent
+            rfp={rfp}
+            activePdfIndex={activePdfIndex}
+            setActivePdfIndex={setActivePdfIndex}
+          />
+        )}
+
+        {tab === "ai" && (
           <div className="prose prose-sm prose-slate mx-auto max-w-2xl text-govbid-text">
             <ReactMarkdown>{rfp.aiAnalysisMarkdown}</ReactMarkdown>
           </div>

@@ -1,5 +1,11 @@
 import type { Rfp } from "./types";
 
+/** Public sample PDF for local mock testing of the viewer */
+const SAMPLE_PUBLIC_PDF =
+  "https://www.w3.org/WAI/WCAG21/working-examples/pdf-note/note.pdf";
+
+type RfpSeed = Omit<Rfp, "sowMarkdown" | "aiAnalysisMarkdown" | "pdfUrls">;
+
 function buildSow(description: string): string {
   return `## Statement of work\n\n${description}\n\n### Deliverables\n\n- Kickoff and discovery within 30 days of award.\n- Monthly status reporting through the performance period.\n- Final acceptance testing and handoff documentation.\n\n### Period of performance\n\nWork is expected to complete within **12 months** of contract start.\n`;
 }
@@ -11,7 +17,7 @@ function buildAiAnalysis(score: number, location: string): string {
   return `### Compatibility summary\n\nYour profile aligns at **${score}/100** with this opportunity based on mock scoring (replace with RAG + contractor embeddings).\n\n### Gap analysis (stub)\n\n- **Security / compliance:** Confirm required certifications (e.g. FedRAMP, StateRAMP) against your past performance.\n- **Staffing:** Validate key personnel clauses vs. bench depth for similar programs.\n- **Geography:** ${geoNote}\n\n### Score breakdown (stub)\n\n| Factor | Weight | Notes |\n| --- | --- | --- |\n| Past performance match | 35% | Heuristic placeholder |\n| Technical keywords | 25% | From RFP tags vs. profile text |\n| Geography | 20% | Location overlap |\n| Contract size fit | 20% | vs. typical deal size |\n`;
 }
 
-const raw: Omit<Rfp, "sowMarkdown" | "aiAnalysisMarkdown">[] = [
+const raw: RfpSeed[] = [
   {
     id: "00000000-0000-4000-8000-000000000001",
     title: "Request for cybersecurity management in San Jose data center",
@@ -134,8 +140,9 @@ const raw: Omit<Rfp, "sowMarkdown" | "aiAnalysisMarkdown">[] = [
   },
 ];
 
-export const MOCK_RFPS: Rfp[] = raw.map((r) => ({
+export const MOCK_RFPS: Rfp[] = raw.map((r, i) => ({
   ...r,
+  pdfUrls: i === 0 ? [SAMPLE_PUBLIC_PDF] : [],
   sowMarkdown: buildSow(r.description),
   aiAnalysisMarkdown: buildAiAnalysis(r.score, r.location),
 }));

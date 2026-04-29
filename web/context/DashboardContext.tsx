@@ -69,12 +69,6 @@ type DashboardContextValue = {
   rfpFilter: RfpFilter;
   setRfpFilter: (filter: RfpFilter) => void;
   signOut: () => Promise<void>;
-  /** True while contractor + RFP + scores fetch runs */
-  workspaceLoading: boolean;
-  /** Last load outcome: counts from DB or an error string */
-  workspaceStatusLine: string | null;
-  /** Re-run Supabase queries (same as after login) */
-  refetchWorkspace: () => Promise<void>;
 };
 
 const DashboardContext = createContext<DashboardContextValue | null>(null);
@@ -93,10 +87,6 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [rfpFilter, setRfpFilter] = useState<RfpFilter>({});
   const [toast, setToast] = useState<string | null>(null);
   const [activeNav, setActiveNav] = useState<ActiveNav>("dashboard");
-  const [workspaceLoading, setWorkspaceLoading] = useState(false);
-  const [workspaceStatusLine, setWorkspaceStatusLine] = useState<string | null>(
-    null,
-  );
 
   const showToast = useCallback((message: string) => {
     setToast(message);
@@ -110,8 +100,6 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const loadWorkspace = useCallback(
     async (userId: string, email: string | undefined) => {
       const supabase = createClient();
-      setWorkspaceLoading(true);
-      setWorkspaceStatusLine("Loading from Supabase…");
 
       try {
         let { data: contractor } = await supabase
@@ -134,7 +122,6 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
             const msg =
               insErr?.message ?? "Could not create contractor profile.";
             showToast(msg);
-            setWorkspaceStatusLine(`Contractor: ${msg}`);
             setContractorId(null);
             setLoadedRfps([]);
             setSavedRfpIds([]);
@@ -178,7 +165,6 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
         if (rfpErr) {
           showToast(rfpErr.message);
           setLoadedRfps([]);
-          setWorkspaceStatusLine(`RFP query failed: ${rfpErr.message}`);
           return;
         }
 
@@ -186,17 +172,9 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
           rfpRows?.map((row) => mapRfpRow(row, cid, scoreRows ?? undefined)) ??
           [];
         setLoadedRfps(mapped);
-
-        const scoreN = scoreRows?.length ?? 0;
-        setWorkspaceStatusLine(
-          `Pulled ${mapped.length} RFP row(s) (active + is_relevant=true), ${scoreN} score row(s), ${savedList.length} saved link(s).`,
-        );
       } catch (e) {
         const msg = e instanceof Error ? e.message : "Unexpected error";
-        setWorkspaceStatusLine(`Error: ${msg}`);
         showToast(msg);
-      } finally {
-        setWorkspaceLoading(false);
       }
     },
     [showToast],
@@ -208,18 +186,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     setSavedRfpIds([]);
     setProfileState(defaultContractorProfile);
     setSelectedRfpId(null);
-    setWorkspaceStatusLine(null);
-    setWorkspaceLoading(false);
   }, []);
-
-  const refetchWorkspace = useCallback(async () => {
-    const supabase = createClient();
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
-    if (!user) return;
-    await loadWorkspace(user.id, user.email ?? undefined);
-  }, [loadWorkspace]);
 
   useEffect(() => {
     const supabase = createClient();
@@ -483,9 +450,6 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       rfpFilter,
       setRfpFilter,
       signOut,
-      workspaceLoading,
-      workspaceStatusLine,
-      refetchWorkspace,
     }),
     [
       authReady,
@@ -509,9 +473,6 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       showToast,
       rfpFilter,
       signOut,
-      workspaceLoading,
-      workspaceStatusLine,
-      refetchWorkspace,
     ],
   );
 

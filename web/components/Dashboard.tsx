@@ -1,7 +1,6 @@
 "use client";
 
 import { useDashboard } from "@/context/DashboardContext";
-import { DataStatusBar } from "./DataStatusBar";
 import { DetailPanel } from "./DetailPanel";
 import { GlobalHeader } from "./GlobalHeader";
 import { ProfileDrawer } from "./ProfileDrawer";
@@ -23,7 +22,6 @@ export function Dashboard() {
     <div className="flex min-h-dvh w-full min-w-0 flex-1 flex-col">
       <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col overflow-hidden bg-govbid-surface">
         <GlobalHeader />
-        <DataStatusBar />
 
         <div className="grid min-h-0 min-w-0 flex-1 grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)]">
           <RfpSidebar />

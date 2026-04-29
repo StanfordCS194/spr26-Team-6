@@ -113,6 +113,16 @@ export interface Database {
           source: RfpSource
           external_id: string
           url: string | null
+          pdf_url_1: string | null
+          pdf_url_2: string | null
+          pdf_url_3: string | null
+          pdf_url_4: string | null
+          pdf_url_5: string | null
+          pdf_url_6: string | null
+          pdf_url_7: string | null
+          pdf_url_8: string | null
+          pdf_url_9: string | null
+          pdf_url_10: string | null
           title: string
           description: string | null
           location: string | null
@@ -140,6 +150,16 @@ export interface Database {
           source: RfpSource
           external_id: string
           url?: string | null
+          pdf_url_1?: string | null
+          pdf_url_2?: string | null
+          pdf_url_3?: string | null
+          pdf_url_4?: string | null
+          pdf_url_5?: string | null
+          pdf_url_6?: string | null
+          pdf_url_7?: string | null
+          pdf_url_8?: string | null
+          pdf_url_9?: string | null
+          pdf_url_10?: string | null
           title: string
           description?: string | null
           location?: string | null

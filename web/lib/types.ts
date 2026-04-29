@@ -8,6 +8,8 @@ export type Rfp = {
   location: string;
   contract: string;
   description: string;
+  /** Non-empty `rfps.pdf_url_1` … `pdf_url_10` in column order */
+  pdfUrls: string[];
   /** Stub SOW as markdown until PDF extraction pipeline exists */
   sowMarkdown: string;
   /** Placeholder gap analysis for the AI tab */

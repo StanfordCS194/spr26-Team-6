@@ -13,6 +13,7 @@ supabase/
     20260428000004_functions.sql    -- RPCs, triggers, score-cache trim
     20260428000005_rls_policies.sql -- per-user access control
     20260428120000_grants_authenticated.sql -- GRANT for PostgREST (fixes permission denied)
+    20260429100000_rfps_pdf_urls.sql       -- pdf_url_1 … pdf_url_10 on rfps
   seed.sql                          -- starter department aliases
 web/lib/
   database.types.ts                 -- TypeScript types for supabase-js

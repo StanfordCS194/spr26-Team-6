@@ -6,6 +6,30 @@ type PastProjectRow = Database["public"]["Tables"]["contractor_past_projects"]["
 type RfpRow = Database["public"]["Tables"]["rfps"]["Row"];
 type ScoreRow = Database["public"]["Tables"]["scores"]["Row"];
 
+const PDF_URL_KEYS = [
+  "pdf_url_1",
+  "pdf_url_2",
+  "pdf_url_3",
+  "pdf_url_4",
+  "pdf_url_5",
+  "pdf_url_6",
+  "pdf_url_7",
+  "pdf_url_8",
+  "pdf_url_9",
+  "pdf_url_10",
+] as const satisfies readonly (keyof RfpRow)[];
+
+export function collectPdfUrlsFromRfpRow(row: RfpRow): string[] {
+  const out: string[] = [];
+  for (const key of PDF_URL_KEYS) {
+    const v = row[key];
+    if (typeof v === "string" && v.trim()) {
+      out.push(v.trim());
+    }
+  }
+  return out;
+}
+
 function buildSowMarkdown(description: string): string {
   return `## Statement of work\n\n${description}\n\n### Deliverables\n\n- Kickoff and discovery within 30 days of award.\n- Monthly status reporting through the performance period.\n- Final acceptance testing and handoff documentation.\n\n### Period of performance\n\nWork is expected to complete within **12 months** of contract start.\n`;
 }
@@ -78,6 +102,7 @@ export function mapRfpRow(
       row.contract_amount_max,
     ),
     description,
+    pdfUrls: collectPdfUrlsFromRfpRow(row),
     sowMarkdown: buildSowMarkdown(description),
     aiAnalysisMarkdown:
       aiOverride ?? buildAiAnalysisMarkdown(score ?? 0, location),

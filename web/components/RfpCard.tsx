@@ -71,11 +71,8 @@ export function RfpCard({ rfp, active, onSelect }: Props) {
         </div>
       </div>
 
-      <div className="flex shrink-0 flex-col items-end justify-between gap-2">
+      <div className="flex shrink-0 flex-col items-end justify-start gap-2">
         <ScoreRing score={rfp.score} size={44} stroke={3} />
-        <span className="text-right text-base font-bold tabular-nums text-govbid-primary md:text-lg">
-          {rfp.contract}
-        </span>
       </div>
     </button>
   );
