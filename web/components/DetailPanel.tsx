@@ -29,12 +29,12 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
   const saved = isSaved(rfp.id);
 
   const handleSave = () => {
-    if (saved) {
-      showToast("Already in your saved list — use profile to review.");
-      return;
-    }
     toggleSaveRfp(rfp.id);
-    showToast("Saved to your profile.");
+    if (saved) {
+      showToast("Removed from saved opportunities.");
+    } else {
+      showToast("Saved to your profile.");
+    }
   };
 
   const handleSummary = () => {
@@ -74,13 +74,13 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
         </button>
       </div>
 
-      <div className="flex flex-wrap gap-2 border-b border-zinc-200 bg-white px-4 py-3 dark:border-zinc-800 dark:bg-zinc-950">
+      <div className="flex flex-wrap items-center gap-2 border-b border-zinc-200 bg-white px-4 py-3 dark:border-zinc-800 dark:bg-zinc-950">
         <button
           type="button"
           onClick={handleSave}
           className="rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm font-medium text-zinc-800 hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
         >
-          {saved ? "Saved" : "Save to profile"}
+          {saved ? "Unsave" : "Save to profile"}
         </button>
         <button
           type="button"
@@ -96,6 +96,11 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
         >
           Draft proposal
         </button>
+        {saved && (
+          <span className="ml-auto inline-flex items-center gap-1 rounded-full border border-emerald-300/80 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 dark:border-emerald-500/80 dark:bg-emerald-500/10 dark:text-emerald-300">
+            <span>✓</span> Saved
+          </span>
+        )}
       </div>
 
       <div className="min-h-0 flex-1 overflow-y-auto p-4">
