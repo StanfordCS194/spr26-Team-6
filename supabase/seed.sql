@@ -9,9 +9,6 @@
 insert into public.department_aliases (canonical_name, alias) values
     -- California Department of Technology (your example)
     ('California Department of Technology', 'California Department of Technology'),
-    ('California Department of Technology', 'CA DoT'),
-    ('California Department of Technology', 'CA DOT'),
-    ('California Department of Technology', 'CDT'),
     ('California Department of Technology', 'Dept. of Technology'),
     ('California Department of Technology', 'Department of Technology'),
     ('California Department of Technology', 'CA Department of Technology'),
