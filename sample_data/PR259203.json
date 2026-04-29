@@ -1,0 +1,47 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "PR259203",
+  "title": "Replace Electrical Transformers",
+  "dept": "Department of Developmental Services",
+  "description": "Contractor to furnish all labor, materials, tools, equipment, and transportation necessary to install MV transformers, electrical conduit, fittings, and wire at Porterville Developmental Center.",
+  "published_date": "2026-04-28T08:00:00-07:00",
+  "due_date": "2026-05-14T09:00:00-07:00",
+  "contact_name": "Connor Stubbs",
+  "contact_email": "connor.stubbs@pdc.dds.ca.gov",
+  "contact_phone": "559-782-2674",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-20260428-electrical-transformers",
+  "metadata": {
+    "event_version": 1,
+    "required_license": "C-10 (Electrical Contractor)",
+    "mandatory_bidder_conference": {
+      "required": true,
+      "date": "2026-05-14T09:00:00",
+      "location": "26501 Avenue 140, Porterville, California, 93257",
+      "notes": "Porterville Developmental Center, PO Modular Bldg"
+    },
+    "documents": [
+      { 
+		"label": "Full RFP Specifications", 
+		"url": "https://drive.google.com/file/d/1VswIadumb2FlulR1UVSi0CtJUdo79F65/view?usp=sharing", 
+		"type": "primary_spec" 
+	  },
+      { 
+		"label": "Notice to Contractors", 
+		"url": "https://drive.google.com/file/d/1PA7kAIjSnbjOry6am09Jiawb4bEIjtz0/view?usp=sharing", 
+		"type": "misc" 
+	  },
+      { "label": "Instructions to Bidders", 
+	  	"url": "https://drive.google.com/file/d/13i8WlXNsMB2pHkeyDGmoMZQsXr0IYRp5/view?usp=sharing", 
+		"type": "misc" 
+	  }
+    ],
+    "unspsc_codes": [
+      {
+        "code": "39121022",
+        "description": "Electronic transformers"
+      }
+    ]
+  }
+}
