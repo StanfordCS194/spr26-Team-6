@@ -1,5 +1,11 @@
 import type { Rfp } from "./types";
 
+/** Public sample PDF for local mock testing of the viewer */
+const SAMPLE_PUBLIC_PDF =
+  "https://www.w3.org/WAI/WCAG21/working-examples/pdf-note/note.pdf";
+
+type RfpSeed = Omit<Rfp, "sowMarkdown" | "aiAnalysisMarkdown" | "pdfUrls">;
+
 function buildSow(description: string): string {
   return `## Statement of work\n\n${description}\n\n### Deliverables\n\n- Kickoff and discovery within 30 days of award.\n- Monthly status reporting through the performance period.\n- Final acceptance testing and handoff documentation.\n\n### Period of performance\n\nWork is expected to complete within **12 months** of contract start.\n`;
 }
@@ -11,9 +17,9 @@ function buildAiAnalysis(score: number, location: string): string {
   return `### Compatibility summary\n\nYour profile aligns at **${score}/100** with this opportunity based on mock scoring (replace with RAG + contractor embeddings).\n\n### Gap analysis (stub)\n\n- **Security / compliance:** Confirm required certifications (e.g. FedRAMP, StateRAMP) against your past performance.\n- **Staffing:** Validate key personnel clauses vs. bench depth for similar programs.\n- **Geography:** ${geoNote}\n\n### Score breakdown (stub)\n\n| Factor | Weight | Notes |\n| --- | --- | --- |\n| Past performance match | 35% | Heuristic placeholder |\n| Technical keywords | 25% | From RFP tags vs. profile text |\n| Geography | 20% | Location overlap |\n| Contract size fit | 20% | vs. typical deal size |\n`;
 }
 
-const raw: Omit<Rfp, "sowMarkdown" | "aiAnalysisMarkdown">[] = [
+const raw: RfpSeed[] = [
   {
-    id: 1,
+    id: "00000000-0000-4000-8000-000000000001",
     title: "Request for cybersecurity management in San Jose data center",
     agency: "City of San Jose",
     dueDate: "2026-05-15",
@@ -25,7 +31,7 @@ const raw: Omit<Rfp, "sowMarkdown" | "aiAnalysisMarkdown">[] = [
       "Deliver managed cybersecurity services, incident response readiness, and compliance monitoring for the San Jose data center campus.",
   },
   {
-    id: 2,
+    id: "00000000-0000-4000-8000-000000000002",
     title: "Request for cloud migration compliance assessment for Los Angeles agency",
     agency: "City of Los Angeles",
     dueDate: "2026-05-22",
@@ -37,7 +43,7 @@ const raw: Omit<Rfp, "sowMarkdown" | "aiAnalysisMarkdown">[] = [
       "Assess current systems and develop a secure cloud migration strategy aligned with federal regulations and agency requirements.",
   },
   {
-    id: 3,
+    id: "00000000-0000-4000-8000-000000000003",
     title: "Request for facility security upgrade at Sacramento operations center",
     agency: "State of California",
     dueDate: "2026-06-03",
@@ -49,7 +55,7 @@ const raw: Omit<Rfp, "sowMarkdown" | "aiAnalysisMarkdown">[] = [
       "Provide physical security system enhancements and access-control modernization for the Sacramento operations site.",
   },
   {
-    id: 4,
+    id: "00000000-0000-4000-8000-000000000004",
     title: "Request for AI-powered document review platform for San Diego office",
     agency: "City of San Diego",
     dueDate: "2026-06-10",
@@ -61,7 +67,7 @@ const raw: Omit<Rfp, "sowMarkdown" | "aiAnalysisMarkdown">[] = [
       "Build an AI-assisted review engine to streamline document validation, redaction, and compliance reporting for the San Diego office.",
   },
   {
-    id: 5,
+    id: "00000000-0000-4000-8000-000000000005",
     title: "Request for wireless infrastructure upgrade at Oakland command hub",
     agency: "City of Oakland",
     dueDate: "2026-06-18",
@@ -73,7 +79,7 @@ const raw: Omit<Rfp, "sowMarkdown" | "aiAnalysisMarkdown">[] = [
       "Design and deploy high-reliability wireless networking infrastructure that supports secure government operations at the command hub.",
   },
   {
-    id: 6,
+    id: "00000000-0000-4000-8000-000000000006",
     title: "Request for environmental monitoring system in Fresno",
     agency: "City of Fresno",
     dueDate: "2026-06-25",
@@ -85,7 +91,7 @@ const raw: Omit<Rfp, "sowMarkdown" | "aiAnalysisMarkdown">[] = [
       "Implement a comprehensive environmental monitoring system to track air quality, water resources, and climate data in Fresno.",
   },
   {
-    id: 7,
+    id: "00000000-0000-4000-8000-000000000007",
     title: "Request for smart city infrastructure in Bakersfield",
     agency: "City of Bakersfield",
     dueDate: "2026-07-02",
@@ -97,7 +103,7 @@ const raw: Omit<Rfp, "sowMarkdown" | "aiAnalysisMarkdown">[] = [
       "Develop smart city technologies including IoT sensors, traffic management, and energy-efficient systems for Bakersfield.",
   },
   {
-    id: 8,
+    id: "00000000-0000-4000-8000-000000000008",
     title: "Request for healthcare data analytics platform in Anaheim",
     agency: "City of Anaheim",
     dueDate: "2026-07-10",
@@ -109,7 +115,7 @@ const raw: Omit<Rfp, "sowMarkdown" | "aiAnalysisMarkdown">[] = [
       "Create a secure data analytics platform for healthcare data management and patient outcome analysis in Anaheim.",
   },
   {
-    id: 9,
+    id: "00000000-0000-4000-8000-000000000009",
     title: "Request for renewable energy assessment in Santa Ana",
     agency: "City of Santa Ana",
     dueDate: "2026-07-18",
@@ -121,7 +127,7 @@ const raw: Omit<Rfp, "sowMarkdown" | "aiAnalysisMarkdown">[] = [
       "Conduct a comprehensive assessment of renewable energy potential and develop implementation strategies for Santa Ana.",
   },
   {
-    id: 10,
+    id: "00000000-0000-4000-8000-00000000000a",
     title: "Request for public transportation optimization in Irvine",
     agency: "City of Irvine",
     dueDate: "2026-07-25",
@@ -134,8 +140,9 @@ const raw: Omit<Rfp, "sowMarkdown" | "aiAnalysisMarkdown">[] = [
   },
 ];
 
-export const MOCK_RFPS: Rfp[] = raw.map((r) => ({
+export const MOCK_RFPS: Rfp[] = raw.map((r, i) => ({
   ...r,
+  pdfUrls: i === 0 ? [SAMPLE_PUBLIC_PDF] : [],
   sowMarkdown: buildSow(r.description),
   aiAnalysisMarkdown: buildAiAnalysis(r.score, r.location),
 }));

@@ -28,19 +28,17 @@ PDFs are not stored in Supabase — they live in Google Drive (set to "anyone wi
 
 ```
 supabase/
-├── migrations/
-│   ├── 20260428000001_extensions.sql        # pgvector, pg_trgm, pgcrypto
-│   ├── 20260428000002_schema.sql            # core tables
-│   ├── 20260428000003_indexes.sql           # HNSW vector + GIN/B-tree indexes
-│   ├── 20260428000004_functions.sql         # RPCs, triggers, score-cache trim
-│   ├── 20260428000005_rls_policies.sql      # per-user access control
-│   ├── 20260428000006_pdf_storage.sql       # storage bucket (later removed)
-│   ├── 20260428000007_drive_url.sql         # swapped storage for drive URL
-│   ├── 20260428000008_full_schema.sql       # scraper output fields, metadata
-│   └── 20260428000009_pdf_url_columns.sql   # 10 flat pdf_url columns
-├── seed.sql                                 # department name aliases
-lib/
-└── database.types.ts                        # TypeScript types for supabase-js
+  migrations/
+    20260428000001_extensions.sql   -- pgvector, pg_trgm, pgcrypto
+    20260428000002_schema.sql       -- all tables
+    20260428000003_indexes.sql      -- HNSW vector + GIN/B-tree indexes
+    20260428000004_functions.sql    -- RPCs, triggers, score-cache trim
+    20260428000005_rls_policies.sql -- per-user access control
+    20260428120000_grants_authenticated.sql -- GRANT for PostgREST (fixes permission denied)
+    20260429100000_rfps_pdf_urls.sql       -- pdf_url_1 … pdf_url_10 on rfps
+  seed.sql                          -- starter department aliases
+web/lib/
+  database.types.ts                 -- TypeScript types for supabase-js
 ```
 
 ---
@@ -80,7 +78,14 @@ brew install supabase/tap/supabase
 npm install -g supabase
 ```
 
+<<<<<<< HEAD
+**Option B — SQL editor in the dashboard:**
+Run all migration files in timestamp order, then `seed.sql`.
+
+If the app reports `permission denied for table contractors` (or any public table), apply [`20260428120000_grants_authenticated.sql`](supabase/migrations/20260428120000_grants_authenticated.sql) — RLS alone is not enough without `GRANT` to the `authenticated` role.
+=======
 ### Apply migrations
+>>>>>>> 81c2082567cbf822058c1a7a99fbb395c63bb05e
 
 ```bash
 supabase login

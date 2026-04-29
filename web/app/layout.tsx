@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Plus_Jakarta_Sans } from "next/font/google";
 import { Providers } from "./providers";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const geistMono = Geist_Mono({
@@ -14,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BAGEA — Client dashboard",
+  title: "GovBid — Client dashboard",
   description:
     "RFP discovery and matching dashboard (GitHub Issues #13–#15 prototype)",
 };
@@ -27,9 +28,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${plusJakarta.variable} ${geistMono.variable} flex h-full min-h-dvh w-full flex-col antialiased`}
     >
-      <body className="min-h-full font-sans">
+      <body className="flex min-h-dvh w-full flex-1 flex-col font-sans text-govbid-text">
         <Providers>{children}</Providers>
       </body>
     </html>

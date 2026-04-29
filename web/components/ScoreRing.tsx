@@ -14,13 +14,13 @@ export function ScoreRing({ score, size = 52, stroke = 4 }: Props) {
 
   return (
     <div
-      className="relative shrink-0 text-emerald-600 dark:text-emerald-400"
+      className="relative shrink-0 text-govbid-primary"
       style={{ width: size, height: size }}
       aria-label={`Compatibility score ${score} out of 100`}
     >
       <svg width={size} height={size} className="-rotate-90">
         <circle
-          className="text-zinc-200 dark:text-zinc-700"
+          className="text-violet-100"
           stroke="currentColor"
           fill="none"
           strokeWidth={stroke}
@@ -40,7 +40,7 @@ export function ScoreRing({ score, size = 52, stroke = 4 }: Props) {
           cy={size / 2}
         />
       </svg>
-      <span className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-zinc-900 dark:text-zinc-100">
+      <span className="absolute inset-0 flex items-center justify-center text-[10px] font-bold text-govbid-text md:text-xs">
         {score}
       </span>
     </div>

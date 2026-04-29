@@ -1,6 +1,17 @@
 // ============================================================================
 // Database types for supabase-js
 // ============================================================================
+// Hand-written to match the migrations. After running migrations you can
+// regenerate this from the live DB with:
+//
+//   supabase gen types typescript --project-id <id> --schema public > web/lib/database.types.ts
+//
+// Then import the typed client in your Next.js app:
+//
+//   import { createClient } from '@supabase/supabase-js'
+//   import type { Database } from '@/lib/database.types'
+//   const supabase = createClient<Database>(URL, ANON_KEY)
+// ============================================================================
 
 export type Json =
   | string
@@ -56,6 +67,7 @@ export interface Database {
           updated_at?: string
         }
         Update: Partial<Database['public']['Tables']['contractors']['Insert']>
+        Relationships: []
       }
 
       contractor_past_projects: {
@@ -90,6 +102,7 @@ export interface Database {
         Update: Partial<
           Database['public']['Tables']['contractor_past_projects']['Insert']
         >
+        Relationships: []
       }
 
       rfps: {
@@ -178,6 +191,7 @@ export interface Database {
           updated_at?: string
         }
         Update: Partial<Database['public']['Tables']['rfps']['Insert']>
+        Relationships: []
       }
 
       rfp_chunks: {
@@ -200,6 +214,7 @@ export interface Database {
           created_at?: string
         }
         Update: Partial<Database['public']['Tables']['rfp_chunks']['Insert']>
+        Relationships: []
       }
 
       rfp_amendments: {
@@ -222,6 +237,7 @@ export interface Database {
         Update: Partial<
           Database['public']['Tables']['rfp_amendments']['Insert']
         >
+        Relationships: []
       }
 
       saved_rfps: {
@@ -238,6 +254,7 @@ export interface Database {
           saved_at?: string
         }
         Update: Partial<Database['public']['Tables']['saved_rfps']['Insert']>
+        Relationships: []
       }
 
       scores: {
@@ -262,6 +279,7 @@ export interface Database {
           computed_at?: string
         }
         Update: Partial<Database['public']['Tables']['scores']['Insert']>
+        Relationships: []
       }
 
       rfp_summaries: {
@@ -286,6 +304,7 @@ export interface Database {
         Update: Partial<
           Database['public']['Tables']['rfp_summaries']['Insert']
         >
+        Relationships: []
       }
 
       department_aliases: {
@@ -304,8 +323,11 @@ export interface Database {
         Update: Partial<
           Database['public']['Tables']['department_aliases']['Insert']
         >
+        Relationships: []
       }
     }
+
+    Views: Record<string, never>
 
     Functions: {
       match_rfp_chunks: {

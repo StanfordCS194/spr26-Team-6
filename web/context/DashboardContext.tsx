@@ -15,14 +15,12 @@ import {
   type ContractorProfile,
   type Rfp,
 } from "@/lib/types";
-import { MOCK_RFPS } from "@/lib/mockData";
-
-const STORAGE_KEY = "bagea-dashboard-v1";
-
-type Persisted = {
-  profile: ContractorProfile;
-  savedRfpIds: number[];
-};
+import { createClient } from "@/lib/supabase/client";
+import {
+  contractorRowToProfile,
+  mapRfpRow,
+  profileToContractorUpdate,
+} from "@/lib/mappers";
 
 type RfpFilter = {
   tag?: string;
@@ -31,6 +29,8 @@ type RfpFilter = {
   priceMin?: number;
   priceMax?: number;
 };
+
+export type ActiveNav = "dashboard" | "saved" | "history";
 
 function parseContractValue(value: string) {
   const normalized = value.replace(/\$/g, "").replace(/,/g, "").trim().toUpperCase();
@@ -43,77 +43,50 @@ function parseContractValue(value: string) {
   return Number(normalized) || 0;
 }
 
-function loadPersisted(): Persisted | null {
-  if (typeof window === "undefined") return null;
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return null;
-    return JSON.parse(raw) as Persisted;
-  } catch {
-    return null;
-  }
-}
-
-function savePersisted(data: Persisted) {
-  if (typeof window === "undefined") return;
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  } catch {
-    /* ignore quota */
-  }
-}
-
 type DashboardContextValue = {
+  authReady: boolean;
+  loadedRfps: Rfp[];
   filteredRfps: Rfp[];
+  feedRfps: Rfp[];
+  activeNav: ActiveNav;
+  setActiveNav: (nav: ActiveNav) => void;
   searchQuery: string;
   setSearchQuery: (q: string) => void;
-  selectedRfpId: number | null;
-  selectRfp: (id: number | null) => void;
+  selectedRfpId: string | null;
+  selectRfp: (id: string | null) => void;
   selectedRfp: Rfp | null;
-  savedRfpIds: number[];
-  isSaved: (id: number) => boolean;
-  toggleSaveRfp: (id: number) => void;
+  savedRfpIds: string[];
+  isSaved: (id: string) => boolean;
+  toggleSaveRfp: (id: string) => Promise<void>;
   profile: ContractorProfile;
   setProfile: (p: Partial<ContractorProfile>) => void;
+  saveProfile: (p: ContractorProfile) => Promise<void>;
+  tryLoadCachedSummary: (rfpId: string) => Promise<boolean>;
   profileOpen: boolean;
   setProfileOpen: (open: boolean) => void;
   toast: string | null;
   showToast: (message: string) => void;
   rfpFilter: RfpFilter;
   setRfpFilter: (filter: RfpFilter) => void;
+  signOut: () => Promise<void>;
 };
 
 const DashboardContext = createContext<DashboardContextValue | null>(null);
 
 export function DashboardProvider({ children }: { children: ReactNode }) {
-  const [hydrated, setHydrated] = useState(false);
+  const [authReady, setAuthReady] = useState(false);
+  const [contractorId, setContractorId] = useState<string | null>(null);
+  const [loadedRfps, setLoadedRfps] = useState<Rfp[]>([]);
+  const [savedRfpIds, setSavedRfpIds] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedRfpId, setSelectedRfpId] = useState<number | null>(null);
-  const [savedRfpIds, setSavedRfpIds] = useState<number[]>([]);
+  const [selectedRfpId, setSelectedRfpId] = useState<string | null>(null);
   const [profile, setProfileState] = useState<ContractorProfile>(
     defaultContractorProfile,
   );
   const [profileOpen, setProfileOpen] = useState(false);
   const [rfpFilter, setRfpFilter] = useState<RfpFilter>({});
   const [toast, setToast] = useState<string | null>(null);
-
-  useEffect(() => {
-    const persisted = loadPersisted();
-    startTransition(() => {
-      if (persisted?.profile) {
-        setProfileState({ ...defaultContractorProfile, ...persisted.profile });
-      }
-      if (persisted?.savedRfpIds?.length) {
-        setSavedRfpIds(persisted.savedRfpIds);
-      }
-      setHydrated(true);
-    });
-  }, []);
-
-  useEffect(() => {
-    if (!hydrated) return;
-    savePersisted({ profile, savedRfpIds });
-  }, [hydrated, profile, savedRfpIds]);
+  const [activeNav, setActiveNav] = useState<ActiveNav>("dashboard");
 
   const showToast = useCallback((message: string) => {
     setToast(message);
@@ -124,25 +97,152 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     setProfileState((prev) => ({ ...prev, ...p }));
   }, []);
 
+  const loadWorkspace = useCallback(
+    async (userId: string, email: string | undefined) => {
+      const supabase = createClient();
+
+      try {
+        let { data: contractor } = await supabase
+          .from("contractors")
+          .select("*")
+          .eq("user_id", userId)
+          .maybeSingle();
+
+        if (!contractor) {
+          const companyName = email?.split("@")[0]?.trim() || "Contractor";
+          const { data: inserted, error: insErr } = await supabase
+            .from("contractors")
+            .insert({
+              user_id: userId,
+              company_name: companyName,
+            })
+            .select()
+            .single();
+          if (insErr || !inserted) {
+            const msg =
+              insErr?.message ?? "Could not create contractor profile.";
+            showToast(msg);
+            setContractorId(null);
+            setLoadedRfps([]);
+            setSavedRfpIds([]);
+            setProfileState(defaultContractorProfile);
+            return;
+          }
+          contractor = inserted;
+        }
+
+        const cid = contractor.id;
+        setContractorId(cid);
+
+        const { data: pastRows } = await supabase
+          .from("contractor_past_projects")
+          .select("*")
+          .eq("contractor_id", cid);
+
+        setProfileState(
+          contractorRowToProfile(contractor, pastRows ?? []),
+        );
+
+        const { data: savedRows } = await supabase
+          .from("saved_rfps")
+          .select("rfp_id")
+          .eq("contractor_id", cid);
+        const savedList = savedRows?.map((r) => r.rfp_id) ?? [];
+        setSavedRfpIds(savedList);
+
+        const { data: scoreRows } = await supabase
+          .from("scores")
+          .select("*")
+          .eq("contractor_id", cid);
+
+        const { data: rfpRows, error: rfpErr } = await supabase
+          .from("rfps")
+          .select("*")
+          .eq("status", "active")
+          .eq("is_relevant", true)
+          .order("due_date", { ascending: true, nullsFirst: false });
+
+        if (rfpErr) {
+          showToast(rfpErr.message);
+          setLoadedRfps([]);
+          return;
+        }
+
+        const mapped =
+          rfpRows?.map((row) => mapRfpRow(row, cid, scoreRows ?? undefined)) ??
+          [];
+        setLoadedRfps(mapped);
+      } catch (e) {
+        const msg = e instanceof Error ? e.message : "Unexpected error";
+        showToast(msg);
+      }
+    },
+    [showToast],
+  );
+
+  const clearWorkspace = useCallback(() => {
+    setContractorId(null);
+    setLoadedRfps([]);
+    setSavedRfpIds([]);
+    setProfileState(defaultContractorProfile);
+    setSelectedRfpId(null);
+  }, []);
+
+  useEffect(() => {
+    const supabase = createClient();
+
+    const init = async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user) {
+        await loadWorkspace(user.id, user.email ?? undefined);
+      } else {
+        clearWorkspace();
+      }
+      startTransition(() => setAuthReady(true));
+    };
+
+    void init();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      startTransition(() => {
+        void (async () => {
+          if (session?.user) {
+            await loadWorkspace(
+              session.user.id,
+              session.user.email ?? undefined,
+            );
+          } else {
+            clearWorkspace();
+          }
+          setAuthReady(true);
+        })();
+      });
+    });
+
+    return () => subscription.unsubscribe();
+  }, [loadWorkspace, clearWorkspace]);
+
   const filteredRfps = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
 
-    return MOCK_RFPS.filter((r) => {
+    return loadedRfps.filter((r) => {
       if (q) {
-        const hay = [
-          r.title,
-          r.agency,
-          r.location,
-          r.description,
-          ...r.tags,
-        ]
+        const hay = [r.title, r.agency, r.location, r.description, ...r.tags]
           .join(" ")
           .toLowerCase();
         if (!hay.includes(q)) return false;
       }
 
       if (rfpFilter.tag && rfpFilter.tag !== "") {
-        if (!r.tags.some((tag) => tag.toLowerCase() === rfpFilter.tag?.toLowerCase())) {
+        if (
+          !r.tags.some(
+            (tag) => tag.toLowerCase() === rfpFilter.tag?.toLowerCase(),
+          )
+        ) {
           return false;
         }
       }
@@ -173,31 +273,164 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
 
       return true;
     });
-  }, [searchQuery, rfpFilter]);
+  }, [loadedRfps, searchQuery, rfpFilter]);
 
-  const selectedRfp =
-    selectedRfpId == null
-      ? null
-      : (MOCK_RFPS.find((r) => r.id === selectedRfpId) ?? null);
+  const feedRfps = useMemo(() => {
+    if (activeNav === "dashboard") {
+      return filteredRfps;
+    }
+    if (activeNav === "saved") {
+      const saved = new Set(savedRfpIds);
+      return filteredRfps.filter((r) => saved.has(r.id));
+    }
+    return [] as Rfp[];
+  }, [activeNav, filteredRfps, savedRfpIds]);
 
-  const selectRfp = useCallback((id: number | null) => {
+  useEffect(() => {
+    if (selectedRfpId == null) return;
+    if (!feedRfps.some((r) => r.id === selectedRfpId)) {
+      startTransition(() => {
+        setSelectedRfpId(null);
+      });
+    }
+  }, [feedRfps, selectedRfpId]);
+
+  const selectedRfp = useMemo(() => {
+    if (selectedRfpId == null) return null;
+    return loadedRfps.find((r) => r.id === selectedRfpId) ?? null;
+  }, [loadedRfps, selectedRfpId]);
+
+  const selectRfp = useCallback((id: string | null) => {
     setSelectedRfpId(id);
   }, []);
 
   const isSaved = useCallback(
-    (id: number) => savedRfpIds.includes(id),
+    (id: string) => savedRfpIds.includes(id),
     [savedRfpIds],
   );
 
-  const toggleSaveRfp = useCallback((id: number) => {
-    setSavedRfpIds((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
-    );
+  const toggleSaveRfp = useCallback(
+    async (id: string) => {
+      if (!contractorId) {
+        showToast("Profile not ready yet.");
+        return;
+      }
+      const supabase = createClient();
+      const saved = savedRfpIds.includes(id);
+      if (saved) {
+        const { error } = await supabase
+          .from("saved_rfps")
+          .delete()
+          .eq("contractor_id", contractorId)
+          .eq("rfp_id", id);
+        if (error) {
+          showToast(error.message);
+          return;
+        }
+        setSavedRfpIds((prev) => prev.filter((x) => x !== id));
+      } else {
+        const { error } = await supabase.from("saved_rfps").insert({
+          contractor_id: contractorId,
+          rfp_id: id,
+        });
+        if (error) {
+          showToast(error.message);
+          return;
+        }
+        setSavedRfpIds((prev) => [...prev, id]);
+      }
+    },
+    [contractorId, savedRfpIds, showToast],
+  );
+
+  const saveProfile = useCallback(
+    async (p: ContractorProfile) => {
+      if (!contractorId) {
+        showToast("Profile not ready yet.");
+        return;
+      }
+      const supabase = createClient();
+      const update = profileToContractorUpdate(p);
+      const { error: upErr } = await supabase
+        .from("contractors")
+        .update(update)
+        .eq("id", contractorId);
+      if (upErr) {
+        showToast(upErr.message);
+        return;
+      }
+
+      const { error: delErr } = await supabase
+        .from("contractor_past_projects")
+        .delete()
+        .eq("contractor_id", contractorId);
+      if (delErr) {
+        showToast(delErr.message);
+        return;
+      }
+
+      const blob = p.pastExperience.trim();
+      if (blob) {
+        const { error: insErr } = await supabase
+          .from("contractor_past_projects")
+          .insert({
+            contractor_id: contractorId,
+            project_name: "Experience profile",
+            description: blob,
+            tags: [],
+          });
+        if (insErr) {
+          showToast(insErr.message);
+          return;
+        }
+      }
+
+      setProfileState(p);
+      showToast("Profile saved.");
+    },
+    [contractorId, showToast],
+  );
+
+  const tryLoadCachedSummary = useCallback(
+    async (rfpId: string): Promise<boolean> => {
+      const supabase = createClient();
+      const { data, error } = await supabase
+        .from("rfp_summaries")
+        .select("summary")
+        .eq("rfp_id", rfpId)
+        .eq("summary_type", "general")
+        .order("generated_at", { ascending: false })
+        .limit(1)
+        .maybeSingle();
+      if (error || !data?.summary) {
+        return false;
+      }
+      setLoadedRfps((prev) =>
+        prev.map((r) =>
+          r.id === rfpId
+            ? { ...r, aiAnalysisMarkdown: data.summary }
+            : r,
+        ),
+      );
+      return true;
+    },
+    [],
+  );
+
+  const signOut = useCallback(async () => {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    window.location.href = "/login";
   }, []);
 
   const value = useMemo<DashboardContextValue>(
     () => ({
+      authReady,
+      loadedRfps,
       filteredRfps,
+      feedRfps,
+      activeNav,
+      setActiveNav,
       searchQuery,
       setSearchQuery,
       selectedRfpId,
@@ -208,15 +441,22 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       toggleSaveRfp,
       profile,
       setProfile,
+      saveProfile,
+      tryLoadCachedSummary,
       profileOpen,
       setProfileOpen,
       toast,
       showToast,
       rfpFilter,
       setRfpFilter,
+      signOut,
     }),
     [
+      authReady,
+      loadedRfps,
       filteredRfps,
+      feedRfps,
+      activeNav,
       searchQuery,
       selectedRfpId,
       selectRfp,
@@ -226,11 +466,13 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       toggleSaveRfp,
       profile,
       setProfile,
+      saveProfile,
+      tryLoadCachedSummary,
       profileOpen,
       toast,
       showToast,
       rfpFilter,
-      setRfpFilter,
+      signOut,
     ],
   );
 

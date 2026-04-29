@@ -1,8 +1,20 @@
+import { redirect } from "next/navigation";
+import { createClient } from "@/lib/supabase/server";
 import { Dashboard } from "@/components/Dashboard";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    redirect("/login");
+  }
+
   return (
-    <div className="flex h-[100dvh] flex-col">
+    <div className="flex min-h-dvh w-full min-w-0 flex-1 flex-col">
       <Dashboard />
     </div>
   );
