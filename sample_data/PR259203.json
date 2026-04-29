@@ -2,6 +2,16 @@
   "source": "Cal eProcure",
   "external_id": "PR259203",
   "title": "Replace Electrical Transformers",
+  "name": "Electrical transformer replacement at Porterville Developmental Center",
+  "statement_of_work": "Install medium-voltage transformers, conduit, fittings, and new wiring to upgrade the electrical system at Porterville Developmental Center.",
+  "deliverables": [
+    "Install MV transformers and associated electrical equipment",
+    "Run conduit, wiring, and fittings to meet facility electrical requirements",
+    "Provide final testing and handoff documentation for installed systems"
+  ],
+  "location_level": "city",
+  "location": "Porterville",
+  "tags": ["Electrical", "Infrastructure", "Porterville", "Construction"],
   "dept": "Department of Developmental Services",
   "description": "Contractor to furnish all labor, materials, tools, equipment, and transportation necessary to install MV transformers, electrical conduit, fittings, and wire at Porterville Developmental Center.",
   "published_date": "2026-04-28T08:00:00-07:00",
