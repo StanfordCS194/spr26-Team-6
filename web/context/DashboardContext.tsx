@@ -24,6 +24,25 @@ type Persisted = {
   savedRfpIds: number[];
 };
 
+type RfpFilter = {
+  tag?: string;
+  dateFrom?: string;
+  dateTo?: string;
+  priceMin?: number;
+  priceMax?: number;
+};
+
+function parseContractValue(value: string) {
+  const normalized = value.replace(/\$/g, "").replace(/,/g, "").trim().toUpperCase();
+  if (normalized.endsWith("M")) {
+    return Number(normalized.slice(0, -1)) * 1_000_000;
+  }
+  if (normalized.endsWith("K")) {
+    return Number(normalized.slice(0, -1)) * 1_000;
+  }
+  return Number(normalized) || 0;
+}
+
 function loadPersisted(): Persisted | null {
   if (typeof window === "undefined") return null;
   try {
@@ -60,6 +79,8 @@ type DashboardContextValue = {
   setProfileOpen: (open: boolean) => void;
   toast: string | null;
   showToast: (message: string) => void;
+  rfpFilter: RfpFilter;
+  setRfpFilter: (filter: RfpFilter) => void;
 };
 
 const DashboardContext = createContext<DashboardContextValue | null>(null);
@@ -73,6 +94,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     defaultContractorProfile,
   );
   const [profileOpen, setProfileOpen] = useState(false);
+  const [rfpFilter, setRfpFilter] = useState<RfpFilter>({});
   const [toast, setToast] = useState<string | null>(null);
 
   useEffect(() => {
@@ -104,20 +126,54 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
 
   const filteredRfps = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
-    if (!q) return MOCK_RFPS;
+
     return MOCK_RFPS.filter((r) => {
-      const hay = [
-        r.title,
-        r.agency,
-        r.location,
-        r.description,
-        ...r.tags,
-      ]
-        .join(" ")
-        .toLowerCase();
-      return hay.includes(q);
+      if (q) {
+        const hay = [
+          r.title,
+          r.agency,
+          r.location,
+          r.description,
+          ...r.tags,
+        ]
+          .join(" ")
+          .toLowerCase();
+        if (!hay.includes(q)) return false;
+      }
+
+      if (rfpFilter.tag && rfpFilter.tag !== "") {
+        if (!r.tags.some((tag) => tag.toLowerCase() === rfpFilter.tag?.toLowerCase())) {
+          return false;
+        }
+      }
+
+      if (rfpFilter.dateFrom) {
+        const from = new Date(rfpFilter.dateFrom);
+        if (Number(new Date(r.dueDate)) < Number(from)) {
+          return false;
+        }
+      }
+
+      if (rfpFilter.dateTo) {
+        const to = new Date(rfpFilter.dateTo);
+        if (Number(new Date(r.dueDate)) > Number(to)) {
+          return false;
+        }
+      }
+
+      const amount = parseContractValue(r.contract);
+
+      if (typeof rfpFilter.priceMin === "number") {
+        if (amount < rfpFilter.priceMin) return false;
+      }
+
+      if (typeof rfpFilter.priceMax === "number") {
+        if (amount > rfpFilter.priceMax) return false;
+      }
+
+      return true;
     });
-  }, [searchQuery]);
+  }, [searchQuery, rfpFilter]);
 
   const selectedRfp =
     selectedRfpId == null
@@ -156,6 +212,8 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       setProfileOpen,
       toast,
       showToast,
+      rfpFilter,
+      setRfpFilter,
     }),
     [
       filteredRfps,
@@ -171,6 +229,8 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       profileOpen,
       toast,
       showToast,
+      rfpFilter,
+      setRfpFilter,
     ],
   );
 
