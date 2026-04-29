@@ -17,7 +17,8 @@ import {
 } from "@/lib/types";
 import { MOCK_RFPS } from "@/lib/mockData";
 
-const STORAGE_KEY = "bagea-dashboard-v1";
+const STORAGE_KEY = "govbid-dashboard-v1";
+const LEGACY_STORAGE_KEY = "bagea-dashboard-v1";
 
 type Persisted = {
   profile: ContractorProfile;
@@ -31,6 +32,8 @@ type RfpFilter = {
   priceMin?: number;
   priceMax?: number;
 };
+
+export type ActiveNav = "dashboard" | "saved" | "history";
 
 function parseContractValue(value: string) {
   const normalized = value.replace(/\$/g, "").replace(/,/g, "").trim().toUpperCase();
@@ -46,7 +49,14 @@ function parseContractValue(value: string) {
 function loadPersisted(): Persisted | null {
   if (typeof window === "undefined") return null;
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    let raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) {
+      raw = localStorage.getItem(LEGACY_STORAGE_KEY);
+      if (raw) {
+        localStorage.setItem(STORAGE_KEY, raw);
+        localStorage.removeItem(LEGACY_STORAGE_KEY);
+      }
+    }
     if (!raw) return null;
     return JSON.parse(raw) as Persisted;
   } catch {
@@ -64,7 +74,12 @@ function savePersisted(data: Persisted) {
 }
 
 type DashboardContextValue = {
+  /** RFPs matching search + sidebar filters (full catalog). */
   filteredRfps: Rfp[];
+  /** RFPs shown in the main feed for the current top nav (dashboard / saved / history). */
+  feedRfps: Rfp[];
+  activeNav: ActiveNav;
+  setActiveNav: (nav: ActiveNav) => void;
   searchQuery: string;
   setSearchQuery: (q: string) => void;
   selectedRfpId: number | null;
@@ -96,6 +111,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [profileOpen, setProfileOpen] = useState(false);
   const [rfpFilter, setRfpFilter] = useState<RfpFilter>({});
   const [toast, setToast] = useState<string | null>(null);
+  const [activeNav, setActiveNav] = useState<ActiveNav>("dashboard");
 
   useEffect(() => {
     const persisted = loadPersisted();
@@ -175,6 +191,26 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     });
   }, [searchQuery, rfpFilter]);
 
+  const feedRfps = useMemo(() => {
+    if (activeNav === "dashboard") {
+      return filteredRfps;
+    }
+    if (activeNav === "saved") {
+      const saved = new Set(savedRfpIds);
+      return filteredRfps.filter((r) => saved.has(r.id));
+    }
+    return [] as Rfp[];
+  }, [activeNav, filteredRfps, savedRfpIds]);
+
+  useEffect(() => {
+    if (selectedRfpId == null) return;
+    if (!feedRfps.some((r) => r.id === selectedRfpId)) {
+      startTransition(() => {
+        setSelectedRfpId(null);
+      });
+    }
+  }, [feedRfps, selectedRfpId]);
+
   const selectedRfp =
     selectedRfpId == null
       ? null
@@ -198,6 +234,9 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const value = useMemo<DashboardContextValue>(
     () => ({
       filteredRfps,
+      feedRfps,
+      activeNav,
+      setActiveNav,
       searchQuery,
       setSearchQuery,
       selectedRfpId,
@@ -217,6 +256,8 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     }),
     [
       filteredRfps,
+      feedRfps,
+      activeNav,
       searchQuery,
       selectedRfpId,
       selectRfp,

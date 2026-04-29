@@ -10,10 +10,9 @@ export function DetailPanel() {
 
   if (!selectedRfp) {
     return (
-      <section className="flex flex-1 items-center justify-center bg-zinc-50/50 p-8 dark:bg-zinc-900/30">
-        <p className="max-w-sm text-center text-sm text-zinc-500 dark:text-zinc-400">
-          Select a recommended RFP from the sidebar to see details, run a
-          summary (stub), or save it to your profile.
+      <section className="flex min-h-[220px] flex-1 flex-col items-center justify-center bg-govbid-surface px-6 py-10 lg:min-h-0">
+        <p className="max-w-[240px] text-center text-sm text-govbid-text-muted">
+          Select an opportunity from the list to view details, run summary stubs, and save to your profile.
         </p>
       </section>
     );
@@ -48,106 +47,95 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
   };
 
   return (
-    <section className="flex min-h-0 flex-1 flex-col bg-zinc-50/30 dark:bg-zinc-900/20">
-      <div className="flex flex-wrap items-center gap-2 border-b border-zinc-200 px-4 py-3 dark:border-zinc-800">
-        <button
-          type="button"
-          onClick={() => setTab("overview")}
-          className={`rounded-lg px-3 py-1.5 text-sm font-medium transition ${
-            tab === "overview"
-              ? "bg-emerald-600 text-white dark:bg-emerald-500"
-              : "text-zinc-600 hover:bg-zinc-200 dark:text-zinc-400 dark:hover:bg-zinc-800"
-          }`}
-        >
-          Overview
-        </button>
-        <button
-          type="button"
-          onClick={() => setTab("ai")}
-          className={`rounded-lg px-3 py-1.5 text-sm font-medium transition ${
-            tab === "ai"
-              ? "bg-emerald-600 text-white dark:bg-emerald-500"
-              : "text-zinc-600 hover:bg-zinc-200 dark:text-zinc-400 dark:hover:bg-zinc-800"
-          }`}
-        >
-          AI analysis
-        </button>
+    <section className="flex min-h-0 flex-1 flex-col bg-govbid-surface">
+      <div className="flex shrink-0 gap-8 border-b border-govbid-border px-4 pt-3 lg:px-5">
+        {(["overview", "ai"] as const).map((id) => (
+          <button
+            key={id}
+            type="button"
+            onClick={() => setTab(id)}
+            className={`relative pb-2.5 text-sm font-semibold transition ${
+              tab === id
+                ? "text-govbid-text"
+                : "text-govbid-text-muted hover:text-govbid-text"
+            }`}
+          >
+            {id === "overview" ? "Overview" : "AI analysis"}
+            {tab === id && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-govbid-primary" />
+            )}
+          </button>
+        ))}
       </div>
 
-      <div className="flex flex-wrap items-center gap-2 border-b border-zinc-200 bg-white px-4 py-3 dark:border-zinc-800 dark:bg-zinc-950">
+      <div className="flex shrink-0 flex-wrap gap-2 border-b border-govbid-border bg-govbid-elevated px-4 py-3 lg:px-5">
         <button
           type="button"
           onClick={handleSave}
-          className="rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm font-medium text-zinc-800 hover:bg-zinc-50 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
+          className="rounded-lg border border-govbid-border bg-govbid-surface px-3 py-2 text-sm font-medium text-govbid-text transition hover:bg-govbid-primary-muted/40"
         >
           {saved ? "Unsave" : "Save to profile"}
         </button>
         <button
           type="button"
           onClick={handleSummary}
-          className="rounded-lg bg-emerald-600 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-400"
+          className="govbid-btn-primary rounded-lg px-3 py-2 text-sm"
         >
           Generate summary
         </button>
         <button
           type="button"
           onClick={handleProposal}
-          className="rounded-lg bg-emerald-700/90 px-3 py-2 text-sm font-medium text-white hover:bg-emerald-800 dark:bg-emerald-600"
+          className="rounded-lg border border-govbid-border bg-govbid-primary-muted px-3 py-2 text-sm font-semibold text-govbid-primary transition hover:bg-govbid-primary-soft"
         >
           Draft proposal
         </button>
         {saved && (
-          <span className="ml-auto inline-flex items-center gap-1 rounded-full border border-emerald-300/80 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 dark:border-emerald-500/80 dark:bg-emerald-500/10 dark:text-emerald-300">
-            <span>✓</span> Saved
+          <span className="ml-auto inline-flex items-center gap-1 rounded-full border border-govbid-border bg-govbid-primary-muted px-3 py-1 text-xs font-semibold text-govbid-primary">
+            <span aria-hidden>✓</span> Saved
           </span>
         )}
       </div>
 
-      <div className="min-h-0 flex-1 overflow-y-auto p-4">
+      <div className="min-h-0 flex-1 overflow-y-auto p-4 lg:p-5">
         {tab === "overview" ? (
-          <div className="mx-auto max-w-3xl space-y-4">
+          <div className="mx-auto max-w-2xl space-y-4">
             <div>
-              <p className="text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
+              <p className="text-xs font-medium uppercase tracking-wide text-govbid-text-muted">
                 {rfp.agency}
               </p>
-              <h2 className="mt-1 text-xl font-semibold text-zinc-900 dark:text-zinc-50">
+              <h2 className="mt-1 text-lg font-bold leading-snug text-govbid-text lg:text-xl">
                 {rfp.title}
               </h2>
-              <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">
+              <p className="mt-2 text-sm leading-relaxed text-govbid-text-muted">
                 {rfp.description}
               </p>
             </div>
             <dl className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
               <div>
-                <dt className="text-zinc-500 dark:text-zinc-400">Location</dt>
-                <dd className="font-medium text-zinc-900 dark:text-zinc-100">
-                  {rfp.location}
-                </dd>
+                <dt className="text-govbid-text-muted">Location</dt>
+                <dd className="font-semibold text-govbid-text">{rfp.location}</dd>
               </div>
               <div>
-                <dt className="text-zinc-500 dark:text-zinc-400">Due date</dt>
-                <dd className="font-medium text-zinc-900 dark:text-zinc-100">
-                  {rfp.dueDate}
-                </dd>
+                <dt className="text-govbid-text-muted">Due date</dt>
+                <dd className="font-semibold text-govbid-text">{rfp.dueDate}</dd>
               </div>
               <div>
-                <dt className="text-zinc-500 dark:text-zinc-400">Value</dt>
-                <dd className="font-medium text-zinc-900 dark:text-zinc-100">
-                  {rfp.contract}
-                </dd>
+                <dt className="text-govbid-text-muted">Value</dt>
+                <dd className="text-lg font-bold tabular-nums text-govbid-primary">{rfp.contract}</dd>
               </div>
             </dl>
-            <div className="rounded-xl border border-zinc-200 bg-white p-4 dark:border-zinc-700 dark:bg-zinc-950">
-              <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+            <div className="rounded-xl border border-govbid-border bg-govbid-surface p-4">
+              <h3 className="text-sm font-semibold text-govbid-text">
                 Statement of work (markdown stub)
               </h3>
-              <div className="prose prose-sm prose-zinc mt-3 max-w-none dark:prose-invert">
+              <div className="prose prose-sm prose-slate mt-3 max-w-none text-govbid-text">
                 <ReactMarkdown>{rfp.sowMarkdown}</ReactMarkdown>
               </div>
             </div>
           </div>
         ) : (
-          <div className="prose prose-sm prose-zinc mx-auto max-w-3xl dark:prose-invert">
+          <div className="prose prose-sm prose-slate mx-auto max-w-2xl text-govbid-text">
             <ReactMarkdown>{rfp.aiAnalysisMarkdown}</ReactMarkdown>
           </div>
         )}

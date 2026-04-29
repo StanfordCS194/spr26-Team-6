@@ -9,49 +9,73 @@ type Props = {
   onSelect: () => void;
 };
 
-const tagColors = [
-  "bg-violet-100 text-violet-800 dark:bg-violet-950 dark:text-violet-200",
-  "bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-200",
-  "bg-sky-100 text-sky-800 dark:bg-sky-950 dark:text-sky-200",
-  "bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-100",
-  "bg-zinc-200 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-100",
-];
+function dueParts(iso: string) {
+  const d = new Date(`${iso}T12:00:00`);
+  return {
+    day: d.getDate(),
+    month: d.toLocaleString("en-US", { month: "long" }),
+  };
+}
+
+function PinIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+      <path d="M12 21s7-4.35 7-10a7 7 0 1 0-14 0c0 5.65 7 10 7 10z" />
+      <circle cx="12" cy="11" r="2" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+function ClockIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M12 7v6l3 2" />
+    </svg>
+  );
+}
 
 export function RfpCard({ rfp, active, onSelect }: Props) {
+  const { day, month } = dueParts(rfp.dueDate);
+  const subtitle = rfp.tags[0] ?? rfp.agency;
+
   return (
     <button
       type="button"
       onClick={onSelect}
-      className={`flex w-full gap-3 rounded-xl border p-3 text-left transition hover:border-zinc-400 dark:hover:border-zinc-500 ${
+      className={`flex w-full gap-4 rounded-xl border bg-govbid-surface p-4 text-left shadow-[var(--govbid-shadow)] transition md:gap-5 md:p-5 ${
         active
-          ? "border-emerald-500 bg-emerald-50/80 ring-1 ring-emerald-500/30 dark:bg-emerald-950/40 dark:border-emerald-400"
-          : "border-zinc-200 bg-white dark:border-zinc-700 dark:bg-zinc-900/60"
+          ? "border-govbid-primary/45 bg-govbid-primary-soft/60 shadow-[0_1px_3px_rgb(79_70_229/0.12)]"
+          : "border-govbid-border hover:border-govbid-border-strong"
       }`}
     >
-      <ScoreRing score={rfp.score} />
+      <div className="flex shrink-0 flex-col items-center border-r border-govbid-border/80 pr-4 text-center md:pr-5">
+        <span className="text-2xl font-bold leading-none text-govbid-text md:text-3xl">{day}</span>
+        <span className="mt-1 text-xs font-medium text-govbid-text-muted">{month}</span>
+      </div>
+
       <div className="min-w-0 flex-1">
-        <p className="text-[11px] font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-          {rfp.agency}
-        </p>
-        <h3 className="mt-0.5 line-clamp-2 text-sm font-semibold leading-snug text-zinc-900 dark:text-zinc-50">
+        <p className="line-clamp-2 text-sm font-semibold leading-snug text-govbid-text md:text-base">
           {rfp.title}
-        </h3>
-        <div className="mt-2 flex flex-wrap gap-1">
-          {rfp.tags.slice(0, 4).map((tag, i) => (
-            <span
-              key={tag}
-              className={`rounded px-1.5 py-0.5 text-[10px] font-medium ${tagColors[i % tagColors.length]}`}
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-        <div className="mt-2 flex flex-wrap gap-x-3 gap-y-0.5 text-xs text-zinc-600 dark:text-zinc-400">
-          <span>Due {rfp.dueDate}</span>
-          <span className="font-medium text-zinc-800 dark:text-zinc-200">
-            {rfp.contract}
+        </p>
+        <p className="mt-1 line-clamp-1 text-xs text-govbid-text-muted">{subtitle}</p>
+        <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-govbid-text-muted">
+          <span className="inline-flex items-center gap-1">
+            <PinIcon />
+            {rfp.location}
+          </span>
+          <span className="inline-flex items-center gap-1">
+            <ClockIcon />
+            Due {rfp.dueDate}
           </span>
         </div>
+      </div>
+
+      <div className="flex shrink-0 flex-col items-end justify-between gap-2">
+        <ScoreRing score={rfp.score} size={44} stroke={3} />
+        <span className="text-right text-base font-bold tabular-nums text-govbid-primary md:text-lg">
+          {rfp.contract}
+        </span>
       </div>
     </button>
   );
