@@ -2,17 +2,16 @@
 
 import { startTransition, useEffect, useState } from "react";
 import { useDashboard } from "@/context/DashboardContext";
-import { MOCK_RFPS } from "@/lib/mockData";
 
 export function ProfileDrawer() {
   const {
     profileOpen,
     setProfileOpen,
     profile,
-    setProfile,
     savedRfpIds,
     selectRfp,
-    showToast,
+    saveProfile,
+    loadedRfps,
   } = useDashboard();
   const [draftProfile, setDraftProfile] = useState(profile);
 
@@ -29,7 +28,7 @@ export function ProfileDrawer() {
   }, [profileOpen, profile, setProfileOpen]);
 
   const savedRfps = savedRfpIds
-    .map((id) => MOCK_RFPS.find((r) => r.id === id))
+    .map((id) => loadedRfps.find((r) => r.id === id))
     .filter((r): r is NonNullable<typeof r> => r != null);
 
   if (!profileOpen) return null;
@@ -122,10 +121,7 @@ export function ProfileDrawer() {
             <div className="flex justify-end pt-2">
               <button
                 type="button"
-                onClick={() => {
-                  setProfile(draftProfile);
-                  showToast("Profile saved.");
-                }}
+                onClick={() => void saveProfile(draftProfile)}
                 className="govbid-btn-primary rounded-lg px-4 py-2.5 text-sm"
               >
                 Save my information

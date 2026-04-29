@@ -12,8 +12,9 @@ supabase/
     20260428000003_indexes.sql      -- HNSW vector + GIN/B-tree indexes
     20260428000004_functions.sql    -- RPCs, triggers, score-cache trim
     20260428000005_rls_policies.sql -- per-user access control
+    20260428120000_grants_authenticated.sql -- GRANT for PostgREST (fixes permission denied)
   seed.sql                          -- starter department aliases
-lib/
+web/lib/
   database.types.ts                 -- TypeScript types for supabase-js
 ```
 
@@ -43,7 +44,9 @@ supabase db reset             # against local dev (also runs seed.sql)
 ```
 
 **Option B — SQL editor in the dashboard:**
-Run the five migration files in order, then `seed.sql`.
+Run all migration files in timestamp order, then `seed.sql`.
+
+If the app reports `permission denied for table contractors` (or any public table), apply [`20260428120000_grants_authenticated.sql`](supabase/migrations/20260428120000_grants_authenticated.sql) — RLS alone is not enough without `GRANT` to the `authenticated` role.
 
 ## Embedding dimensions — pick one and commit
 

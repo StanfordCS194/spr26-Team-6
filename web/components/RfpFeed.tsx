@@ -3,8 +3,37 @@
 import { useDashboard } from "@/context/DashboardContext";
 import { RfpCard } from "./RfpCard";
 
+function filtersActive(
+  q: string,
+  filter: {
+    tag?: string;
+    dateFrom?: string;
+    dateTo?: string;
+    priceMin?: number;
+    priceMax?: number;
+  },
+) {
+  return (
+    q.trim() !== "" ||
+    Boolean(filter.tag) ||
+    Boolean(filter.dateFrom) ||
+    Boolean(filter.dateTo) ||
+    typeof filter.priceMin === "number" ||
+    typeof filter.priceMax === "number"
+  );
+}
+
 export function RfpFeed() {
-  const { feedRfps, selectedRfpId, selectRfp, activeNav } = useDashboard();
+  const {
+    feedRfps,
+    selectedRfpId,
+    selectRfp,
+    activeNav,
+    loadedRfps,
+    filteredRfps,
+    searchQuery,
+    rfpFilter,
+  } = useDashboard();
 
   if (activeNav === "history") {
     return (
@@ -28,10 +57,15 @@ export function RfpFeed() {
         />
       ))}
       {feedRfps.length === 0 && (
-        <p className="rounded-xl border border-dashed border-govbid-border bg-govbid-surface/80 px-4 py-10 text-center text-sm text-govbid-text-muted">
+        <p className="rounded-xl border border-dashed border-govbid-border bg-govbid-surface/80 px-4 py-10 text-center text-sm leading-relaxed text-govbid-text-muted">
           {activeNav === "saved"
             ? "No saved opportunities match these filters. Save RFPs from the detail view or clear filters."
-            : "No RFPs match your search. Try different keywords or filters."}
+            : loadedRfps.length === 0
+              ? "Supabase returned no rows for this query (status = active and is_relevant = true). Add or update RFPs in the database, or set is_relevant / status so they match."
+              : filtersActive(searchQuery, rfpFilter) &&
+                  filteredRfps.length === 0
+                ? `Your catalog has ${loadedRfps.length} RFP(s) from the database, but search and sidebar filters hide all of them. Clear filters or broaden your search.`
+                : "No RFPs match your search. Try different keywords or filters."}
         </p>
       )}
     </div>

@@ -22,22 +22,31 @@ export function DetailPanel() {
 }
 
 function DetailPanelBody({ rfp }: { rfp: Rfp }) {
-  const { toggleSaveRfp, isSaved, showToast } = useDashboard();
+  const { toggleSaveRfp, isSaved, showToast, tryLoadCachedSummary } =
+    useDashboard();
   const [tab, setTab] = useState<"overview" | "ai">("overview");
 
   const saved = isSaved(rfp.id);
 
-  const handleSave = () => {
-    toggleSaveRfp(rfp.id);
-    if (saved) {
+  const handleSave = async () => {
+    const wasSaved = saved;
+    await toggleSaveRfp(rfp.id);
+    if (wasSaved) {
       showToast("Removed from saved opportunities.");
     } else {
       showToast("Saved to your profile.");
     }
   };
 
-  const handleSummary = () => {
-    showToast(`Summary pipeline stub — would call RAG for RFP #${rfp.id}.`);
+  const handleSummary = async () => {
+    const found = await tryLoadCachedSummary(rfp.id);
+    if (found) {
+      showToast("Loaded cached summary from the database.");
+      return;
+    }
+    showToast(
+      "No cached summary yet. Generating new summaries requires a server-side pipeline (service role) — not available from the browser.",
+    );
   };
 
   const handleProposal = () => {

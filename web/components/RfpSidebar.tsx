@@ -8,7 +8,6 @@ import {
   type SetStateAction,
 } from "react";
 import { useDashboard } from "@/context/DashboardContext";
-import { MOCK_RFPS } from "@/lib/mockData";
 
 function FunnelIcon() {
   return (
@@ -28,7 +27,8 @@ function SearchIcon() {
 }
 
 export function RfpSidebar() {
-  const { searchQuery, setSearchQuery, rfpFilter, setRfpFilter } = useDashboard();
+  const { searchQuery, setSearchQuery, rfpFilter, setRfpFilter, loadedRfps } =
+    useDashboard();
   const [draftFilter, setDraftFilter] = useState({
     tag: rfpFilter.tag ?? "",
     dateFrom: rfpFilter.dateFrom ?? "",
@@ -49,7 +49,9 @@ export function RfpSidebar() {
     });
   }, [rfpFilter]);
 
-  const allTags = Array.from(new Set(MOCK_RFPS.flatMap((rfp) => rfp.tags))).sort();
+  const allTags = Array.from(
+    new Set(loadedRfps.flatMap((rfp) => rfp.tags)),
+  ).sort();
 
   const applyFilter = () => {
     setRfpFilter({

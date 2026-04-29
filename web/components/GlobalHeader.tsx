@@ -103,7 +103,7 @@ function NavButtons({ className }: { className?: string }) {
 }
 
 export function GlobalHeader() {
-  const { setProfileOpen, profileOpen, showToast } = useDashboard();
+  const { setProfileOpen, profileOpen, showToast, signOut } = useDashboard();
 
   return (
     <header className="flex shrink-0 flex-col gap-3 border-b border-govbid-border bg-govbid-surface px-4 py-3 md:px-6">
@@ -162,6 +162,13 @@ export function GlobalHeader() {
           >
             <span aria-hidden>Me</span>
             <span className="sr-only">Open profile</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => void signOut()}
+            className="rounded-lg border border-govbid-border px-2.5 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-govbid-text-muted transition hover:bg-govbid-primary-muted/50 hover:text-govbid-text"
+          >
+            Sign out
           </button>
         </div>
       </div>

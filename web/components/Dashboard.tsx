@@ -1,6 +1,7 @@
 "use client";
 
 import { useDashboard } from "@/context/DashboardContext";
+import { DataStatusBar } from "./DataStatusBar";
 import { DetailPanel } from "./DetailPanel";
 import { GlobalHeader } from "./GlobalHeader";
 import { ProfileDrawer } from "./ProfileDrawer";
@@ -8,12 +9,21 @@ import { RfpFeed } from "./RfpFeed";
 import { RfpSidebar } from "./RfpSidebar";
 
 export function Dashboard() {
-  const { toast } = useDashboard();
+  const { toast, authReady } = useDashboard();
+
+  if (!authReady) {
+    return (
+      <div className="flex min-h-dvh flex-1 items-center justify-center bg-govbid-surface px-6">
+        <p className="text-sm font-medium text-govbid-text-muted">Loading…</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-dvh w-full min-w-0 flex-1 flex-col">
       <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col overflow-hidden bg-govbid-surface">
         <GlobalHeader />
+        <DataStatusBar />
 
         <div className="grid min-h-0 min-w-0 flex-1 grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)]">
           <RfpSidebar />

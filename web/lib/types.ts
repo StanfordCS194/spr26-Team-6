@@ -1,5 +1,5 @@
 export type Rfp = {
-  id: number;
+  id: string;
   title: string;
   agency: string;
   dueDate: string;
