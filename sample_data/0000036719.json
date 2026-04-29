@@ -2,6 +2,16 @@
   "source": "Cal eProcure",
   "external_id": "0000036719",
   "title": "CalHEERS SDMO RFP #73040873",
+  "name": "CalHEERS SDMO system development & operations",
+  "statement_of_work": "Provide system development, maintenance, and operations support for California Healthcare Eligibility systems, including integration with statewide welfare eligibility interfaces for Covered California and Medi-Cal.",
+  "deliverables": [
+    "Perform system development and enhancements for CalHEERS",
+    "Deliver ongoing maintenance and operations support for enrollment and eligibility workflows",
+    "Coordinate interfaces with SAWS systems for MAGI Medi-Cal eligibility"
+  ],
+  "location_level": "city",
+  "location": "Sacramento",
+  "tags": ["Healthcare", "IT Systems", "Operations", "Sacramento", "System Development, Maintenance, and Operations"],
   "dept": "Office of Technology and Solutions Integration (OTSI)",
   "description": "System Development, Maintenance & Operations (SDMO) for the California Healthcare Eligibility, Enrollment and Retention System (CalHEERS). Supports Covered California and the Department of Health Care Services (DHCS), including interfaces with the Statewide Automated Welfare Systems (SAWS) for MAGI Medi-Cal eligibility.",
   "published_date": "2025-09-17T17:00:00-07:00",
@@ -53,4 +63,5 @@
       }
 	]
   }
+  
 }
