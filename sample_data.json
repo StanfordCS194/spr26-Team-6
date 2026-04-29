@@ -1,0 +1,56 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "0000036719",
+  "title": "CalHEERS SDMO RFP #73040873",
+  "dept": "Office of Technology and Solutions Integration (OTSI)",
+  "description": "System Development, Maintenance & Operations (SDMO) for the California Healthcare Eligibility, Enrollment and Retention System (CalHEERS). Supports Covered California and the Department of Health Care Services (DHCS), including interfaces with the Statewide Automated Welfare Systems (SAWS) for MAGI Medi-Cal eligibility.",
+  "published_date": "2025-09-17T17:00:00-07:00",
+  "due_date": "2026-10-31T17:00:00-07:00",
+  "contact_name": "Alina Corpus",
+  "contact_email": "CalHEERSProcurement@otsi.ca.gov",
+  "contact_phone": "916-634-2905",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v12-2026-01-08-update",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 12,
+    "mandatory_bidder_conference": {
+      "date": "2025-10-15T09:30:00",
+      "location": "OTSI Headquarters, Sacramento, CA",
+      "required": true
+    },
+    "unspsc_codes": [
+      {
+        "code": "80101507",
+        "description": "Information technology consult srvcs"
+      }
+    ],
+    "amendments_noted": [
+      "Addendum 3 posted 1/7/26",
+      "Page count discrepancy update 1/8/26"
+    ],
+	"documents": [
+      {
+        "label": "Main RFP Package",
+        "url": "https://drive.google.com/file/d/1tvj5RwKM5H71zf6YIk46QuaCCVXQrzvA/view?usp=sharing",
+        "type": "rfp"
+      },
+      {
+        "label": "Supplementary Doc 1",
+        "url": "https://drive.google.com/file/d/1Mqtw3qGrpR_kZNTSPRbpvlzm-_5LQUT9/view?usp=sharing",
+        "type": "misc"
+      },
+      {
+        "label": "Supplementary Doc 2",
+        "url": "https://drive.google.com/file/d/1-PYMy7L42_1GuDtxUdovHmfHQmateQtk/view?usp=sharing",
+        "type": "misc"
+      },
+      {
+        "label": "Supplementary Doc 3",
+        "url": "https://drive.google.com/file/d/1GefovcgOUXn13nwljOMTTsVj3KvjolI1/view?usp=sharing",
+        "type": "addendum"
+      }
+	]
+  }
+}
