@@ -21,10 +21,8 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-// Source of an RFP — must match the CHECK constraint in schema.sql
-export type RfpSource = 'sam.gov' | 'cal_eprocure' | 'planetbids' | 'other'
+export type RfpSource = 'sam.gov' | 'Cal eProcure' | 'PlanetBids' | 'other'
 
-// Lifecycle status — must match the CHECK constraint in schema.sql
 export type RfpStatus =
   | 'active'
   | 'closed'
@@ -124,8 +122,12 @@ export interface Database {
           pdf_url_9: string | null
           pdf_url_10: string | null
           title: string
+          name: string | null
           description: string | null
+          statement_of_work: string | null
+          deliverables: string[]
           location: string | null
+          location_level: string | null
           state: string | null
           department: string | null
           due_date: string | null
@@ -139,9 +141,20 @@ export interface Database {
           contact_email: string | null
           contact_phone: string | null
           raw_data: Json | null
+          metadata: Json
           content_hash: string | null
           status: RfpStatus
           last_amended_at: string | null
+          pdf_url_1: string | null
+          pdf_url_2: string | null
+          pdf_url_3: string | null
+          pdf_url_4: string | null
+          pdf_url_5: string | null
+          pdf_url_6: string | null
+          pdf_url_7: string | null
+          pdf_url_8: string | null
+          pdf_url_9: string | null
+          pdf_url_10: string | null
           created_at: string
           updated_at: string
         }
@@ -161,8 +174,12 @@ export interface Database {
           pdf_url_9?: string | null
           pdf_url_10?: string | null
           title: string
+          name?: string | null
           description?: string | null
+          statement_of_work?: string | null
+          deliverables?: string[]
           location?: string | null
+          location_level?: string | null
           state?: string | null
           department?: string | null
           due_date?: string | null
@@ -176,9 +193,20 @@ export interface Database {
           contact_email?: string | null
           contact_phone?: string | null
           raw_data?: Json | null
+          metadata?: Json
           content_hash?: string | null
           status?: RfpStatus
           last_amended_at?: string | null
+          pdf_url_1?: string | null
+          pdf_url_2?: string | null
+          pdf_url_3?: string | null
+          pdf_url_4?: string | null
+          pdf_url_5?: string | null
+          pdf_url_6?: string | null
+          pdf_url_7?: string | null
+          pdf_url_8?: string | null
+          pdf_url_9?: string | null
+          pdf_url_10?: string | null
           created_at?: string
           updated_at?: string
         }
@@ -369,6 +397,10 @@ export interface Database {
           p_new_content_hash: string
         }
         Returns: string
+      }
+      drive_file_id: {
+        Args: { drive_url: string }
+        Returns: string | null
       }
     }
   }

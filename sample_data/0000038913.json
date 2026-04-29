@@ -1,0 +1,49 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "0000038913",
+  "title": "Server HW Upgrade (SuperServer E-300-14AR)",
+  "name": "Server hardware upgrade for CAL FIRE",
+  "statement_of_work": "Procure and deliver SuperServer E-300-14AR systems and associated freight services to support CAL FIRE’s hardware refresh effort.",
+  "deliverables": [
+    "Supply SuperServer E-300-14AR hardware per specification",
+    "Provide freight and handling services for delivery",
+    "Submit procurement documentation and quote details for review"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": ["Hardware", "Servers", "California", "Fire Services"],
+  "dept": "California Department of Forestry and Fire Protection (CAL FIRE)",
+  "description": "CAL FIRE is requesting quotes for SuperServer E-300-14AR hardware upgrades. Procurement includes computer servers and associated freight/handling fees.",
+  "published_date": "2026-04-16T07:42:00-07:00",
+  "due_date": "2026-04-29T12:00:00-07:00",
+  "contact_name": "Andrea Armstrong",
+  "contact_email": "andrea.armstrong@fire.ca.gov",
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-20260416-hw-upgrade",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "RFQ Main Package",
+        "url": "https://drive.google.com/file/d/1KMda7dnHmKAKaBji4kN8TshdWRwYgx97/view?usp=sharing",
+        "type": "primary_spec"
+      }
+    ],
+    "unspsc_codes": [
+      {
+        "code": "43211501",
+        "description": "Computer servers"
+      },
+      {
+        "code": "78121603",
+        "description": "Freight fee"
+      }
+    ]
+  }
+}
