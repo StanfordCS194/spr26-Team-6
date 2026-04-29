@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDashboard } from "@/context/DashboardContext";
 import { MOCK_RFPS } from "@/lib/mockData";
 
@@ -12,16 +12,19 @@ export function ProfileDrawer() {
     setProfile,
     savedRfpIds,
     selectRfp,
+    showToast,
   } = useDashboard();
+  const [draftProfile, setDraftProfile] = useState(profile);
 
   useEffect(() => {
     if (!profileOpen) return;
+    setDraftProfile(profile);
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setProfileOpen(false);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [profileOpen, setProfileOpen]);
+  }, [profileOpen, profile, setProfileOpen]);
 
   const savedRfps = savedRfpIds
     .map((id) => MOCK_RFPS.find((r) => r.id === id))
@@ -63,24 +66,39 @@ export function ProfileDrawer() {
               Industries
               <input
                 className="mt-1 w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
-                value={profile.industries}
-                onChange={(e) => setProfile({ industries: e.target.value })}
+                value={draftProfile.industries}
+                onChange={(e) =>
+                  setDraftProfile((prev) => ({
+                    ...prev,
+                    industries: e.target.value,
+                  }))
+                }
               />
             </label>
             <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400">
               Sub-industries
               <input
                 className="mt-1 w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
-                value={profile.subIndustries}
-                onChange={(e) => setProfile({ subIndustries: e.target.value })}
+                value={draftProfile.subIndustries}
+                onChange={(e) =>
+                  setDraftProfile((prev) => ({
+                    ...prev,
+                    subIndustries: e.target.value,
+                  }))
+                }
               />
             </label>
             <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400">
               Goals
               <input
                 className="mt-1 w-full rounded-lg border border-zinc-200 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
-                value={profile.goals}
-                onChange={(e) => setProfile({ goals: e.target.value })}
+                value={draftProfile.goals}
+                onChange={(e) =>
+                  setDraftProfile((prev) => ({
+                    ...prev,
+                    goals: e.target.value,
+                  }))
+                }
               />
             </label>
             <label className="block text-xs font-medium text-zinc-500 dark:text-zinc-400">
@@ -88,12 +106,27 @@ export function ProfileDrawer() {
               <textarea
                 rows={4}
                 className="mt-1 w-full resize-y rounded-lg border border-zinc-200 px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
-                value={profile.pastExperience}
+                value={draftProfile.pastExperience}
                 onChange={(e) =>
-                  setProfile({ pastExperience: e.target.value })
+                  setDraftProfile((prev) => ({
+                    ...prev,
+                    pastExperience: e.target.value,
+                  }))
                 }
               />
             </label>
+            <div className="mt-4 flex justify-end">
+              <button
+                type="button"
+                onClick={() => {
+                  setProfile(draftProfile);
+                  showToast("Profile saved.");
+                }}
+                className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-400"
+              >
+                Save My Information
+              </button>
+            </div>
           </section>
 
           <section className="mt-8">
