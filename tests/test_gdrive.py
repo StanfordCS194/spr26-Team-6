@@ -11,7 +11,7 @@ from reportlab.pdfgen import canvas
 # 1. Add the project root to sys.path to locate the 'scraper' package
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from scraper.gdrive_interface import create_drive_folder, upload_and_get_pdf_link
+from scraper.gdrive_interface import create_drive_folder, upload_and_get_pdf_link, remove_from_drive
 
 # Creates a temporary PDF file with the given filename and content.
 def create_pdf(filename, content):
@@ -67,10 +67,36 @@ def run_test():
         print(f"\nAN ERROR OCCURRED: {e}")
     
     finally:
-        # 6. Cleanup dummy file
+        # 6. Cleanup local dummy file after prompting user for command line confirmation
         if os.path.exists(test_pdf_path):
-            os.remove(test_pdf_path)
-            print("\nCleaned up local test file.")
+            confirm = input(
+                "\nDelete the local file? [y/N]: "
+            ).strip().lower()
+
+            if confirm == "y":
+                try:
+                    os.remove(test_pdf_path)
+                    print("Cleaned up local test file.")
+                except Exception as e:
+                    print(f"Could not delete test file: {e}")
+            else:
+                print(f"Keeping local test file for manual review.")
+
+        # 7. Cleanup Drive dummy file and folder after prompting user for command line confirmation
+        if fid:
+            confirm = input(
+                "\nVerify the file uploaded correctly in Drive. "
+                "Delete the Drive folder and file? [y/N]: "
+            ).strip().lower()
+
+            if confirm == "y":
+                try:
+                    remove_from_drive(fid)
+                    print("Cleaned up Drive test folder and file.")
+                except Exception as e:
+                    print(f"Could not delete Drive folder {fid}: {e}")
+            else:
+                print(f"Keeping Drive test folder for manual review (ID: {fid}).")
 
 if __name__ == "__main__":
     run_test()

@@ -111,3 +111,11 @@ def upload_and_get_pdf_link(file_path, folder_id=None, credentials_path=None, to
 
     # 3. Get the sharing link
     return file.get('webViewLink')
+
+# Remove a Drive folder or file based on its ID
+def remove_from_drive(id, credentials_path=None, token_path=None):
+    service = get_drive_service(credentials_path=credentials_path, token_path=token_path)
+    
+    # If the target ID is a folder, all contents are recursively deleted
+    service.files().delete(fileId=id).execute()
+    print(f"Drive object removed: {id}")
