@@ -4,7 +4,7 @@
 // Hand-written to match the migrations. After running migrations you can
 // regenerate this from the live DB with:
 //
-//   supabase gen types typescript --project-id <id> --schema public > lib/database.types.ts
+//   supabase gen types typescript --project-id <id> --schema public > web/lib/database.types.ts
 //
 // Then import the typed client in your Next.js app:
 //
@@ -21,10 +21,8 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-// Source of an RFP — must match the CHECK constraint in schema.sql
-export type RfpSource = 'sam.gov' | 'cal_eprocure' | 'planetbids' | 'other'
+export type RfpSource = 'sam.gov' | 'Cal eProcure' | 'PlanetBids' | 'other'
 
-// Lifecycle status — must match the CHECK constraint in schema.sql
 export type RfpStatus =
   | 'active'
   | 'closed'
@@ -69,6 +67,7 @@ export interface Database {
           updated_at?: string
         }
         Update: Partial<Database['public']['Tables']['contractors']['Insert']>
+        Relationships: []
       }
 
       contractor_past_projects: {
@@ -103,6 +102,7 @@ export interface Database {
         Update: Partial<
           Database['public']['Tables']['contractor_past_projects']['Insert']
         >
+        Relationships: []
       }
 
       rfps: {
@@ -112,8 +112,12 @@ export interface Database {
           external_id: string
           url: string | null
           title: string
+          name: string | null
           description: string | null
+          statement_of_work: string | null
+          deliverables: string[]
           location: string | null
+          location_level: string | null
           state: string | null
           department: string | null
           due_date: string | null
@@ -127,9 +131,20 @@ export interface Database {
           contact_email: string | null
           contact_phone: string | null
           raw_data: Json | null
+          metadata: Json
           content_hash: string | null
           status: RfpStatus
           last_amended_at: string | null
+          pdf_url_1: string | null
+          pdf_url_2: string | null
+          pdf_url_3: string | null
+          pdf_url_4: string | null
+          pdf_url_5: string | null
+          pdf_url_6: string | null
+          pdf_url_7: string | null
+          pdf_url_8: string | null
+          pdf_url_9: string | null
+          pdf_url_10: string | null
           created_at: string
           updated_at: string
         }
@@ -139,8 +154,12 @@ export interface Database {
           external_id: string
           url?: string | null
           title: string
+          name?: string | null
           description?: string | null
+          statement_of_work?: string | null
+          deliverables?: string[]
           location?: string | null
+          location_level?: string | null
           state?: string | null
           department?: string | null
           due_date?: string | null
@@ -154,13 +173,25 @@ export interface Database {
           contact_email?: string | null
           contact_phone?: string | null
           raw_data?: Json | null
+          metadata?: Json
           content_hash?: string | null
           status?: RfpStatus
           last_amended_at?: string | null
+          pdf_url_1?: string | null
+          pdf_url_2?: string | null
+          pdf_url_3?: string | null
+          pdf_url_4?: string | null
+          pdf_url_5?: string | null
+          pdf_url_6?: string | null
+          pdf_url_7?: string | null
+          pdf_url_8?: string | null
+          pdf_url_9?: string | null
+          pdf_url_10?: string | null
           created_at?: string
           updated_at?: string
         }
         Update: Partial<Database['public']['Tables']['rfps']['Insert']>
+        Relationships: []
       }
 
       rfp_chunks: {
@@ -183,6 +214,7 @@ export interface Database {
           created_at?: string
         }
         Update: Partial<Database['public']['Tables']['rfp_chunks']['Insert']>
+        Relationships: []
       }
 
       rfp_amendments: {
@@ -205,6 +237,7 @@ export interface Database {
         Update: Partial<
           Database['public']['Tables']['rfp_amendments']['Insert']
         >
+        Relationships: []
       }
 
       saved_rfps: {
@@ -221,6 +254,7 @@ export interface Database {
           saved_at?: string
         }
         Update: Partial<Database['public']['Tables']['saved_rfps']['Insert']>
+        Relationships: []
       }
 
       scores: {
@@ -245,6 +279,7 @@ export interface Database {
           computed_at?: string
         }
         Update: Partial<Database['public']['Tables']['scores']['Insert']>
+        Relationships: []
       }
 
       rfp_summaries: {
@@ -269,6 +304,7 @@ export interface Database {
         Update: Partial<
           Database['public']['Tables']['rfp_summaries']['Insert']
         >
+        Relationships: []
       }
 
       department_aliases: {
@@ -287,8 +323,11 @@ export interface Database {
         Update: Partial<
           Database['public']['Tables']['department_aliases']['Insert']
         >
+        Relationships: []
       }
     }
+
+    Views: Record<string, never>
 
     Functions: {
       match_rfp_chunks: {
@@ -338,6 +377,10 @@ export interface Database {
           p_new_content_hash: string
         }
         Returns: string
+      }
+      drive_file_id: {
+        Args: { drive_url: string }
+        Returns: string | null
       }
     }
   }

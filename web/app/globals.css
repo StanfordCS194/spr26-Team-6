@@ -2,26 +2,70 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --govbid-surface: #ffffff;
+  --govbid-shell: #ffffff;
+  --govbid-elevated: #fafafc;
+  --govbid-border: #f0eef6;
+  --govbid-border-strong: #e6e2ef;
+  --govbid-primary: #4f46e5;
+  --govbid-primary-hover: #4338ca;
+  --govbid-primary-muted: #eef2ff;
+  --govbid-primary-soft: #f5f5ff;
+  --govbid-text: #1e1b4b;
+  --govbid-text-muted: #64748b;
+  --govbid-amber: #d97706;
+  --govbid-amber-bg: #fffbeb;
+  --govbid-overlay: rgb(30 27 75 / 0.45);
+  --govbid-shadow: 0 1px 2px rgb(30 27 75 / 0.04);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --color-govbid-surface: var(--govbid-surface);
+  --color-govbid-shell: var(--govbid-shell);
+  --color-govbid-elevated: var(--govbid-elevated);
+  --color-govbid-border: var(--govbid-border);
+  --color-govbid-border-strong: var(--govbid-border-strong);
+  --color-govbid-primary: var(--govbid-primary);
+  --color-govbid-primary-hover: var(--govbid-primary-hover);
+  --color-govbid-primary-muted: var(--govbid-primary-muted);
+  --color-govbid-primary-soft: var(--govbid-primary-soft);
+  --color-govbid-text: var(--govbid-text);
+  --color-govbid-text-muted: var(--govbid-text-muted);
+  --color-govbid-amber: var(--govbid-amber);
+  --color-govbid-amber-bg: var(--govbid-amber-bg);
+  --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono);
+  --shadow-govbid-shell: var(--govbid-shadow);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  height: 100%;
+  min-height: 100dvh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background: var(--govbid-surface);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  min-height: 100dvh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background: var(--govbid-surface);
+  color: var(--govbid-text);
+  font-family: var(--font-sans);
+}
+
+.govbid-btn-primary {
+  color: #ffffff;
+  font-weight: 600;
+  background-color: var(--govbid-primary);
+  transition: background-color 0.15s ease;
+}
+
+.govbid-btn-primary:hover {
+  background-color: var(--govbid-primary-hover);
 }

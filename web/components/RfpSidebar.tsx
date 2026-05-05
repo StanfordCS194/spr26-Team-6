@@ -1,12 +1,34 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {
+  startTransition,
+  useEffect,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from "react";
 import { useDashboard } from "@/context/DashboardContext";
-import { RfpCard } from "./RfpCard";
-import { MOCK_RFPS } from "@/lib/mockData";
+
+function FunnelIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+      <path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z" />
+    </svg>
+  );
+}
+
+function SearchIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+      <circle cx="11" cy="11" r="7" />
+      <path d="m21 21-4.3-4.3" />
+    </svg>
+  );
+}
 
 export function RfpSidebar() {
-  const { filteredRfps, selectedRfpId, selectRfp, rfpFilter, setRfpFilter } = useDashboard();
+  const { searchQuery, setSearchQuery, rfpFilter, setRfpFilter, loadedRfps } =
+    useDashboard();
   const [draftFilter, setDraftFilter] = useState({
     tag: rfpFilter.tag ?? "",
     dateFrom: rfpFilter.dateFrom ?? "",
@@ -16,28 +38,28 @@ export function RfpSidebar() {
   });
 
   useEffect(() => {
-    setDraftFilter({
-      tag: rfpFilter.tag ?? "",
-      dateFrom: rfpFilter.dateFrom ?? "",
-      dateTo: rfpFilter.dateTo ?? "",
-      priceMin: rfpFilter.priceMin?.toString() ?? "",
-      priceMax: rfpFilter.priceMax?.toString() ?? "",
+    startTransition(() => {
+      setDraftFilter({
+        tag: rfpFilter.tag ?? "",
+        dateFrom: rfpFilter.dateFrom ?? "",
+        dateTo: rfpFilter.dateTo ?? "",
+        priceMin: rfpFilter.priceMin?.toString() ?? "",
+        priceMax: rfpFilter.priceMax?.toString() ?? "",
+      });
     });
   }, [rfpFilter]);
 
-  const allTags = Array.from(new Set(MOCK_RFPS.flatMap((rfp) => rfp.tags))).sort();
+  const allTags = Array.from(
+    new Set(loadedRfps.flatMap((rfp) => rfp.tags)),
+  ).sort();
 
   const applyFilter = () => {
     setRfpFilter({
       tag: draftFilter.tag || undefined,
       dateFrom: draftFilter.dateFrom || undefined,
       dateTo: draftFilter.dateTo || undefined,
-      priceMin: draftFilter.priceMin
-        ? Number(draftFilter.priceMin)
-        : undefined,
-      priceMax: draftFilter.priceMax
-        ? Number(draftFilter.priceMax)
-        : undefined,
+      priceMin: draftFilter.priceMin ? Number(draftFilter.priceMin) : undefined,
+      priceMax: draftFilter.priceMax ? Number(draftFilter.priceMax) : undefined,
     });
   };
 
@@ -46,144 +68,201 @@ export function RfpSidebar() {
     setRfpFilter({});
   };
 
+  const inputClass =
+    "mt-1.5 w-full rounded-lg border border-govbid-border bg-govbid-surface px-3 py-2 text-sm text-govbid-text outline-none transition placeholder:text-govbid-text-muted focus:border-govbid-primary focus:outline focus:outline-2 focus:outline-offset-0 focus:outline-govbid-primary";
+
   return (
-    <aside className="flex min-h-0 flex-col border-r border-zinc-200 bg-zinc-50/80 dark:border-zinc-800 dark:bg-zinc-950/50">
-      <div className="border-b border-zinc-200 px-4 py-3 dark:border-zinc-800">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
-              Recommended RFPs
-            </h2>
-            <p className="mt-0.5 text-xs text-zinc-500 dark:text-zinc-400">
-              Mock data — wire to SAM.gov + scoring pipeline later.
-            </p>
-          </div>
+    <aside className="flex w-full shrink-0 flex-col gap-4 border-b border-govbid-border/60 bg-govbid-surface p-4 lg:w-[280px] lg:border-b-0 lg:p-5">
+      <details className="group rounded-xl lg:hidden" open>
+        <summary className="cursor-pointer list-none rounded-lg border border-govbid-border bg-govbid-surface px-3 py-2 text-sm font-semibold text-govbid-text [&::-webkit-details-marker]:hidden">
+          <span className="flex items-center justify-between gap-2">
+            Search &amp; filters
+            <span className="text-govbid-text-muted group-open:rotate-180">▼</span>
+          </span>
+        </summary>
+        <div className="mt-3 space-y-4">
+          <SearchCardBody
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            draftFilter={draftFilter}
+            setDraftFilter={setDraftFilter}
+            allTags={allTags}
+            applyFilter={applyFilter}
+            clearFilter={clearFilter}
+            inputClass={inputClass}
+          />
         </div>
-        <details className="group mt-4 rounded-2xl border border-zinc-200 bg-white p-3 shadow-sm transition hover:border-zinc-300 dark:border-zinc-800 dark:bg-zinc-950/95">
-          <summary className="flex cursor-pointer items-center justify-between text-sm font-semibold text-zinc-900 dark:text-zinc-50">
-            Sort By
-            <span className="text-xs text-zinc-500 dark:text-zinc-400">Choose topic, dates, or price</span>
-          </summary>
-          <div className="mt-4 space-y-3">
-            <div>
-              <label className="text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                Topic tag
-              </label>
-              <select
-                value={draftFilter.tag}
-                onChange={(event) =>
-                  setDraftFilter((prev) => ({ ...prev, tag: event.target.value }))
-                }
-                className="mt-2 w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
-              >
-                <option value="">Any</option>
-                {allTags.map((tag) => (
-                  <option key={tag} value={tag}>
-                    {tag}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <label className="text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                Due date from
-                <input
-                  type="date"
-                  value={draftFilter.dateFrom}
-                  onChange={(event) =>
-                    setDraftFilter((prev) => ({
-                      ...prev,
-                      dateFrom: event.target.value,
-                    }))
-                  }
-                  className="mt-2 w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
-                />
-              </label>
-              <label className="text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                Due date to
-                <input
-                  type="date"
-                  value={draftFilter.dateTo}
-                  onChange={(event) =>
-                    setDraftFilter((prev) => ({
-                      ...prev,
-                      dateTo: event.target.value,
-                    }))
-                  }
-                  className="mt-2 w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
-                />
-              </label>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <label className="text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                Minimum price ($)
-                <input
-                  type="number"
-                  min={0}
-                  value={draftFilter.priceMin}
-                  onChange={(event) =>
-                    setDraftFilter((prev) => ({
-                      ...prev,
-                      priceMin: event.target.value,
-                    }))
-                  }
-                  placeholder="0"
-                  className="mt-2 w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
-                />
-              </label>
-              <label className="text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-                Maximum price ($)
-                <input
-                  type="number"
-                  min={0}
-                  value={draftFilter.priceMax}
-                  onChange={(event) =>
-                    setDraftFilter((prev) => ({
-                      ...prev,
-                      priceMax: event.target.value,
-                    }))
-                  }
-                  placeholder="Any"
-                  className="mt-2 w-full rounded-lg border border-zinc-200 bg-white px-3 py-2 text-sm dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100"
-                />
-              </label>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              <button
-                type="button"
-                onClick={applyFilter}
-                className="rounded-lg bg-emerald-600 px-3 py-2 text-sm font-semibold text-white hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-400"
-              >
-                Apply
-              </button>
-              <button
-                type="button"
-                onClick={clearFilter}
-                className="rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm font-semibold text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
-              >
-                Clear
-              </button>
-            </div>
-          </div>
-        </details>
-      </div>
-      <div className="min-h-0 flex-1 overflow-y-auto p-3">
-        <div className="flex flex-col gap-2">
-          {filteredRfps.map((rfp) => (
-            <RfpCard
-              key={rfp.id}
-              rfp={rfp}
-              active={selectedRfpId === rfp.id}
-              onSelect={() => selectRfp(rfp.id)}
-            />
-          ))}
-          {filteredRfps.length === 0 && (
-            <p className="px-1 text-sm text-zinc-500 dark:text-zinc-400">
-              No RFPs match your search.
-            </p>
-          )}
+      </details>
+
+      <div className="hidden rounded-xl border border-govbid-border bg-govbid-surface p-4 lg:block">
+        <div className="mb-4 flex items-center gap-2 text-sm font-semibold text-govbid-text">
+          <FunnelIcon />
+          Search
         </div>
+        <SearchCardBody
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          draftFilter={draftFilter}
+          setDraftFilter={setDraftFilter}
+          allTags={allTags}
+          applyFilter={applyFilter}
+          clearFilter={clearFilter}
+          inputClass={inputClass}
+        />
       </div>
     </aside>
+  );
+}
+
+function SearchCardBody({
+  searchQuery,
+  setSearchQuery,
+  draftFilter,
+  setDraftFilter,
+  allTags,
+  applyFilter,
+  clearFilter,
+  inputClass,
+}: {
+  searchQuery: string;
+  setSearchQuery: (q: string) => void;
+  draftFilter: {
+    tag: string;
+    dateFrom: string;
+    dateTo: string;
+    priceMin: string;
+    priceMax: string;
+  };
+  setDraftFilter: Dispatch<
+    SetStateAction<{
+      tag: string;
+      dateFrom: string;
+      dateTo: string;
+      priceMin: string;
+      priceMax: string;
+    }>
+  >;
+  allTags: string[];
+  applyFilter: () => void;
+  clearFilter: () => void;
+  inputClass: string;
+}) {
+  return (
+    <div className="space-y-4">
+      <label className="block text-xs font-medium text-govbid-text-muted">
+        <span className="flex items-center gap-1.5 text-govbid-text">
+          <SearchIcon />
+          Keyword
+        </span>
+        <input
+          type="search"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Title, agency, tags…"
+          className={inputClass}
+        />
+      </label>
+
+      <div>
+        <label className="text-xs font-medium text-govbid-text-muted">Topic tag</label>
+        <select
+          value={draftFilter.tag}
+          onChange={(event) =>
+            setDraftFilter((prev) => ({ ...prev, tag: event.target.value }))
+          }
+          className={inputClass}
+        >
+          <option value="">Any</option>
+          {allTags.map((tag) => (
+            <option key={tag} value={tag}>
+              {tag}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+        <label className="block text-xs font-medium text-govbid-text-muted">
+          Due from
+          <input
+            type="date"
+            value={draftFilter.dateFrom}
+            onChange={(event) =>
+              setDraftFilter((prev) => ({
+                ...prev,
+                dateFrom: event.target.value,
+              }))
+            }
+            className={inputClass}
+          />
+        </label>
+        <label className="block text-xs font-medium text-govbid-text-muted">
+          Due to
+          <input
+            type="date"
+            value={draftFilter.dateTo}
+            onChange={(event) =>
+              setDraftFilter((prev) => ({
+                ...prev,
+                dateTo: event.target.value,
+              }))
+            }
+            className={inputClass}
+          />
+        </label>
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+        <label className="block text-xs font-medium text-govbid-text-muted">
+          Min price ($)
+          <input
+            type="number"
+            min={0}
+            value={draftFilter.priceMin}
+            onChange={(event) =>
+              setDraftFilter((prev) => ({
+                ...prev,
+                priceMin: event.target.value,
+              }))
+            }
+            placeholder="0"
+            className={inputClass}
+          />
+        </label>
+        <label className="block text-xs font-medium text-govbid-text-muted">
+          Max price ($)
+          <input
+            type="number"
+            min={0}
+            value={draftFilter.priceMax}
+            onChange={(event) =>
+              setDraftFilter((prev) => ({
+                ...prev,
+                priceMax: event.target.value,
+              }))
+            }
+            placeholder="Any"
+            className={inputClass}
+          />
+        </label>
+      </div>
+
+      <div className="flex flex-wrap gap-2 pt-1">
+        <button
+          type="button"
+          onClick={applyFilter}
+          className="govbid-btn-primary rounded-lg px-4 py-2 text-sm"
+        >
+          Apply
+        </button>
+        <button
+          type="button"
+          onClick={clearFilter}
+          className="rounded-lg border border-govbid-border bg-govbid-surface px-4 py-2 text-sm font-semibold text-govbid-text transition hover:bg-govbid-primary-muted/40"
+        >
+          Clear
+        </button>
+      </div>
+    </div>
   );
 }
