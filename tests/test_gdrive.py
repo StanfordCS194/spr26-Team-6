@@ -1,7 +1,6 @@
 """ 
 This test is intended to be run manually to verify the gdrive_interface pipeline is working as expected.
 Run with: python -m tests.test_gdrive
-NOTE: this test does NOT clean up the test folder or file after completion because these are not functionalities needed by the actual GovBid gdrive_interface pipeline.
 """
 
 import os
