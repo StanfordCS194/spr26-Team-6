@@ -105,4 +105,4 @@ def upload_and_get_pdf_link(file_path, folder_id=None, credentials_path=None, to
     ).execute()
 
     # 3. Get the sharing link
-    return file_info.get('webViewLink')
+    return file.get('webViewLink')
