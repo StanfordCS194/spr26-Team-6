@@ -47,7 +47,7 @@ export function RfpFeed() {
   }
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto bg-govbid-surface p-4 lg:gap-4 lg:p-5">
+    <div id="rfp-feed" className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto bg-govbid-surface p-4 lg:gap-4 lg:p-5">
       {feedRfps.map((rfp) => (
         <RfpCard
           key={rfp.id}

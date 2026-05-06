@@ -64,6 +64,10 @@ type DashboardContextValue = {
   tryLoadCachedSummary: (rfpId: string) => Promise<boolean>;
   profileOpen: boolean;
   setProfileOpen: (open: boolean) => void;
+  walkthroughActive: boolean;
+  setWalkthroughActive: (active: boolean) => void;
+  walkthroughStep: number;
+  setWalkthroughStep: (step: number) => void;
   toast: string | null;
   showToast: (message: string) => void;
   rfpFilter: RfpFilter;
@@ -84,6 +88,8 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     defaultContractorProfile,
   );
   const [profileOpen, setProfileOpen] = useState(false);
+  const [walkthroughActive, setWalkthroughActive] = useState(false);
+  const [walkthroughStep, setWalkthroughStep] = useState(0);
   const [rfpFilter, setRfpFilter] = useState<RfpFilter>({});
   const [toast, setToast] = useState<string | null>(null);
   const [activeNav, setActiveNav] = useState<ActiveNav>("dashboard");
@@ -445,6 +451,10 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       tryLoadCachedSummary,
       profileOpen,
       setProfileOpen,
+      walkthroughActive,
+      setWalkthroughActive,
+      walkthroughStep,
+      setWalkthroughStep,
       toast,
       showToast,
       rfpFilter,
@@ -469,6 +479,8 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       saveProfile,
       tryLoadCachedSummary,
       profileOpen,
+      walkthroughActive,
+      walkthroughStep,
       toast,
       showToast,
       rfpFilter,

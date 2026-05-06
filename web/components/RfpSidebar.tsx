@@ -155,6 +155,7 @@ function SearchCardBody({
           Keyword
         </span>
         <input
+          id="search-bar"
           type="search"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
@@ -166,6 +167,7 @@ function SearchCardBody({
       <div>
         <label className="text-xs font-medium text-govbid-text-muted">Topic tag</label>
         <select
+          id="filter-button"
           value={draftFilter.tag}
           onChange={(event) =>
             setDraftFilter((prev) => ({ ...prev, tag: event.target.value }))
