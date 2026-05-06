@@ -4,26 +4,37 @@ It is used to search for technology-related contracts.
 
 Step 1: search events by technology keywords and fuzzy-match against Event Name.
 Step 2: open each candidate result and scrape only those whose UNSPSC codes look technology-related.
+
+See test/test_caleprocure.py for unit test.
+Alternative: run the following in terminal
+conda run -n cs194w python -c "
+from scraper.caleprocure_interface import CalEProcureInterface
+client = CalEProcureInterface(timeout_seconds=30)
+
+candidates = client.fuzzy_search_candidates(keywords=['software'], allow_browser_fallback=True)
+filtered = client.unspsc_filter_search(candidates, include_probe_metadata=True)
+
+print('Step1 candidates:', len(candidates))
+print('Step2 filtered:', len(filtered))
+for e in filtered[:10]:
+    print('-', e.result.event_name, '|', e.extraction_strategy, '|', len(e.unspsc_codes), 'unspsc')
+"
 """
 
 from __future__ import annotations
 from dataclasses import dataclass, field
 from difflib import SequenceMatcher
-import json
 from html import unescape
 from html.parser import HTMLParser
-import re
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 from urllib.parse import urljoin
 import requests
+import re
+import json
 
 SEARCH_URL = "https://caleprocure.ca.gov/pages/Events-BS3/event-search.aspx"
 EVENT_BASE_URL = "https://caleprocure.ca.gov/"
 DEFAULT_SEARCH_BUSINESS_UNIT = "BS3"
-
-_BU_MATCH = re.search(r"Events-([A-Za-z0-9]+)", SEARCH_URL)
-if _BU_MATCH:
-    DEFAULT_SEARCH_BUSINESS_UNIT = _BU_MATCH.group(1)
 
 # Tech/IT/telecommunications keywords (heuristics) for fuzzy search
 DEFAULT_TECH_KEYWORDS = [
@@ -53,6 +64,7 @@ DEFAULT_TECH_KEYWORDS = [
 
 # Conservative UNSPSC families frequently used for technology procurement
 # See: https://www.ungm.org/public/unspsc 
+# For pruning the results of the fuzzy/heuristic-based search
 TECH_UNSPSC_PREFIXES = (
     "43",       # Information technology broadcasting and telecommunications
     "8111",     # Profession engineering services: computer services
@@ -63,6 +75,8 @@ TECH_UNSPSC_PREFIXES = (
                 # Note: 831215 is Information services: libraries
 )
 
+# Fallback for fuzzy search pruning
+# It's possible a contract doesn't have a "valid" UNSPSC code but is still tech-related
 TECH_UNSPSC_DESCRIPTION_HINTS = (
     "software",
     "computer",
@@ -79,6 +93,8 @@ TECH_UNSPSC_DESCRIPTION_HINTS = (
     "information technology",
 )
 
+# Data classes for CaleProcure search results, UNSPSC codes, and events that satisfy both 
+# the fuzzy search and the UNSPSC code pruning
 @dataclass(frozen=True)
 class SearchResult:
     external_id: Optional[str]
@@ -96,7 +112,7 @@ class FilteredEvent:
     unspsc_codes: List[UnspscCode] = field(default_factory=list)
     extraction_strategy: str = "text_fallback"
 
-# Extracts event detail links/titles from search results HTML.
+# Class that walks anchor tags in search result HTML and looks for events (contracts) or links
 class _SearchResultsParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
@@ -116,7 +132,7 @@ class _SearchResultsParser(HTMLParser):
 
         lowered = href.lower()
         # The header/nav can include many links containing "event"
-        # (e.g. the search page itself). We only want actual event details.
+        # (e.g. the search page itself) --> we only want actual event details
         if ("/event/" not in lowered) and ("auc_id" not in lowered):
             return
 
@@ -150,8 +166,7 @@ class _SearchResultsParser(HTMLParser):
             )
         )
 
-
-# Extracts likely UNSPSC code + description pairs from event detail HTML.
+# Extracts likely UNSPSC code + description pairs from event detail HTML
 class _UnspscParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
@@ -166,11 +181,11 @@ class _UnspscParser(HTMLParser):
     def text(self) -> str:
         return " ".join(self._buffer)
 
-
+# Lowercase a string and change all whitespace to single spaces for consistency
 def _normalize(value: str) -> str:
     return " ".join(value.lower().split())
 
-
+# Extracts the event ID from the event name or URL
 def _extract_external_id(event_name: str, detail_url: str) -> Optional[str]:
     for token in event_name.split():
         if token.isdigit() and len(token) >= 6:
@@ -182,7 +197,9 @@ def _extract_external_id(event_name: str, detail_url: str) -> Optional[str]:
 
     return None
 
-
+# Scores how well an event name matches any keyword in the list of keywords
+# Default list of keywords is DEFAULT_TECH_KEYWORDS
+# Returns 1.0 for an exact match, otherwise uses python SequenceMatcher
 def _best_keyword_similarity(event_name: str, keywords: Iterable[str]) -> float:
     normalized_name = _normalize(event_name)
     if not normalized_name:
@@ -199,7 +216,7 @@ def _best_keyword_similarity(event_name: str, keywords: Iterable[str]) -> float:
         best = max(best, score)
     return best
 
-
+# Determines if a UNSPSC code is relevant by checking against TECH_UNSPSC_PREFIXES
 def is_tech_unspsc(code: str, description: str) -> bool:
     compact = "".join(ch for ch in code if ch.isdigit())
     normalized_desc = _normalize(description)
@@ -210,12 +227,13 @@ def is_tech_unspsc(code: str, description: str) -> bool:
         return True
     return False
 
-
+# Start parsing search result HTML via _SearchResultsParser
+# But if that fails, uses _parse_search_results_from_grid
 def parse_search_results(html: str) -> List[SearchResult]:
     parser = _SearchResultsParser()
     parser.feed(html)
 
-    # Deduplicate by URL while preserving order.
+    # Deduplicate by URL while preserving order
     seen = set()
     deduped: List[SearchResult] = []
     for row in parser.rows:
@@ -225,14 +243,15 @@ def parse_search_results(html: str) -> List[SearchResult]:
         deduped.append(row)
 
     # The event search page often renders results into a PeopleSoft grid
-    # where event IDs/names are present but detail links don't have real hrefs.
-    # If anchor-based parsing found nothing, try grid-cell parsing.
+    # where event IDs/names are present but detail links don't have real hrefs
+    # If anchor-based parsing found nothing, try grid-cell parsing
     if deduped:
         return deduped
 
     return _parse_search_results_from_grid(html)
 
-
+# Handles PeopleSoft grid HTML where results are in clickable rows
+# Looks for Event IDs and Event Names
 class _EventGridParser(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
@@ -304,17 +323,17 @@ class _EventGridParser(HTMLParser):
                     )
                 )
 
-        # Reset capture for the current td.
+        # Reset capture for the current td
         self.capture = None
         self._cell_text_parts = []
 
-
+# Naively tries to extract an UNSPSC code by scanning for 8-digit codes
 def extract_unspsc_codes(detail_html: str) -> List[UnspscCode]:
     parser = _UnspscParser()
     parser.feed(detail_html)
     text = parser.text
 
-    # Lightweight extraction: scan tokens and pair 8-digit codes with nearby text.
+    # Lightweight extraction: scan tokens and pair 8-digit codes with nearby text
     tokens = text.split()
     out: List[UnspscCode] = []
     seen = set()
@@ -323,7 +342,7 @@ def extract_unspsc_codes(detail_html: str) -> List[UnspscCode]:
         if len(digits) != 8:
             continue
 
-        # Use a short right context as description candidate.
+        # Use a short right context as description candidate
         right = tokens[idx + 1 : idx + 9]
         description = " ".join(right).strip(" -:;,")
         description = description[:120].strip()
@@ -335,12 +354,13 @@ def extract_unspsc_codes(detail_html: str) -> List[UnspscCode]:
 
     return out
 
-
+# Fallback parser using _EventGridParser for PeopleSoft-style grid layouts
+# where event links don't carry real hrefs
 def _parse_search_results_from_grid(html: str) -> List[SearchResult]:
     parser = _EventGridParser()
     parser.feed(html)
 
-    # Deduplicate by detail_url while preserving order.
+    # Deduplicate by detail_url while preserving order
     seen = set()
     deduped: List[SearchResult] = []
     for row in parser.rows:
@@ -350,9 +370,8 @@ def _parse_search_results_from_grid(html: str) -> List[SearchResult]:
         deduped.append(row)
     return deduped
 
-
+# Parses a JSON payload to find UNSPSC codes and their descriptions from PeopleSoft format
 def _extract_unspsc_from_capture_results(capture_results: Dict[str, Any]) -> List[UnspscCode]:
-    """Extract UNSPSC entries from NLX/PeopleSoft CaptureResults payload."""
     rows = capture_results.get("unspscCodeBody", [])
     out: List[UnspscCode] = []
     seen = set()
@@ -376,7 +395,8 @@ def _extract_unspsc_from_capture_results(capture_results: Dict[str, Any]) -> Lis
 
     return out
 
-
+# Pulls the first non-empty text property from a list of capture entry objects
+# Helper function for _extract_unspsc_from_capture_results
 def _first_capture_text(entries: Any) -> str:
     if not isinstance(entries, list):
         return ""
@@ -387,12 +407,8 @@ def _first_capture_text(entries: Any) -> str:
             return text.strip()
     return ""
 
-
+# Finds a JSON object containing some key within raw JS strings
 def _extract_json_object_after_key(raw: str, key: str) -> Optional[Dict[str, Any]]:
-    """
-    Find a JSON object assigned to a key in inline JS, e.g.:
-    `something = {"CaptureResults": {...}}` or `{"CaptureResults": {...}}`.
-    """
     needle = f'"{key}"'
     idx = raw.find(needle)
     if idx == -1:
@@ -432,11 +448,8 @@ def _extract_json_object_after_key(raw: str, key: str) -> Optional[Dict[str, Any
                     return None
     return None
 
-
+# Parse embedded script payloads and return CaptureResults when present
 def _extract_embedded_capture_results_from_html(detail_html: str) -> Optional[Dict[str, Any]]:
-    """
-    Parse embedded script payloads and return CaptureResults when present.
-    """
     script_chunks = re.findall(
         r"<script[^>]*>(.*?)</script>",
         detail_html,
@@ -450,10 +463,9 @@ def _extract_embedded_capture_results_from_html(detail_html: str) -> Optional[Di
             return parsed["CaptureResults"]
     return None
 
-
+# HTTP-backed class that interfaces with CaleProcure to scrape events (contracts)
+# that satisfy both a fuzzy search of tech-related keywords and have tech-related UNSPSC codes
 class CalEProcureInterface:
-    """HTTP-backed helper for Step 1 and Step 2 of the scraper workflow."""
-
     def __init__(self, timeout_seconds: int = 30) -> None:
         self.timeout_seconds = timeout_seconds
         self.session = requests.Session()
@@ -475,8 +487,8 @@ class CalEProcureInterface:
         )
         self._session_primed = False
 
+    # Warm up anti-bot/cookies before search requests
     def _prime_session(self) -> None:
-        """Warm up anti-bot/session cookies before search requests."""
         if self._session_primed:
             return
         bootstrap_urls = [
@@ -492,6 +504,9 @@ class CalEProcureInterface:
                 continue
         self._session_primed = True
 
+    # This typically won't work because CaleProcure uses dynamic loading
+    # But good to have in case the website ever changes structure
+    # See the next function (search_with_browser_html) for the fallback approach
     def search_raw_html(self, keyword: str) -> str:
         self._prime_session()
         attempts = [
@@ -534,20 +549,14 @@ class CalEProcureInterface:
             f"Unable to query Cal eProcure search endpoint for keyword '{keyword}'."
         )
 
+    # Browser fallback for JS-render pages, using playwright
     def _search_with_browser_html(self, keyword: str) -> str:
-        """
-        Browser fallback for JS-rendered pages.
-        Requires:
-          pip install playwright
-          python -m playwright install chromium
-        """
         try:
             from playwright.sync_api import sync_playwright
         except ImportError as exc:
             raise RuntimeError(
                 "Playwright is required for browser fallback. "
-                "Install with `pip install playwright` and "
-                "`python -m playwright install chromium`."
+                "Install with `pip install playwright` and `python -m playwright install chromium`."
             ) from exc
 
         with sync_playwright() as p:
@@ -561,11 +570,11 @@ class CalEProcureInterface:
             page.wait_for_timeout(2_000)
 
             # If we landed on the generic portal, click through to the CSCR app
-            # ("Find Bid Opportunities (CSCR)") before trying to locate search inputs.
+            # ("Find Bid Opportunities (CSCR)") before trying to locate search inputs
             try:
                 cscr_link = page.locator("a:has-text('Find Bid Opportunities (CSCR)')").first
                 if cscr_link.count() == 0:
-                    # Fallback: any link pointing to the event-search page.
+                    # Fallback: any link pointing to the event-search page
                     cscr_link = page.locator("a[href*='event-search.aspx']").first
                 if cscr_link.count() > 0:
                     cscr_link.click(timeout=10_000)
@@ -573,10 +582,10 @@ class CalEProcureInterface:
                     page.wait_for_timeout(2_000)
             except Exception:
                 # If this navigation step fails, we still try to proceed; the
-                # worst case is we stay on the landing page and no rows are found.
+                # worst case is we stay on the landing page and no rows are found
                 pass
 
-            # Try known Cal eProcure search input/button first.
+            # Try known Cal eProcure search input/button first
             frames = [page.main_frame] + [f for f in page.frames if f != page.main_frame]
             specific_input_id = "#RESP_INQA_WK_ZZ_AUC_NAME"
             specific_search_button_id = "#RESP_INQA_WK_INQ_AUC_GO_PB"
@@ -585,8 +594,8 @@ class CalEProcureInterface:
             for frame in frames:
                 try:
                     if frame.locator(specific_input_id).count() > 0:
-                        # Some templates render the field as temporarily readonly/disabled.
-                        # Set the value via JS and dispatch input/change events.
+                        # Some templates render the field as temporarily readonly/disabled
+                        # Set the value via JS and dispatch input/change events
                         frame.evaluate(
                             """(sel, val) => {
                                 const el = document.querySelector(sel);
@@ -618,10 +627,10 @@ class CalEProcureInterface:
                 except Exception:
                     continue
 
-            # If we couldn't set the known field, fall back to generic heuristics.
+            # If we couldn't set the known field, fall back to generic heuristics
             if not filled:
-                # Try likely search input selectors across all frames. Cal eProcure can
-                # render controls inside PeopleSoft/NLX frames.
+                # Try likely search input selectors across all frames
+                # Cal eProcure can render controls inside PeopleSoft/NLX frames
                 input_selectors = [
                     "input[name*='eventName' i]",
                     "input[id*='eventName' i]",
@@ -654,13 +663,12 @@ class CalEProcureInterface:
                 browser.close()
                 raise RuntimeError("Could not find a search input field on Cal eProcure page.")
 
-            # Try clicking a likely search button in any frame; fall back to Enter.
+            # Try clicking a likely search button in any frame; fall back to Enter
             clicked = False
             for frame in frames:
                 try:
                     if frame.locator(specific_search_button_id).count() > 0:
-                        # Click via JS to bypass cases where the element is disabled
-                        # during template render.
+                        # Click via JS to bypass cases where the element is disabled during template render
                         frame.evaluate(
                             """(sel) => {
                                 const btn = document.querySelector(sel);
@@ -671,7 +679,7 @@ class CalEProcureInterface:
                             }""",
                             specific_search_button_id,
                         )
-                        # Also attempt a normal click as a fallback.
+                        # Also attempt a normal click as a fallback
                         frame.locator(specific_search_button_id).first.click(timeout=10_000)
                         clicked = True
                         break
@@ -709,11 +717,11 @@ class CalEProcureInterface:
                     except Exception:
                         continue
 
-            # Let dynamic rendering complete and return rendered HTML.
+            # Let dynamic rendering complete and return rendered HTML
             page.wait_for_load_state("networkidle", timeout=30_000)
             page.wait_for_timeout(3_000)
             content = page.content()
-            # Include frame content because results may render inside an iframe.
+            # Include frame content because results may render inside an iframe
             for frame in frames[1:]:
                 try:
                     content += "\n<!-- FRAME CONTENT -->\n" + frame.content()
@@ -727,11 +735,9 @@ class CalEProcureInterface:
         response.raise_for_status()
         return response.text
 
+    # Try to fetch structured response payload for event detail pages
+    # First attempts JSON endpoint variants, then falls back to embedded script extraction
     def _fetch_capture_results_payload(self, detail_url: str) -> Optional[Dict[str, Any]]:
-        """
-        Try to fetch structured response payload for event detail pages.
-        First attempts JSON endpoint variants, then falls back to embedded script extraction.
-        """
         candidate_urls = [
             detail_url,
             f"{detail_url}&format=json" if "?" in detail_url else f"{detail_url}?format=json",
@@ -757,13 +763,11 @@ class CalEProcureInterface:
 
         return None
 
+# Three UNSPSC code extraction strategies: 
+# (1) structured API payload
+# (2) embedded script JSON
+# (3) plain-text matching - heuristics
     def _extract_unspsc_with_strategy(self, detail_url: str) -> Tuple[List[UnspscCode], str]:
-        """
-        Ordered extraction strategies:
-        1) structured API payload
-        2) embedded CaptureResults in script
-        3) text fallback heuristic
-        """
         capture_results = self._fetch_capture_results_payload(detail_url)
         if capture_results:
             codes = _extract_unspsc_from_capture_results(capture_results)
@@ -779,7 +783,7 @@ class CalEProcureInterface:
 
         return extract_unspsc_codes(detail_html), "text_fallback"
 
-    def step1_search_candidates(
+    def fuzzy_search_candidates(
         self,
         keywords: Optional[Iterable[str]] = None,
         fuzzy_threshold: float = 0.58,
@@ -795,7 +799,7 @@ class CalEProcureInterface:
             try:
                 html = self.search_raw_html(keyword)
             except requests.RequestException:
-                # Skip blocked/failed keyword so one error does not abort the whole run.
+                # Skip blocked/failed keyword so one error does not abort the whole run
                 continue
             rows = parse_search_results(html)
             if rows:
@@ -809,15 +813,14 @@ class CalEProcureInterface:
                 seen_urls.add(row.detail_url)
                 candidates.append(row)
 
-        # If requests-based scraping produced no rows at all, try browser rendering.
+        # If requests-based scraping produced no rows at all, try browser rendering
         fallback_error: Optional[Exception] = None
         if allow_browser_fallback and not had_request_results:
             for keyword in words:
                 try:
                     html = self._search_with_browser_html(keyword)
                 except Exception:
-                    # Keep trying other keywords, but remember the first failure
-                    # so callers get useful debugging info.
+                    # Keep trying other keywords, but remember the first failure so callers get useful debugging info
                     if fallback_error is None:
                         fallback_error = Exception(
                             f"Browser fallback failed for keyword '{keyword}'."
@@ -835,7 +838,7 @@ class CalEProcureInterface:
 
         return candidates
 
-    def step2_filter_by_unspsc(
+    def unspsc_filter_search(
         self,
         candidates: Iterable[SearchResult],
         include_probe_metadata: bool = True,
@@ -857,13 +860,13 @@ class CalEProcureInterface:
                 )
         return filtered
 
-    def run_step1_and_step2(
+    def run_search(
         self,
         keywords: Optional[Iterable[str]] = None,
         fuzzy_threshold: float = 0.58,
     ) -> List[FilteredEvent]:
-        candidates = self.step1_search_candidates(
+        candidates = self.fuzzy_search_candidates(
             keywords=keywords,
             fuzzy_threshold=fuzzy_threshold,
         )
-        return self.step2_filter_by_unspsc(candidates)
+        return self.unspsc_filter_search(candidates)
