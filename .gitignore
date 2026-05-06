@@ -2,4 +2,4 @@ credentials.json
 token.json
 __pycache__/
 .vscode
-scraper/pdfs_for_upload/
+scraper/pdfs_for_upload/*
