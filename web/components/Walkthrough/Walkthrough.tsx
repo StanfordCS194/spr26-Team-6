@@ -52,7 +52,7 @@ const WALKTHROUGH_STEPS: Record<WalkthroughStep, WalkthroughContent> = {
       "When you're done typing in your information, click this 'Save my information' button. Your data will be stored and used to personalize your RFP recommendations based on your capabilities and interests. You can update this information at any time.",
   },
   "close-profile": {
-    selector: null,
+    selector: "#profile-drawer",
     title: "Close the Profile",
     description:
       "Now let's close the profile window by clicking the 'Close' button so we can explore the main dashboard. Click 'Next' to continue.",
@@ -76,7 +76,7 @@ const WALKTHROUGH_STEPS: Record<WalkthroughStep, WalkthroughContent> = {
       "Use the filter menu to narrow down your RFP recommendations by:\n\n• Tags - Filter by specific categories or keywords\n• Date range - Find opportunities based on due date\n• Contract value - Filter by budget range\n\nThese filters help you focus on opportunities that best match your interests and capabilities.",
   },
   "open-rfp": {
-    selector: null,
+    selector: "#rfp-feed",
     title: "Click on an RFP",
     description:
       "Now click on one of the RFP cards in the list to open it and see the detailed information. This will help us explore the individual RFP details view. Click 'Next' when you've selected an RFP.",
@@ -112,7 +112,7 @@ const WALKTHROUGH_STEPS: Record<WalkthroughStep, WalkthroughContent> = {
       "This shows:\n\n• Project location - Where the work will be performed or where the agency is located\n• Due date - The deadline for submitting your proposal\n\nMake sure you understand the location requirements and can meet the submission deadline.",
   },
   "pdf-viewer": {
-    selector: ".pdf-viewer-button:nth-child(2)",
+    selector: "[data-walkthrough-tab='document']",
     title: "Source PDF",
     description:
       "Click the 'Source PDF' tab to view the original PDF document from the government agency. Here you can:\n\n• See the complete official RFP document\n• Review official formatting and requirements\n• Scroll through the entire document\n• Access specific sections referenced in the summary\n\nThis is the authoritative source for all requirements.",
@@ -198,13 +198,11 @@ export function Walkthrough() {
     if (currentStepId === "profile") {
       setProfileOpen(true);
     } else if (currentStepId === "close-profile") {
-      // Don't auto-close here, just show the message
+      // Show instructions but don't auto-close
     } else if (currentStepId === "search-bar") {
       setProfileOpen(false);
     } else if (currentStepId === "open-rfp") {
       // Guide user to click on an RFP
-    } else if (currentStepId === "rfp-details" && !selectedRfpId && loadedRfps.length > 0) {
-      // Don't auto-select, let user click first, but prepare for when they do
     } else if (currentStepId === "return-to-profile") {
       setProfileOpen(true);
     } else if (currentStepId === "completion") {
@@ -214,18 +212,49 @@ export function Walkthrough() {
     // Find and set target element
     if (stepContent.selector) {
       const timer = setTimeout(() => {
-        const element = document.querySelector(
+        // Try multiple attempts to find the element
+        let element = document.querySelector(
           stepContent.selector as string
         ) as HTMLElement | null;
+        
+        // If not found and it's a data attribute, try again
+        if (!element && (stepContent.selector as string).startsWith("[data-")) {
+          element = document.querySelector(
+            stepContent.selector as string
+          ) as HTMLElement | null;
+        }
+        
         setTargetElement(element);
-      }, 50);
+      }, 100);
       return () => clearTimeout(timer);
     } else {
       setTargetElement(null);
     }
-  }, [walkthroughActive, walkthroughStep, setProfileOpen, selectedRfpId, loadedRfps]);
+  }, [walkthroughActive, walkthroughStep, setProfileOpen]);
 
-  const handleNext = () => {
+  // Auto-scroll to keep highlighted element visible
+  useEffect(() => {
+    if (!walkthroughActive || !targetElement || targetElement.offsetParent === null) return;
+
+    const timer = setTimeout(() => {
+      const rect = targetElement.getBoundingClientRect();
+      const isVisible =
+        rect.top >= -200 &&
+        rect.left >= -200 &&
+        rect.bottom <= window.innerHeight + 200 &&
+        rect.right <= window.innerWidth + 200;
+
+      if (!isVisible) {
+        targetElement.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "center",
+        });
+      }
+    }, 200);
+
+    return () => clearTimeout(timer);
+  }, [walkthroughActive, targetElement]);
     if (walkthroughStep < STEP_ORDER.length - 1) {
       setWalkthroughStep(walkthroughStep + 1);
     } else if (showCompletion) {

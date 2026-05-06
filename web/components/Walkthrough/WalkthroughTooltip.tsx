@@ -11,8 +11,9 @@ interface WalkthroughTooltipProps {
   onNext: () => void;
   onPrev: () => void;
   onClose: () => void;
-  placement?: "bottom" | "top" | "left" | "right";
 }
+
+type TooltipPosition = "bottom" | "top" | "left" | "right";
 
 export function WalkthroughTooltip({
   title,
@@ -23,33 +24,96 @@ export function WalkthroughTooltip({
   onNext,
   onPrev,
   onClose,
-  placement = "bottom",
 }: WalkthroughTooltipProps) {
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [placement, setPlacement] = useState<TooltipPosition>("bottom");
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!targetElement || targetElement.offsetParent === null) return;
-
     const updatePosition = () => {
+      if (!tooltipRef.current) return;
+
+      const tooltipWidth = 400;
+      const tooltipHeight = tooltipRef.current.offsetHeight || 200;
+      const padding = 16;
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      if (!targetElement || targetElement.offsetParent === null) {
+        // No target element - center the tooltip on screen
+        const centerX = (viewportWidth - tooltipWidth) / 2;
+        const centerY = (viewportHeight - tooltipHeight) / 2;
+        setPosition({ x: centerX, y: centerY });
+        setPlacement("bottom");
+        return;
+      }
+
       const rect = targetElement.getBoundingClientRect();
       const scrollX = window.scrollX;
       const scrollY = window.scrollY;
 
-      let x = rect.left + scrollX + rect.width / 2;
-      let y = rect.top + scrollY;
+      // Calculate all possible positions
+      const positions = {
+        bottom: {
+          x: rect.left + scrollX + rect.width / 2 - tooltipWidth / 2,
+          y: rect.bottom + scrollY + padding,
+        },
+        top: {
+          x: rect.left + scrollX + rect.width / 2 - tooltipWidth / 2,
+          y: rect.top + scrollY - tooltipHeight - padding,
+        },
+        right: {
+          x: rect.right + scrollX + padding,
+          y: rect.top + scrollY + rect.height / 2 - tooltipHeight / 2,
+        },
+        left: {
+          x: rect.left + scrollX - tooltipWidth - padding,
+          y: rect.top + scrollY + rect.height / 2 - tooltipHeight / 2,
+        },
+      };
 
-      // Adjust position based on placement
-      if (placement === "bottom") {
-        y = rect.bottom + scrollY + 16;
-        x -= tooltipRef.current?.offsetWidth ? tooltipRef.current.offsetWidth / 2 : 0;
-      } else if (placement === "top") {
-        y = rect.top + scrollY - 16;
-        x -= tooltipRef.current?.offsetWidth ? tooltipRef.current.offsetWidth / 2 : 0;
-        y -= tooltipRef.current?.offsetHeight || 0;
+      // Check which positions keep tooltip visible
+      const isVisible = (pos: typeof positions.bottom): boolean => {
+        const right = pos.x + tooltipWidth;
+        const bottom = pos.y + tooltipHeight;
+        return (
+          pos.x >= -50 &&
+          pos.y >= -50 &&
+          right <= viewportWidth + 50 &&
+          bottom <= viewportHeight + 50
+        );
+      };
+
+      // Priority order: bottom, right, left, top
+      let finalPlacement: TooltipPosition = "bottom";
+      let finalPos = positions.bottom;
+
+      if (isVisible(positions.bottom)) {
+        finalPlacement = "bottom";
+        finalPos = positions.bottom;
+      } else if (isVisible(positions.right)) {
+        finalPlacement = "right";
+        finalPos = positions.right;
+      } else if (isVisible(positions.left)) {
+        finalPlacement = "left";
+        finalPos = positions.left;
+      } else if (isVisible(positions.top)) {
+        finalPlacement = "top";
+        finalPos = positions.top;
+      } else {
+        // Fallback: clamp to viewport
+        finalPos = {
+          x: Math.max(padding, Math.min(finalPos.x, viewportWidth - tooltipWidth - padding)),
+          y: Math.max(padding, Math.min(finalPos.y, viewportHeight - tooltipHeight - padding)),
+        };
       }
 
-      setPosition({ x, y });
+      // Clamp to viewport boundaries
+      finalPos.x = Math.max(padding, Math.min(finalPos.x, viewportWidth - tooltipWidth - padding));
+      finalPos.y = Math.max(padding, Math.min(finalPos.y, viewportHeight - tooltipHeight - padding));
+
+      setPlacement(finalPlacement);
+      setPosition(finalPos);
     };
 
     updatePosition();
@@ -60,7 +124,7 @@ export function WalkthroughTooltip({
       window.removeEventListener("resize", updatePosition);
       window.removeEventListener("scroll", updatePosition);
     };
-  }, [targetElement, placement]);
+  }, [targetElement]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -83,11 +147,11 @@ export function WalkthroughTooltip({
   return (
     <div
       ref={tooltipRef}
-      className="fixed z-50 max-w-sm rounded-lg border border-govbid-border bg-govbid-surface p-4 shadow-lg"
+      className="fixed z-50 max-w-sm rounded-lg border border-govbid-border bg-govbid-surface p-4 shadow-xl"
       style={{
         left: `${position.x}px`,
         top: `${position.y}px`,
-        transform: "translateX(-50%)",
+        transform: placement === "bottom" || placement === "top" ? "translateX(-50%)" : undefined,
       }}
     >
       {/* Close button */}
@@ -142,17 +206,59 @@ export function WalkthroughTooltip({
         </button>
       </div>
 
-      {/* Arrow pointing down */}
-      <div
-        className="absolute left-1/2 h-4 w-4 -translate-x-1/2 bg-govbid-surface"
-        style={{
-          top: "-8px",
-          borderLeft: "8px solid transparent",
-          borderRight: "8px solid transparent",
-          borderBottom: `8px solid var(--govbid-surface)`,
-          background: "none",
-        }}
-      />
+      {/* Arrow pointing toward target */}
+      {placement === "bottom" && (
+        <div
+          className="absolute left-1/2 -translate-x-1/2 -translate-y-full"
+          style={{
+            width: 0,
+            height: 0,
+            borderLeft: "8px solid transparent",
+            borderRight: "8px solid transparent",
+            borderTop: "8px solid var(--govbid-surface)",
+            filter: "drop-shadow(-1px -1px 1px rgba(0,0,0,0.1))",
+          }}
+        />
+      )}
+      {placement === "top" && (
+        <div
+          className="absolute left-1/2 -translate-x-1/2 translate-y-full"
+          style={{
+            width: 0,
+            height: 0,
+            borderLeft: "8px solid transparent",
+            borderRight: "8px solid transparent",
+            borderBottom: "8px solid var(--govbid-surface)",
+            filter: "drop-shadow(1px 1px 1px rgba(0,0,0,0.1))",
+          }}
+        />
+      )}
+      {placement === "left" && (
+        <div
+          className="absolute top-1/2 -translate-y-1/2 translate-x-full"
+          style={{
+            width: 0,
+            height: 0,
+            borderTop: "8px solid transparent",
+            borderBottom: "8px solid transparent",
+            borderLeft: "8px solid var(--govbid-surface)",
+            filter: "drop-shadow(1px -1px 1px rgba(0,0,0,0.1))",
+          }}
+        />
+      )}
+      {placement === "right" && (
+        <div
+          className="absolute top-1/2 -translate-y-1/2 -translate-x-full"
+          style={{
+            width: 0,
+            height: 0,
+            borderTop: "8px solid transparent",
+            borderBottom: "8px solid transparent",
+            borderRight: "8px solid var(--govbid-surface)",
+            filter: "drop-shadow(-1px 1px 1px rgba(0,0,0,0.1))",
+          }}
+        />
+      )}
     </div>
   );
 }

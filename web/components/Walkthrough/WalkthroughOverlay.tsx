@@ -27,7 +27,7 @@ export function WalkthroughOverlay({
     canvas.height = window.innerHeight;
 
     // Draw dark overlay
-    ctx.fillStyle = "rgba(0, 0, 0, 0.7)";
+    ctx.fillStyle = "rgba(0, 0, 0, 0.75)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     // Create spotlight/highlight area
@@ -36,20 +36,53 @@ export function WalkthroughOverlay({
       const scrollX = window.scrollX;
       const scrollY = window.scrollY;
 
+      const padding = 12;
       const x = rect.left + scrollX - padding;
       const y = rect.top + scrollY - padding;
       const width = rect.width + padding * 2;
       const height = rect.height + padding * 2;
+      const cornerRadius = 8;
 
-      // Clear the highlighted area
+      // Clear the highlighted area with rounded corners
       ctx.globalCompositeOperation = "destination-out";
-      ctx.clearRect(x, y, width, height);
+      
+      ctx.beginPath();
+      ctx.moveTo(x + cornerRadius, y);
+      ctx.lineTo(x + width - cornerRadius, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + cornerRadius);
+      ctx.lineTo(x + width, y + height - cornerRadius);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - cornerRadius, y + height);
+      ctx.lineTo(x + cornerRadius, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - cornerRadius);
+      ctx.lineTo(x, y + cornerRadius);
+      ctx.quadraticCurveTo(x, y, x + cornerRadius, y);
+      ctx.closePath();
+      ctx.fill();
+      
       ctx.globalCompositeOperation = "source-over";
 
       // Draw border around highlighted area
-      ctx.strokeStyle = "rgba(79, 70, 229, 0.5)";
-      ctx.lineWidth = 2;
-      ctx.strokeRect(x, y, width, height);
+      ctx.strokeStyle = "rgba(79, 70, 229, 0.8)";
+      ctx.lineWidth = 3;
+      ctx.shadowColor = "rgba(79, 70, 229, 0.3)";
+      ctx.shadowBlur = 12;
+      ctx.shadowOffsetX = 0;
+      ctx.shadowOffsetY = 0;
+      
+      ctx.beginPath();
+      ctx.moveTo(x + cornerRadius, y);
+      ctx.lineTo(x + width - cornerRadius, y);
+      ctx.quadraticCurveTo(x + width, y, x + width, y + cornerRadius);
+      ctx.lineTo(x + width, y + height - cornerRadius);
+      ctx.quadraticCurveTo(x + width, y + height, x + width - cornerRadius, y + height);
+      ctx.lineTo(x + cornerRadius, y + height);
+      ctx.quadraticCurveTo(x, y + height, x, y + height - cornerRadius);
+      ctx.lineTo(x, y + cornerRadius);
+      ctx.quadraticCurveTo(x, y, x + cornerRadius, y);
+      ctx.closePath();
+      ctx.stroke();
+      
+      ctx.shadowColor = "transparent";
     }
   }, [targetElement, padding, isVisible]);
 

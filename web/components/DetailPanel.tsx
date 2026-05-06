@@ -170,6 +170,7 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
             key={id}
             type="button"
             onClick={() => setTab(id)}
+            data-walkthrough-tab={id}
             className={`pdf-viewer-button relative pb-2.5 text-sm font-semibold transition ${
               tab === id
                 ? "text-govbid-text"
