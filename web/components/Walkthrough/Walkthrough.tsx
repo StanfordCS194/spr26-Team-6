@@ -255,6 +255,8 @@ export function Walkthrough() {
 
     return () => clearTimeout(timer);
   }, [walkthroughActive, targetElement]);
+
+  const handleNext = () => {
     if (walkthroughStep < STEP_ORDER.length - 1) {
       setWalkthroughStep(walkthroughStep + 1);
     } else if (showCompletion) {
