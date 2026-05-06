@@ -1,6 +1,8 @@
 """
 This file provides a interface for interacting with Google Drive using the Google API.
 It is used to create folders, upload files, and get file links.
+
+See tests/test_gdrive.py for unit test.
 """
 
 import os

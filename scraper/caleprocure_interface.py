@@ -4,8 +4,10 @@ It is used to search for technology-related contracts.
 
 Step 1: search events by technology keywords and fuzzy-match against Event Name.
 Step 2: open each candidate result and scrape only those whose UNSPSC codes look technology-related.
+Step 3: scrape Event Details page text (browser; see ``scrape_event_details_text``).
+Step 4: View Event Package and download up to 10 attachments (see ``download_event_package_attachments`` or ``run_steps_3_and_4``).
 
-See test/test_caleprocure.py for unit test.
+See tests/test_caleprocure.py for unit tests.
 Alternative: run the following in terminal
 conda run -n cs194w python -c "
 from scraper.caleprocure_interface import CalEProcureInterface
@@ -22,12 +24,15 @@ for e in filtered[:10]:
 """
 
 from __future__ import annotations
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from difflib import SequenceMatcher
 from html import unescape
 from html.parser import HTMLParser
 from typing import Any, Dict, Iterable, List, Optional, Tuple
-from urllib.parse import urljoin
+from urllib.parse import unquote, urljoin
+import os
+import time
 import requests
 import re
 import json
@@ -35,6 +40,21 @@ import json
 SEARCH_URL = "https://caleprocure.ca.gov/pages/Events-BS3/event-search.aspx"
 EVENT_BASE_URL = "https://caleprocure.ca.gov/"
 DEFAULT_SEARCH_BUSINESS_UNIT = "BS3"
+
+# Event Package / View Attachments — NLX clones PS controls (see data-if-label + id PV_ATTACH_WRK_SCM_DOWNLOAD$n).
+PS_VIEW_ATTACH_DOWNLOAD_BTN = 'button[data-if-label="ViewAttachmentsView"]:not(.if-hide)'
+PS_VIEW_ATTACH_DOWNLOAD_CTRLS = (
+    f'{PS_VIEW_ATTACH_DOWNLOAD_BTN}, '
+    '[id^="PV_ATTACH_WRK_SCM_DOWNLOAD"], '
+    'input[id^="PV_ATTACH_WRK_SCM_DOWNLOAD"], '
+    'a[id^="PV_ATTACH_WRK_SCM_DOWNLOAD"], '
+    'button:has(.fa-download)'
+)
+
+# Default folder for Step 4 saved attachments before Google Drive upload (created on demand).
+DEFAULT_PDFS_FOR_UPLOAD_DIR = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), "pdfs_for_upload"
+)
 
 # Tech/IT/telecommunications keywords (heuristics) for fuzzy search
 DEFAULT_TECH_KEYWORDS = [
@@ -111,6 +131,16 @@ class FilteredEvent:
     result: SearchResult
     unspsc_codes: List[UnspscCode] = field(default_factory=list)
     extraction_strategy: str = "text_fallback"
+
+
+@dataclass
+class DownloadedAttachment:
+    """Step 4: one file saved from the Event Package attachments grid."""
+
+    local_path: str
+    attached_file_name: str
+    attachment_description: str
+
 
 # Class that walks anchor tags in search result HTML and looks for events (contracts) or links
 class _SearchResultsParser(HTMLParser):
@@ -196,6 +226,22 @@ def _extract_external_id(event_name: str, detail_url: str) -> Optional[str]:
         return digits[-10:]
 
     return None
+
+
+def _filename_from_content_disposition(value: Optional[str]) -> Optional[str]:
+    if not value:
+        return None
+    m = re.search(r"filename\*=UTF-8''([^;\s]+)", value, re.I)
+    if m:
+        return unquote(m.group(1).strip().strip('"'))
+    m = re.search(r'filename\s*=\s*"([^"]+)"', value, re.I)
+    if m:
+        return m.group(1)
+    m = re.search(r"filename\s*=\s*([^;\s]+)", value, re.I)
+    if m:
+        return m.group(1).strip('"')
+    return None
+
 
 # Scores how well an event name matches any keyword in the list of keywords
 # Default list of keywords is DEFAULT_TECH_KEYWORDS
@@ -326,6 +372,75 @@ class _EventGridParser(HTMLParser):
         # Reset capture for the current td
         self.capture = None
         self._cell_text_parts = []
+
+
+class _UnspscDetailTableParser(HTMLParser):
+    """Reads UNSPSC rows from Event Details table cells."""
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.rows: List[UnspscCode] = []
+        self._pending_code: Optional[str] = None
+        self._capture: Optional[str] = None
+        self._parts: List[str] = []
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, Optional[str]]]) -> None:
+        if tag.lower() != "td":
+            return
+        am = dict(attrs)
+        lab = (am.get("data-if-label") or "").strip()
+        if lab == "unspscClassification":
+            self._capture = "code"
+            self._parts = []
+        elif lab == "unspscDescription":
+            self._capture = "desc"
+            self._parts = []
+
+    def handle_data(self, data: str) -> None:
+        if self._capture and data.strip():
+            self._parts.append(unescape(data).strip())
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag.lower() != "td" or not self._capture:
+            return
+        text = " ".join(self._parts).strip()
+        if self._capture == "code":
+            digits = "".join(ch for ch in text if ch.isdigit())
+            self._pending_code = digits if len(digits) == 8 else None
+        elif self._capture == "desc":
+            if self._pending_code:
+                self.rows.append(UnspscCode(code=self._pending_code, description=text))
+            self._pending_code = None
+        self._capture = None
+        self._parts = []
+
+
+def extract_unspsc_codes_from_unspsc_table(detail_html: str) -> List[UnspscCode]:
+    parser = _UnspscDetailTableParser()
+    parser.feed(detail_html)
+    seen = set()
+    out: List[UnspscCode] = []
+    for row in parser.rows:
+        key = (row.code, row.description)
+        if key in seen:
+            continue
+        seen.add(key)
+        out.append(row)
+    return out
+
+
+def _merge_unspsc_lists(*lists: List[UnspscCode]) -> List[UnspscCode]:
+    seen = set()
+    out: List[UnspscCode] = []
+    for lst in lists:
+        for item in lst:
+            key = (item.code, item.description)
+            if key in seen:
+                continue
+            seen.add(key)
+            out.append(item)
+    return out
+
 
 # Naively tries to extract an UNSPSC code by scanning for 8-digit codes
 def extract_unspsc_codes(detail_html: str) -> List[UnspscCode]:
@@ -466,8 +581,14 @@ def _extract_embedded_capture_results_from_html(detail_html: str) -> Optional[Di
 # HTTP-backed class that interfaces with CaleProcure to scrape events (contracts)
 # that satisfy both a fuzzy search of tech-related keywords and have tech-related UNSPSC codes
 class CalEProcureInterface:
-    def __init__(self, timeout_seconds: int = 30) -> None:
+    def __init__(
+        self,
+        timeout_seconds: int = 30,
+        *,
+        playwright_headless: bool = True,
+    ) -> None:
         self.timeout_seconds = timeout_seconds
+        self.playwright_headless = playwright_headless
         self.session = requests.Session()
         self.session.headers.update(
             {
@@ -560,7 +681,11 @@ class CalEProcureInterface:
             ) from exc
 
         with sync_playwright() as p:
-            browser = p.chromium.launch(headless=True)
+            browser = p.chromium.launch(
+                headless=self.playwright_headless,
+                args=["--disable-blink-features=AutomationControlled"],
+                ignore_default_args=["--enable-automation"],
+            )
             context = browser.new_context(
                 user_agent=self.session.headers.get("User-Agent", ""),
                 locale="en-US",
@@ -578,8 +703,11 @@ class CalEProcureInterface:
                     cscr_link = page.locator("a[href*='event-search.aspx']").first
                 if cscr_link.count() > 0:
                     cscr_link.click(timeout=10_000)
-                    page.wait_for_load_state("networkidle", timeout=45_000)
-                    page.wait_for_timeout(2_000)
+                    try:
+                        page.wait_for_selector("#RESP_INQA_WK_ZZ_AUC_NAME", timeout=25_000)
+                    except Exception:
+                        pass
+                    page.wait_for_timeout(1_000)
             except Exception:
                 # If this navigation step fails, we still try to proceed; the
                 # worst case is we stay on the landing page and no rows are found
@@ -717,9 +845,12 @@ class CalEProcureInterface:
                     except Exception:
                         continue
 
-            # Let dynamic rendering complete and return rendered HTML
-            page.wait_for_load_state("networkidle", timeout=30_000)
-            page.wait_for_timeout(3_000)
+            # Avoid networkidle (often waits full timeout on this site)
+            try:
+                page.wait_for_selector("table tbody tr, tbody.clickable tr", timeout=20_000)
+            except Exception:
+                pass
+            page.wait_for_timeout(1_500)
             content = page.content()
             # Include frame content because results may render inside an iframe
             for frame in frames[1:]:
@@ -734,6 +865,900 @@ class CalEProcureInterface:
         response = self.session.get(detail_url, timeout=self.timeout_seconds)
         response.raise_for_status()
         return response.text
+
+    @staticmethod
+    def _require_playwright():
+        try:
+            from playwright.sync_api import sync_playwright
+        except ImportError as exc:
+            raise RuntimeError(
+                "Playwright is required for Steps 3 and 4. "
+                "Install with `pip install playwright` and `python -m playwright install chromium`."
+            ) from exc
+        return sync_playwright
+
+    @staticmethod
+    def _playwright_frames(page: Any) -> List[Any]:
+        return [page.main_frame] + [f for f in page.frames if f != page.main_frame]
+
+    @contextmanager
+    def _playwright_page(self, accept_downloads: bool = False):
+        sync_playwright = self._require_playwright()
+        with sync_playwright() as p:
+            browser = p.chromium.launch(
+                headless=self.playwright_headless,
+                args=["--disable-blink-features=AutomationControlled"],
+                ignore_default_args=["--enable-automation"],
+            )
+            context = browser.new_context(
+                user_agent=self.session.headers.get("User-Agent", ""),
+                locale="en-US",
+                accept_downloads=accept_downloads,
+            )
+            page = context.new_page()
+            try:
+                yield page
+            finally:
+                browser.close()
+
+    def _goto_event_detail(self, page: Any, detail_url: str) -> None:
+        """
+        Load event details without ``networkidle`` — SPAs often never go idle and
+        Playwright will sit until the timeout (feels stuck).
+        """
+        nav_timeout = max(15_000, min(90_000, self.timeout_seconds * 1000))
+        page.goto(detail_url, wait_until="domcontentloaded", timeout=nav_timeout)
+        page.wait_for_timeout(500)
+        try:
+            page.wait_for_selector("#main", timeout=min(20_000, nav_timeout))
+        except Exception:
+            pass
+        # NLX/InFlight paints after #main exists; brief pause beats networkidle.
+        page.wait_for_timeout(1_200)
+
+    def _wait_for_detail_content_ready(self, page: Any) -> None:
+        """
+        Wait until NLX has filled real event data (not the template placeholders).
+        Without this, #main often has only ~100–200 chars and buttons are missing.
+        """
+        deadline = min(45_000, max(12_000, int(self.timeout_seconds * 1000)))
+        try:
+            page.wait_for_function(
+                """
+                () => {
+                    const norm = (s) => (s || '').replace(/\\s+/g, ' ').trim();
+                    const nameEl = document.querySelector('[data-if-label="eventName"]');
+                    const name = norm(nameEl ? nameEl.textContent : '');
+                    if (name.length > 2 && name !== '[Event Title]') return true;
+                    const main = document.querySelector('#main');
+                    const mainText = norm(main ? main.innerText : '');
+                    if (mainText.length > 200) return true;
+                    return false;
+                }
+                """,
+                timeout=deadline,
+            )
+        except Exception:
+            pass
+        page.wait_for_timeout(600)
+
+    def _settle_after_view_event_package(self, page: Any) -> None:
+        """Wait for Event Bid / View Attachments grid (not UNSPSC or other tables)."""
+        page.wait_for_timeout(500)
+        deadline = min(30_000, max(10_000, int(self.timeout_seconds * 1000)))
+        try:
+            page.wait_for_function(
+                """
+                () => {
+                    const t = (document.body && document.body.innerText) || '';
+                    if (/view(ing)? attachments|attached file/i.test(t)) return true;
+                    const dl = document.querySelector('[id^="PV_ATTACH_WRK_SCM_DOWNLOAD"]');
+                    return !!(dl && dl.offsetParent !== null);
+                }
+                """,
+                timeout=deadline,
+            )
+        except Exception:
+            pass
+        try:
+            page.wait_for_selector(
+                '[id^="PV_ATTACH_WRK_SCM_DOWNLOAD"], tr[data-if-label="ViewAttachmentsTableRow"]',
+                timeout=12_000,
+            )
+        except Exception:
+            pass
+        page.wait_for_timeout(800)
+
+    def _wait_attachment_grid_hydrated(self, page: Any) -> None:
+        """
+        NLX fills the View Attachments grid asynchronously. View Source will not show
+        row icons; Playwright only sees controls after this hydration (live DOM).
+        Wait until at least one PS download control exists and is visible in any frame.
+        """
+        deadline = time.monotonic() + min(
+            60_000, max(15_000, int(self.timeout_seconds * 1_500))
+        ) / 1000
+        sel = f'{PS_VIEW_ATTACH_DOWNLOAD_CTRLS}, table.table-results button:has(.fa-download)'
+        while time.monotonic() < deadline:
+            for frame in self._playwright_frames(page):
+                try:
+                    loc = frame.locator(sel)
+                    n = loc.count()
+                    for k in range(min(n, 32)):
+                        try:
+                            if loc.nth(k).is_visible():
+                                return
+                        except Exception:
+                            continue
+                except Exception:
+                    pass
+            try:
+                page.wait_for_timeout(200)
+            except Exception:
+                break
+
+    def _expand_attachment_pager_show_all(self, page: Any) -> None:
+        """
+        View Attachments uses a PeopleSoft grid pager (e.g. "1 of 7", "View All").
+        Only the current page rows may exist until **View All** is clicked.
+        """
+        va_re = re.compile(r"^\s*view\s+all\s*$", re.I)
+        for frame in self._playwright_frames(page):
+            try:
+                section = frame.locator('[data-if-label="viewEventAttachmentTable"]')
+                if section.count() > 0:
+                    root = section.first
+                    try:
+                        if root.is_visible():
+                            link = root.locator("a").filter(has_text=va_re)
+                            if link.count() > 0:
+                                cand = link.first
+                                if cand.is_visible():
+                                    cand.click(timeout=12_000)
+                                    page.wait_for_timeout(1_200)
+                                    return
+                    except Exception:
+                        pass
+                link = frame.locator("a[id*='AUC_ATTCH_HD_VW']").filter(has_text=va_re)
+                if link.count() > 0:
+                    cand = link.first
+                    if cand.is_visible():
+                        cand.click(timeout=12_000)
+                        page.wait_for_timeout(1_200)
+                        return
+            except Exception:
+                continue
+
+    def _best_attachment_row_locator(self, frame: Any) -> Any:
+        """
+        Pick the row locator that actually contains view-grid download controls.
+        The first non-empty ``tbody tr`` on the page is often the wrong table (or templates),
+        which makes it look like "buttons are visible but none are clicked."
+        """
+        candidates = (
+            frame.locator(
+                '[data-if-label="viewEventAttachmentTable"] table.table-results tbody tr'
+            ),
+            frame.locator('table[id^="AUC_ATTCH_HD_VW"] tbody tr'),
+            frame.locator('tr[id^="trAUC_ATTCH_HD_VW"]'),
+            frame.locator('tr[data-if-label="ViewAttachmentsTableRow"]'),
+            frame.locator("table.table-results tbody tr"),
+        )
+        ctrl_sel = PS_VIEW_ATTACH_DOWNLOAD_CTRLS
+        best_loc: Any = None
+        best_score = -1
+        for loc in candidates:
+            try:
+                n = loc.count()
+            except Exception:
+                continue
+            if n == 0:
+                continue
+            score = 0
+            for i in range(min(n, 40)):
+                try:
+                    row = loc.nth(i)
+                    if row.locator(ctrl_sel).count() > 0:
+                        score += 1
+                except Exception:
+                    continue
+            if score > best_score:
+                best_score = score
+                best_loc = loc
+        if best_loc is not None and best_score > 0:
+            return best_loc
+        return frame.locator("table.table-results tbody tr")
+
+    def _attachment_download_triggers_in_view_table(self, frame: Any) -> Any:
+        """
+        All download controls inside **View Attachments** only (excludes Add Attachments grid).
+        Used when row iteration does not find scoped triggers (same-page NLX layouts).
+        """
+        scoped = (
+            f'[data-if-label="viewEventAttachmentTable"] {PS_VIEW_ATTACH_DOWNLOAD_BTN}, '
+            '[data-if-label="viewEventAttachmentTable"] '
+            '[id^="PV_ATTACH_WRK_SCM_DOWNLOAD"], '
+            '[data-if-label="viewEventAttachmentTable"] '
+            'button:has(.fa-download)'
+        )
+        loc = frame.locator(scoped)
+        try:
+            if loc.count() > 0:
+                return loc
+        except Exception:
+            pass
+        fallback = (
+            f'table[id^="AUC_ATTCH_HD_VW"] {PS_VIEW_ATTACH_DOWNLOAD_BTN}, '
+            'table[id^="AUC_ATTCH_HD_VW"] '
+            '[id^="PV_ATTACH_WRK_SCM_DOWNLOAD"], '
+            'table[id^="AUC_ATTCH_HD_VW"] button:has(.fa-download)'
+        )
+        return frame.locator(fallback)
+
+    def _download_attachments_via_scoped_triggers(
+        self,
+        page: Any,
+        frame: Any,
+        download_dir: str,
+        max_files: int,
+        already: int,
+        ctx: Any,
+        dl_timeout: int,
+    ) -> List[DownloadedAttachment]:
+        """Fallback: click each visible scoped download control in DOM order."""
+        out: List[DownloadedAttachment] = []
+        triggers = self._attachment_download_triggers_in_view_table(frame)
+        try:
+            n = triggers.count()
+        except Exception:
+            return out
+        for i in range(min(n, max_files * 2)):
+            if len(out) + already >= max_files:
+                break
+            trig = triggers.nth(i)
+            try:
+                if not trig.is_visible():
+                    continue
+            except Exception:
+                continue
+            try:
+                if trig.evaluate(
+                    """el => !!el.closest('[data-if-label="addNewAttachmentTable"]')"""
+                ):
+                    continue
+            except Exception:
+                pass
+            display_name = f"attachment_{already + len(out)}"
+            try:
+                row = trig.locator("xpath=ancestor::tr[1]")
+                if row.count() > 0:
+                    fn = row.locator("[id^='PV_ATTACH_WRK_ATTACHUSERFILE']").first
+                    if fn.count() > 0:
+                        display_name = fn.inner_text(timeout=3_000).strip() or display_name
+            except Exception:
+                pass
+            try:
+                trig.scroll_into_view_if_needed(timeout=5_000)
+                trig.evaluate(
+                    """node => {
+                        if (!node) return;
+                        try { node.disabled = false; node.removeAttribute('disabled'); } catch (e) {}
+                    }"""
+                )
+            except Exception:
+                pass
+            try:
+                self._playwright_click_download_trigger(trig)
+                got = self._complete_attachment_download_after_row_action(
+                    ctx,
+                    page,
+                    display_name,
+                    "",
+                    download_dir,
+                    already + len(out),
+                    dl_timeout,
+                )
+                if got:
+                    out.append(got)
+            except Exception:
+                continue
+        return out
+
+    @staticmethod
+    def _playwright_click_download_trigger(trigger: Any) -> None:
+        """
+        NLX marks real PS actions with ``data-if-ps-clickable``; handlers are often
+        delegated (jQuery/InFlight), so a single Playwright click may not run PeopleCode.
+        Try Playwright, keyboard activation, physical mouse coordinates, then DOM/jQuery events.
+        """
+        try:
+            trigger.click(timeout=15_000)
+            return
+        except Exception:
+            pass
+        try:
+            trigger.click(timeout=15_000, force=True)
+            return
+        except Exception:
+            pass
+        try:
+            trigger.focus(timeout=5_000)
+            trigger.press("Enter", timeout=5_000)
+            return
+        except Exception:
+            pass
+        try:
+            trigger.focus(timeout=5_000)
+            trigger.press("Space", timeout=5_000)
+            return
+        except Exception:
+            pass
+        try:
+            page = trigger.page
+            box = trigger.bounding_box()
+            if box is not None:
+                x = box["x"] + box["width"] / 2
+                y = box["y"] + box["height"] / 2
+                page.mouse.move(x, y)
+                page.mouse.click(x, y, delay=50)
+                return
+        except Exception:
+            pass
+        trigger.evaluate(
+            r"""(el) => {
+                if (!el) return;
+                try { el.disabled = false; el.removeAttribute('disabled'); } catch (e) {}
+                const r = el.getBoundingClientRect();
+                const cx = Math.floor(r.left + r.width / 2);
+                const cy = Math.floor(r.top + r.height / 2);
+                const base = {
+                    bubbles: true,
+                    cancelable: true,
+                    composed: true,
+                    view: window,
+                    clientX: cx,
+                    clientY: cy,
+                    button: 0,
+                    buttons: 1,
+                };
+                try {
+                    el.dispatchEvent(
+                        new PointerEvent('pointerdown', Object.assign({}, base, {
+                            pointerId: 1,
+                            pointerType: 'mouse',
+                        }))
+                    );
+                } catch (e) {}
+                el.dispatchEvent(new MouseEvent('mousedown', base));
+                el.dispatchEvent(new MouseEvent('mouseup', base));
+                try {
+                    el.dispatchEvent(
+                        new PointerEvent('pointerup', Object.assign({}, base, {
+                            pointerId: 1,
+                            pointerType: 'mouse',
+                        }))
+                    );
+                } catch (e) {}
+                el.dispatchEvent(new MouseEvent('click', base));
+                if (typeof window.jQuery !== 'undefined') {
+                    try {
+                        window.jQuery(el).trigger('mousedown').trigger('mouseup').trigger('click');
+                    } catch (e2) {}
+                }
+                try {
+                    el.click();
+                } catch (e3) {}
+            }"""
+        )
+
+    def _extract_event_details_text_from_page(self, page: Any) -> str:
+        """Step 3: visible text from the rendered Event Details view (all frames)."""
+        blocks: List[str] = []
+        for frame in self._playwright_frames(page):
+            main = frame.locator("#main")
+            if main.count() == 0:
+                continue
+            try:
+                txt = main.first.inner_text(timeout=15_000).strip()
+                if txt and txt not in blocks:
+                    blocks.append(txt)
+            except Exception:
+                continue
+        if not blocks:
+            try:
+                body = page.inner_text("body").strip()
+                if body:
+                    blocks.append(body)
+            except Exception:
+                pass
+        return "\n\n".join(b for b in blocks if b)
+
+    def scrape_event_details_text(self, detail_url: str) -> str:
+        """
+        Step 3: scrape all visible information from the Event Details page into one string.
+        Uses a browser because the page is JS-rendered.
+        """
+        with self._playwright_page(accept_downloads=False) as page:
+            self._goto_event_detail(page, detail_url)
+            self._wait_for_detail_content_ready(page)
+            return self._extract_event_details_text_from_page(page)
+
+    def _click_view_event_package(self, page: Any) -> Optional[Any]:
+        """
+        Step 4: open the Event Package (attachments) view.
+        Returns the Playwright ``Page`` to use next (popup tab if one opens, else ``page``),
+        or ``None`` if the control was not found or click failed.
+        """
+        ctx = page.context
+        n_pages_before = len(ctx.pages)
+
+        for frame in self._playwright_frames(page):
+            for sel in (
+                '[data-if-label="viewPackage"]',
+                "#RESP_INQ_DL0_WK_AUC_DOWNLOAD_PB",
+                "button:has-text('View Event Package')",
+                "a:has-text('View Event Package')",
+            ):
+                try:
+                    loc = frame.locator(sel).first
+                    if loc.count() == 0:
+                        continue
+                    try:
+                        loc.scroll_into_view_if_needed(timeout=5_000)
+                    except Exception:
+                        pass
+                    if not sel.startswith("button:") and not sel.startswith("a:"):
+                        frame.evaluate(
+                            """(s) => {
+                                const el = document.querySelector(s);
+                                if (!el) return;
+                                try { el.disabled = false; el.removeAttribute('disabled'); } catch (e) {}
+                            }""",
+                            sel,
+                        )
+                    loc.click(timeout=15_000)
+                    page.wait_for_timeout(1_500)
+                    pages = ctx.pages
+                    if len(pages) > n_pages_before:
+                        new_page = pages[-1]
+                        try:
+                            new_page.wait_for_load_state("domcontentloaded", timeout=45_000)
+                        except Exception:
+                            pass
+                        return new_page
+                    return page
+                except Exception:
+                    continue
+        return None
+
+    def _click_download_attachment_confirm_button(self, page: Any) -> None:
+        """
+        After the grid icon (``ViewAttachmentsView``), NLX shows a confirm dialog.
+        Click the **first visible** primary action whose accessible name matches
+        **Download Attachment** — no ``expect_download``, no dialog-shell heuristics.
+        """
+        name_re = re.compile(r"download\s+attachment", re.I)
+        deadline = time.monotonic() + min(
+            45_000, max(8_000, int(self.timeout_seconds * 1_200))
+        ) / 1000
+        while time.monotonic() < deadline:
+            for frame in self._playwright_frames(page):
+                for locator in (
+                    frame.get_by_role("button", name=name_re),
+                    frame.locator("button").filter(has_text=name_re),
+                    frame.locator("a").filter(has_text=name_re),
+                ):
+                    try:
+                        n = locator.count()
+                    except Exception:
+                        continue
+                    for j in range(n):
+                        cand = locator.nth(j)
+                        try:
+                            if not cand.is_visible():
+                                continue
+                            cand.scroll_into_view_if_needed(timeout=3_000)
+                            cand.click(timeout=15_000)
+                            return
+                        except Exception:
+                            continue
+            try:
+                page.wait_for_timeout(120)
+            except Exception:
+                break
+
+    def _save_opened_tab_as_attachment_file(
+        self,
+        context: Any,
+        new_page: Any,
+        target_path: str,
+        display_name: str,
+    ) -> str:
+        """
+        Portal opens many IFBs in a **new tab**; Chromium may not emit a ``Download`` object.
+        Read ``http(s)`` or ``blob:`` from that tab and write to ``target_path``.
+        Returns the path actually written (may add extension or use Content-Disposition name).
+        """
+        nav_timeout = min(90_000, max(25_000, int(self.timeout_seconds * 2_500)))
+        try:
+            new_page.wait_for_load_state("domcontentloaded", timeout=nav_timeout)
+        except Exception:
+            pass
+        try:
+            new_page.wait_for_load_state("load", timeout=min(60_000, nav_timeout))
+        except Exception:
+            pass
+        try:
+            new_page.wait_for_function(
+                """() => {
+                    const u = location.href || '';
+                    return u && u !== 'about:blank' && !u.startsWith('chrome://newtab');
+                }""",
+                timeout=min(45_000, nav_timeout),
+            )
+        except Exception:
+            pass
+
+        url = ""
+        try:
+            url = new_page.url or ""
+        except Exception:
+            pass
+        body: bytes = b""
+        content_type = ""
+        fname_hint: Optional[str] = None
+
+        if url.startswith("blob:"):
+            arr = new_page.evaluate(
+                """async () => {
+                    const r = await fetch(location.href);
+                    const buf = await r.arrayBuffer();
+                    return Array.from(new Uint8Array(buf));
+                }"""
+            )
+            body = bytes(arr)
+        elif url.startswith("http://") or url.startswith("https://"):
+            body, content_type, fname_hint = self._fetch_attachment_bytes_for_tab_url(
+                context, new_page, url, nav_timeout
+            )
+        else:
+            raise RuntimeError(f"unsupported attachment tab URL after confirm: {url!r}")
+
+        out_path = target_path
+        if fname_hint:
+            base = re.sub(r"[^\w.\-]+", "_", os.path.basename(fname_hint)).strip("._")
+            if base:
+                out_path = os.path.join(os.path.dirname(target_path), base)
+        elif not os.path.splitext(out_path)[1]:
+            if content_type == "application/pdf" or "pdf" in content_type:
+                out_path = out_path + ".pdf"
+
+        parent = os.path.dirname(out_path)
+        if parent:
+            os.makedirs(parent, exist_ok=True)
+        with open(out_path, "wb") as f:
+            f.write(body)
+        if not body:
+            raise RuntimeError(f"saved empty body for {out_path!r} (url={url!r})")
+        return out_path
+
+    def _fetch_attachment_bytes_for_tab_url(
+        self,
+        context: Any,
+        new_page: Any,
+        url: str,
+        nav_timeout: int,
+    ) -> Tuple[bytes, str, Optional[str]]:
+        """
+        The attachment tab uses the user's session cookies. Prefer ``Page.request`` (cookie
+        jar tied to the tab), then in-page ``fetch`` (credentials: 'include'), then plain
+        ``context.request`` as a last resort.
+        """
+        last_exc: Optional[Exception] = None
+        req = getattr(new_page, "request", None)
+        if req is not None:
+            try:
+                resp = req.get(url, timeout=nav_timeout)
+                if resp.status < 400:
+                    ct = (resp.headers.get("content-type") or "").split(";")[0].strip().lower()
+                    cd = resp.headers.get("content-disposition") or resp.headers.get(
+                        "Content-Disposition"
+                    )
+                    return resp.body(), ct, _filename_from_content_disposition(cd)
+            except Exception as exc:
+                last_exc = exc
+        try:
+            meta = new_page.evaluate(
+                """async (u) => {
+                    const r = await fetch(u, { credentials: 'include' });
+                    const ct = (r.headers.get('content-type') || '').split(';')[0]
+                        .trim().toLowerCase();
+                    const cd = r.headers.get('content-disposition') || '';
+                    if (!r.ok) throw new Error('fetch HTTP ' + r.status);
+                    const buf = await r.arrayBuffer();
+                    return {
+                        bytes: Array.from(new Uint8Array(buf)),
+                        ct: ct,
+                        cd: cd,
+                    };
+                }""",
+                url,
+            )
+            return (
+                bytes(meta["bytes"]),
+                (meta.get("ct") or "").strip().lower(),
+                _filename_from_content_disposition(meta.get("cd")),
+            )
+        except Exception as exc:
+            last_exc = exc
+        resp = context.request.get(url, timeout=nav_timeout)
+        if resp.status >= 400:
+            raise RuntimeError(
+                f"attachment fetch failed: HTTP {resp.status} for {url[:160]!r}"
+            ) from last_exc
+        ct = (resp.headers.get("content-type") or "").split(";")[0].strip().lower()
+        cd = resp.headers.get("content-disposition") or resp.headers.get(
+            "Content-Disposition"
+        )
+        return resp.body(), ct, _filename_from_content_disposition(cd)
+
+    def count_view_attachment_download_slots(self, page: Any) -> int:
+        """
+        Number of **visible** row download controls in the View Attachments grid.
+        Uses ``[id^="PV_ATTACH_WRK_SCM_DOWNLOAD"]`` only (not the max across selectors,
+        which could count an extra hidden NLX template and yield 8 instead of 7).
+        """
+        best = 0
+        for frame in self._playwright_frames(page):
+            for scope in (
+                '[data-if-label="viewEventAttachmentTable"]',
+                'table[id^="AUC_ATTCH_HD_VW"]',
+            ):
+                loc = frame.locator(f'{scope} [id^="PV_ATTACH_WRK_SCM_DOWNLOAD"]')
+                try:
+                    n = loc.count()
+                except Exception:
+                    continue
+                visible = 0
+                for i in range(min(n, 64)):
+                    try:
+                        if loc.nth(i).is_visible():
+                            visible += 1
+                    except Exception:
+                        continue
+                if visible > best:
+                    best = visible
+        return best
+
+    def _complete_attachment_download_after_row_action(
+        self,
+        context: Any,
+        page: Any,
+        display_name: str,
+        desc: str,
+        download_dir: str,
+        file_index: int,
+        dl_timeout: int,
+    ) -> Optional[DownloadedAttachment]:
+        """
+        Grid icon is already clicked (modal visible). Click the **Download Attachment**
+        confirm, then capture bytes from the **new tab** (``expect_page`` + HTTP/blob).
+        """
+        safe = re.sub(r"[^\w.\-]+", "_", display_name).strip("._") or f"file_{file_index}"
+        if not os.path.splitext(safe)[1]:
+            safe = f"{safe}.pdf"
+        target = os.path.join(download_dir, safe)
+        if os.path.exists(target):
+            base, ext = os.path.splitext(safe)
+            target = os.path.join(download_dir, f"{base}_{file_index}{ext}")
+
+        new_page = None
+        try:
+            with context.expect_page(timeout=dl_timeout) as new_page_info:
+                self._click_download_attachment_confirm_button(page)
+            new_page = new_page_info.value
+            written = self._save_opened_tab_as_attachment_file(
+                context, new_page, target, display_name
+            )
+            return DownloadedAttachment(
+                local_path=written,
+                attached_file_name=display_name,
+                attachment_description=desc,
+            )
+        except Exception:
+            return None
+        finally:
+            if new_page is not None:
+                try:
+                    new_page.close()
+                except Exception:
+                    pass
+
+    def _download_attachment_rows(
+        self,
+        page: Any,
+        download_dir: str,
+        max_files: int,
+    ) -> List[DownloadedAttachment]:
+        """
+        Download up to max_files attachments. Cal eProcure Event Package uses PeopleSoft
+        rows ``tr[data-if-label="ViewAttachmentsTableRow"]`` with **buttons**
+        ``[data-if-label="ViewAttachmentsView"]`` / ``[id^='PV_ATTACH_WRK_SCM_DOWNLOAD']``
+        (not ``<a href>`` links). Many events show a **Download Attachment** modal; the file
+        is often opened in a **new tab** (handled via ``expect_page`` + HTTP/blob save).
+        """
+        downloaded: List[DownloadedAttachment] = []
+        header_re = re.compile(
+            r"^(attached file|attachment description|file name|download|actions)\s*$",
+            re.IGNORECASE,
+        )
+        ctx = page.context
+        dl_timeout = min(120_000, max(25_000, self.timeout_seconds * 3_000))
+
+        def _download_btn_for_row(row: Any) -> Any:
+            # Matches NLX output: button[data-if-label=ViewAttachmentsView], id PV_ATTACH_WRK_SCM_DOWNLOAD$n.
+            # Upload sibling uses ViewAttachmentsUpload / ATTACHRFXADD and often .if-hide.
+            selectors = (
+                PS_VIEW_ATTACH_DOWNLOAD_BTN,
+                '[data-if-label="ViewAttachmentsView"]:not(.if-hide)',
+                '[id^="PV_ATTACH_WRK_SCM_DOWNLOAD"]',
+                'input[id^="PV_ATTACH_WRK_SCM_DOWNLOAD"]',
+                'a[id^="PV_ATTACH_WRK_SCM_DOWNLOAD"]',
+                'button:has(.fa-download)',
+            )
+            for sel in selectors:
+                loc = row.locator(sel).first
+                if loc.count() == 0:
+                    continue
+                if sel == "button:has(.fa-download)" and row.locator(
+                    '[id^="ATTACHRFXADD"]'
+                ).count() > 0:
+                    continue
+                return loc
+            return None
+
+        self._wait_attachment_grid_hydrated(page)
+        self._expand_attachment_pager_show_all(page)
+        self._wait_attachment_grid_hydrated(page)
+
+        slot_cap = self.count_view_attachment_download_slots(page)
+        effective_max = min(max_files, slot_cap) if slot_cap > 0 else max_files
+
+        for frame in self._playwright_frames(page):
+            row_iter = self._best_attachment_row_locator(frame)
+            n = row_iter.count()
+            if n == 0:
+                continue
+
+            for i in range(n):
+                if len(downloaded) >= effective_max:
+                    return downloaded
+                row = row_iter.nth(i)
+                try:
+                    if row.locator("th").count() > 0:
+                        continue
+                except Exception:
+                    pass
+                name, desc = "", ""
+                try:
+                    name_el = row.locator(
+                        '[data-if-label="ViewAttachFileName"], '
+                        '[id^="PV_ATTACH_WRK_ATTACHUSERFILE"]'
+                    ).first
+                    if name_el.count() > 0:
+                        name = name_el.inner_text(timeout=4_000).strip()
+                except Exception:
+                    pass
+                try:
+                    desc_el = row.locator(
+                        '[data-if-label="ViewAttachDescriptSpan"], '
+                        'span[id^="PV_ATTACH_WRK_ATTACH_DESCR"]'
+                    ).first
+                    if desc_el.count() > 0:
+                        desc = desc_el.inner_text(timeout=4_000).strip()
+                except Exception:
+                    pass
+
+                trigger = _download_btn_for_row(row)
+                if trigger is None or trigger.count() == 0:
+                    continue
+
+                if header_re.match(name):
+                    continue
+                if not name and not desc:
+                    # Dynamic rows may omit mirrored text; still download if the control exists.
+                    pass
+
+                try:
+                    trigger.scroll_into_view_if_needed(timeout=5_000)
+                except Exception:
+                    pass
+                try:
+                    trigger.evaluate(
+                        """node => {
+                            if (!node) return;
+                            try { node.disabled = false; node.removeAttribute('disabled'); } catch (e) {}
+                        }"""
+                    )
+                except Exception:
+                    pass
+
+                display_name = name or f"attachment_{len(downloaded)}"
+                try:
+                    self._playwright_click_download_trigger(trigger)
+                    got = self._complete_attachment_download_after_row_action(
+                        ctx,
+                        page,
+                        display_name,
+                        desc,
+                        download_dir,
+                        len(downloaded),
+                        dl_timeout,
+                    )
+                    if got:
+                        downloaded.append(got)
+                except Exception:
+                    continue
+
+        if len(downloaded) == 0:
+            for frame in self._playwright_frames(page):
+                extra = self._download_attachments_via_scoped_triggers(
+                    page,
+                    frame,
+                    download_dir,
+                    effective_max,
+                    len(downloaded),
+                    ctx,
+                    dl_timeout,
+                )
+                downloaded.extend(extra)
+                if len(downloaded) >= effective_max:
+                    break
+        return downloaded
+
+    def download_event_package_attachments(
+        self,
+        detail_url: str,
+        download_dir: str,
+        max_files: int = 10,
+    ) -> List[DownloadedAttachment]:
+        """
+        Step 4: from Event Details, click View Event Package, then download up to ``max_files``
+        attachments (or all available if fewer). Records Attached File and Attachment Description
+        column text for each saved file.
+        """
+        os.makedirs(download_dir, exist_ok=True)
+        with self._playwright_page(accept_downloads=True) as page:
+            self._goto_event_detail(page, detail_url)
+            self._wait_for_detail_content_ready(page)
+            attach_page = self._click_view_event_package(page)
+            if attach_page is None:
+                return []
+            self._settle_after_view_event_package(attach_page)
+            return self._download_attachment_rows(attach_page, download_dir, max_files)
+
+    def run_steps_3_and_4(
+        self,
+        detail_url: str,
+        download_dir: str,
+        max_attachments: int = 10,
+    ) -> Tuple[str, List[DownloadedAttachment]]:
+        """
+        One browser session: Step 3 text scrape, then Step 4 attachment downloads.
+        """
+        os.makedirs(download_dir, exist_ok=True)
+        with self._playwright_page(accept_downloads=True) as page:
+            self._goto_event_detail(page, detail_url)
+            self._wait_for_detail_content_ready(page)
+            details_text = self._extract_event_details_text_from_page(page)
+            attach_page = self._click_view_event_package(page)
+            if attach_page is None:
+                return details_text, []
+            self._settle_after_view_event_package(attach_page)
+            attachments = self._download_attachment_rows(
+                attach_page, download_dir, max_attachments
+            )
+            return details_text, attachments
 
     # Try to fetch structured response payload for event detail pages
     # First attempts JSON endpoint variants, then falls back to embedded script extraction
@@ -763,10 +1788,10 @@ class CalEProcureInterface:
 
         return None
 
-# Three UNSPSC code extraction strategies: 
-# (1) structured API payload
-# (2) embedded script JSON
-# (3) plain-text matching - heuristics
+    # Three UNSPSC code extraction strategies:
+    # (1) structured API payload
+    # (2) embedded script JSON
+    # (3) plain-text matching - heuristics
     def _extract_unspsc_with_strategy(self, detail_url: str) -> Tuple[List[UnspscCode], str]:
         capture_results = self._fetch_capture_results_payload(detail_url)
         if capture_results:
@@ -781,7 +1806,11 @@ class CalEProcureInterface:
             if codes:
                 return codes, "embedded_capture_results"
 
-        return extract_unspsc_codes(detail_html), "text_fallback"
+        merged = _merge_unspsc_lists(
+            extract_unspsc_codes_from_unspsc_table(detail_html),
+            extract_unspsc_codes(detail_html),
+        )
+        return merged, "text_fallback"
 
     def fuzzy_search_candidates(
         self,
@@ -813,9 +1842,13 @@ class CalEProcureInterface:
                 seen_urls.add(row.detail_url)
                 candidates.append(row)
 
-        # If requests-based scraping produced no rows at all, try browser rendering
+        # If requests produced no rows, or this is a single-keyword query, also use the
+        # browser so results match the live portal (requests are often incomplete).
         fallback_error: Optional[Exception] = None
-        if allow_browser_fallback and not had_request_results:
+        should_use_browser = allow_browser_fallback and (
+            (not had_request_results) or (len(words) == 1)
+        )
+        if should_use_browser:
             for keyword in words:
                 try:
                     html = self._search_with_browser_html(keyword)
