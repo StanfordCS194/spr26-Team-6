@@ -3,3 +3,4 @@ token.json
 __pycache__/
 .vscode
 scraper/pdfs_for_upload/*
+.DS_Store
