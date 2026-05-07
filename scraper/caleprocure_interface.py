@@ -67,24 +67,24 @@ DEFAULT_PDFS_FOR_UPLOAD_DIR = os.path.join(
 
 # Tech/IT/telecommunications keywords (heuristics) for fuzzy search
 DEFAULT_TECH_KEYWORDS = [
-    "software"
-    # # "hardware",
-    # "computer",
+    # "software",
+    # "hardware",
+    "computer",
     # "server",
     # "cloud",
-    # # "cybersecurity",
+    # "cybersecurity",
     # "network",
-    # # "telecommunications",
-    # # "data center",
-    # # "it support",
-    # "database",
-    # # "ai",
-    # # "machine learning",
-    # # "laptop",
-    # # "desktop",
-    # # "devops",
-    # # "mainframe",
-    # # "encryption",
+    # "telecommunications",
+    # "data center",
+    # "it support",
+    "database"
+    # "ai",
+    # "machine learning",
+    # "laptop",
+    # "desktop",
+    # "devops",
+    # "mainframe",
+    # "encryption",
     # "firewall",
     # "data"
     # "firmware",
@@ -96,6 +96,7 @@ DEFAULT_TECH_KEYWORDS = [
 # For pruning the results of the fuzzy/heuristic-based search
 TECH_UNSPSC_PREFIXES = (
     "43",       # Information technology broadcasting and telecommunications
+    "80101507", # Information technology consulation services
     "8111",     # Profession engineering services: computer services
     "8116",     # Profession engineering services: information technology service delivery
     "8311",     # Telecommunications media services   
@@ -223,6 +224,27 @@ class _UnspscParser(HTMLParser):
 # Lowercase a string and change all whitespace to single spaces for consistency
 def _normalize(value: str) -> str:
     return " ".join(value.lower().split())
+
+
+def _looks_like_placeholder_detail_text(text: str) -> bool:
+    """Heuristic guard for NLX template placeholders before hydration."""
+    n = _normalize(text or "")
+    if not n:
+        return True
+    markers = (
+        "[event title]",
+        "[detail description]",
+        "loading...",
+        "[contact",
+        "[email]",
+        "[phone]",
+        "[pre bid conference]",
+        "[mandatory]",
+        "[01/01/2001]",
+        "[12:00 am]",
+    )
+    return any(m in n for m in markers)
+
 
 # Extracts the event ID from the event name or URL
 def _extract_external_id(event_name: str, detail_url: str) -> Optional[str]:
@@ -1103,29 +1125,68 @@ class CalEProcureInterface:
 
     def _wait_for_detail_content_ready(self, page: Any) -> None:
         """
-        Wait until NLX has filled real event data (not the template placeholders).
-        Without this, #main often has only ~100–200 chars and buttons are missing.
+        Wait until NLX has filled real event data in at least one visible frame.
+        Raises ``TimeoutError`` if the page still looks like template placeholder content.
         """
-        deadline = min(45_000, max(12_000, int(self.timeout_seconds * 1000)))
-        try:
-            page.wait_for_function(
-                """
-                () => {
-                    const norm = (s) => (s || '').replace(/\\s+/g, ' ').trim();
-                    const nameEl = document.querySelector('[data-if-label="eventName"]');
-                    const name = norm(nameEl ? nameEl.textContent : '');
-                    if (name.length > 2 && name !== '[Event Title]') return true;
-                    const main = document.querySelector('#main');
-                    const mainText = norm(main ? main.innerText : '');
-                    if (mainText.length > 200) return true;
-                    return false;
-                }
-                """,
-                timeout=deadline,
-            )
-        except Exception:
-            pass
-        page.wait_for_timeout(600)
+        deadline_ms = min(50_000, max(14_000, int(self.timeout_seconds * 1_200)))
+        deadline = time.monotonic() + (deadline_ms / 1000.0)
+        last_observed = ""
+
+        while time.monotonic() < deadline:
+            for frame in self._playwright_frames(page):
+                try:
+                    snapshot = frame.evaluate(
+                        """
+                        () => {
+                            const norm = (s) => (s || '').replace(/\\s+/g, ' ').trim();
+                            const nameEl = document.querySelector('[data-if-label="eventName"]');
+                            const mainEl = document.querySelector('#main');
+                            const bodyEl = document.body;
+                            return {
+                                name: norm(nameEl ? nameEl.textContent : ''),
+                                main: norm(mainEl ? mainEl.innerText : ''),
+                                body: norm(bodyEl ? bodyEl.innerText : ''),
+                            };
+                        }
+                        """
+                    )
+                except Exception:
+                    continue
+
+                name = str(snapshot.get("name") or "")
+                main = str(snapshot.get("main") or "")
+                body = str(snapshot.get("body") or "")
+                if len(main) > len(last_observed):
+                    last_observed = main
+                elif len(body) > len(last_observed):
+                    last_observed = body
+
+                # Strongest readiness signal: hydrated event title field.
+                if name and len(name) >= 4 and not _looks_like_placeholder_detail_text(name):
+                    page.wait_for_timeout(600)
+                    return
+
+                # Fallback: substantial details text with expected labels and no placeholders.
+                main_low = main.lower()
+                if (
+                    len(main) >= 450
+                    and not _looks_like_placeholder_detail_text(main)
+                    and (
+                        "view event package" in main_low
+                        or "contact information" in main_low
+                        or "description:" in main_low
+                    )
+                ):
+                    page.wait_for_timeout(600)
+                    return
+
+            page.wait_for_timeout(250)
+
+        sample = (last_observed or "")[:220]
+        raise TimeoutError(
+            "Event details page did not hydrate in time; placeholder/template text persisted. "
+            f"Sample={sample!r}"
+        )
 
     def _settle_after_view_event_package(self, page: Any) -> None:
         """Wait for Event Bid / View Attachments grid (not UNSPSC or other tables)."""

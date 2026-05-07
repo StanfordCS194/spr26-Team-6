@@ -40,12 +40,16 @@ def _first_email(text: str) -> Optional[str]:
 
 
 def _first_phone(text: str) -> Optional[str]:
-    # Cal eProcure: "Phone: 760/770-6242"
-    m = re.search(r"(?:Phone\s*:?\s*)?(\d{3}/\d{3}-\d{4})\b", text, re.I)
+    # Cal eProcure usually uses a labeled field, e.g. "Phone: 760/770-6242".
+    # Avoid matching unlabeled 10-digit tokens like numeric event IDs.
+    m = re.search(r"(?:^|\n)\s*Phone\s*:?\s*(\d{3}/\d{3}-\d{4})\b", text, re.I)
     if m:
         return m.group(1)
+
+    # Fallback to common formatted phone patterns (separators required).
+    # Examples: 916-653-8468, 916 653 8468, (916) 653-8468
     m = re.search(
-        r"(?:\+?1[-.\s]?)?(?:\(\d{3}\)|\d{3})[-.\s]?\d{3}[-.\s]?\d{4}",
+        r"(?:\+?1[-.\s]?)?(?:\(\d{3}\)\s*|\d{3}[-./\s])\d{3}[-./\s]\d{4}\b",
         text,
     )
     return m.group(0) if m else None
@@ -94,8 +98,49 @@ def _cal_eprocure_title_line(text: str, external_id: str) -> Optional[str]:
     """Line like ``CS269009 Pharmacy Services`` (event id + name)."""
     if not external_id or external_id == "unknown":
         return None
-    m = re.search(rf"(?m)^\s*{re.escape(external_id)}\s+.+$", text)
-    return m.group(0).strip() if m else None
+    # Keep match on a single line only (avoid crossing newlines into labels like "Format/Type:").
+    m = re.search(rf"(?m)^\s*{re.escape(external_id)}[ \t]+([^\n]+)$", text)
+    if not m:
+        return None
+    tail = " ".join(m.group(1).split())
+    return f"{external_id} {tail}".strip()
+
+
+def _cal_eprocure_title_from_event_block(text: str, external_id: str) -> Optional[str]:
+    """
+    Prefer the line immediately after ``Event : <id>`` (or ``Event ID``) when present.
+    """
+    if not text:
+        return None
+    lines = [ln.strip() for ln in text.replace("\r\n", "\n").split("\n")]
+    for i, line in enumerate(lines):
+        low = line.lower()
+        if not low:
+            continue
+        if low.startswith("event :") or low == "event id":
+            # Skip the raw ID line and take the next meaningful non-label line as title.
+            for j in range(i + 1, min(i + 8, len(lines))):
+                cand = (lines[j] or "").strip()
+                if not cand:
+                    continue
+                cand_low = cand.lower()
+                if external_id and cand == external_id:
+                    continue
+                if cand_low in {
+                    "details",
+                    "event id",
+                    "format/type:",
+                    "published date",
+                    "dept:",
+                    "event version",
+                    "event end date:",
+                    "description:",
+                }:
+                    continue
+                if len(cand) < 6:
+                    continue
+                return " ".join(cand.split())
+    return None
 
 
 def _cal_eprocure_dept_block(text: str) -> Optional[str]:
@@ -161,7 +206,9 @@ def parse_baseline_fields_from_details_text(
     text = scraped_text.replace("\r\n", "\n").strip()
     lines = [ln.strip() for ln in text.split("\n") if ln.strip()]
 
-    title: Optional[str] = _cal_eprocure_title_line(text, external_id)
+    title: Optional[str] = _cal_eprocure_title_from_event_block(text, external_id)
+    if not title:
+        title = _cal_eprocure_title_line(text, external_id)
     dept: Optional[str] = _cal_eprocure_dept_block(text)
     published_date: Optional[str] = _cal_eprocure_published_date(text)
     due_date: Optional[str] = _cal_eprocure_due_date(text)

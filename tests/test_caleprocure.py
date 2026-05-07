@@ -9,6 +9,7 @@ from scraper.caleprocure_interface import (
     CalEProcureInterface,
     SearchResult,
     UnspscCode,
+    _looks_like_placeholder_detail_text,
     extract_unspsc_codes_from_unspsc_table,
     is_tech_unspsc,
     parse_search_results,
@@ -173,6 +174,15 @@ class TestCalEProcureInterface(unittest.TestCase):
         )
         ids = {r.external_id for r in rows}
         self.assertEqual(ids, {"0000039001", "0000039002"})
+
+    def test_placeholder_detail_text_detection(self):
+        self.assertTrue(_looks_like_placeholder_detail_text("[Event Title] Loading..."))
+        self.assertTrue(_looks_like_placeholder_detail_text("Contact Information [Contact Name]"))
+        self.assertFalse(
+            _looks_like_placeholder_detail_text(
+                "Solicitation for software maintenance services Description: support and hosting"
+            )
+        )
 
 if __name__ == "__main__":
     unittest.main()
