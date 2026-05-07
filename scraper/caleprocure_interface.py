@@ -4,10 +4,17 @@ It is used to search for technology-related contracts.
 
 Step 1: search events by technology keywords and fuzzy-match against Event Name.
 Step 2: open each candidate result and scrape only those whose UNSPSC codes look technology-related.
-Step 3: scrape Event Details page text (browser; see ``scrape_event_details_text``).
-Step 4: View Event Package and download up to 10 attachments (see ``download_event_package_attachments`` or ``run_steps_3_and_4``).
+Step 3: scrape Event Details page text.
+Step 4: View Event Package and download up to 10 attachments.
+Step 5–6: upload PDFs to Google Drive and write JSON (``finalize_pipeline_after_downloads``, ``caleprocure_json_generator``).
 
 See tests/test_caleprocure.py for unit tests.
+
+CLI: from repo root ``python -m scraper.caleprocure_interface`` (Steps 1–2 by default).
+Add ``--steps-3-4`` / ``--finalize`` to run Steps 3+ on **all** Step 2 matches by default
+(``--max-pipeline-events N`` to cap). Step 3–4 searches the portal by **event name** (Event Name field).
+Use ``--per-keyword`` only for Step 1–2 diagnostics.
+
 Alternative: run the following in terminal
 conda run -n cs194w python -c "
 from scraper.caleprocure_interface import CalEProcureInterface
@@ -31,7 +38,9 @@ from html import unescape
 from html.parser import HTMLParser
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 from urllib.parse import unquote, urljoin
+import argparse
 import os
+import sys
 import time
 import requests
 import re
@@ -51,35 +60,35 @@ PS_VIEW_ATTACH_DOWNLOAD_CTRLS = (
     'button:has(.fa-download)'
 )
 
-# Default folder for Step 4 saved attachments before Google Drive upload (created on demand).
+# Default folder for saved pdfs before Google Drive upload (created on demand).
 DEFAULT_PDFS_FOR_UPLOAD_DIR = os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "pdfs_for_upload"
 )
 
 # Tech/IT/telecommunications keywords (heuristics) for fuzzy search
 DEFAULT_TECH_KEYWORDS = [
-    "software",
-    "hardware",
-    "computer",
-    "server",
-    "cloud",
-    "cybersecurity",
-    "network",
-    "telecommunications",
-    "data center",
-    "it support",
-    "database",
-    "ai",
-    "machine learning",
-    "laptop",
-    "desktop",
-    "devops",
-    "mainframe",
-    "encryption",
-    "firewall",
-    "data",
-    "firmware",
-    "microservices"
+    "software"
+    # # "hardware",
+    # "computer",
+    # "server",
+    # "cloud",
+    # # "cybersecurity",
+    # "network",
+    # # "telecommunications",
+    # # "data center",
+    # # "it support",
+    # "database",
+    # # "ai",
+    # # "machine learning",
+    # # "laptop",
+    # # "desktop",
+    # # "devops",
+    # # "mainframe",
+    # # "encryption",
+    # "firewall",
+    # "data"
+    # "firmware",
+    # "microservices"
 ]
 
 # Conservative UNSPSC families frequently used for technology procurement
@@ -261,6 +270,33 @@ def _best_keyword_similarity(event_name: str, keywords: Iterable[str]) -> float:
         score = SequenceMatcher(None, normalized_name, normalized_keyword).ratio()
         best = max(best, score)
     return best
+
+
+def _pick_search_keyword_for_event(event_name: str, keywords: Iterable[str]) -> str:
+    """
+    Choose a search string that is likely to surface ``event_name`` in Cal eProcure search.
+    Prefer a substring match from ``keywords``, else an event-id token (e.g. CS269009), else best fuzzy.
+    """
+    words = list(keywords)
+    if not words:
+        return "software"
+    n = _normalize(event_name)
+    for kw in words:
+        kn = _normalize(kw)
+        if kn and kn in n:
+            return kw
+    for token in event_name.split():
+        if re.match(r"^CS\d{5,}$", token.strip(), re.I):
+            return token.strip()
+    best = words[0]
+    best_score = -1.0
+    for kw in words:
+        sc = _best_keyword_similarity(event_name, [kw])
+        if sc > best_score:
+            best_score = sc
+            best = kw
+    return best
+
 
 # Determines if a UNSPSC code is relevant by checking against TECH_UNSPSC_PREFIXES
 def is_tech_unspsc(code: str, description: str) -> bool:
@@ -670,16 +706,177 @@ class CalEProcureInterface:
             f"Unable to query Cal eProcure search endpoint for keyword '{keyword}'."
         )
 
-    # Browser fallback for JS-render pages, using playwright
-    def _search_with_browser_html(self, keyword: str) -> str:
-        try:
-            from playwright.sync_api import sync_playwright
-        except ImportError as exc:
-            raise RuntimeError(
-                "Playwright is required for browser fallback. "
-                "Install with `pip install playwright` and `python -m playwright install chromium`."
-            ) from exc
+    def _browser_run_search_on_page(self, page: Any, keyword: str) -> None:
+        """
+        On an existing Playwright page: open event search, submit ``keyword``, wait for results grid.
+        Used for HTML capture and for Steps 3–4 when opening Event Details via Event Name click.
+        """
+        page.goto(SEARCH_URL, wait_until="domcontentloaded", timeout=45_000)
+        page.wait_for_timeout(2_000)
 
+        try:
+            cscr_link = page.locator("a:has-text('Find Bid Opportunities (CSCR)')").first
+            if cscr_link.count() == 0:
+                cscr_link = page.locator("a[href*='event-search.aspx']").first
+            if cscr_link.count() > 0:
+                cscr_link.click(timeout=10_000)
+                try:
+                    page.wait_for_selector("#RESP_INQA_WK_ZZ_AUC_NAME", timeout=25_000)
+                except Exception:
+                    pass
+                page.wait_for_timeout(1_000)
+        except Exception:
+            pass
+
+        frames = [page.main_frame] + [f for f in page.frames if f != page.main_frame]
+        specific_input_id = "#RESP_INQA_WK_ZZ_AUC_NAME"
+        specific_search_button_id = "#RESP_INQA_WK_INQ_AUC_GO_PB"
+
+        filled = False
+        for frame in frames:
+            try:
+                if frame.locator(specific_input_id).count() > 0:
+                    frame.evaluate(
+                        """(sel, val) => {
+                            const el = document.querySelector(sel);
+                            if (!el) return false;
+                            try {
+                              el.disabled = false;
+                              el.removeAttribute('disabled');
+                            } catch (e) {}
+                            try {
+                              el.readOnly = false;
+                              el.removeAttribute('readonly');
+                            } catch (e) {}
+                            el.value = val;
+                            el.focus?.();
+                            el.dispatchEvent(new Event('input', { bubbles: true }));
+                            el.dispatchEvent(new Event('keyup', { bubbles: true }));
+                            el.dispatchEvent(new Event('change', { bubbles: true }));
+                            el.blur?.();
+                            return true;
+                        }""",
+                        specific_input_id,
+                        keyword,
+                    )
+                    filled = True
+                    break
+            except Exception:
+                continue
+
+        if not filled:
+            input_selectors = [
+                "input[name*='eventName' i]",
+                "input[id*='eventName' i]",
+                "input[name*='AUC_NAME' i]",
+                "input[id*='AUC_NAME' i]",
+                "input[name*='keyword' i]",
+                "input[id*='keyword' i]",
+                "input[name*='search' i]",
+                "input[id*='search' i]",
+                "input[type='search']",
+                "input[type='text']",
+            ]
+            for frame in frames:
+                for selector in input_selectors:
+                    try:
+                        locator = frame.locator(selector).first
+                        if locator.count() == 0:
+                            continue
+                        locator.fill("")
+                        locator.fill(keyword)
+                        filled = True
+                        break
+                    except Exception:
+                        continue
+                if filled:
+                    break
+
+        if not filled:
+            raise RuntimeError("Could not find a search input field on Cal eProcure page.")
+
+        clicked = False
+        for frame in frames:
+            try:
+                if frame.locator(specific_search_button_id).count() > 0:
+                    frame.evaluate(
+                        """(sel) => {
+                            const btn = document.querySelector(sel);
+                            if (!btn) return false;
+                            try { btn.disabled = false; btn.removeAttribute('disabled'); } catch (e) {}
+                            btn.click();
+                            return true;
+                        }""",
+                        specific_search_button_id,
+                    )
+                    frame.locator(specific_search_button_id).first.click(timeout=10_000)
+                    clicked = True
+                    break
+            except Exception:
+                continue
+
+        if not clicked:
+            button_selectors = [
+                "button:has-text('Search')",
+                "input[type='submit'][value*='Search' i]",
+                "button[id*='search' i]",
+                "input[id*='search' i]",
+                "a:has-text('Search')",
+            ]
+            for frame in frames:
+                for selector in button_selectors:
+                    try:
+                        locator = frame.locator(selector).first
+                        if locator.count() == 0:
+                            continue
+                        locator.click(timeout=8_000)
+                        clicked = True
+                        break
+                    except Exception:
+                        continue
+                if clicked:
+                    break
+
+        if not clicked:
+            for frame in frames:
+                try:
+                    frame.keyboard.press("Enter")
+                    clicked = True
+                    break
+                except Exception:
+                    continue
+
+        try:
+            page.wait_for_selector("table tbody tr, tbody.clickable tr", timeout=20_000)
+        except Exception:
+            pass
+        page.wait_for_timeout(1_500)
+
+    @staticmethod
+    def _harvest_playwright_page_html(page: Any) -> str:
+        """Main document plus iframe bodies (Cal eProcure often renders the grid in a frame)."""
+        frames = [page.main_frame] + [f for f in page.frames if f != page.main_frame]
+        content = page.content()
+        for frame in frames[1:]:
+            try:
+                content += "\n<!-- FRAME CONTENT -->\n" + frame.content()
+            except Exception:
+                continue
+        return content
+
+    # Browser fallback for JS-render pages, using playwright
+    def _search_with_browser_html(self, keyword: str, page: Optional[Any] = None) -> str:
+        """
+        Run one portal search in a browser and return HTML for ``parse_search_results``.
+
+        If ``page`` is provided, reuse it (same browser session). Otherwise launch a temporary
+        browser and close it when done.
+        """
+        if page is not None:
+            self._browser_run_search_on_page(page, keyword)
+            return self._harvest_playwright_page_html(page)
+
+        sync_playwright = self._require_playwright()
         with sync_playwright() as p:
             browser = p.chromium.launch(
                 headless=self.playwright_headless,
@@ -690,176 +887,12 @@ class CalEProcureInterface:
                 user_agent=self.session.headers.get("User-Agent", ""),
                 locale="en-US",
             )
-            page = context.new_page()
-            page.goto(SEARCH_URL, wait_until="domcontentloaded", timeout=45_000)
-            page.wait_for_timeout(2_000)
-
-            # If we landed on the generic portal, click through to the CSCR app
-            # ("Find Bid Opportunities (CSCR)") before trying to locate search inputs
+            pw_page = context.new_page()
             try:
-                cscr_link = page.locator("a:has-text('Find Bid Opportunities (CSCR)')").first
-                if cscr_link.count() == 0:
-                    # Fallback: any link pointing to the event-search page
-                    cscr_link = page.locator("a[href*='event-search.aspx']").first
-                if cscr_link.count() > 0:
-                    cscr_link.click(timeout=10_000)
-                    try:
-                        page.wait_for_selector("#RESP_INQA_WK_ZZ_AUC_NAME", timeout=25_000)
-                    except Exception:
-                        pass
-                    page.wait_for_timeout(1_000)
-            except Exception:
-                # If this navigation step fails, we still try to proceed; the
-                # worst case is we stay on the landing page and no rows are found
-                pass
-
-            # Try known Cal eProcure search input/button first
-            frames = [page.main_frame] + [f for f in page.frames if f != page.main_frame]
-            specific_input_id = "#RESP_INQA_WK_ZZ_AUC_NAME"
-            specific_search_button_id = "#RESP_INQA_WK_INQ_AUC_GO_PB"
-
-            filled = False
-            for frame in frames:
-                try:
-                    if frame.locator(specific_input_id).count() > 0:
-                        # Some templates render the field as temporarily readonly/disabled
-                        # Set the value via JS and dispatch input/change events
-                        frame.evaluate(
-                            """(sel, val) => {
-                                const el = document.querySelector(sel);
-                                if (!el) return false;
-                                // If the field is disabled/readonly in the template,
-                                // clear those attributes so the app can use the value.
-                                try {
-                                  el.disabled = false;
-                                  el.removeAttribute('disabled');
-                                } catch (e) {}
-                                try {
-                                  el.readOnly = false;
-                                  el.removeAttribute('readonly');
-                                } catch (e) {}
-
-                                el.value = val;
-                                el.focus?.();
-                                el.dispatchEvent(new Event('input', { bubbles: true }));
-                                el.dispatchEvent(new Event('keyup', { bubbles: true }));
-                                el.dispatchEvent(new Event('change', { bubbles: true }));
-                                el.blur?.();
-                                return true;
-                            }""",
-                            specific_input_id,
-                            keyword,
-                        )
-                        filled = True
-                        break
-                except Exception:
-                    continue
-
-            # If we couldn't set the known field, fall back to generic heuristics
-            if not filled:
-                # Try likely search input selectors across all frames
-                # Cal eProcure can render controls inside PeopleSoft/NLX frames
-                input_selectors = [
-                    "input[name*='eventName' i]",
-                    "input[id*='eventName' i]",
-                    "input[name*='AUC_NAME' i]",
-                    "input[id*='AUC_NAME' i]",
-                    "input[name*='keyword' i]",
-                    "input[id*='keyword' i]",
-                    "input[name*='search' i]",
-                    "input[id*='search' i]",
-                    "input[type='search']",
-                    "input[type='text']",
-                ]
-
-                for frame in frames:
-                    for selector in input_selectors:
-                        try:
-                            locator = frame.locator(selector).first
-                            if locator.count() == 0:
-                                continue
-                            locator.fill("")
-                            locator.fill(keyword)
-                            filled = True
-                            break
-                        except Exception:
-                            continue
-                    if filled:
-                        break
-
-            if not filled:
+                self._browser_run_search_on_page(pw_page, keyword)
+                return self._harvest_playwright_page_html(pw_page)
+            finally:
                 browser.close()
-                raise RuntimeError("Could not find a search input field on Cal eProcure page.")
-
-            # Try clicking a likely search button in any frame; fall back to Enter
-            clicked = False
-            for frame in frames:
-                try:
-                    if frame.locator(specific_search_button_id).count() > 0:
-                        # Click via JS to bypass cases where the element is disabled during template render
-                        frame.evaluate(
-                            """(sel) => {
-                                const btn = document.querySelector(sel);
-                                if (!btn) return false;
-                                try { btn.disabled = false; btn.removeAttribute('disabled'); } catch (e) {}
-                                btn.click();
-                                return true;
-                            }""",
-                            specific_search_button_id,
-                        )
-                        # Also attempt a normal click as a fallback
-                        frame.locator(specific_search_button_id).first.click(timeout=10_000)
-                        clicked = True
-                        break
-                except Exception:
-                    continue
-
-            if not clicked:
-                button_selectors = [
-                    "button:has-text('Search')",
-                    "input[type='submit'][value*='Search' i]",
-                    "button[id*='search' i]",
-                    "input[id*='search' i]",
-                    "a:has-text('Search')",
-                ]
-                for frame in frames:
-                    for selector in button_selectors:
-                        try:
-                            locator = frame.locator(selector).first
-                            if locator.count() == 0:
-                                continue
-                            locator.click(timeout=8_000)
-                            clicked = True
-                            break
-                        except Exception:
-                            continue
-                    if clicked:
-                        break
-
-            if not clicked:
-                for frame in frames:
-                    try:
-                        frame.keyboard.press("Enter")
-                        clicked = True
-                        break
-                    except Exception:
-                        continue
-
-            # Avoid networkidle (often waits full timeout on this site)
-            try:
-                page.wait_for_selector("table tbody tr, tbody.clickable tr", timeout=20_000)
-            except Exception:
-                pass
-            page.wait_for_timeout(1_500)
-            content = page.content()
-            # Include frame content because results may render inside an iframe
-            for frame in frames[1:]:
-                try:
-                    content += "\n<!-- FRAME CONTENT -->\n" + frame.content()
-                except Exception:
-                    continue
-            browser.close()
-            return content
 
     def fetch_event_detail_html(self, detail_url: str) -> str:
         response = self.session.get(detail_url, timeout=self.timeout_seconds)
@@ -915,6 +948,158 @@ class CalEProcureInterface:
             pass
         # NLX/InFlight paints after #main exists; brief pause beats networkidle.
         page.wait_for_timeout(1_200)
+
+    @staticmethod
+    def _detail_url_tail(detail_url: str) -> str:
+        tail = detail_url.rstrip("/").split("/")[-1]
+        if "?" in tail:
+            tail = tail.split("?", 1)[0]
+        return tail
+
+    def _click_opens_detail_page(
+        self,
+        context: Any,
+        page: Any,
+        target: Any,
+        *,
+        nav_timeout: int,
+        click_timeout: int,
+    ) -> Any:
+        """
+        Click a search-result control; return the Event Details ``Page`` (new tab or same tab).
+        """
+        from playwright.sync_api import TimeoutError as PlaywrightTimeoutError
+
+        url_pat = re.compile(r"/event/", re.I)
+        try:
+            with context.expect_page(timeout=nav_timeout) as new_pg:
+                try:
+                    target.scroll_into_view_if_needed(timeout=5_000)
+                except Exception:
+                    pass
+                target.click(timeout=click_timeout)
+            dp = new_pg.value
+            try:
+                dp.wait_for_load_state("domcontentloaded", timeout=nav_timeout)
+            except Exception:
+                pass
+            return dp
+        except PlaywrightTimeoutError:
+            try:
+                target.scroll_into_view_if_needed(timeout=5_000)
+            except Exception:
+                pass
+            target.click(timeout=click_timeout, force=True)
+            try:
+                page.wait_for_url(url_pat, timeout=nav_timeout)
+            except Exception:
+                pass
+            return page
+
+    def _open_event_detail_from_search_results(
+        self,
+        page: Any,
+        context: Any,
+        detail_url: str,
+        event_name: str,
+    ) -> Optional[Any]:
+        """
+        On the search-results page, open Event Details the same way a user does: click Event Name
+        (or row/link). Often opens a **new tab**; falls back to same-tab navigation.
+        """
+        tail = self._detail_url_tail(detail_url)
+        nav_timeout = max(15_000, min(90_000, int(self.timeout_seconds * 1000)))
+        click_timeout = min(30_000, nav_timeout)
+
+        for frame in self._playwright_frames(page):
+            for sel in (f'a[href*="{tail}"]', f'a[href*="/{tail}"]'):
+                try:
+                    loc = frame.locator(sel)
+                    n = loc.count()
+                    for i in range(min(n, 12)):
+                        cand = loc.nth(i)
+                        try:
+                            if not cand.is_visible():
+                                continue
+                        except Exception:
+                            continue
+                        return self._click_opens_detail_page(
+                            context,
+                            page,
+                            cand,
+                            nav_timeout=nav_timeout,
+                            click_timeout=click_timeout,
+                        )
+                except Exception:
+                    continue
+
+        if event_name.strip():
+            frag = event_name.strip()[:72]
+            esc = re.escape(frag) if len(frag) < 80 else re.escape(frag[:40])
+            for frame in self._playwright_frames(page):
+                try:
+                    loc = frame.get_by_role("link", name=re.compile(esc, re.I))
+                    n = loc.count()
+                    for i in range(min(n, 8)):
+                        cand = loc.nth(i)
+                        try:
+                            if not cand.is_visible():
+                                continue
+                        except Exception:
+                            continue
+                        return self._click_opens_detail_page(
+                            context,
+                            page,
+                            cand,
+                            nav_timeout=nav_timeout,
+                            click_timeout=click_timeout,
+                        )
+                except Exception:
+                    pass
+                try:
+                    cell = frame.locator('[data-if-label="tdEventName"]').filter(
+                        has_text=re.compile(esc, re.I)
+                    )
+                    n = cell.count()
+                    for i in range(min(n, 8)):
+                        cand = cell.nth(i)
+                        try:
+                            if not cand.is_visible():
+                                continue
+                        except Exception:
+                            continue
+                        return self._click_opens_detail_page(
+                            context,
+                            page,
+                            cand,
+                            nav_timeout=nav_timeout,
+                            click_timeout=click_timeout,
+                        )
+                except Exception:
+                    pass
+                try:
+                    row = frame.locator("tbody.clickable tr").filter(
+                        has_text=re.compile(re.escape(tail), re.I)
+                    )
+                    n = row.count()
+                    for i in range(min(n, 8)):
+                        cand = row.nth(i)
+                        try:
+                            if not cand.is_visible():
+                                continue
+                        except Exception:
+                            continue
+                        return self._click_opens_detail_page(
+                            context,
+                            page,
+                            cand,
+                            nav_timeout=nav_timeout,
+                            click_timeout=click_timeout,
+                        )
+                except Exception:
+                    pass
+
+        return None
 
     def _wait_for_detail_content_ready(self, page: Any) -> None:
         """
@@ -1742,16 +1927,97 @@ class CalEProcureInterface:
         detail_url: str,
         download_dir: str,
         max_attachments: int = 10,
+        *,
+        event_name: Optional[str] = None,
+        event_external_id: Optional[str] = None,
+        search_keyword: Optional[str] = None,
+        open_via_search_click: bool = True,
+        search_keyword_pool: Optional[Iterable[str]] = None,
+        progress: bool = False,
     ) -> Tuple[str, List[DownloadedAttachment]]:
         """
         One browser session: Step 3 text scrape, then Step 4 attachment downloads.
+
+        By default, reproduces manual navigation: **search the portal by event name** (Event Name
+        field), then click the matching row on the results grid (often a **new tab**).
+        Pass ``search_keyword=`` to force a different search string. If click-through fails, falls
+        back to ``page.goto(detail_url)``. Pass ``open_via_search_click=False`` for direct URL only.
         """
         os.makedirs(download_dir, exist_ok=True)
+        pool = list(search_keyword_pool or DEFAULT_TECH_KEYWORDS)
         with self._playwright_page(accept_downloads=True) as page:
-            self._goto_event_detail(page, detail_url)
-            self._wait_for_detail_content_ready(page)
-            details_text = self._extract_event_details_text_from_page(page)
-            attach_page = self._click_view_event_package(page)
+            context = page.context
+            detail_page = page
+            if open_via_search_click:
+                if search_keyword and str(search_keyword).strip():
+                    kw = str(search_keyword).strip()
+                    kw_source = "override (--search-keyword)"
+                else:
+                    kw = ""
+                    kw_source = ""
+                    if event_name and str(event_name).strip():
+                        kw = " ".join(str(event_name).split())
+                        kw_source = "event name"
+                    if not kw:
+                        kw = (event_external_id or "").strip()
+                        if kw:
+                            kw_source = "event id (fallback)"
+                    if not kw:
+                        kw = self._detail_url_tail(detail_url)
+                        if kw:
+                            kw_source = "detail URL tail (fallback)"
+                    if not kw and event_name:
+                        kw = _pick_search_keyword_for_event(event_name, pool)
+                        kw_source = "derived from name / keyword pool"
+                name_for_click = event_name or ""
+                if kw:
+                    if progress:
+                        print(
+                            f"    Step 3–4: portal search {kw_source} term={kw!r} (then click row)…",
+                            flush=True,
+                        )
+                    self._browser_run_search_on_page(page, kw)
+                    opened = self._open_event_detail_from_search_results(
+                        page, context, detail_url, name_for_click
+                    )
+                    if opened is not None:
+                        detail_page = opened
+                        if progress:
+                            try:
+                                u = detail_page.url
+                            except Exception:
+                                u = "?"
+                            mode = "new tab" if detail_page is not page else "same tab"
+                            print(f"    Step 3–4: opened Event Details ({mode}) → {u}", flush=True)
+                    else:
+                        if progress:
+                            print(
+                                "    Step 3–4: no matching row/link on search results; "
+                                f"fallback goto {detail_url!r}",
+                                flush=True,
+                            )
+                        self._goto_event_detail(page, detail_url)
+                        detail_page = page
+                else:
+                    if progress:
+                        print(
+                            f"    Step 3–4: no search term; direct navigation → {detail_url!r}",
+                            flush=True,
+                        )
+                    self._goto_event_detail(page, detail_url)
+                    detail_page = page
+            else:
+                if progress:
+                    print(
+                        f"    Step 3–4: direct navigation → {detail_url!r}",
+                        flush=True,
+                    )
+                self._goto_event_detail(page, detail_url)
+                detail_page = page
+
+            self._wait_for_detail_content_ready(detail_page)
+            details_text = self._extract_event_details_text_from_page(detail_page)
+            attach_page = self._click_view_event_package(detail_page)
             if attach_page is None:
                 return details_text, []
             self._settle_after_view_event_package(attach_page)
@@ -1812,11 +2078,77 @@ class CalEProcureInterface:
         )
         return merged, "text_fallback"
 
+    def _browser_fallback_accumulate_candidates(
+        self,
+        words: List[str],
+        seen_urls: set,
+        candidates: List[SearchResult],
+        progress: bool,
+    ) -> Optional[Exception]:
+        """
+        Step 1 browser path: run each keyword in **one** Chromium session (reuse one tab) and
+        merge parsed rows into ``candidates``. Subclasses may override for tests without Playwright.
+        """
+        fallback_error: Optional[Exception] = None
+        sync_playwright = self._require_playwright()
+        with sync_playwright() as p:
+            browser = p.chromium.launch(
+                headless=self.playwright_headless,
+                args=["--disable-blink-features=AutomationControlled"],
+                ignore_default_args=["--enable-automation"],
+            )
+            context = browser.new_context(
+                user_agent=self.session.headers.get("User-Agent", ""),
+                locale="en-US",
+            )
+            pw_page = context.new_page()
+            try:
+                for i, keyword in enumerate(words, 1):
+                    if progress:
+                        print(
+                            f"    Playwright {i}/{len(words)}: {keyword!r} …",
+                            flush=True,
+                        )
+                    n_before = len(candidates)
+                    t0 = time.monotonic()
+                    try:
+                        html = self._search_with_browser_html(keyword, page=pw_page)
+                    except Exception:
+                        if fallback_error is None:
+                            fallback_error = Exception(
+                                f"Browser fallback failed for keyword '{keyword}'."
+                            )
+                        if progress:
+                            print(
+                                f"    Playwright {i}/{len(words)}: FAILED {keyword!r}",
+                                flush=True,
+                            )
+                        continue
+                    rows = parse_search_results(html)
+                    for row in rows:
+                        if row.detail_url in seen_urls:
+                            continue
+                        seen_urls.add(row.detail_url)
+                        candidates.append(row)
+                    if progress:
+                        elapsed = time.monotonic() - t0
+                        added = len(candidates) - n_before
+                        print(
+                            f"    Playwright {i}/{len(words)} done in {elapsed:.1f}s — "
+                            f"{len(rows)} parsed row(s), +{added} new candidate(s)",
+                            flush=True,
+                        )
+            finally:
+                browser.close()
+        return fallback_error
+
     def fuzzy_search_candidates(
         self,
         keywords: Optional[Iterable[str]] = None,
         fuzzy_threshold: float = 0.58,
         allow_browser_fallback: bool = True,
+        *,
+        progress: bool = False,
     ) -> List[SearchResult]:
         """Step 1: keyword search + fuzzy filter on Event Name."""
         words = list(keywords or DEFAULT_TECH_KEYWORDS)
@@ -1824,7 +2156,12 @@ class CalEProcureInterface:
         candidates: List[SearchResult] = []
         had_request_results = False
 
-        for keyword in words:
+        for i, keyword in enumerate(words, 1):
+            if progress:
+                print(
+                    f"  Step 1 HTTP: keyword {i}/{len(words)} {keyword!r} …",
+                    flush=True,
+                )
             try:
                 html = self.search_raw_html(keyword)
             except requests.RequestException:
@@ -1849,36 +2186,53 @@ class CalEProcureInterface:
             (not had_request_results) or (len(words) == 1)
         )
         if should_use_browser:
-            for keyword in words:
-                try:
-                    html = self._search_with_browser_html(keyword)
-                except Exception:
-                    # Keep trying other keywords, but remember the first failure so callers get useful debugging info
-                    if fallback_error is None:
-                        fallback_error = Exception(
-                            f"Browser fallback failed for keyword '{keyword}'."
-                        )
-                    continue
-                rows = parse_search_results(html)
-                for row in rows:
-                    if row.detail_url in seen_urls:
-                        continue
-                    seen_urls.add(row.detail_url)
-                    candidates.append(row)
+            if progress:
+                why = (
+                    "no HTTP rows"
+                    if not had_request_results
+                    else "single-keyword query"
+                )
+                print(
+                    f"  Step 1 browser: {len(words)} search(es) ({why}) — "
+                    f"one Chromium session (not {len(words)} restarts) …",
+                    flush=True,
+                )
+            fallback_error = self._browser_fallback_accumulate_candidates(
+                words, seen_urls, candidates, progress
+            )
 
         if not candidates and fallback_error:
             raise RuntimeError(str(fallback_error))
 
+        if progress:
+            print(
+                f"  Step 1 done: {len(candidates)} candidate URL(s) after fuzzy filter.",
+                flush=True,
+            )
         return candidates
 
     def unspsc_filter_search(
         self,
         candidates: Iterable[SearchResult],
         include_probe_metadata: bool = True,
+        *,
+        progress: bool = False,
     ) -> List[FilteredEvent]:
         """Step 2: keep only candidates with tech-related UNSPSC classifications."""
         filtered: List[FilteredEvent] = []
-        for result in candidates:
+        candidates_list = list(candidates)
+        n = len(candidates_list)
+        if progress and n:
+            print(
+                f"  Step 2: fetching event pages for UNSPSC ({n} candidate(s)) — often the slow part …",
+                flush=True,
+            )
+        for i, result in enumerate(candidates_list, 1):
+            if progress:
+                snippet = result.event_name[:72] + (
+                    "…" if len(result.event_name) > 72 else ""
+                )
+                print(f"    UNSPSC {i}/{n}: {snippet}", flush=True)
             unspsc_codes, strategy = self._extract_unspsc_with_strategy(result.detail_url)
             relevant_codes = [
                 code for code in unspsc_codes if is_tech_unspsc(code.code, code.description)
@@ -1891,15 +2245,392 @@ class CalEProcureInterface:
                         extraction_strategy=(strategy if include_probe_metadata else "unspecified"),
                     )
                 )
+        if progress:
+            print(
+                f"  Step 2 done: {len(filtered)} event(s) with tech-related UNSPSC.",
+                flush=True,
+            )
         return filtered
 
     def run_search(
         self,
         keywords: Optional[Iterable[str]] = None,
         fuzzy_threshold: float = 0.58,
+        *,
+        progress: bool = False,
     ) -> List[FilteredEvent]:
         candidates = self.fuzzy_search_candidates(
             keywords=keywords,
             fuzzy_threshold=fuzzy_threshold,
+            progress=progress,
         )
-        return self.unspsc_filter_search(candidates)
+        return self.unspsc_filter_search(candidates, progress=progress)
+
+    def finalize_pipeline_after_downloads(
+        self,
+        event_details_text: str,
+        attachments: List[DownloadedAttachment],
+        detail_url: str,
+        *,
+        download_dir: Optional[str] = None,
+        data_raw_dir: Optional[str] = None,
+        credentials_path: Optional[str] = None,
+        token_path: Optional[str] = None,
+        cleanup_local_downloads: bool = True,
+    ) -> str:
+        """
+        Upload every ``.pdf`` in ``download_dir`` to a Drive folder ``CaleProcure: {event_id}``
+        via ``gdrive_interface.upload_pdfs_from_local_folder``, enrich document labels from
+        ``attachments`` when basenames match, write JSON under ``data_raw/``, then remove
+        local PDFs in ``download_dir`` only (Drive files are unchanged) unless
+        ``cleanup_local_downloads`` is false.
+
+        Returns the absolute path to the written JSON file.
+        """
+        from scraper import gdrive_interface
+        from scraper import caleprocure_json_generator as json_generator
+
+        dl_dir = os.path.abspath(download_dir or DEFAULT_PDFS_FOR_UPLOAD_DIR)
+        raw_dir = data_raw_dir or json_generator.DEFAULT_DATA_RAW_DIR
+
+        ext_id = json_generator.external_id_from_detail_url(detail_url)
+        folder_name = f"CaleProcure: {ext_id}"
+        folder_id = gdrive_interface.create_drive_folder(
+            folder_name,
+            credentials_path=credentials_path,
+            token_path=token_path,
+        )
+
+        by_basename: Dict[str, Tuple[str, str]] = {}
+        for att in attachments:
+            if not att.local_path:
+                continue
+            p = os.path.abspath(att.local_path)
+            if not p.lower().endswith(".pdf") or not os.path.isfile(p):
+                continue
+            bn = os.path.basename(p)
+            by_basename[bn] = (
+                att.attached_file_name or bn,
+                att.attachment_description or "",
+            )
+
+        uploads = gdrive_interface.upload_pdfs_from_local_folder(
+            dl_dir,
+            folder_id,
+            credentials_path=credentials_path,
+            token_path=token_path,
+        )
+
+        documents: List[Dict[str, Any]] = []
+        for i, (basename, link) in enumerate(uploads):
+            label, desc = by_basename.get(basename, (basename, ""))
+            doc_type = "primary_spec" if i == 0 else "attachment"
+            documents.append(
+                {
+                    "label": label,
+                    "url": link,
+                    "type": doc_type,
+                    "attachment_description": desc,
+                }
+            )
+
+        codes, _strategy = self._extract_unspsc_with_strategy(detail_url)
+        unspsc_json = [{"code": c.code, "description": c.description} for c in codes]
+
+        _payload, json_path = json_generator.run_step6_generate_raw_json(
+            event_details_text,
+            detail_url,
+            documents,
+            unspsc_json,
+            data_raw_dir=raw_dir,
+        )
+        if cleanup_local_downloads:
+            gdrive_interface.delete_local_files_in_folder(dl_dir)
+        return json_path
+
+
+def _print_step2_matched_event_names(filtered: List[FilteredEvent], *, heading: str) -> None:
+    """Print every event name that survived Step 2 (UNSPSC filter), one per line."""
+    print(heading, flush=True)
+    if not filtered:
+        print("  (no matches)", flush=True)
+        print(flush=True)
+        return
+    for i, fe in enumerate(filtered, 1):
+        r = fe.result
+        eid = r.external_id or ""
+        id_part = f"  [{eid}]" if eid else ""
+        print(f"  {i}. {r.event_name}{id_part}", flush=True)
+    print(flush=True)
+
+
+def _print_filtered_event_lines(filtered: List[FilteredEvent], *, limit: Optional[int]) -> None:
+    n = len(filtered)
+    cap = n if limit is None or limit < 0 else min(limit, n)
+    for i, fe in enumerate(filtered[:cap], 1):
+        r = fe.result
+        eid = r.external_id or ""
+        print(
+            f"  {i}. [{eid}] {r.event_name}\n"
+            f"      {r.detail_url}  |  unspsc: {len(fe.unspsc_codes)}  |  {fe.extraction_strategy}"
+        )
+    if limit is not None and limit >= 0 and n > cap:
+        print(f"  … {n - cap} more not shown (use --limit 0 for all)")
+
+
+def main(argv: Optional[List[str]] = None) -> int:
+    """
+    Command-line entry: search Cal eProcure with default tech keywords.
+
+    * Steps 1–2 (default): fuzzy search + UNSPSC filter (HTTP only for detail pages).
+    * Steps 3–4 (``--steps-3-4``): for each selected filtered event, open ``detail_url`` in
+      Playwright (no search-grid click needed), scrape Event Details, download attachments.
+    * Steps 5–6 (``--finalize``): Drive upload + ``data_raw`` JSON per event (implies 3–4).
+
+    ``--steps-3-4`` / ``--finalize`` require the **combined** run (not ``--per-keyword``).
+    """
+    ap = argparse.ArgumentParser(
+        description=(
+            "Cal eProcure tech search using DEFAULT_TECH_KEYWORDS "
+            "(fuzzy event name + UNSPSC filter)."
+        ),
+    )
+    ap.add_argument(
+        "--per-keyword",
+        action="store_true",
+        help=(
+            "Run search+UNSPSC filter once per default keyword instead of a single combined run."
+        ),
+    )
+    ap.add_argument(
+        "--headed",
+        action="store_true",
+        help="Show browser window when Playwright fallback runs.",
+    )
+    ap.add_argument(
+        "--timeout",
+        type=int,
+        default=60,
+        help="HTTP/browser timeout in seconds (default: 60).",
+    )
+    ap.add_argument(
+        "--fuzzy-threshold",
+        type=float,
+        default=0.58,
+        help="Minimum fuzzy score vs keyword set (default: 0.58).",
+    )
+    ap.add_argument(
+        "--limit",
+        type=int,
+        default=25,
+        help="Max events to print per section (default: 25; use 0 for no limit).",
+    )
+    ap.add_argument(
+        "--quiet",
+        action="store_true",
+        help="No progress lines (only errors and final listing).",
+    )
+    ap.add_argument(
+        "--steps-3-4",
+        action="store_true",
+        dest="steps_3_4",
+        help=(
+            "After Step 2, run Step 3–4: portal search by **event name**, click row, then attachments. "
+            "Use --search-keyword to force a different search string. "
+            "--direct-detail-goto skips search and uses detail URL only."
+        ),
+    )
+    ap.add_argument(
+        "--finalize",
+        action="store_true",
+        help="After 3–4, run Step 5–6 (Drive + data_raw JSON). Implies --steps-3-4.",
+    )
+    ap.add_argument(
+        "--max-pipeline-events",
+        type=int,
+        default=0,
+        metavar="N",
+        help=(
+            "How many Step 2 matches to run through Steps 3+ (default: 0 = **all** matches). "
+            "Set to a positive N to process only the first N events (e.g. smoke tests)."
+        ),
+    )
+    ap.add_argument(
+        "--max-attachments",
+        type=int,
+        default=10,
+        help="Max attachment downloads per event in Step 4 (default: 10).",
+    )
+    ap.add_argument(
+        "--download-dir",
+        default=None,
+        help=(
+            "Folder for PDF staging (all attachments for the current event go here; "
+            "cleared before each event when running multiple). "
+            f"Default: {DEFAULT_PDFS_FOR_UPLOAD_DIR}."
+        ),
+    )
+    ap.add_argument(
+        "--cleanup-local-pdfs",
+        action="store_true",
+        help="With --finalize, delete that event's local PDFs after its JSON is written.",
+    )
+    ap.add_argument(
+        "--direct-detail-goto",
+        action="store_true",
+        help="Steps 3–4: open detail_url with page.goto instead of search + Event Name click.",
+    )
+    ap.add_argument(
+        "--search-keyword",
+        "--search_keyword",
+        default=None,
+        metavar="TEXT",
+        dest="search_keyword",
+        help=(
+            "Steps 3–4: optional override for the portal search box. "
+            "Default is the event name (from Step 2), not the Step 1 tech keyword."
+        ),
+    )
+    args = ap.parse_args(argv)
+
+    limit: Optional[int] = None if args.limit == 0 else args.limit
+    do_finalize = args.finalize
+    do_steps_3_4 = args.steps_3_4 or do_finalize
+
+    client = CalEProcureInterface(
+        timeout_seconds=args.timeout,
+        playwright_headless=not args.headed,
+    )
+
+    show_progress = not args.quiet
+
+    if args.per_keyword:
+        print(f"Per-keyword run ({len(DEFAULT_TECH_KEYWORDS)} keywords)…\n")
+        grand_total = 0
+        for kw in DEFAULT_TECH_KEYWORDS:
+            print(f"=== {kw!r} ===")
+            try:
+                candidates = client.fuzzy_search_candidates(
+                    keywords=[kw],
+                    fuzzy_threshold=args.fuzzy_threshold,
+                    progress=show_progress,
+                )
+                filtered = client.unspsc_filter_search(
+                    candidates,
+                    progress=show_progress,
+                )
+            except Exception as exc:
+                print(f"  error: {exc}\n")
+                continue
+            print(f"  candidates: {len(candidates)}  |  after UNSPSC filter: {len(filtered)}")
+            _print_step2_matched_event_names(
+                filtered,
+                heading="  Step 2 — matched event names (UNSPSC filter):",
+            )
+            print("  Details (url, UNSPSC count, strategy):", flush=True)
+            _print_filtered_event_lines(filtered, limit=limit)
+            grand_total += len(filtered)
+            print()
+        print(f"Sum of per-keyword filtered counts: {grand_total} (events may overlap across keywords).")
+        if do_steps_3_4:
+            print(
+                "Note: Steps 3–6 are not run in --per-keyword mode. "
+                "Run again without --per-keyword and pass --steps-3-4 or --finalize.",
+                file=sys.stderr,
+            )
+            return 2
+        return 0
+
+    print(
+        f"Combined run: {len(DEFAULT_TECH_KEYWORDS)} keywords "
+        f"{DEFAULT_TECH_KEYWORDS[:5]!r} …",
+        flush=True,
+    )
+    if show_progress:
+        print(
+            "  (Not stuck: Step 1 = searches per keyword; Step 2 = one HTTP fetch per "
+            "candidate for UNSPSC. Large runs can take many minutes.)\n",
+            flush=True,
+        )
+    try:
+        filtered = client.run_search(
+            keywords=DEFAULT_TECH_KEYWORDS,
+            fuzzy_threshold=args.fuzzy_threshold,
+            progress=show_progress,
+        )
+    except Exception as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+
+    print(f"\nStep 2 done: {len(filtered)} event(s) passed the UNSPSC filter.\n", flush=True)
+    _print_step2_matched_event_names(
+        filtered,
+        heading="Step 2 — matched event names (these are candidates for Steps 3+):",
+    )
+    print("Details (url, UNSPSC count, extraction strategy):", flush=True)
+    _print_filtered_event_lines(filtered, limit=limit)
+
+    if not do_steps_3_4:
+        return 0
+
+    from scraper import caleprocure_json_generator as json_generator
+    from scraper import gdrive_interface
+
+    dl_root = os.path.abspath(args.download_dir or DEFAULT_PDFS_FOR_UPLOAD_DIR)
+    os.makedirs(dl_root, exist_ok=True)
+    n_cap = args.max_pipeline_events
+    todo = filtered if n_cap <= 0 else filtered[:n_cap]
+    if show_progress:
+        print(
+            f"\nSteps 3–4{' + 5–6' if do_finalize else ''}: "
+            f"{len(todo)} of {len(filtered)} Step 2 match(es) "
+            f"(use --max-pipeline-events N to cap). "
+            f"{'Direct goto(detail_url).' if args.direct_detail_goto else 'Search portal by event name, then click row.'}\n",
+            flush=True,
+        )
+    for fe in todo:
+        # Flat staging dir: clear PDFs before each contract so Drive upload never sees
+        # leftovers from a prior event (upload scans the whole folder).
+        gdrive_interface.delete_local_files_in_folder(dl_root)
+        url = fe.result.detail_url
+        ext = fe.result.external_id or json_generator.external_id_from_detail_url(url)
+        safe = re.sub(r"[^\w.\-]+", "_", ext).strip("._") or "event"
+        title_short = (fe.result.event_name[:72] + "…") if len(fe.result.event_name) > 72 else fe.result.event_name
+        print(f"  → [{safe}] {title_short}", flush=True)
+        try:
+            details_text, attachments = client.run_steps_3_and_4(
+                url,
+                dl_root,
+                max_attachments=args.max_attachments,
+                event_name=fe.result.event_name,
+                event_external_id=ext,
+                search_keyword=args.search_keyword,
+                open_via_search_click=not args.direct_detail_goto,
+                search_keyword_pool=DEFAULT_TECH_KEYWORDS,
+                progress=show_progress,
+            )
+        except Exception as exc:
+            print(f"    Steps 3–4 error: {exc}", flush=True)
+            continue
+        print(
+            f"    Step 3: {len(details_text)} chars; Step 4: {len(attachments)} file(s) → {dl_root}",
+            flush=True,
+        )
+        if not do_finalize:
+            continue
+        try:
+            json_path = client.finalize_pipeline_after_downloads(
+                details_text,
+                attachments,
+                url,
+                download_dir=dl_root,
+                cleanup_local_downloads=args.cleanup_local_pdfs,
+            )
+            print(f"    Step 5–6 JSON: {json_path}", flush=True)
+        except Exception as exc:
+            print(f"    finalize error: {exc}", flush=True)
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

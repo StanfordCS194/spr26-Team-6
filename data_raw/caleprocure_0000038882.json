@@ -1,0 +1,36 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "0000038882",
+  "title": "[Event Title]",
+  "dept": "Description:",
+  "description": "Event Details        \n      \n      \n        \n          \n            \n              Event : \n            \n            \n              \n                \n                  \n                  \n                \n                \n                    \n                  \n                \n                  \n                \n              \n            \n          \n\n          \n            [Event Title]\n          \n          \n            Loading...\n          \n\n          \n            \n              Details\n\n              \n                \n                  \n                  Format/Type: / \n                  \n                \n                \n                  Dept:\n                  \n                  \n                \n              \n\n              \n                \n                  Description:\n                  [Detail Description]\n                \n              \n            \n\n            \n              \n              \n\n              \n                View Event Package              \n\n              \n                View Award Details              \n\n                    \n                      \n                        Post Vendor Ads\n                    \n                    \n                      \n                        View Vendor Ads\n                    \n              Contact Information\n              [Contact\n                Name]\n\n              [Phone]:\n              [Phone\n                Number]\n\n              \n                [Email]\n                [EmailAddress]\n                [EmailAddress]\n              \n\n              Pre Bid Conference\n\n              \n                \n                  [Pre Bid Conference]:\n                  [Mandatory]\n                  \n                  Date:\n                  [01/01/2001]\n\n                  Time:\n                  [12:00 AM]\n\n                  Location:\n                  [California]\n\n                  Comments:\n                  [Please Review]",
+  "published_date": null,
+  "due_date": null,
+  "contact_name": "[Contact",
+  "contact_email": null,
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-0000038882-1e84af648458",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": ".RFQ___SOW_S25073069.pdf",
+        "url": "https://drive.google.com/file/d/1pxFc7Sc9yh84CTTxaxzg82s8q6TXFnYL/view?usp=drivesdk",
+        "type": "primary_spec",
+        "attachment_description": ""
+      }
+    ],
+    "unspsc_codes": [
+      {
+        "code": "01012001",
+        "description": "/> <span data-if-container-label=\"conferenceRow\" data-if-source=\"[id^='ZZ_BID_CNF_VW_DUE_DT_TIME$']\" data-if-content=\"nu"
+      }
+    ]
+  }
+}

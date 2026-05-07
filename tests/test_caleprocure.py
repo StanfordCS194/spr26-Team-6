@@ -54,8 +54,28 @@ class _FakeSearchCalEProcureInterface(CalEProcureInterface):
     def search_raw_html(self, keyword: str) -> str:
         return self._request_html
 
-    def _search_with_browser_html(self, keyword: str) -> str:
+    def _search_with_browser_html(self, keyword: str, page=None) -> str:
         return self._browser_html
+
+    def _browser_fallback_accumulate_candidates(self, words, seen_urls, candidates, progress):
+        """Avoid launching real Chromium in unit tests."""
+        fallback_error = None
+        for i, keyword in enumerate(words, 1):
+            if progress:
+                print(f"    Playwright {i}/{len(words)}: {keyword!r} …")
+            try:
+                html = self._search_with_browser_html(keyword)
+            except Exception:
+                if fallback_error is None:
+                    fallback_error = Exception(f"Browser fallback failed for keyword '{keyword}'.")
+                continue
+            rows = parse_search_results(html)
+            for row in rows:
+                if row.detail_url in seen_urls:
+                    continue
+                seen_urls.add(row.detail_url)
+                candidates.append(row)
+        return fallback_error
 
 class TestCalEProcureInterface(unittest.TestCase):
     def test_extract_unspsc_from_detail_table_cells(self):

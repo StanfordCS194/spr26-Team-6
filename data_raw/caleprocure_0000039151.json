@@ -1,0 +1,36 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "0000039151",
+  "title": "0000039151\n\nFormat/Type:",
+  "dept": "UC Davis Medical Center",
+  "description": "Event Details\nEvent : 0000039151\nCM Capital Infrastructure\nDetails\n\nEvent ID\n0000039151\n\nFormat/Type:\nRequest For Information / RFx\n\nPublished Date\n05/04/2026 10:00AM PDT\n\nDept:\nUC Davis Medical Center\n\nEvent Version\n1\n\nEvent End Date:\n05/28/2026  2:00PM PDT\n\nDescription:\n\n\nRFQ FOR CONSTRUCTION MANAGEMENT SERVICES\nCAPITAL INFRASTRUCTURE PROJECTS\nUC Davis Health in Sacramento, California requests Statements of Qualifications on or before 2 p.m. Friday, May 29, 2026, from qualified firms interested in providing Construction Management services to support the Capital Infrastructure Projects team within the Facilities Planning and Development division.\nThe RFQ package with additional information and attachments can be downloaded directly from our website at https://health.ucdavis.edu/facilities/work-with-us/consultants/rfq starting Friday, May 1st, 2026. Statements of qualifications shall be specifically tailored to this RFQ, responding directly to the screening criteria (See RFQ document and Consultant Qualification form available on the above link). After Qualification Statements are received, a Screening Committee will review, conduct reference checks and recommend a short list of firms for interviews. A Selection Committee will conduct the discussions prior to selecting the successful firm.\nStatements of qualifications must be submitted electronically no later than 2 p.m. Friday, May 29, 2026, to the link to be provided by UC Davis Health. No hard copies will be accepted. Firms interested in responding to this RFQ must notify the University by Thursday, May 28, 2026, to be provided a link to upload their Qualifications package. Questions and requests for the link to upload statements may be addressed via email only to Nicole Quintero, Contracts Administrator, at nicquintero@health.ucdavis.edu. Statements of Qualifications will not be accepted after the date and time stipulated above.\nThe most qualified CM consulting firm for each of the four categories of work liste",
+  "published_date": "2026-05-04T10:00:00-07:00",
+  "due_date": "2026-05-28T14:00:00-07:00",
+  "contact_name": "Corinne Ruggiero",
+  "contact_email": "nicquintero@health.ucdavis.edu",
+  "contact_phone": "0000039151",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-0000039151-76fd591a2aa1",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "Capital_Infrastructure_CM_RFQ2026.pdf",
+        "url": "https://drive.google.com/file/d/1aRcUfmreclqQqT3mDohHhEliY8CJOWby/view?usp=drivesdk",
+        "type": "primary_spec",
+        "attachment_description": ""
+      }
+    ],
+    "unspsc_codes": [
+      {
+        "code": "01012001",
+        "description": "/> <span data-if-container-label=\"conferenceRow\" data-if-source=\"[id^='ZZ_BID_CNF_VW_DUE_DT_TIME$']\" data-if-content=\"nu"
+      }
+    ]
+  }
+}
