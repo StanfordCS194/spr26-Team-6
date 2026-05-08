@@ -1,6 +1,14 @@
 """
-This module provides a interface for interacting with Google Drive using the Google API.
+This file provides a interface for interacting with Google Drive using the Google API.
 It is used to create folders, upload files, and get file links.
+
+Local staging: ``upload_pdfs_from_local_folder`` uploads every ``.pdf`` in a directory;
+``delete_local_files_in_folder`` removes local files only (never Drive).
+
+See tests/test_gdrive.py for unit test.
+
+Requires: ``pip install google-api-python-client google-auth-oauthlib google-auth-httplib2``
+(or ``pip install -r requirements.txt`` from the repo root).
 """
 
 import os
@@ -73,6 +81,101 @@ def create_drive_folder(folder_name, credentials_path=None, token_path=None):
     ).execute()
     
     return folder.get('id')
+
+
+def _sorted_pdf_paths_in_local_folder(local_folder_path):
+    """
+    Non-recursive list of absolute paths to ``.pdf`` files in a directory, sorted by basename.
+    """
+    if not os.path.isdir(local_folder_path):
+        raise NotADirectoryError(f"Not a directory: {local_folder_path}")
+    names = sorted(
+        n for n in os.listdir(local_folder_path) if n.lower().endswith(".pdf")
+    )
+    paths = []
+    for n in names:
+        p = os.path.join(os.path.abspath(local_folder_path), n)
+        if os.path.isfile(p):
+            paths.append(p)
+    return paths
+
+
+def upload_pdfs_to_folder(
+    file_paths,
+    folder_id,
+    credentials_path=None,
+    token_path=None,
+):
+    """
+    Upload each existing ``.pdf`` path into ``folder_id``.
+    Returns a list of ``(file_basename, webViewLink)`` in the same order as successful uploads.
+    """
+    results = []
+    for fp in file_paths:
+        if not fp or not str(fp).lower().endswith(".pdf"):
+            continue
+        if not os.path.isfile(fp):
+            continue
+        link = upload_and_get_pdf_link(
+            fp,
+            folder_id=folder_id,
+            credentials_path=credentials_path,
+            token_path=token_path,
+        )
+        results.append((os.path.basename(fp), link))
+    return results
+
+
+def upload_pdfs_from_local_folder(
+    local_folder_path,
+    drive_folder_id,
+    credentials_path=None,
+    token_path=None,
+):
+    """
+    Upload every ``.pdf`` file in ``local_folder_path`` (not subfolders) into the Drive folder
+    ``drive_folder_id``, in sorted basename order.
+
+    Returns a list of ``(file_basename, webViewLink)`` like ``upload_pdfs_to_folder``.
+    """
+    paths = _sorted_pdf_paths_in_local_folder(local_folder_path)
+    return upload_pdfs_to_folder(
+        paths,
+        drive_folder_id,
+        credentials_path=credentials_path,
+        token_path=token_path,
+    )
+
+
+def delete_local_files_in_folder(folder_path, extensions=(".pdf",)):
+    """
+    Delete local files under ``folder_path`` (non-recursive; subdirectories are ignored).
+    Does **not** delete anything on Google Drive.
+
+    Only files whose names end with one of ``extensions`` (case-insensitive) are removed.
+    Default is PDFs only. Pass ``extensions=None`` to remove all regular files in the folder.
+
+    Returns a list of basenames that were deleted.
+    """
+    if not os.path.isdir(folder_path):
+        raise NotADirectoryError(f"Not a directory: {folder_path}")
+    root = os.path.abspath(folder_path)
+    removed = []
+    for name in os.listdir(root):
+        path = os.path.join(root, name)
+        if not os.path.isfile(path):
+            continue
+        if extensions is not None:
+            low = name.lower()
+            if not any(
+                low.endswith(ext.lower() if ext.startswith(".") else f".{ext.lower()}")
+                for ext in extensions
+            ):
+                continue
+        os.remove(path)
+        removed.append(name)
+    return removed
+
 
 # Uploads a PDF file to GDrive and shares it with anyone with the link.
 def upload_and_get_pdf_link(file_path, folder_id=None, credentials_path=None, token_path=None):
