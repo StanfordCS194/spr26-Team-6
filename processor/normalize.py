@@ -128,7 +128,18 @@ _TRAILER_MARKERS = {
     "contact information",
     "pre bid conference",
     "pre-bid conference",
+    "unspsc codes",
+    "service area",
+    "contractor license type",
 }
+
+# Some Cal eProcure descriptions write "Pre Bid Conference(N/A)" with no
+# space before the parenthetical — treat any line that *starts with* one
+# of these prefixes as a trailer too.
+_TRAILER_PREFIXES = (
+    "pre bid conference",
+    "pre-bid conference",
+)
 
 # Field-label lines preceding the description body in Cal eProcure exports.
 _HEADER_LABELS_RE = re.compile(
@@ -162,7 +173,11 @@ def clean_description(text: str | None) -> str | None:
     # Truncate at the first trailer marker (Contact Information, etc.).
     body_end = len(body)
     for i, line in enumerate(body):
-        if line.strip().lower() in _TRAILER_MARKERS:
+        stripped = line.strip().lower()
+        if stripped in _TRAILER_MARKERS:
+            body_end = i
+            break
+        if any(stripped.startswith(p) for p in _TRAILER_PREFIXES):
             body_end = i
             break
     body = body[:body_end]

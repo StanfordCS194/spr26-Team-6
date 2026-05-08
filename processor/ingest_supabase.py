@@ -7,7 +7,7 @@ or one-off CLI can drive it later.
 Usage (after `pip install supabase`):
 
     from processor.ingest_supabase import ingest_directory
-    ingest_directory()  # reads ./processed_data, upserts into public.rfps
+    ingest_directory()  # reads ./data_processed, upserts into public.rfps
 
 Required env vars:
     SUPABASE_URL              — project URL (e.g. https://xxxx.supabase.co)
@@ -185,7 +185,7 @@ def ingest_directory(
     """
     in_path = Path(input_dir)
     if not in_path.is_dir():
-        raise FileNotFoundError(f"processed_data directory does not exist: {in_path}")
+        raise FileNotFoundError(f"data_processed directory does not exist: {in_path}")
 
     if client is None:
         client = get_client()

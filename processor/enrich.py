@@ -3,67 +3,42 @@
 Adds the four new fields the spec calls for:
     name, statement_of_work, deliverables, tags
 
-A pure-heuristic baseline is provided so the pipeline runs without external
-services. Pass a `llm_callback` to `enrich` to override fields with
-LLM-generated values once the model integration is wired up — the callback
-receives the normalized record and the heuristic suggestion and returns the
-final dict.
+``name``, ``statement_of_work``, and ``deliverables`` are produced by
+deterministic heuristics. Real value for these comes from an optional
+``llm_callback`` argument to ``enrich`` — the callback receives the
+normalized record plus the heuristic suggestion and returns the final
+dict.
+
+``tags`` come from a multi-label classifier trained on the raw corpus
+(see ``processor.classifier``). The classifier emits 2–4 category tags;
+the location tag from ``processor.location.detect_location`` is appended
+last so every output has 3–5 total, with location guaranteed.
 """
 
 from __future__ import annotations
 
 import re
+from pathlib import Path
 from typing import Any, Callable, Optional
 
-# Maps a substring (case-insensitive) found anywhere in the title/description
-# to a canonical category tag. Order is unimportant; multiple matches are
-# de-duplicated downstream.
-_KEYWORD_TAGS: list[tuple[str, str]] = [
-    ("transformer", "Electrical"),
-    ("electrical", "Electrical"),
-    ("wiring", "Electrical"),
-    ("conduit", "Electrical"),
-    ("medi-cal", "Health Services"),
-    ("medicaid", "Health Services"),
-    ("healthcare", "Health Services"),
-    ("health care", "Health Services"),
-    ("eligibility", "Health Services"),
-    ("calheers", "Health Services"),
-    ("hospital", "Health Services"),
-    ("clinical", "Health Services"),
-    ("server", "Hardware"),
-    ("hardware", "Hardware"),
-    ("freight", "Logistics"),
-    ("software", "IT Systems"),
-    ("information technology", "IT Systems"),
-    ("system development", "System Development"),
-    ("maintenance & operations", "Operations"),
-    ("maintenance and operations", "Operations"),
-    ("cyber", "Cybersecurity"),
-    ("security", "Security"),
-    ("forestry", "Forestry"),
-    ("fire protection", "Fire Services"),
-    ("cal fire", "Fire Services"),
-    ("construction", "Construction"),
-    ("install", "Construction"),
-    ("transportation", "Transportation"),
-    ("highway", "Infrastructure"),
-    ("bridge", "Infrastructure"),
-    ("water", "Infrastructure"),
-    ("pipeline", "Infrastructure"),
-    ("infrastructure", "Infrastructure"),
-    ("cloud", "Cloud"),
-    ("data center", "Data Center"),
-    ("consulting", "Consulting"),
-    ("training", "Training"),
-    ("research", "Research"),
-]
+from processor.classifier import Classifier, load_or_train
+
+# Resolve the project root locally so this module doesn't import from
+# ``processor.pipeline`` (which would create a circular import — pipeline
+# imports ``enrich``).
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent
+_DEFAULT_RAW_DIR = _PROJECT_ROOT / "data_raw"
+
+# A process-wide default classifier so we don't load+deserialize the joblib
+# artifact on every record. Set lazily by ``_get_default_classifier``.
+_DEFAULT_CLASSIFIER: Classifier | None = None
 
 
-def _haystack(rfp: dict[str, Any]) -> str:
-    return " ".join(
-        str(rfp.get(k) or "") for k in ("title", "name", "description", "dept")
-    ).lower()
+def _get_default_classifier() -> Classifier:
+    global _DEFAULT_CLASSIFIER
+    if _DEFAULT_CLASSIFIER is None:
+        _DEFAULT_CLASSIFIER = load_or_train(_DEFAULT_RAW_DIR)
+    return _DEFAULT_CLASSIFIER
 
 
 def generate_name(rfp: dict[str, Any]) -> str:
@@ -109,7 +84,6 @@ def generate_deliverables(rfp: dict[str, Any]) -> list[str]:
     if bullets:
         return bullets[:4]
 
-    # Fallback: synthesize from the project name.
     name = generate_name(rfp)
     return [
         f"Execute scope of work described in the {name} solicitation",
@@ -118,24 +92,22 @@ def generate_deliverables(rfp: dict[str, Any]) -> list[str]:
     ]
 
 
-def generate_tags(rfp: dict[str, Any], location: str | None) -> list[str]:
-    """3–5 tags, including a location tag and category tags."""
-    text = _haystack(rfp)
-    seen: set[str] = set()
-    category_tags: list[str] = []
-    for needle, tag in _KEYWORD_TAGS:
-        if needle in text and tag not in seen:
-            category_tags.append(tag)
-            seen.add(tag)
-        if len(category_tags) >= 4:
-            break
+def generate_tags(
+    rfp: dict[str, Any],
+    location: str | None,
+    *,
+    classifier: Classifier | None = None,
+) -> list[str]:
+    """Return 3–5 tags for *rfp*, with *location* always included.
 
-    # Always make sure we have at least 2 category tags so the location tag
-    # doesn't dominate.
-    if len(category_tags) < 2:
-        category_tags.extend(t for t in ("Government", "Procurement") if t not in seen)
+    The classifier produces 2–4 category tags; the location string is
+    appended last (deduped). If no classifier is supplied the
+    process-wide default is used (loaded or trained on first call).
+    """
+    clf = classifier or _get_default_classifier()
+    category_tags = clf.predict_tags(rfp)
 
-    tags = category_tags[:4]
+    tags = list(category_tags)
     if location and location not in tags:
         tags.append(location)
     return tags[:5]
@@ -154,18 +126,19 @@ def enrich(
     location: str,
     location_level: str,
     llm_callback: Optional[EnrichmentCallback] = None,
+    classifier: Classifier | None = None,
 ) -> dict[str, Any]:
-    """Apply heuristic enrichment, then optionally hand off to an LLM.
+    """Apply enrichment, then optionally hand off to an LLM.
 
-    The LLM callback signature is `(rfp, heuristic_fields) -> final_fields`.
-    It must return a dict with keys `name`, `statement_of_work`,
-    `deliverables`, `tags`.
+    The LLM callback signature is ``(rfp, heuristic_fields) -> final_fields``.
+    It must return a dict with keys ``name``, ``statement_of_work``,
+    ``deliverables``, ``tags``.
     """
     heuristic = {
         "name": generate_name(rfp),
         "statement_of_work": generate_statement_of_work(rfp),
         "deliverables": generate_deliverables(rfp),
-        "tags": generate_tags(rfp, location),
+        "tags": generate_tags(rfp, location, classifier=classifier),
     }
     final = llm_callback(rfp, heuristic) if llm_callback else heuristic
     return {

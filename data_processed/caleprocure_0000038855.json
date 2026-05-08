@@ -1,0 +1,105 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "0000038855",
+  "title": "COURT INTERPRETER SCHEDULING SOFTWARE RFP Number: LSS-2026-207-RB",
+  "name": "COURT INTERPRETER SCHEDULING SOFTWARE RFP Number: LSS-2026-207-RB",
+  "statement_of_work": "The Judicial Council is requesting proposals from highly qualified providers of court interpreter scheduling software for the CIP and LSS. This software is needed as a 3-year subscription-based tool to allow courts to request and assign court employee cross-assignments and VRI assignments via email and text communications to various contact groups.",
+  "deliverables": [
+    "Execute scope of work described in the COURT INTERPRETER SCHEDULING SOFTWARE RFP Number: LSS-2026-207-RB solicitation",
+    "Deliver milestones, status reporting, and acceptance documentation",
+    "Provide final handoff and post-deployment support per RFP terms"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Legal & Courts",
+    "Procurement",
+    "Software",
+    "California"
+  ],
+  "dept": "Judicial Branch of California",
+  "description": "The Judicial Council is requesting proposals from highly qualified providers of court interpreter scheduling software for the CIP and LSS. This software is needed as a 3-year subscription-based tool to allow courts to request and assign court employee cross-assignments and VRI assignments via email and text communications to various contact groups.\n\nPlease visit the Courts Bidders/Solicitations web page to view the published Solicitation:\nhttps://www.courts.ca.gov\nAll inquiries must be directed to Solicitations@jud.ca.gov",
+  "published_date": "2026-04-14T08:27:00-07:00",
+  "due_date": "2026-05-29T17:00:00-07:00",
+  "contact_name": "Roderick Bustos",
+  "contact_email": "Solicitations@jud.ca.gov",
+  "contact_phone": "415-865-7722",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-0000038855-c1af335110b4",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "RFP_LSS-2026-207-RB-Attach-1-Admin-Rules.pdf",
+        "url": "https://drive.google.com/file/d/1guqWOWSvPgtg1FtuYKK7oxH-PkqdDkMA/view?usp=drivesdk",
+        "type": "primary_spec",
+        "attachment_description": ""
+      },
+      {
+        "label": "RFP_LSS-2026-207-RB-Attach-10-Bidder-Declaration.pdf",
+        "url": "https://drive.google.com/file/d/1N7sV31DqEEKOJffjFniF2MRS0zbO1lE1/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "RFP_LSS-2026-207-RB-Attach-2-Agreement.pdf",
+        "url": "https://drive.google.com/file/d/1qRThfDC8BUSxiHNbERAlrnWTrWQOEMlp/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "RFP_LSS-2026-207-RB-Attach-3-Accept-TCs.pdf",
+        "url": "https://drive.google.com/file/d/1SQwJ7Z5wJwzDBeB0UUSdV2ghAmVaCFs5/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "RFP_LSS-2026-207-RB-Attach-4-Gen-Certs.pdf",
+        "url": "https://drive.google.com/file/d/1IO7_PtFozh0cLSwvSfwOO8RaqkmuPYad/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "RFP_LSS-2026-207-RB-Attach-5-Small-Biz.pdf",
+        "url": "https://drive.google.com/file/d/1wPb8YWz7o8WqFw9qMDuKuK0ps2uEB2MH/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "RFP_LSS-2026-207-RB-Attach-7-Iran-Act.pdf",
+        "url": "https://drive.google.com/file/d/1p5oS8XEHdsavsqN1W-9a16-QziBj5k4G/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "RFP_LSS-2026-207-RB-Attach-8-Unruh-FEH-Act.pdf",
+        "url": "https://drive.google.com/file/d/10z0WGtjSpf27TfaqqME0x1f7ofAiQN86/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "RFP_LSS-2026-207-RB-Attach-9-Darfur-Cert.pdf",
+        "url": "https://drive.google.com/file/d/1NvT5myZ5W4M1nxXoE-uX04eCMTFROOwf/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "RFP_LSS-2026-207-RB-Request-For-Proposal.pdf",
+        "url": "https://drive.google.com/file/d/1s6Z2x4yBdzmuy0MBNsup8hODA_7PyEvm/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      }
+    ],
+    "unspsc_codes": [
+      {
+        "code": "01012001",
+        "description": "/> <span data-if-container-label=\"conferenceRow\" data-if-source=\"[id^='ZZ_BID_CNF_VW_DUE_DT_TIME$']\" data-if-content=\"nu"
+      }
+    ]
+  }
+}

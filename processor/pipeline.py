@@ -1,7 +1,7 @@
 """Process raw scraper JSONs into the canonical processed format.
 
 Reads every `*.json` under `data_raw/`, applies normalization plus derived
-fields, and writes one matching file under `processed_data/`.
+fields, and writes one matching file under `data_processed/`.
 """
 
 from __future__ import annotations
@@ -11,13 +11,14 @@ import os
 from pathlib import Path
 from typing import Any, Optional
 
+from processor.classifier import Classifier, load_or_train
 from processor.enrich import EnrichmentCallback, enrich
 from processor.location import detect_location
 from processor.normalize import normalize_record
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_INPUT_DIR = PROJECT_ROOT / "data_raw"
-DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "processed_data"
+DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "data_processed"
 
 
 # Order the output keys land in. Mirrors the sample_data files so diffs
@@ -62,6 +63,7 @@ def process_one(
     raw: dict[str, Any],
     *,
     llm_callback: Optional[EnrichmentCallback] = None,
+    classifier: Classifier | None = None,
 ) -> dict[str, Any]:
     """Apply normalization + enrichment to a single raw RFP record."""
     normalized = normalize_record(raw)
@@ -71,6 +73,7 @@ def process_one(
         location=location,
         location_level=level,
         llm_callback=llm_callback,
+        classifier=classifier,
     )
     merged = {**normalized, **enriched}
     return _ordered(merged)
@@ -81,10 +84,12 @@ def process_directory(
     output_dir: os.PathLike[str] | str = DEFAULT_OUTPUT_DIR,
     *,
     llm_callback: Optional[EnrichmentCallback] = None,
+    classifier: Classifier | None = None,
 ) -> list[Path]:
     """Process every `*.json` in `input_dir` into `output_dir`.
 
-    Returns the list of files written.
+    Returns the list of files written. Loads (or trains) the tag
+    classifier once and reuses it across every record.
     """
     in_path = Path(input_dir)
     out_path = Path(output_dir)
@@ -92,11 +97,14 @@ def process_directory(
         raise FileNotFoundError(f"Input directory does not exist: {in_path}")
     out_path.mkdir(parents=True, exist_ok=True)
 
+    if classifier is None:
+        classifier = load_or_train(in_path)
+
     written: list[Path] = []
     for src in sorted(in_path.glob("*.json")):
         with src.open("r", encoding="utf-8") as fh:
             raw = json.load(fh)
-        processed = process_one(raw, llm_callback=llm_callback)
+        processed = process_one(raw, llm_callback=llm_callback, classifier=classifier)
         dst = out_path / src.name
         with dst.open("w", encoding="utf-8") as fh:
             json.dump(processed, fh, indent=2, ensure_ascii=False)

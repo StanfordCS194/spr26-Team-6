@@ -51,6 +51,18 @@ def _city_from_address(address: str) -> str | None:
 
 
 def _city_from_text(text: str) -> str | None:
+    """Best-effort city extraction.
+
+    Prefers cities that appear in the canonical ``"<City>, California"`` /
+    ``"<City>, CA"`` pattern over bare mentions, because bare mentions
+    often catch institution names ("UC Davis Health", "San Diego State
+    University") rather than the project location.
+    """
+    # 1. Strong signal: "<City>, California" or "<City>, CA[,.]"
+    for city in CALIFORNIA_CITIES:
+        if re.search(rf"\b{re.escape(city)}\s*,\s*(?:California|CA)\b", text):
+            return city
+    # 2. Fallback: any whole-word city mention.
     for city in CALIFORNIA_CITIES:
         if re.search(rf"\b{re.escape(city)}\b", text):
             return city

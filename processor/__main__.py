@@ -1,7 +1,7 @@
 """CLI entry point: `python -m processor`.
 
 Examples:
-    python -m processor                         # data_raw/ -> processed_data/
+    python -m processor                         # data_raw/ -> data_processed/
     python -m processor --input some/dir
     python -m processor --ingest                # also push processed files to Supabase
 """
@@ -25,7 +25,7 @@ def main() -> int:
     parser.add_argument(
         "--ingest",
         action="store_true",
-        help="After processing, ingest processed_data/ into Supabase.",
+        help="After processing, ingest data_processed/ into Supabase.",
     )
     args = parser.parse_args()
 

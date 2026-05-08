@@ -66,6 +66,64 @@ DEPARTMENT_ALIASES: dict[str, str] = {
     "DHCS": "California Department of Health Care Services",
     "CA DHCS": "California Department of Health Care Services",
 
+    # California State Water Resources Control Board
+    "California State Water Resources Control Board": "California State Water Resources Control Board",
+    "State Water Resources Control Board": "California State Water Resources Control Board",
+    "State Water Resources Control": "California State Water Resources Control Board",
+    "SWRCB": "California State Water Resources Control Board",
+
+    # California Department of Water Resources
+    "California Department of Water Resources": "California Department of Water Resources",
+    "Department of Water Resources": "California Department of Water Resources",
+    "of Water Resources": "California Department of Water Resources",
+    "DWR": "California Department of Water Resources",
+
+    # California Department of Cannabis Control
+    "California Department of Cannabis Control": "California Department of Cannabis Control",
+    "Department of Cannabis Control": "California Department of Cannabis Control",
+    "Department of Cannabis Control (DCC)": "California Department of Cannabis Control",
+    "DCC": "California Department of Cannabis Control",
+
+    # Judicial Branch / Judicial Council of California
+    "Judicial Branch of California": "Judicial Branch of California",
+    "Judicial Branch": "Judicial Branch of California",
+    "Judicial Council of California": "Judicial Branch of California",
+
+    # California Department of Parks and Recreation
+    "California Department of Parks and Recreation": "California Department of Parks and Recreation",
+    "Department of Parks and Recreation": "California Department of Parks and Recreation",
+    "Dept of Parks & Recreation": "California Department of Parks and Recreation",
+    "Dept. of Parks and Recreation": "California Department of Parks and Recreation",
+    "California State Parks": "California Department of Parks and Recreation",
+
+    # California Franchise Tax Board
+    "California Franchise Tax Board": "California Franchise Tax Board",
+    "Franchise Tax Board": "California Franchise Tax Board",
+    "FTB": "California Franchise Tax Board",
+    "CA FTB": "California Franchise Tax Board",
+
+    # California Department of Corrections and Rehabilitation
+    "California Department of Corrections and Rehabilitation": "California Department of Corrections and Rehabilitation",
+    "Department of Corrections and Rehabilitation": "California Department of Corrections and Rehabilitation",
+    "Dept of Corrections & Rehab": "California Department of Corrections and Rehabilitation",
+    "Dept. of Corrections and Rehabilitation": "California Department of Corrections and Rehabilitation",
+    "CDCR": "California Department of Corrections and Rehabilitation",
+
+    # Truncated DMV form observed in raw scrapes
+    "of Motor Vehicles": "California Department of Motor Vehicles",
+
+    # California Governor's Office of Emergency Services
+    "California Governor's Office of Emergency Services (Cal OES)":
+        "California Governor's Office of Emergency Services (Cal OES)",
+    "Office of Emergency Services": "California Governor's Office of Emergency Services (Cal OES)",
+    "California Office of Emergency Services": "California Governor's Office of Emergency Services (Cal OES)",
+    "Cal OES": "California Governor's Office of Emergency Services (Cal OES)",
+    "CalOES": "California Governor's Office of Emergency Services (Cal OES)",
+
+    # UC Davis Medical Center — already in canonical form
+    "UC Davis Medical Center": "UC Davis Medical Center",
+    "UC Davis Health": "UC Davis Medical Center",
+
     # Office of Technology and Solutions Integration (CalHEERS owner)
     "Office of Technology and Solutions Integration (OTSI)":
         "Office of Technology and Solutions Integration (OTSI)",
