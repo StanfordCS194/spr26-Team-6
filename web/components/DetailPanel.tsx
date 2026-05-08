@@ -7,6 +7,7 @@ import { useDashboard } from "@/context/DashboardContext";
 import { isPdfUrl } from "@/lib/pdf";
 import type { Rfp } from "@/lib/types";
 import { SourceDocumentEmbed } from "./SourceDocumentEmbed";
+import { TagBubble } from "./RfpCard";
 
 const RfpPdfViewer = dynamic(
   () => import("./RfpPdfViewer").then((m) => m.RfpPdfViewer),
@@ -238,6 +239,14 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
                 <dd className="font-semibold text-govbid-text">{rfp.dueDate}</dd>
               </div>
             </dl>
+            {/* TAGS: show all tags as colored bubbles below location/due date */}
+            {rfp.tags?.length > 0 && (
+              <div className="mt-2 flex flex-wrap gap-1">
+                {rfp.tags.map((tag) => (
+                  <TagBubble key={tag} tag={tag} />
+                ))}
+              </div>
+            )}
             <div className="rfp-sow rounded-xl border border-govbid-border bg-govbid-surface p-4">
               <h3 className="text-sm font-semibold text-govbid-text">
                 Statement of work (markdown stub)
