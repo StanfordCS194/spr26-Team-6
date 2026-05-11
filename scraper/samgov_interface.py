@@ -352,6 +352,24 @@ class SamGovClient:
         return json_path
 
 
+# ---------------------------------------------------------------------- dedup
+def _safe_notice_id_filename(notice_id: str) -> str:
+    """Mirror the filename sanitization in samgov_json_generator.write_raw_json."""
+    return re.sub(r"[^\w.\-]+", "_", notice_id or "").strip("._") or "notice"
+
+
+def _existing_raw_notice_ids(data_raw_dir: str) -> set:
+    """Return the set of safe noticeIds that already have data_raw/samgov_*.json files."""
+    if not os.path.isdir(data_raw_dir):
+        return set()
+    out: set = set()
+    prefix, suffix = "samgov_", ".json"
+    for fname in os.listdir(data_raw_dir):
+        if fname.startswith(prefix) and fname.endswith(suffix):
+            out.add(fname[len(prefix):-len(suffix)])
+    return out
+
+
 # ----------------------------------------------------------------------- CLI
 def main(argv: Optional[List[str]] = None) -> int:
     parser = argparse.ArgumentParser(
@@ -375,6 +393,10 @@ def main(argv: Optional[List[str]] = None) -> int:
                         help="Skip Google Drive upload; record original SAM.gov URLs in JSON.")
     parser.add_argument("--timeout", type=int, default=60,
                         help="HTTP timeout in seconds (default: %(default)s).")
+    parser.add_argument("--skip-existing", dest="skip_existing", action="store_true", default=True,
+                        help="Skip opportunities whose data_raw/samgov_<id>.json already exists (default).")
+    parser.add_argument("--no-skip-existing", dest="skip_existing", action="store_false",
+                        help="Re-scrape and overwrite opportunities even if a raw JSON already exists.")
     args = parser.parse_args(argv)
 
     client = SamGovClient(timeout_seconds=args.timeout)
@@ -399,6 +421,24 @@ def main(argv: Optional[List[str]] = None) -> int:
             f"{len(args.naics)} NAICS codes (posted {args.posted_from}–{args.posted_to or 'today'}).",
             flush=True,
         )
+
+    raw_dir = os.path.abspath(json_generator.DEFAULT_DATA_RAW_DIR)
+    if args.skip_existing:
+        already_scraped = _existing_raw_notice_ids(raw_dir)
+        filtered: List[Dict[str, Any]] = []
+        skipped = 0
+        for opp in opportunities:
+            safe = _safe_notice_id_filename(opp.get("noticeId") or "")
+            if safe in already_scraped:
+                skipped += 1
+                continue
+            filtered.append(opp)
+        if skipped:
+            print(
+                f"Dedup: skipping {skipped} opportunity(ies) already present in data_raw/.",
+                flush=True,
+            )
+        opportunities = filtered
 
     dl_root = DEFAULT_FILES_FOR_UPLOAD_DIR
     os.makedirs(dl_root, exist_ok=True)
