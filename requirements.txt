@@ -1,0 +1,8 @@
+# SAM.gov scraper (scraper/samgov_interface.py)
+
+# HTTP client for SAM.gov API + attachment downloads
+requests>=2.28
+
+# Google Drive client + OAuth
+google-api-python-client>=2.100
+google-auth-oauthlib>=1.0

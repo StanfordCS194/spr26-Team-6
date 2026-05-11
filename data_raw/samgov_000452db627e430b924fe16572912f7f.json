@@ -1,0 +1,230 @@
+{
+  "source": "SAM.gov",
+  "external_id": "000452db627e430b924fe16572912f7f",
+  "title": "Foundation Sustainment Support, Software and Integration (FS3i)",
+  "dept": "DEPT OF DEFENSE.NATIONAL GEOSPATIAL-INTELLIGENCE AGENCY (NGA).NATL GEOSPATIAL-INTELLIGENCE AGENCY",
+  "description": "",
+  "published_date": "2026-04-06",
+  "due_date": "2026-02-23T09:00:00-06:00",
+  "contact_name": "Daniel R.Fadely",
+  "contact_email": "daniel.r.fadely@nga.mil",
+  "contact_phone": "3146760215",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-000452db627e430b924fe16572912f7f-ba12302fe01b",
+  "metadata": {
+    "event_type": "Presolicitation",
+    "solicitation_number": "HM0476_20260105",
+    "ui_link": "https://sam.gov/workspace/contract/opp/000452db627e430b924fe16572912f7f/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": "DF01",
+    "set_aside": "NONE",
+    "set_aside_description": "No Set aside used",
+    "place_of_performance": {
+      "city": {
+        "code": "65000",
+        "name": "Saint Louis"
+      },
+      "state": {
+        "code": "MO",
+        "name": "Missouri"
+      },
+      "country": {
+        "code": "USA",
+        "name": "UNITED STATES"
+      }
+    },
+    "office_address": {
+      "zipcode": "630106238",
+      "city": "ARNOLD",
+      "countryCode": "USA",
+      "state": "MO"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "Draft_HM047625R0016.pdf",
+        "url": "https://drive.google.com/file/d/1c0rgP-Lai1sMGC0P2aDJlcMdTsrMSB5X/view?usp=drivesdk",
+        "type": "primary_spec",
+        "original_extension": "pdf",
+        "size_bytes": 902600,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/afade1cc86284cd7a7f651623b2728aa/download"
+      },
+      {
+        "label": "J-01 FS3i_Base_PWS_v9_01022026.docx",
+        "url": "https://docs.google.com/document/d/10SDt23Xs6Bg9UVPNLpf_p2kuo5xzB1Lb/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 1154067,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/479384f3c1734c35a516eac2d814bc22/download"
+      },
+      {
+        "label": "J-02 DD254_HM047625R0016_20250311.pdf",
+        "url": "https://drive.google.com/file/d/15gEtdPD8LkXs8Qo1oTv42scF5Zf5ROKA/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 225674,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/238ac398e4924b5294a999efc2924d25/download"
+      },
+      {
+        "label": "J-03 FS3i_Common_Services-TO-PWS-v16_01022026.docx",
+        "url": "https://docs.google.com/document/d/1XUia0FMaLCBhGYaHEB3dG9mQen2yIePb/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 927041,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/3e01f93e61de47b399fb6cb55294e31a/download"
+      },
+      {
+        "label": "J-04 FS3i Common Services Task Order QASP 01022026.docx",
+        "url": "https://docs.google.com/document/d/1tvY1qwwufKSX-TiU2nNNeoal_tVGrZ1k/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 132680,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/051dde972a38423d9f4f3bd5470d9b9c/download"
+      },
+      {
+        "label": "J-05 FS3i_ Air_PWS v4.1_01022026.docx",
+        "url": "https://docs.google.com/document/d/1-hort8zSVTJ71a_p8dpS9DPV47YUeEfY/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 165426,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/f96024e1883e4430a702cb924ec86285/download"
+      },
+      {
+        "label": "J-06 FS3i Air Task Order QASP-v4.1.docx",
+        "url": "https://docs.google.com/document/d/1B9OPJ9hZPGnweR-BQxYOxk-UDC0U7TX9/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 139754,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/aafa948084d24780bf0286c6b4f5e2a2/download"
+      },
+      {
+        "label": "J-07 FS3i CDRLs 1423_REV_3.2.docx",
+        "url": "https://docs.google.com/document/d/16dbJ1vSG2dn8TKkwcXUduRX7x_qhd05g/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 485467,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/889cf326237345b4bb82f45099f54778/download"
+      },
+      {
+        "label": "L-10_Placeholder.docx",
+        "url": "https://docs.google.com/document/d/1hrYb8xX-a-arKcWKkB3dIicB42F6dYs2/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 78757,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/8824f80881024e0cae5095c3bc1ae761/download"
+      },
+      {
+        "label": "L-1_OCI_Disclosure_Form.docx",
+        "url": "https://docs.google.com/document/d/10ZR6DWsPHn7ZUkN-2JTGMStoAuGWDk63/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 52114,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/2902d16d9285429c9d6c94a464cc7d9a/download"
+      },
+      {
+        "label": "L-2_BOE Placeholder.docx",
+        "url": "https://docs.google.com/document/d/1XblNWlO6HXcoVBOwKpOlLrI68ktGrE7L/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 78711,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/9745945906724f72b1ab4db164992137/download"
+      },
+      {
+        "label": "L-3_Key_Personnel_Resume_Template.docx",
+        "url": "https://docs.google.com/document/d/1OHGVTk7IG_j1JDcEeUxyhXJwsnPZhqEp/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 29786,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/5c75aa0d41864d4dbd856eda377e60d5/download"
+      },
+      {
+        "label": "L-4_Small_Business_Participation_Template.xlsx",
+        "url": "https://docs.google.com/spreadsheets/d/1zhFOlfriIS20x2yDIlCw9g59QHQWNBKB/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "xlsx",
+        "size_bytes": 614562,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/fb5dae8dbe65448d9a3c19444b400f27/download"
+      },
+      {
+        "label": "L-5_Master_Project_Template.xlsx",
+        "url": "https://docs.google.com/spreadsheets/d/13st_S0YNq-4uNpFy85pnviyFvoQcznUh/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "xlsx",
+        "size_bytes": 16278,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/040c2fb499534744b178a04068aae2b2/download"
+      },
+      {
+        "label": "L-6_Past_Performance_Questionnaire.docx",
+        "url": "https://docs.google.com/document/d/1INwfe5cgK9J_7qeCyqRmfK05DPfqHESK/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 84555,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/c39d3703388844cab1b80bb991bf1009/download"
+      },
+      {
+        "label": "L-7_Intellectual_Property_Schedule.docx",
+        "url": "https://docs.google.com/document/d/1TXP9ZwS1YW86yuvUXQjGkvX5KE7KD4d6/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 71200,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/829581b85edc4ff89cae90f1d5bce31c/download"
+      },
+      {
+        "label": "L-8_Facility_Security_Clearance_Level_Template.docx",
+        "url": "https://docs.google.com/document/d/1Mn3wlo_F3bouApc7ctGfZcY6gxfoGwa_/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 42063,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/63adf493ba78451a82bff5a8b00d4288/download"
+      },
+      {
+        "label": "L-9_Personnel_Security_Clearance_Template.docx",
+        "url": "https://docs.google.com/document/d/1SPbW3TMAyGMMxVpzNQDZjkrVcK_u7tf9/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 39925,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/ae944a07c7c04799a0d8f1996800eb3a/download"
+      },
+      {
+        "label": "Section_L_v4 01132026.docx",
+        "url": "https://docs.google.com/document/d/1uR0fC-aZffm3ugwRWdHCtE6GomHbE59m/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 87994,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/07960b170c054d9bbf79d1ac81dbc768/download"
+      },
+      {
+        "label": "Section_M_v3 122825.docx",
+        "url": "https://docs.google.com/document/d/1j8At8phc5bftVGEvddP2VJLLb9uHJVFD/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 71358,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/e86d1eba5bb44d48957b1a5989ba661f/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "daniel.r.fadely@nga.mil",
+        "phone": "3146760215",
+        "title": null,
+        "fullName": "Daniel R.Fadely"
+      },
+      {
+        "fax": "",
+        "type": "secondary",
+        "email": "hannah.m.pulcher@nga.mil",
+        "phone": "3146761711",
+        "title": null,
+        "fullName": "Hannah M. Pulcher"
+      }
+    ]
+  }
+}

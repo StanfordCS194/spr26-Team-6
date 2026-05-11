@@ -1,0 +1,79 @@
+{
+  "source": "SAM.gov",
+  "external_id": "785f0c0cb4404df7869911576eea44d2",
+  "title": "AF EAD_IA/MA-PLMF",
+  "dept": "GENERAL SERVICES ADMINISTRATION.FEDERAL ACQUISITION SERVICE.GSA FAS AAS ARMY (QFB)",
+  "description": "",
+  "published_date": "2026-05-04",
+  "due_date": "2026-05-15T17:00:00-04:00",
+  "contact_name": "Alex Budai",
+  "contact_email": "alex.budai@gsa.gov",
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-785f0c0cb4404df7869911576eea44d2-1ceec0b680e2",
+  "metadata": {
+    "event_type": "Sources Sought",
+    "solicitation_number": "RFI_R7DFW5YAFNSF",
+    "ui_link": "https://sam.gov/workspace/contract/opp/785f0c0cb4404df7869911576eea44d2/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": "R425",
+    "set_aside": "NONE",
+    "set_aside_description": "No Set aside used",
+    "place_of_performance": {
+      "city": {
+        "code": "0",
+        "name": "S Coffeyville"
+      },
+      "state": {
+        "code": "OK",
+        "name": "Oklahoma"
+      },
+      "zip": "73145",
+      "country": {
+        "code": "USA",
+        "name": "UNITED STATES"
+      }
+    },
+    "office_address": {
+      "zipcode": "20405",
+      "city": "Washington",
+      "countryCode": "USA",
+      "state": "DC"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "AFLCMC-WVV EAD_RFI_PWS_Draft_R1.pdf",
+        "url": "https://drive.google.com/file/d/1V_ZUkqA9-DPWQR9QwNsQNLVT9fbx6Lrn/view?usp=drivesdk",
+        "type": "primary_spec",
+        "original_extension": "pdf",
+        "size_bytes": 900916,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/31b5894885a7427386ab9f5195cc2aba/download"
+      },
+      {
+        "label": "RFI-Sources Sought Response Form.xlsx",
+        "url": "https://docs.google.com/spreadsheets/d/1SuFaJAWY1FdEtRl9bU431vXaqbH3rGhD/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "xlsx",
+        "size_bytes": 17690,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/48724ce5fc8e4f6a9a86ff921c4761d6/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "alex.budai@gsa.gov",
+        "phone": "",
+        "title": null,
+        "fullName": "Alex Budai"
+      }
+    ]
+  }
+}
