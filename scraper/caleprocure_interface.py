@@ -49,7 +49,7 @@ DEFAULT_PDFS_FOR_UPLOAD_DIR = os.path.join(
 
 # Tech/IT/telecommunications keywords for portal search
 DEFAULT_TECH_KEYWORDS = [
-    # "software",
+    "software",
     # "hardware",
     "computer",
     # "server",
@@ -1596,36 +1596,54 @@ class CalEProcureInterface:
             target = os.path.join(download_dir, f"{base}_{file_index}{ext}")
 
         new_page = None
-        try:
-            # Some events trigger a browser download directly; others open a new tab.
-            # Try direct download first to avoid long expect_page timeouts.
-            try:
-                with page.expect_download(timeout=min(dl_timeout, 45_000)) as dl_info:
-                    self._click_download_attachment_confirm_button(page)
-                dl = dl_info.value
-                dl.save_as(target)
-                return DownloadedAttachment(
-                    local_path=target,
-                    attached_file_name=display_name,
-                    attachment_description=desc,
-                )
-            except Exception:
-                pass
+        downloads: List[Any] = []
 
-            with context.expect_page(timeout=dl_timeout) as new_page_info:
-                self._click_download_attachment_confirm_button(page)
-            new_page = new_page_info.value
-            written = self._save_opened_tab_as_attachment_file(
-                context, new_page, target, display_name
-            )
-            return DownloadedAttachment(
-                local_path=written,
-                attached_file_name=display_name,
-                attachment_description=desc,
-            )
+        def _on_download(d: Any) -> None:
+            downloads.append(d)
+
+        page.on("download", _on_download)
+        try:
+            pages_before = list(context.pages)
+            self._click_download_attachment_confirm_button(page)
+            deadline = time.monotonic() + dl_timeout / 1000.0
+            poll_ms = 150
+            while time.monotonic() < deadline:
+                if downloads:
+                    try:
+                        downloads[0].save_as(target)
+                    except Exception:
+                        return None
+                    return DownloadedAttachment(
+                        local_path=target,
+                        attached_file_name=display_name,
+                        attachment_description=desc,
+                    )
+                fresh = [p for p in context.pages if p not in pages_before]
+                if fresh:
+                    new_page = fresh[-1]
+                    try:
+                        written = self._save_opened_tab_as_attachment_file(
+                            context, new_page, target, display_name
+                        )
+                        return DownloadedAttachment(
+                            local_path=written,
+                            attached_file_name=display_name,
+                            attachment_description=desc,
+                        )
+                    except Exception:
+                        return None
+                try:
+                    page.wait_for_timeout(poll_ms)
+                except Exception:
+                    break
+            return None
         except Exception:
             return None
         finally:
+            try:
+                page.remove_listener("download", _on_download)
+            except Exception:
+                pass
             if new_page is not None:
                 try:
                     new_page.close()
