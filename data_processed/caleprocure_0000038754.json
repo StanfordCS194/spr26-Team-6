@@ -1,0 +1,93 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "0000038754",
+  "title": "RFQ 10211040 - Historic Aerial Film Scanning",
+  "name": "RFQ 10211040 - Historic Aerial Film Scanning",
+  "statement_of_work": "DWR requires a contractor to scan and index historic aerial film. The contractor will perform the work under this contract, by following the procedures used by DWR staff, and by using the same DWR database indexing system to track the library.",
+  "deliverables": [
+    "Execute scope of work described in the RFQ 10211040 - Historic Aerial Film Scanning solicitation",
+    "Deliver milestones, status reporting, and acceptance documentation",
+    "Provide final handoff and post-deployment support per RFP terms"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Water",
+    "GIS",
+    "Data",
+    "California"
+  ],
+  "dept": "California Department of Water Resources",
+  "description": "DWR requires a contractor to scan and index historic aerial film. The contractor will perform the work under this contract, by following the procedures used by DWR staff, and by using the same DWR database indexing system to track the library.",
+  "published_date": "2026-04-06T13:17:00-07:00",
+  "due_date": "2026-05-13T15:00:00-07:00",
+  "contact_name": "Peter Czerkies",
+  "contact_email": "peter.czerkies@water.ca.gov",
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-0000038754-4a30e9dfbe71",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "Addendum_2_-_RFQ_10211040.pdf",
+        "url": "https://drive.google.com/file/d/1wD3B4SsRK2-l6gWsTnWuM_-3Op0a_VVg/view?usp=drivesdk",
+        "type": "primary_spec",
+        "attachment_description": ""
+      },
+      {
+        "label": "Addendum_3_-_RFQ_10211040.pdf",
+        "url": "https://drive.google.com/file/d/1NDbBg8N6b7AM5t6F6VO4oIDFxG1iaRoa/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "RFQ_10211040_-_Addendum_1.pdf",
+        "url": "https://drive.google.com/file/d/1qQfpQTKPXXe4qoYoRJv7jPY9WUl1LAoN/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "RFQ_10211040_-_DWR_Response_to_Questions.pdf",
+        "url": "https://drive.google.com/file/d/1INqqIhLYP-7qdS8awCzvebM7Ie2dV4xu/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "RFQ_10211040_-_Historic_Aerial_Film_Scanning_(Final).pdf",
+        "url": "https://drive.google.com/file/d/1JsLA9coI8ljTH0HwuDuFgzTiLerAIx1w/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "RFQ_10211040_Addendum_3_-_Cost_Worksheet.pdf",
+        "url": "https://drive.google.com/file/d/1-x9UHGhKwgK1mOkbEzCyXUc5nJYw7Gev/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "RFQ_10211040_Addendum_3,_Attachment_1_-_Catalogue_DB.pdf",
+        "url": "https://drive.google.com/file/d/1fq88s1Hvi1qaPOQORWOnDMnuaJXE0fGj/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "RFQ_10211040_Addendum_3,_Attachment_2_-_Examples.pdf",
+        "url": "https://drive.google.com/file/d/1EwyFBmdYtzc1AiclHI3oOb9lfwIQBjAy/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      }
+    ],
+    "unspsc_codes": [
+      {
+        "code": "01012001",
+        "description": "/> <span data-if-container-label=\"conferenceRow\" data-if-source=\"[id^='ZZ_BID_CNF_VW_DUE_DT_TIME$']\" data-if-content=\"nu"
+      }
+    ]
+  }
+}

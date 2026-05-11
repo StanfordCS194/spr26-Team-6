@@ -1,0 +1,44 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "0000039012",
+  "title": "HCL BigFix Software Subscription and Support",
+  "name": "HCL BigFix Software Subscription and Support",
+  "statement_of_work": "HCL BigFix Software Subscription and Support - RFQ FTB-2526-1036.\nFinal Supplier Quotation Due Date: Thursday, 5/14/2026 by 3:00 PM PT.",
+  "deliverables": [
+    "Execute scope of work described in the HCL BigFix Software Subscription and Support solicitation",
+    "Deliver milestones, status reporting, and acceptance documentation",
+    "Provide final handoff and post-deployment support per RFP terms"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Cybersecurity",
+    "Finance",
+    "Software",
+    "California"
+  ],
+  "dept": "California Franchise Tax Board",
+  "description": "HCL BigFix Software Subscription and Support - RFQ FTB-2526-1036.\nFinal Supplier Quotation Due Date: Thursday, 5/14/2026 by 3:00 PM PT.",
+  "published_date": "2026-04-30T15:00:00-07:00",
+  "due_date": "2026-06-30T15:00:00-07:00",
+  "contact_name": "Tommy Yu",
+  "contact_email": "tommy.yu@ftb.ca.gov",
+  "contact_phone": "916-845-7802",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-event-details.aspx-2c32c323537f",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [],
+    "unspsc_codes": [
+      {
+        "code": "01012001",
+        "description": "/> <span data-if-container-label=\"conferenceRow\" data-if-source=\"[id^='ZZ_BID_CNF_VW_DUE_DT_TIME$']\" data-if-content=\"nu"
+      }
+    ]
+  }
+}
