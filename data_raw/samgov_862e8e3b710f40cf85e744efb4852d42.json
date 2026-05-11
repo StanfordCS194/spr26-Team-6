@@ -1,0 +1,69 @@
+{
+  "source": "SAM.gov",
+  "external_id": "862e8e3b710f40cf85e744efb4852d42",
+  "title": "7B22--VISN 15 | PYXIS SERVER UPGRADE",
+  "dept": "VETERANS AFFAIRS, DEPARTMENT OF.VETERANS AFFAIRS, DEPARTMENT OF.255-NETWORK CONTRACT OFFICE 15 (36C255)",
+  "description": "",
+  "published_date": "2026-04-28",
+  "due_date": "2026-05-06T11:00:00-05:00",
+  "contact_name": "Betty Flores",
+  "contact_email": "veronica.flores@va.gov",
+  "contact_phone": "913-946-1167",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-862e8e3b710f40cf85e744efb4852d42-56ddd3af1867",
+  "metadata": {
+    "event_type": "Special Notice",
+    "solicitation_number": "36C25526Q0347",
+    "ui_link": "https://sam.gov/workspace/contract/opp/862e8e3b710f40cf85e744efb4852d42/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": "7B22",
+    "set_aside": null,
+    "set_aside_description": null,
+    "place_of_performance": {
+      "city": {},
+      "state": {},
+      "country": {}
+    },
+    "office_address": {
+      "zipcode": "66048",
+      "city": "LEAVENWORTH",
+      "countryCode": "USA",
+      "state": "KS"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "36C25526Q0347.docx",
+        "url": "https://docs.google.com/document/d/1o3QNHraOBi0XZ7LxqlwxqObMs1FsY59p/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "primary_spec",
+        "original_extension": "docx",
+        "size_bytes": 24639,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/76cc5eac2d3a4404838e47356f8e79fd/download"
+      },
+      {
+        "label": "SSJ_36C255-26-AP-1765_Pyxis Server Upgrade VISN_BF_Redacted.pdf",
+        "url": "https://drive.google.com/file/d/11n-VUoM5nDTeG_V6iDquydBBSnRVgBN6/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 124317,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/517247712eec46c8ab76d14c13bad297/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "veronica.flores@va.gov",
+        "phone": "913-946-1167",
+        "title": "Contracting Officer",
+        "fullName": "Betty Flores"
+      }
+    ]
+  }
+}
