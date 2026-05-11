@@ -6,6 +6,7 @@ import { GlobalHeader } from "./GlobalHeader";
 import { ProfileDrawer } from "./ProfileDrawer";
 import { RfpFeed } from "./RfpFeed";
 import { RfpSidebar } from "./RfpSidebar";
+import { Walkthrough } from "./Walkthrough/Walkthrough";
 
 export function Dashboard() {
   const { toast, authReady } = useDashboard();
@@ -39,6 +40,7 @@ export function Dashboard() {
       </div>
 
       <ProfileDrawer />
+      <Walkthrough />
       {toast && (
         <div
           role="status"

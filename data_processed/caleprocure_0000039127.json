@@ -1,0 +1,43 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "0000039127",
+  "title": "75350667 Civica MultiVue Renewal",
+  "name": "75350667 Civica MultiVue Renewal",
+  "statement_of_work": "The California Health and Human Services Agency, Office of Technology and Solutions Integration (CalHHS OTSI) is releasing Request for Quote (Reference #75350667) for Civica MultiVue Renewal. Please see the attached RFQ for details.",
+  "deliverables": [
+    "Execute scope of work described in the 75350667 Civica MultiVue Renewal solicitation",
+    "Deliver milestones, status reporting, and acceptance documentation",
+    "Provide final handoff and post-deployment support per RFP terms"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Medical Imaging",
+    "System Development",
+    "California"
+  ],
+  "dept": "Office of Technology and Solutions Integration (OTSI)",
+  "description": "The California Health and Human Services Agency, Office of Technology and Solutions Integration (CalHHS OTSI) is releasing Request for Quote (Reference #75350667) for Civica MultiVue Renewal. Please see the attached RFQ for details.",
+  "published_date": "2026-05-01T17:00:00-07:00",
+  "due_date": "2026-05-15T12:00:00-07:00",
+  "contact_name": "Katie Bang",
+  "contact_email": "katie.bang@otsi.ca.gov",
+  "contact_phone": "916-263-0739",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-0000039127-9c645f9a1c4b",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [],
+    "unspsc_codes": [
+      {
+        "code": "01012001",
+        "description": "/> <span data-if-container-label=\"conferenceRow\" data-if-source=\"[id^='ZZ_BID_CNF_VW_DUE_DT_TIME$']\" data-if-content=\"nu"
+      }
+    ]
+  }
+}

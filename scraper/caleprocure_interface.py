@@ -2140,6 +2140,18 @@ class CalEProcureInterface:
         gdrive_interface.delete_local_files_in_folder(dl_dir)
         return json_path
 
+def _existing_raw_external_ids(data_raw_dir: str) -> set:
+    """Return the set of safe external_ids that already have data_raw/caleprocure_*.json files."""
+    if not os.path.isdir(data_raw_dir):
+        return set()
+    out: set = set()
+    prefix, suffix = "caleprocure_", ".json"
+    for fname in os.listdir(data_raw_dir):
+        if fname.startswith(prefix) and fname.endswith(suffix):
+            out.add(fname[len(prefix):-len(suffix)])
+    return out
+
+
 # Command-line entry: always run full pipeline with default tech keywords
 def main(argv: Optional[List[str]] = None) -> int:
     ap = argparse.ArgumentParser(description="Cal eProcure search and scrape for IT contracts.")
@@ -2167,6 +2179,20 @@ def main(argv: Optional[List[str]] = None) -> int:
         type=int,
         default=10,
         help="Max attachment downloads per event in Step 4 (default: 10).",
+    )
+
+    ap.add_argument(
+        "--skip-existing",
+        dest="skip_existing",
+        action="store_true",
+        default=True,
+        help="Skip events whose data_raw/caleprocure_<id>.json already exists (default).",
+    )
+    ap.add_argument(
+        "--no-skip-existing",
+        dest="skip_existing",
+        action="store_false",
+        help="Re-scrape and overwrite events even if a raw JSON already exists.",
     )
 
     args = ap.parse_args(argv)
@@ -2202,6 +2228,25 @@ def main(argv: Optional[List[str]] = None) -> int:
             print(f"error: {exc}", file=sys.stderr)
             return 1
         print(f"\nStep 1 done: {len(candidates)} candidate event(s) from keyword searches.", flush=True)
+
+    if args.skip_existing and not single_detail_mode:
+        raw_dir = os.path.abspath(json_generator.DEFAULT_DATA_RAW_DIR)
+        already_scraped = _existing_raw_external_ids(raw_dir)
+        filtered: List[SearchResult] = []
+        skipped = 0
+        for r in candidates:
+            ext = r.external_id or json_generator.external_id_from_detail_url(r.detail_url)
+            safe = re.sub(r"[^\w.\-]+", "_", ext or "").strip("._") or "event"
+            if safe in already_scraped:
+                skipped += 1
+                continue
+            filtered.append(r)
+        if skipped:
+            print(
+                f"Dedup: skipping {skipped} candidate(s) already present in data_raw/.",
+                flush=True,
+            )
+        candidates = filtered
 
     dl_root = os.path.abspath(DEFAULT_PDFS_FOR_UPLOAD_DIR)
     os.makedirs(dl_root, exist_ok=True)

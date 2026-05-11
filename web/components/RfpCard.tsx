@@ -3,6 +3,44 @@
 import type { Rfp } from "@/lib/types";
 import { ScoreRing } from "./ScoreRing";
 
+// Simple color palette for tags
+const TAG_COLORS = [
+  "#e57373", // red
+  "#64b5f6", // blue
+  "#81c784", // green
+  "#ffd54f", // yellow
+  "#ba68c8", // purple
+  "#4db6ac", // teal
+  "#ffb74d", // orange
+  "#a1887f", // brown
+  "#90a4ae", // gray
+];
+
+// Deterministic color for a tag string
+function getTagColor(tag: string) {
+  let hash = 0;
+  for (let i = 0; i < tag.length; i++) {
+    hash = tag.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return TAG_COLORS[Math.abs(hash) % TAG_COLORS.length];
+}
+
+export function TagBubble({ tag }: { tag: string }) {
+  return (
+    <span
+      className="inline-block rounded-md px-2 py-0.5 text-xs font-semibold mr-1 mb-1 border"
+      style={{
+        background: getTagColor(tag) + "22", // faded bg
+        color: getTagColor(tag),
+        borderColor: getTagColor(tag),
+        minWidth: 0,
+      }}
+    >
+      {tag}
+    </span>
+  );
+}
+
 type Props = {
   rfp: Rfp;
   active: boolean;
@@ -59,6 +97,12 @@ export function RfpCard({ rfp, active, onSelect }: Props) {
           {rfp.title}
         </p>
         <p className="mt-1 line-clamp-1 text-xs text-govbid-text-muted">{subtitle}</p>
+        {/* TAGS: show all tags as colored bubbles */}
+        <div className="mt-2 flex flex-wrap gap-1">
+          {rfp.tags?.map((tag) => (
+            <TagBubble key={tag} tag={tag} />
+          ))}
+        </div>
         <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-govbid-text-muted">
           <span className="inline-flex items-center gap-1">
             <PinIcon />

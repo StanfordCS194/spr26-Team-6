@@ -1,0 +1,52 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "0000039185",
+  "title": "IFB A251017444 OneStream Implementation Services",
+  "name": "IFB A251017444 OneStream Implementation Services",
+  "statement_of_work": "The California Governor¿s Office of Emergency Services, requires implementation and configuration services for the Software as a Service (SaaS) platform, OneStream. The system will support budget development, financial tracking, reporting, position control, grant management, and compliance oversight. The solution will replace manual processes, reduce reliance on spreadsheets, and provide a controlled, auditable financial management environment.",
+  "deliverables": [
+    "Execute scope of work described in the IFB A251017444 OneStream Implementation Services solicitation",
+    "Deliver milestones, status reporting, and acceptance documentation",
+    "Provide final handoff and post-deployment support per RFP terms"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Environment",
+    "Finance",
+    "SaaS",
+    "System Development",
+    "California"
+  ],
+  "dept": "California Governor's Office of Emergency Services (Cal OES)",
+  "description": "The California Governor¿s Office of Emergency Services, requires implementation and configuration services for the Software as a Service (SaaS) platform, OneStream. The system will support budget development, financial tracking, reporting, position control, grant management, and compliance oversight. The solution will replace manual processes, reduce reliance on spreadsheets, and provide a controlled, auditable financial management environment.",
+  "published_date": "2026-05-06T16:25:00-07:00",
+  "due_date": "2026-06-10T17:00:00-07:00",
+  "contact_name": "Flora Karami",
+  "contact_email": "flora.karami@caloes.ca.gov",
+  "contact_phone": "916-845-8808",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-0000039185-cc6dda31a50f",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "IFB_A251017444_OneStream_Implementation.pdf",
+        "url": "https://drive.google.com/file/d/1MiEAVF6SmY5c5gUiS9RK-vIMRVWbeYmp/view?usp=drivesdk",
+        "type": "primary_spec",
+        "attachment_description": ""
+      }
+    ],
+    "unspsc_codes": [
+      {
+        "code": "01012001",
+        "description": "/> <span data-if-container-label=\"conferenceRow\" data-if-source=\"[id^='ZZ_BID_CNF_VW_DUE_DT_TIME$']\" data-if-content=\"nu"
+      }
+    ]
+  }
+}
