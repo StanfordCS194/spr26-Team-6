@@ -1,0 +1,226 @@
+{
+  "source": "SAM.gov",
+  "external_id": "3235294d18ab494a8ea6aeeb6a95cfa9",
+  "title": "Census Bureau Transformation & Application Modernization (CenTAM) - Draft Solicitation Sections for Industry Review and Feedback",
+  "dept": "COMMERCE, DEPARTMENT OF.US CENSUS BUREAU",
+  "description": "",
+  "published_date": "2026-04-20",
+  "due_date": "2026-05-11T17:00:00-04:00",
+  "contact_name": "Bryan Shearer",
+  "contact_email": "bryan.allan.shearer@census.gov",
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-3235294d18ab494a8ea6aeeb6a95cfa9-faec45d04960",
+  "metadata": {
+    "event_type": "Special Notice",
+    "solicitation_number": "YA1323-26-CENTAMSN-0002",
+    "ui_link": "https://sam.gov/workspace/contract/opp/3235294d18ab494a8ea6aeeb6a95cfa9/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": null,
+    "set_aside": null,
+    "set_aside_description": null,
+    "place_of_performance": {
+      "city": {
+        "code": "75725",
+        "name": "Suitland"
+      },
+      "state": {
+        "code": "MD",
+        "name": "Maryland"
+      },
+      "zip": "20746",
+      "country": {
+        "code": "USA",
+        "name": "UNITED STATES"
+      }
+    },
+    "office_address": null,
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "Attachment J-XX - 2030 Census Integration and Implementation Plan (IIP) V1.0 (1).pdf",
+        "url": "https://drive.google.com/file/d/1zHa6LhIeBQFKSXzz0JCo3Vr2IOdyAsNU/view?usp=drivesdk",
+        "type": "primary_spec",
+        "original_extension": "pdf",
+        "size_bytes": 1209473,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/9c4283fdc8a7447081a7983ad8dee53a/download"
+      },
+      {
+        "label": "Attachment J-XX - 2030 Census Operational Delivery Management Plan (ODMP) V1.0 (1).pdf",
+        "url": "https://drive.google.com/file/d/1lr64D5GMevUiXS7cabZRRvTYc9-4C2c1/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 629793,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/9ecc6ff3ad474eaf902b62851d279016/download"
+      },
+      {
+        "label": "Attachment J-XX - 2030 Census Program Test and Evaluation Management Plan (TEMP) V2.0 (1).pdf",
+        "url": "https://drive.google.com/file/d/1-q5dAqHpHodNon2xtcVwqEyD9dnGBXNh/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 1980004,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/a0217c7503cb41b3ab6a0bbd25711d5c/download"
+      },
+      {
+        "label": "Attachment J-XX - 2030 Census Systems Engineering Management Plan (SEMP) V1.1 (1).pdf",
+        "url": "https://drive.google.com/file/d/1fUSb37myfLYMWRi4PXwWr8IV_OpKFml4/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 1083996,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/83e8a0b9eda14b8997e7b8cf128ab228/download"
+      },
+      {
+        "label": "Attachment J-XX - CenTAM Labor Roles (DRAFT).pdf",
+        "url": "https://drive.google.com/file/d/1l30LlPHGTpSJb8f0WSPxHMC0KyM3S00G/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 257292,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/e4a76df3d8d643018e4b9c5206c37c07/download"
+      },
+      {
+        "label": "Attachment J-XX - Decennial BPA Scope and Task Areas (DRAFT).pdf",
+        "url": "https://drive.google.com/file/d/1W0ftyfbfCgALfRpg4VUjy763rbEKJ6Gc/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 333213,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/0f801b50266b4a4196d92de735094d84/download"
+      },
+      {
+        "label": "Attachment J-XX - Enterprise BPA Scope and Task Areas (DRAFT).pdf",
+        "url": "https://drive.google.com/file/d/1dDpcLurgcvJwY-B-YBmbJmiP5DY1UWUM/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 366143,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/112e6de1456748a19e8706efa98ad967/download"
+      },
+      {
+        "label": "Attachment J-XX - GEOTAM Current Environment.pdf",
+        "url": "https://drive.google.com/file/d/1Nn3ncsBGn-13Xudwn4jgAkgX30-spaAH/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 253674,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/0acc303268a2405b94cee2219402d82a/download"
+      },
+      {
+        "label": "Attachment J-XX - Geospatial BPA Scope and Task Areas (DRAFT).pdf",
+        "url": "https://drive.google.com/file/d/1L3-2WBEQ9wm5TuxCUH1iHMNN6DbKMFdY/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 335922,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/3cafcb36d6634f45ab06858bc8f1d409/download"
+      },
+      {
+        "label": "Attachment J-XX - Quoter Attestation (1).pdf",
+        "url": "https://drive.google.com/file/d/1p7o6MaUy8rL6GMHU5jaU-oDdPQ70vfgq/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 144354,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/3bbcc87723a640ba9d42b37e6606f8d8/download"
+      },
+      {
+        "label": "Attachment J-XX - SPS BPA Scope and Task Areas (DRAFT).pdf",
+        "url": "https://drive.google.com/file/d/1fPtz26PhC24TxhQ1mrcs7WybhwTuqhMN/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 245311,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/4f3e0126ac474f5aaa08b7065a1332f4/download"
+      },
+      {
+        "label": "Attachment J-XX DTAM Order Draft.pdf",
+        "url": "https://drive.google.com/file/d/1A_JcHNJCa50mpSQOLCXDbj3tDXUz01OW/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 1025761,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/a8254f8b033640a79f9e1b047fad338c/download"
+      },
+      {
+        "label": "Attachment J-XX GEOTAM Order DRAFT.pdf",
+        "url": "https://drive.google.com/file/d/17ak0ezCiUOanD7W1coXWCa-ET3A9kHEH/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 1009991,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/5c04680164d8461dbd1fd42ac359ed41/download"
+      },
+      {
+        "label": "Attachment J-XX GEOTAM Service Level Requirements.pdf",
+        "url": "https://drive.google.com/file/d/1_KoHTpHZk3rdxAMSjS84pN77T1a7ohdm/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 128985,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/1efcb80b6ac0432aae8bf8f21435860c/download"
+      },
+      {
+        "label": "CENTAM L and M Draft.pdf",
+        "url": "https://drive.google.com/file/d/1cSUcbDyt4v2j_k3uP-RjNKxqUGDwqcnl/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 580165,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/035d0691d41a4d458ed23bfa9046540f/download"
+      },
+      {
+        "label": "CenTAM Acqusition Framework Overview (DRAFT).pdf",
+        "url": "https://drive.google.com/file/d/1jIvVLy0slC0cNnnGS6JSIicf0SsnqwmV/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 271088,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/d253a4d778d344a1b318dc1a1d54a12c/download"
+      },
+      {
+        "label": "CenTAM Industry Feedback Template - Draft Solicitation Sections - April 2026.xlsx",
+        "url": "https://docs.google.com/spreadsheets/d/1f5G3BmolC8wTC96M6ocPUqu7M7y0QX04/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "xlsx",
+        "size_bytes": 24764,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/5fde638477934d128a3dd539782482b3/download"
+      },
+      {
+        "label": "DTAM Attachment - Deliverables and Work Products.pdf",
+        "url": "https://drive.google.com/file/d/155atAbB084Pp9GlPsPWwq5Z4mhjgeD19/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 311142,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/a75ddf8dc504407c94b4293e20437a36/download"
+      },
+      {
+        "label": "GEOTAM Attachment - Deliverables and Work Products.pdf",
+        "url": "https://drive.google.com/file/d/1rcSnH_UlS3BU_LkxJqf1qM-57UVgqL0f/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 326258,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/1fd8baccdd174d64983cf4b554f84857/download"
+      },
+      {
+        "label": "Notice to Industry - CenTAM Draft Solicitation Sections for Industry Review (1).pdf",
+        "url": "https://drive.google.com/file/d/1pqtgxi1WkaQomIH0Dwpx1Ef4BKW4MIJa/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 156885,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/ba0f31c2357a4c37843b4d67a2dde7eb/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "bryan.allan.shearer@census.gov",
+        "phone": "",
+        "title": null,
+        "fullName": "Bryan Shearer"
+      },
+      {
+        "fax": "",
+        "type": "secondary",
+        "email": "matthew.s.gore@census.gov",
+        "phone": "",
+        "title": null,
+        "fullName": "Matthew Gore"
+      }
+    ]
+  }
+}
