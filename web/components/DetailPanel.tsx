@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import ReactMarkdown from "react-markdown";
 import { useDashboard } from "@/context/DashboardContext";
+import { captureEvent } from "@/lib/analytics";
 import { isPdfUrl } from "@/lib/pdf";
 import type { Rfp } from "@/lib/types";
 import { SourceDocumentEmbed } from "./SourceDocumentEmbed";
@@ -141,9 +142,11 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
   };
 
   const handleSummary = async () => {
+    captureEvent("rag_summary_requested", { rfp_id: rfp.id });
     const found = await tryLoadCachedSummary(rfp.id);
     if (found) {
       showToast("Loaded cached summary from the database.");
+      captureEvent("rag_summary_cached_hit", { rfp_id: rfp.id });
       return;
     }
     showToast(
@@ -170,7 +173,10 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
           <button
             key={id}
             type="button"
-            onClick={() => setTab(id)}
+            onClick={() => {
+              setTab(id);
+              captureEvent("detail_tab_changed", { tab: id, rfp_id: rfp.id });
+            }}
             data-walkthrough-tab={id}
             className={`pdf-viewer-button relative pb-2.5 text-sm font-semibold transition ${
               tab === id
