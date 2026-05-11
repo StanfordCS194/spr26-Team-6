@@ -3,4 +3,5 @@ token.json
 __pycache__/
 .vscode
 scraper/pdfs_for_upload/*
+processor/models/*.joblib
 .DS_Store
