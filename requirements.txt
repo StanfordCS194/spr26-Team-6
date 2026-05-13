@@ -1,8 +1,22 @@
 # SAM.gov scraper (scraper/samgov_interface.py)
-
 # HTTP client for SAM.gov API + attachment downloads
 requests>=2.28
 
 # Google Drive client + OAuth
 google-api-python-client>=2.100
 google-auth-oauthlib>=1.0
+
+# Cal eProcure scraper (browser automation)
+playwright>=1.40
+
+# Normalize + tag stage (processor/)
+# Pinned to 1.5.0 to match pickled model artifacts
+scikit-learn==1.8.0
+joblib>=1.3
+numpy>=1.24
+pandas>=2.0
+
+# Supabase upload stage (processor/ingest_supabase.py)
+supabase>=2.0
+
+python-dotenv>=1.0

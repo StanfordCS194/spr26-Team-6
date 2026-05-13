@@ -359,14 +359,19 @@ def _safe_notice_id_filename(notice_id: str) -> str:
 
 
 def _existing_raw_notice_ids(data_raw_dir: str) -> set:
-    """Return the set of safe noticeIds that already have data_raw/samgov_*.json files."""
-    if not os.path.isdir(data_raw_dir):
-        return set()
+    """Return the set of safe noticeIds already present in data_raw/
+    or data_raw/archive/. Both count as 'already scraped' for dedup purposes;
+    archived files are opportunities the pipeline has already processed.
+    """
     out: set = set()
     prefix, suffix = "samgov_", ".json"
-    for fname in os.listdir(data_raw_dir):
-        if fname.startswith(prefix) and fname.endswith(suffix):
-            out.add(fname[len(prefix):-len(suffix)])
+    dirs_to_scan = [data_raw_dir, os.path.join(data_raw_dir, "archive")]
+    for d in dirs_to_scan:
+        if not os.path.isdir(d):
+            continue
+        for fname in os.listdir(d):
+            if fname.startswith(prefix) and fname.endswith(suffix):
+                out.add(fname[len(prefix):-len(suffix)])
     return out
 
 

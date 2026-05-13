@@ -12,10 +12,10 @@
   "location_level": "state",
   "location": "California",
   "tags": [
-    "Environment",
-    "Cloud",
     "Water",
     "SaaS",
+    "Cloud",
+    "Data",
     "California"
   ],
   "dept": "California State Water Resources Control Board",

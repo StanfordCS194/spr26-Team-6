@@ -1,0 +1,93 @@
+{
+  "source": "sam.gov",
+  "external_id": "ea37ba4fa6bc4d5499c1dcbbbe4a4b0e",
+  "title": "ANC OCIO CEAS Support Services",
+  "name": "ANC OCIO CEAS Support Services",
+  "statement_of_work": "",
+  "deliverables": [
+    "Execute scope of work described in the ANC OCIO CEAS Support Services solicitation",
+    "Deliver milestones, status reporting, and acceptance documentation",
+    "Provide final handoff and post-deployment support per RFP terms"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Software",
+    "Procurement",
+    "California"
+  ],
+  "dept": "DEPT OF DEFENSE.DEPT OF THE ARMY.AMC.ACC.MISSION INSTALLATION CONTRACTING COMMAND.FDO SAM HOUSTON.W6QM MICC-FT BELVOIR",
+  "description": "",
+  "published_date": "2026-04-22",
+  "due_date": "2026-06-22T16:00:00-04:00",
+  "contact_name": "Amber Peeples",
+  "contact_email": "amber.k.peeples.civ@army.mil",
+  "contact_phone": "520-671-5013",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-ea37ba4fa6bc4d5499c1dcbbbe4a4b0e-14b8f55429a8",
+  "metadata": {
+    "event_type": "Sources Sought",
+    "solicitation_number": "PANMCC26P0000042657",
+    "ui_link": "https://sam.gov/workspace/contract/opp/ea37ba4fa6bc4d5499c1dcbbbe4a4b0e/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": "DF01",
+    "set_aside": "SBA",
+    "set_aside_description": "Total Small Business Set-Aside (FAR 19.5)",
+    "place_of_performance": {
+      "city": {
+        "code": "29232",
+        "name": "Fort Myer"
+      },
+      "state": {
+        "code": "VA",
+        "name": "Virginia"
+      },
+      "zip": "22211",
+      "country": {
+        "code": "USA",
+        "name": "UNITED STATES"
+      }
+    },
+    "office_address": {
+      "zipcode": "22060-5116",
+      "city": "FORT BELVOIR",
+      "countryCode": "USA",
+      "state": "VA"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "OCIO CEAS FY27-30 DRAFT PWS Sources Sought postedsam.gov.pdf",
+        "url": "https://drive.google.com/file/d/1bJxC0b6PEkFUBbphhVdc9ZdOSViJtRM6/view?usp=drivesdk",
+        "type": "primary_spec",
+        "original_extension": "pdf",
+        "size_bytes": 319114,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/dcee79e47a464906af52cd41c8ec8a6d/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "amber.k.peeples.civ@army.mil",
+        "phone": "5206715013",
+        "title": null,
+        "fullName": "Amber Peeples"
+      },
+      {
+        "fax": "",
+        "type": "secondary",
+        "email": "david.l.gecewicz2.civ@army.mil",
+        "phone": "7039692757",
+        "title": null,
+        "fullName": "David L. Gecewicz"
+      }
+    ]
+  }
+}
