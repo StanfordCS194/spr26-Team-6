@@ -1,12 +1,20 @@
-"""End-to-end RFP ingestion pipeline.
+"""End-to-end RFP ingestion pipeline, one source at a time.
 
-Single-command orchestrator that runs both scrapers, processes the raw output,
-and uploads the processed records to Supabase.
+Single-command orchestrator scoped to a single data source. Runs that
+source's scraper, processes only that source's raw files, and uploads only
+those records to Supabase.
 
-Stage 1: scrape SAM.gov            -> data_raw/samgov_<noticeId>.json
-Stage 2: scrape Cal eProcure       -> data_raw/caleprocure_<externalId>.json
-Stage 3: normalize + tag           -> data_processed/<source>_<id>.json
-Stage 4: upsert into Supabase      -> public.rfps
+Usage:
+    python run_pipeline.py sam          # SAM.gov pipeline only
+    python run_pipeline.py eProcure     # Cal eProcure pipeline only
+
+Stage 1: scrape <source>           -> data_raw/<prefix>_<id>.json
+Stage 2: normalize + tag           -> data_processed/<prefix>_<id>.json
+Stage 3: upsert into Supabase      -> public.rfps
+
+Source flag mapping:
+    sam       -> SAM.gov scraper        + data_raw/samgov_*.json
+    eProcure  -> Cal eProcure scraper   + data_raw/caleprocure_*.json
 
 Dedup guarantees:
   * Each scraper skips opportunities/events whose raw JSON already exists in
@@ -14,16 +22,6 @@ Dedup guarantees:
   * Each raw file maps 1:1 to a processed file by filename — no duplicates.
   * Supabase upsert is keyed on (source, external_id) so re-runs never insert
     duplicate rows; existing rows are refreshed in place.
-
-Usage:
-    python run_pipeline.py                       # full pipeline (default)
-    python run_pipeline.py --skip-samgov         # skip SAM.gov scrape
-    python run_pipeline.py --skip-caleprocure    # skip Cal eProcure scrape
-    python run_pipeline.py --skip-process        # skip normalization stage
-    python run_pipeline.py --skip-ingest         # skip Supabase upload
-    python run_pipeline.py --rescrape            # disable scraper dedup
-    python run_pipeline.py --no-drive            # write source URLs into SAM JSON
-                                                 #   instead of uploading to Drive
 """
 
 from __future__ import annotations
@@ -41,6 +39,21 @@ load_dotenv()
 PROJECT_ROOT = Path(__file__).resolve().parent
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
+
+
+# source flag -> (scraper module name, data_raw filename prefix, human label)
+SOURCES: dict[str, dict[str, str]] = {
+    "sam": {
+        "scraper": "scraper.samgov_interface",
+        "prefix": "samgov_",
+        "label": "SAM.gov",
+    },
+    "eProcure": {
+        "scraper": "scraper.caleprocure_interface",
+        "prefix": "caleprocure_",
+        "label": "Cal eProcure",
+    },
+}
 
 
 def _banner(title: str) -> None:
@@ -94,28 +107,32 @@ def _scrape_caleprocure(rescrape: bool, extra: List[str]) -> None:
         raise RuntimeError(f"caleprocure_interface.main returned {rc}")
 
 
-def _process_raw() -> None:
+def _process_raw(prefix: str) -> None:
     from processor.pipeline import (
         DEFAULT_INPUT_DIR,
         DEFAULT_OUTPUT_DIR,
         process_directory,
     )
 
-    written = process_directory(DEFAULT_INPUT_DIR, DEFAULT_OUTPUT_DIR)
+    written = process_directory(
+        DEFAULT_INPUT_DIR,
+        DEFAULT_OUTPUT_DIR,
+        filename_prefix=prefix,
+    )
     print(
-        f"Processed {len(written)} raw file(s) from {DEFAULT_INPUT_DIR} "
-        f"-> {DEFAULT_OUTPUT_DIR}",
+        f"Processed {len(written)} '{prefix}*.json' file(s) from "
+        f"{DEFAULT_INPUT_DIR} -> {DEFAULT_OUTPUT_DIR}",
         flush=True,
     )
 
 
-def _ingest_to_supabase() -> None:
+def _ingest_to_supabase(prefix: str) -> None:
     from processor.ingest_supabase import ingest_directory
     from processor.pipeline import DEFAULT_OUTPUT_DIR
 
-    result = ingest_directory(DEFAULT_OUTPUT_DIR)
+    result = ingest_directory(DEFAULT_OUTPUT_DIR, filename_prefix=prefix)
     print(
-        f"Supabase ingest: {result.upserted} upserted, "
+        f"Supabase ingest ({prefix}*): {result.upserted} upserted, "
         f"{result.skipped} skipped, {result.failed} failed",
         flush=True,
     )
@@ -130,15 +147,16 @@ def _ingest_to_supabase() -> None:
 def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         prog="run_pipeline",
-        description="Run the full RFP ingestion pipeline: scrape -> process -> upload.",
+        description="Run the full RFP ingestion pipeline for one data source.",
     )
     parser.add_argument(
-        "--skip-samgov", action="store_true",
-        help="Skip the SAM.gov scrape stage.",
+        "source",
+        choices=sorted(SOURCES.keys()),
+        help="Which source to run the pipeline for ('sam' or 'eProcure').",
     )
     parser.add_argument(
-        "--skip-caleprocure", action="store_true",
-        help="Skip the Cal eProcure scrape stage.",
+        "--skip-scrape", action="store_true",
+        help="Skip the scrape stage; just (re)process and upload existing raw files.",
     )
     parser.add_argument(
         "--skip-process", action="store_true",
@@ -158,44 +176,43 @@ def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
              "uploading attachments to Google Drive.",
     )
     parser.add_argument(
-        "--samgov-arg", action="append", default=[],
-        help="Pass an extra raw argument through to samgov_interface "
-             "(repeatable). Example: --samgov-arg=--max-per-naics --samgov-arg=25",
-    )
-    parser.add_argument(
-        "--caleprocure-arg", action="append", default=[],
-        help="Pass an extra raw argument through to caleprocure_interface (repeatable).",
+        "--scraper-arg", action="append", default=[],
+        help="Pass an extra raw argument through to the chosen scraper "
+             "(repeatable). Example: --scraper-arg=--max-per-naics --scraper-arg=25",
     )
     return parser.parse_args(argv)
 
 
 def main(argv: List[str] | None = None) -> int:
     args = parse_args(argv)
+    source = args.source
+    cfg = SOURCES[source]
+    prefix = cfg["prefix"]
+    label = cfg["label"]
 
     failures: List[str] = []
 
-    if not args.skip_samgov:
-        ok = _run_stage(
-            "Stage 1/4 — SAM.gov scrape",
-            lambda: _scrape_samgov(args.rescrape, args.no_drive, args.samgov_arg),
-        )
+    if not args.skip_scrape:
+        if source == "sam":
+            ok = _run_stage(
+                f"Stage 1/3 — {label} scrape",
+                lambda: _scrape_samgov(args.rescrape, args.no_drive, args.scraper_arg),
+            )
+        else:  # eProcure
+            ok = _run_stage(
+                f"Stage 1/3 — {label} scrape",
+                lambda: _scrape_caleprocure(args.rescrape, args.scraper_arg),
+            )
         if not ok:
-            failures.append("samgov")
+            failures.append("scrape")
     else:
-        print("\n[Stage 1/4] SAM.gov scrape skipped (--skip-samgov)", flush=True)
-
-    if not args.skip_caleprocure:
-        ok = _run_stage(
-            "Stage 2/4 — Cal eProcure scrape",
-            lambda: _scrape_caleprocure(args.rescrape, args.caleprocure_arg),
-        )
-        if not ok:
-            failures.append("caleprocure")
-    else:
-        print("\n[Stage 2/4] Cal eProcure scrape skipped (--skip-caleprocure)", flush=True)
+        print(f"\n[Stage 1/3] {label} scrape skipped (--skip-scrape)", flush=True)
 
     if not args.skip_process:
-        ok = _run_stage("Stage 3/4 — Normalize + tag", _process_raw)
+        ok = _run_stage(
+            f"Stage 2/3 — Normalize + tag ({prefix}*)",
+            lambda: _process_raw(prefix),
+        )
         if not ok:
             failures.append("process")
             print(
@@ -204,16 +221,19 @@ def main(argv: List[str] | None = None) -> int:
             )
             return 1
     else:
-        print("\n[Stage 3/4] Processing skipped (--skip-process)", flush=True)
+        print("\n[Stage 2/3] Processing skipped (--skip-process)", flush=True)
 
     if not args.skip_ingest:
-        ok = _run_stage("Stage 4/4 — Supabase upload", _ingest_to_supabase)
+        ok = _run_stage(
+            f"Stage 3/3 — Supabase upload ({prefix}*)",
+            lambda: _ingest_to_supabase(prefix),
+        )
         if not ok:
             failures.append("ingest")
     else:
-        print("\n[Stage 4/4] Supabase upload skipped (--skip-ingest)", flush=True)
+        print("\n[Stage 3/3] Supabase upload skipped (--skip-ingest)", flush=True)
 
-    _banner("Pipeline complete")
+    _banner(f"{label} pipeline complete")
     if failures:
         print(f"Pipeline finished with failures in: {', '.join(failures)}", flush=True)
         return 1

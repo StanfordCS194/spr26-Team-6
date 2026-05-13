@@ -177,11 +177,14 @@ def ingest_directory(
     input_dir: os.PathLike[str] | str = DEFAULT_OUTPUT_DIR,
     *,
     client: Any | None = None,
+    filename_prefix: str | None = None,
 ) -> IngestResult:
     """Read every processed JSON in `input_dir` and upsert it into Supabase.
 
-    Pass a pre-built `client` (e.g. for tests) or omit to construct one from
-    env vars via `get_client()`.
+    When ``filename_prefix`` is set, only files whose name starts with that
+    prefix are ingested (e.g. ``"samgov_"`` or ``"caleprocure_"``). Pass a
+    pre-built ``client`` (e.g. for tests) or omit to construct one from env
+    vars via :func:`get_client`.
     """
     in_path = Path(input_dir)
     if not in_path.is_dir():
@@ -190,8 +193,9 @@ def ingest_directory(
     if client is None:
         client = get_client()
 
+    glob_pattern = f"{filename_prefix}*.json" if filename_prefix else "*.json"
     result = IngestResult()
-    for src in sorted(in_path.glob("*.json")):
+    for src in sorted(in_path.glob(glob_pattern)):
         try:
             with src.open("r", encoding="utf-8") as fh:
                 processed = json.load(fh)

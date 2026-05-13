@@ -1,5 +1,6 @@
 "use client";
 
+import { getListCardLayout } from "@/lib/analytics";
 import { useDashboard } from "@/context/DashboardContext";
 import { RfpCard } from "./RfpCard";
 
@@ -24,6 +25,7 @@ function filtersActive(
 }
 
 export function RfpFeed() {
+  const listLayout = getListCardLayout();
   const {
     feedRfps,
     selectedRfpId,
@@ -52,6 +54,7 @@ export function RfpFeed() {
         <RfpCard
           key={rfp.id}
           rfp={rfp}
+          layout={listLayout}
           active={selectedRfpId === rfp.id}
           onSelect={() => selectRfp(rfp.id)}
         />

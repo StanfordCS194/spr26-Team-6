@@ -85,11 +85,14 @@ def process_directory(
     *,
     llm_callback: Optional[EnrichmentCallback] = None,
     classifier: Classifier | None = None,
+    filename_prefix: Optional[str] = None,
 ) -> list[Path]:
     """Process every `*.json` in `input_dir` into `output_dir`.
 
-    Returns the list of files written. Loads (or trains) the tag
-    classifier once and reuses it across every record.
+    When ``filename_prefix`` is set, only files whose name starts with that
+    prefix are processed (e.g. ``"samgov_"`` or ``"caleprocure_"``). Returns
+    the list of files written. Loads (or trains) the tag classifier once and
+    reuses it across every record.
     """
     in_path = Path(input_dir)
     out_path = Path(output_dir)
@@ -103,8 +106,9 @@ def process_directory(
     if classifier is None:
         classifier = load_or_train(in_path)
 
+    glob_pattern = f"{filename_prefix}*.json" if filename_prefix else "*.json"
     written: list[Path] = []
-    for src in sorted(in_path.glob("*.json")):
+    for src in sorted(in_path.glob(glob_pattern)):
         with src.open("r", encoding="utf-8") as fh:
             raw = json.load(fh)
         processed = process_one(raw, llm_callback=llm_callback, classifier=classifier)
