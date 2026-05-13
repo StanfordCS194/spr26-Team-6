@@ -3,11 +3,11 @@
   "external_id": "0000036719",
   "title": "CalHEERS SDMO RFP #73040873",
   "name": "CalHEERS SDMO",
-  "statement_of_work": "The State of California, Office of Technology and Solutions Integration (OTSI), is releasing a Request for Proposal (RFP) #73040873 for System Development, Maintenance & Operations (SDMO) for the California Healthcare Eligibility, Enrollment and Retention System (CalHEERS). There will be a mandatory in-person Bidders Conference held on October 15, 2025. Please note: the conference will begin at 9:30 a.m. so please allow time for sign-in.",
+  "statement_of_work": "The State of California, Office of Technology and Solutions Integration (OTSI), is releasing a Request for Proposal (RFP) #73040873 for System Development, Maintenance & Operations (SDMO) for the California Healthcare Eligibility, Enrollment and Retention System (CalHEERS). The CalHEERS Project supports the enhancement, maintenance and operations, and on-going business of both Covered California and the Department of Health Care Services (DHCS).",
   "deliverables": [
-    "Execute scope of work described in the CalHEERS SDMO solicitation",
-    "Deliver milestones, status reporting, and acceptance documentation",
-    "Provide final handoff and post-deployment support per RFP terms"
+    "Support consumer application",
+    "Support health plan selection for insurance affordability programs",
+    "Support streamlining Californian's ability to research"
   ],
   "location_level": "state",
   "location": "California",
@@ -18,7 +18,7 @@
     "California"
   ],
   "dept": "Office of Technology and Solutions Integration (OTSI)",
-  "description": "The State of California, Office of Technology and Solutions Integration (OTSI), is releasing a Request for Proposal (RFP) #73040873 for System Development, Maintenance & Operations (SDMO) for the California Healthcare Eligibility, Enrollment and Retention System (CalHEERS). There will be a mandatory in-person Bidders Conference held on October 15, 2025. Please note: the conference will begin at 9:30 a.m. so please allow time for sign-in.\n\nThe CalHEERS Project supports the enhancement, maintenance and operations, and on-going business of both Covered California and the Department of Health Care Services (DHCS). CalHEERS supports account creation, consumer application, eligibility rules, and health plan selection for insurance affordability programs, streamlining Californian's ability to research, compare, check their eligibility for, and purchase health coverage. CalHEERS interfaces with the Statewide Automated Welfare Systems (SAWS) for Modified Adjusted Gross Income (MAGI) Medi-Cal eligibility, enrollment and reporting, and provides data for potential eligibility to other programs such as, non-MAGI Medi-Cal, CalFresh, and California Work Opportunities and Responsibility for Kids (CalWORKS).\n\n1/8/26 - There is a page count discrepancy between Addendum 2 and Addendum 3 because (1) track changes from Addendum 2 were accepted, and (2) Exhibit A was updated to remove obsolete/deprecated requirements that have no impact on bidder's ability to bid.\n\n1/7/26 - CalHEERS SDMO RFP #73040873 Addendum 3 has been posted.",
+  "description": "The State of California, Office of Technology and Solutions Integration (OTSI), is releasing a Request for Proposal (RFP) #73040873 for System Development, Maintenance & Operations (SDMO) for the California Healthcare Eligibility, Enrollment and Retention System (CalHEERS). There will be a mandatory in-person Bidders Conference held on October 15, 2025. Please note: the conference will begin at 9:30 a.m. so please allow time for sign-in.\n\nThe CalHEERS Project supports the enhancement, maintenance and operations, and on-going business of both Covered California and the Department of Health Care Services (DHCS). CalHEERS supports account creation, consumer application, eligibility rules, and health plan selection for insurance affordability programs, streamlining Californian's ability to research, compare, check their eligibility for, and purchase health coverage. CalHEERS interfaces with the Statewide Automated Welfare Systems (SAWS) for Modified Adjusted Gross Income (MAGI) Medi-Cal eligibility, enrollment and reporting, and provides data for potential eligibility to other programs such as, non-MAGI Medi-Cal, CalFresh, and California Work Opportunities and Responsibility for Kids (CalWORKS).",
   "published_date": "2025-09-17T17:00:00-07:00",
   "due_date": "2026-10-31T17:00:00-07:00",
   "contact_name": "Alina Corpus",

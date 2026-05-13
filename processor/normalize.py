@@ -148,6 +148,71 @@ _HEADER_LABELS_RE = re.compile(
     re.IGNORECASE,
 )
 
+# Addendum / Q&A entries layered on top of Cal eProcure descriptions.
+# Cal eProcure stacks update entries chronologically (newest first), each
+# block beginning with a bare "MM/DD/YYYY" line, followed by content like
+# "This is Addendum 4. ..." or "This is Q&A Set 2 for this RFP".
+_DATE_ONLY_LINE_RE = re.compile(r"^\s*\d{1,2}/\d{1,2}/\d{2,4}\s*$")
+_DATE_PREFIX_LINE_RE = re.compile(r"^\s*\d{1,2}/\d{1,2}/\d{2,4}\s*[-–—:]\s*")
+_ADDENDUM_HEAD_RE = re.compile(
+    r"^\s*(this\s+is\s+(addendum|q\s*&\s*a|q\s+and\s+a)|addendum\s+\d+|"
+    r"q\s*&\s*a\b|amendment\s+\d+|errata\b)",
+    re.IGNORECASE,
+)
+_ADDENDUM_KEYWORDS = (
+    "addendum", "amendment", "errata", "q&a", "q & a", "q and a",
+    "page count discrepancy", "summary of changes",
+)
+
+
+def strip_addendum_blocks(text: str) -> str:
+    """Remove date-stamped addendum / Q&A entries from a description.
+
+    Cal eProcure descriptions stack update entries on top of the original
+    project announcement. This collapses the text to just the substantive
+    project content by:
+        * dropping blocks whose first line is a bare date followed by
+          "This is Addendum/Q&A ..."
+        * dropping standalone lines like "1/8/26 - Addendum 3 has been
+          posted." that aren't substantive description
+    """
+    if not text:
+        return text or ""
+
+    blocks = re.split(r"\n\s*\n", text)
+    kept_blocks: list[str] = []
+    for block in blocks:
+        lines = [ln for ln in block.split("\n")]
+        non_empty = [ln for ln in lines if ln.strip()]
+        if not non_empty:
+            continue
+
+        first = non_empty[0].strip()
+        # "<date>\nThis is Addendum/Q&A ..." → drop whole block.
+        if _DATE_ONLY_LINE_RE.match(first) and len(non_empty) >= 2:
+            second = non_empty[1].strip()
+            if _ADDENDUM_HEAD_RE.match(second):
+                continue
+            # Otherwise keep, but drop the bare-date line.
+            lines = [ln for ln in lines if not _DATE_ONLY_LINE_RE.match(ln.strip())]
+
+        # Strip lines like "1/7/26 - Addendum 3 has been posted." that are
+        # pure update logs (only when the line clearly references addenda).
+        filtered: list[str] = []
+        for ln in lines:
+            stripped = ln.strip()
+            if _DATE_PREFIX_LINE_RE.match(stripped):
+                low = stripped.lower()
+                if any(kw in low for kw in _ADDENDUM_KEYWORDS):
+                    continue
+            filtered.append(ln)
+
+        if not any(ln.strip() for ln in filtered):
+            continue
+        kept_blocks.append("\n".join(filtered).strip())
+
+    return "\n\n".join(b for b in kept_blocks if b).strip()
+
 
 def clean_description(text: str | None) -> str | None:
     """Strip Cal eProcure event-details boilerplate from a description blob.
@@ -205,6 +270,7 @@ def clean_description(text: str | None) -> str | None:
         cleaned.pop()
 
     result = "\n".join(cleaned).strip()
+    result = strip_addendum_blocks(result)
     return result or None
 
 
