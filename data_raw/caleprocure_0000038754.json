@@ -21,57 +21,57 @@
     "documents": [
       {
         "label": "Addendum_2_-_RFQ_10211040.pdf",
-        "url": "https://drive.google.com/file/d/1wD3B4SsRK2-l6gWsTnWuM_-3Op0a_VVg/view?usp=drivesdk",
+        "url": "https://drive.google.com/file/d/1kbGwlprOzmvksT731iEfPhnntHL3hRS1/view?usp=drivesdk",
         "type": "primary_spec",
         "attachment_description": ""
       },
       {
         "label": "Addendum_3_-_RFQ_10211040.pdf",
-        "url": "https://drive.google.com/file/d/1NDbBg8N6b7AM5t6F6VO4oIDFxG1iaRoa/view?usp=drivesdk",
+        "url": "https://drive.google.com/file/d/1r2xJqsbYDyujw238C96Szv3IQ6EGR00a/view?usp=drivesdk",
         "type": "attachment",
         "attachment_description": ""
       },
       {
         "label": "RFQ_10211040_-_Addendum_1.pdf",
-        "url": "https://drive.google.com/file/d/1qQfpQTKPXXe4qoYoRJv7jPY9WUl1LAoN/view?usp=drivesdk",
+        "url": "https://drive.google.com/file/d/18I9EwDWC67QA4f0cF8jZb94gFRgxj82z/view?usp=drivesdk",
         "type": "attachment",
         "attachment_description": ""
       },
       {
         "label": "RFQ_10211040_-_DWR_Response_to_Questions.pdf",
-        "url": "https://drive.google.com/file/d/1INqqIhLYP-7qdS8awCzvebM7Ie2dV4xu/view?usp=drivesdk",
+        "url": "https://drive.google.com/file/d/1Vb2Gj6b7SikqCEUBB7xHNZh6i_G3mBiZ/view?usp=drivesdk",
         "type": "attachment",
         "attachment_description": ""
       },
       {
         "label": "RFQ_10211040_-_Historic_Aerial_Film_Scanning_(Final).pdf",
-        "url": "https://drive.google.com/file/d/1JsLA9coI8ljTH0HwuDuFgzTiLerAIx1w/view?usp=drivesdk",
+        "url": "https://drive.google.com/file/d/1qtMdhM7zlIbbExAgAcs__H-GDwJ1YNWb/view?usp=drivesdk",
         "type": "attachment",
         "attachment_description": ""
       },
       {
         "label": "RFQ_10211040_Addendum_3_-_Cost_Worksheet.pdf",
-        "url": "https://drive.google.com/file/d/1-x9UHGhKwgK1mOkbEzCyXUc5nJYw7Gev/view?usp=drivesdk",
+        "url": "https://drive.google.com/file/d/1XSjsq53I-gM655gDRvlntKFN0SSVDX1B/view?usp=drivesdk",
         "type": "attachment",
         "attachment_description": ""
       },
       {
         "label": "RFQ_10211040_Addendum_3,_Attachment_1_-_Catalogue_DB.pdf",
-        "url": "https://drive.google.com/file/d/1fq88s1Hvi1qaPOQORWOnDMnuaJXE0fGj/view?usp=drivesdk",
+        "url": "https://drive.google.com/file/d/1kNzMLfqoPpCilCzIT4izwu4gGiGQisSm/view?usp=drivesdk",
         "type": "attachment",
         "attachment_description": ""
       },
       {
         "label": "RFQ_10211040_Addendum_3,_Attachment_2_-_Examples.pdf",
-        "url": "https://drive.google.com/file/d/1EwyFBmdYtzc1AiclHI3oOb9lfwIQBjAy/view?usp=drivesdk",
+        "url": "https://drive.google.com/file/d/1G_1l1hVweD7B-tzVpLV9iWnJZZuR6XuY/view?usp=drivesdk",
         "type": "attachment",
         "attachment_description": ""
       }
     ],
     "unspsc_codes": [
       {
-        "code": "01012001",
-        "description": "/> <span data-if-container-label=\"conferenceRow\" data-if-source=\"[id^='ZZ_BID_CNF_VW_DUE_DT_TIME$']\" data-if-content=\"nu"
+        "code": "81112005",
+        "description": "Computer services - Data services - Document scanning service"
       }
     ]
   }

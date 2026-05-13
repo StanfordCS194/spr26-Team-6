@@ -12,8 +12,8 @@
   "location_level": "state",
   "location": "California",
   "tags": [
-    "Procurement",
     "Software",
+    "Procurement",
     "California"
   ],
   "dept": "California Department of Parks and Recreation",
@@ -35,15 +35,15 @@
     "documents": [
       {
         "label": ".RFQ___SOW_S25073069.pdf",
-        "url": "https://drive.google.com/file/d/1GRk9yvuaxJqPlzuLTB5SLbpYGqVEELac/view?usp=drivesdk",
+        "url": "https://drive.google.com/file/d/1FmCTwyf3t97D3JGdJp04338CD3wdoqws/view?usp=drivesdk",
         "type": "primary_spec",
         "attachment_description": ""
       }
     ],
     "unspsc_codes": [
       {
-        "code": "01012001",
-        "description": "/> <span data-if-container-label=\"conferenceRow\" data-if-source=\"[id^='ZZ_BID_CNF_VW_DUE_DT_TIME$']\" data-if-content=\"nu"
+        "code": "43232800",
+        "description": "Network management software"
       }
     ]
   }

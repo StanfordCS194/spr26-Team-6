@@ -1982,7 +1982,7 @@ class CalEProcureInterface:
                 detail_page, download_dir, max_attachments
             )
 
-            print(f"    Step 4: downloaded{len(attachments)} file(s)", flush=True)
+            print(f"    Step 4: downloaded {len(attachments)} file(s)", flush=True)
             return details_text, attachments, unspsc_codes
 
     # Run each keyword in a Chromium session and merge and return the parsed rows
