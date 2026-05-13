@@ -5,9 +5,10 @@
   "name": "Notice of Intent to Sole Source - Key Solutions, Inc. - eProtocol and Lab Animal Resource System (LARS) Software",
   "statement_of_work": "The Centers for Disease Control and Prevention (CDC), National Center for Immunization and Respiratory Diseases (NCIRD), Office of Director (OD), Office of Laboratory Systems and Response (OLSR), intends to award a sole source firm fixed price purchase order to Key Solutions, Inc., 2803 Lakeview Ct, Fremont, CA, 94538 for the purchase of the eProtocol software license for the Institutional Animal Care and Use Committee (IACUC) and for the purchase of Lab Animal Resource System (LARS) software li",
   "deliverables": [
-    "Execute scope of work described in the Notice of Intent to Sole Source - Key Solutions, Inc. - eProtocol and Lab Animal Resource System (LARS) Software solicitation",
-    "Deliver milestones, status reporting, and acceptance documentation",
-    "Provide final handoff and post-deployment support per RFP terms"
+    "Deliver up to\n50 active IACUC users",
+    "Deliver 16 hours of web-based training",
+    "Deliver an annual maintenance agreement",
+    "Deliver data migration services"
   ],
   "location_level": "city",
   "location": "Fremont",

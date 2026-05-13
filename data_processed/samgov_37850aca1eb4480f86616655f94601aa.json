@@ -5,10 +5,10 @@
   "name": "DRAFT SF1449 Electronic Tax Preparation Software",
   "statement_of_work": "Special Notice for DRAFT SF1449 Electronic Tax Preparation Software (solicitation 2043FY-26-R-00007) issued by INTERNAL REVENUE SERVICE.",
   "deliverables": [
-    "The Contractor shall ensure the software functions as a web-based application",
-    "The Contractor shall ensure the site managers have the capability to track the status of",
-    "The system shall ensure that only one authorized user can edit a tax return at a time",
-    "The system shall allow for a real-time diagnostic form checks (aka schema"
+    "provide secure, commercial off the shelf (COTS) Tax Preparation Software supporting",
+    "enable accurate preparation and transmission of federal and state taxes returns",
+    "provide reliable user support and training to ensure successful filing season operations",
+    "deliver timely and accurate reporting to support IRS program oversight"
   ],
   "location_level": "state",
   "location": "California",

@@ -5,9 +5,8 @@
   "name": "Nuclear Medicine Radiopharmaceutical Dose Tracking Software",
   "statement_of_work": "Allows nuclear medicine departments to keep track of radioactive inventory, radiopharmaceutical doses, patient dose records information and radiopharmaceutical billing. The fully integrated Nuclear Medicine dose tracking software shall include: Patient dose amounts, procedures, referring physicians and radioactive waste disposal Automated daily reporting Automated monthly record keeping",
   "deliverables": [
-    "Execute scope of work described in the Nuclear Medicine Radiopharmaceutical Dose Tracking Software solicitation",
-    "Deliver milestones, status reporting, and acceptance documentation",
-    "Provide final handoff and post-deployment support per RFP terms"
+    "QA & QM for all nuclear medicine hot lab equipment",
+    "Daily and weekly survey and wipes record keeping"
   ],
   "location_level": "state",
   "location": "California",

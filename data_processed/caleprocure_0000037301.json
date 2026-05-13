@@ -5,9 +5,9 @@
   "name": "Water Technical Access Portal (WaterTAP)",
   "statement_of_work": "On behalf of the California State Water Resources Control Board (SWRCB), the California Department of Technology seeks proposals from qualified bidders to provide a cloud-based SaaS solution for the Water Technical Access Portal (WaterTAP). These services will include development, design, and implementation of the WaterTAP solution, software licensing and maintenance, and optional post-implementation services.",
   "deliverables": [
-    "Execute scope of work described in the Water Technical Access Portal (WaterTAP) solicitation",
-    "Deliver milestones, status reporting, and acceptance documentation",
-    "Provide final handoff and post-deployment support per RFP terms"
+    "Deliver implementation of the WaterTAP solution",
+    "Deliver software licensing and maintenance",
+    "Deliver optional post-implementation services"
   ],
   "location_level": "state",
   "location": "California",
@@ -19,7 +19,7 @@
     "California"
   ],
   "dept": "California State Water Resources Control Board",
-  "description": "On behalf of the California State Water Resources Control Board (SWRCB), the California Department of Technology seeks proposals from qualified bidders to provide a cloud-based SaaS solution for the Water Technical Access Portal (WaterTAP). These services will include development, design, and implementation of the WaterTAP solution, software licensing and maintenance, and optional post-implementation services.\n\nThe WaterTAP solution will replace legacy systems with a configurable, cloud-based Software as a Service (SaaS) solution that will be an enterprise-level data system which aims to minimize customization and:\n\n¿\tAddress current and future information and business needs,\n¿\tMaintain an overarching architecture to connect existing foundational data systems,\n¿\tIntegrate new data systems from disparate spreadsheets to databases currently used, into a single, cohesive system,\n¿\tStreamline information access for internal staff and external stakeholders,\n¿\tSupports data and document submissions, workflow routing, and compliance decision support\n\nThe WaterTAP cloud-based SaaS solution will enable SWRCB to be more agile in responding to new legislation and to support California's environmental requirements.  It will also create a streamlined user experience, increase efficiency, and create a single system of record for all drinking water reporting. Finally, the WaterTAP cloud-based SaaS solution will also improve access to data for more robust and complete reporting.",
+  "description": "On behalf of the California State Water Resources Control Board (SWRCB), the California Department of Technology seeks proposals from qualified bidders to provide a cloud-based SaaS solution for the Water Technical Access Portal (WaterTAP). These services will include development, design, and implementation of the WaterTAP solution, software licensing and maintenance, and optional post-implementation services.\n\nThe WaterTAP solution will replace legacy systems with a configurable, cloud-based Software as a Service (SaaS) solution that will be an enterprise-level data system which aims to minimize customization and:\n\n¿\tAddress current and future information and business needs,\n¿\tMaintain an overarching architecture to connect existing foundational data systems,\n¿\tIntegrate new data systems from disparate spreadsheets to databases currently used, into a single, cohesive system,\n¿\tStreamline information access for internal staff and external stakeholders,\n¿\tSupports data and document submissions, workflow routing, and compliance decision support\n\nThe WaterTAP cloud-based SaaS solution will enable SWRCB to be more agile in responding to new legislation and to support California's environmental requirements. It will also create a streamlined user experience, increase efficiency, and create a single system of record for all drinking water reporting. Finally, the WaterTAP cloud-based SaaS solution will also improve access to data for more robust and complete reporting.",
   "published_date": "2025-11-20T13:11:00-08:00",
   "due_date": "2027-01-15T10:00:00-08:00",
   "contact_name": "Nichole Gutierrez",

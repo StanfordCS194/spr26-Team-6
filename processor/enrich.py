@@ -799,10 +799,7 @@ def generate_deliverables(rfp: dict[str, Any]) -> list[str]:
         _extract_inline_lists,
     ):
         items = extractor(desc)
-        items = [
-            i for i in items
-            if 10 < len(i) < 280 and not _looks_like_pure_admin(i)
-        ]
+        items = [i for i in items if 10 < len(i) < 280]
         if len(items) >= 2:
             return items[:4]
 

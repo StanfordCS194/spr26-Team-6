@@ -30,8 +30,17 @@ export function collectPdfUrlsFromRfpRow(row: RfpRow): string[] {
   return out;
 }
 
-function buildSowMarkdown(description: string): string {
-  return `## Statement of work\n\n${description}\n\n### Deliverables\n\n- Kickoff and discovery within 30 days of award.\n- Monthly status reporting through the performance period.\n- Final acceptance testing and handoff documentation.\n\n### Period of performance\n\nWork is expected to complete within **12 months** of contract start.\n`;
+function buildSowMarkdown(
+  statementOfWork: string | null,
+  description: string,
+  deliverables: readonly string[],
+): string {
+  const sow = (statementOfWork ?? "").trim() || description;
+  const items = deliverables.map((d) => d.trim()).filter(Boolean);
+  const deliverablesBlock = items.length
+    ? items.map((d) => `- ${d}`).join("\n")
+    : "_No deliverables extracted from the RFP package._";
+  return `## Statement of work\n\n${sow}\n\n### Deliverables\n\n${deliverablesBlock}\n`;
 }
 
 function buildAiAnalysisMarkdown(score: number, location: string): string {
@@ -89,6 +98,7 @@ export function mapRfpRow(
     contractorId,
   );
   const location = row.location ?? "—";
+  const deliverables = row.deliverables?.length ? [...row.deliverables] : [];
   return {
     id: row.id,
     title: row.title,
@@ -102,8 +112,13 @@ export function mapRfpRow(
       row.contract_amount_max,
     ),
     description,
+    deliverables,
     pdfUrls: collectPdfUrlsFromRfpRow(row),
-    sowMarkdown: buildSowMarkdown(description),
+    sowMarkdown: buildSowMarkdown(
+      row.statement_of_work,
+      description,
+      deliverables,
+    ),
     aiAnalysisMarkdown:
       aiOverride ?? buildAiAnalysisMarkdown(score ?? 0, location),
   };

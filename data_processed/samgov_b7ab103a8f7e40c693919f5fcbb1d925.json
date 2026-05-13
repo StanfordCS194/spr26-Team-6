@@ -5,9 +5,9 @@
   "name": "7A21--GAIT Analysis Machine (Medical Research) Intent to Sole Source",
   "statement_of_work": "The Department of Veterans Affairs, VISN 12, Network Contracting Office (NCO) 12, intends to issue a sole source purchase order to Stoelting Co., the exclusive authorized U.S. distributor of the Ugo Basile G.A.I.T. (Gait Analysis and Imaging Tool) system. This acquisition is for a commercial, integrated gait analysis platform required by the William S.",
   "deliverables": [
-    "Execute scope of work described in the 7A21--GAIT Analysis Machine (Medical Research) Intent to Sole Source solicitation",
-    "Deliver milestones, status reporting, and acceptance documentation",
-    "Provide final handoff and post-deployment support per RFP terms"
+    "Provide simultaneous ventral and lateral high resolution imaging",
+    "Provide automated AI driven gait detection",
+    "Provide artifact correction essential for post TBI locomotion analysis in mice"
   ],
   "location_level": "state",
   "location": "California",

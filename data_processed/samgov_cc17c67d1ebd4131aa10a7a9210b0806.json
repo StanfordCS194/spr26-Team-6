@@ -5,9 +5,10 @@
   "name": "7A21--IDS (Investigational Drug System) Software",
   "statement_of_work": "Vendor shall provide IDS, a secure, HIPAA and 21 CFR Part 11 compliant, web-based application that has the following features: Monitors Receive, Transfer, Dispense, Return to Supplier, Destroy, and Adjustment transactions Manages a comprehensive drug catalog, protocols, patients, suppliers, documents, and pharmacies Generates accountability logs exportable to NCI DARF, NCI ORAL DRAF, ACTG, De-Identified and other format, significantly facilitating the audit process Granular inventory tracking do",
   "deliverables": [
-    "Execute scope of work described in the 7A21--IDS (Investigational Drug System) Software solicitation",
-    "Deliver milestones, status reporting, and acceptance documentation",
-    "Provide final handoff and post-deployment support per RFP terms"
+    "Provide hIPAA and 21 CFR Part 11 compliant",
+    "Provide web-based application that has the following features:\nMonitors Receive",
+    "Provide return to Supplier",
+    "Provide adjustment transactions\nManages a comprehensive drug catalog"
   ],
   "location_level": "state",
   "location": "California",

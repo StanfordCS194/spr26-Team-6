@@ -278,7 +278,7 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
             )}
             <div className="rfp-sow rounded-xl border border-govbid-border bg-govbid-surface p-4">
               <h3 className="text-sm font-semibold text-govbid-text">
-                Statement of work (markdown stub)
+                Statement of work
               </h3>
               <div className="prose prose-sm prose-slate mt-3 max-w-none text-govbid-text">
                 <ReactMarkdown>{rfp.sowMarkdown}</ReactMarkdown>

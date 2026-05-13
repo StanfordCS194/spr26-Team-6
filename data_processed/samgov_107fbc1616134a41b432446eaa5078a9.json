@@ -5,9 +5,10 @@
   "name": "Foundation Sustainment Support, Software and Integration (FS3i)",
   "statement_of_work": "Amazon's trademarks and trade dress may not be used in connection with any product or service that is not Amazon's, in any manner that is likely to cause confusion among customers, or in any manner that disparages or discredits Amazon. All other trademarks not owned by Amazon are the property of their respective owners, who may or may not be aﬃliated with, connected to, or sponsored by Amazon.",
   "deliverables": [
-    "You must review, evaluate, assess, and approve the solution in compliance with your organization's particular security features, tools, and conﬁgurations",
-    "ID VDSS security requirement AWS technolog ies resources Covered by LZA 2.1.2.1 The VDSS shall maintain virtual separation of all management, user, and data traﬃc",
-    "The VDSS shall provide a reverse proxy capability to handle access requests from client systems"
+    "Conﬁgure additional functionality, guardrails, and security services, such as",
+    "Manage your foundational networking topology through services such as Amazon Virtual Private",
+    "Generate additional workload accounts by using the AWS Control Tower Account Factory. There are no additional charges or upfront commitments required to use Landing Zone Accelerator",
+    "Cloud Access Point (CAP) – Provides access to the cloud, and protects DoD networks from the"
   ],
   "location_level": "state",
   "location": "California",
