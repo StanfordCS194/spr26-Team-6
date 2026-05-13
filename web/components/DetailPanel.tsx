@@ -9,6 +9,7 @@ import { isPdfUrl } from "@/lib/pdf";
 import type { Rfp } from "@/lib/types";
 import { SourceDocumentEmbed } from "./SourceDocumentEmbed";
 import { TagBubble } from "./RfpCard";
+import { trackABTestEvent } from "@/app/posthog-provider";
 
 const RfpPdfViewer = dynamic(
   () => import("./RfpPdfViewer").then((m) => m.RfpPdfViewer),
@@ -127,6 +128,12 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
 
   useEffect(() => {
     setActivePdfIndex(0);
+    // Track variant view
+    trackABTestEvent("ab_test_variant_viewed", {
+      component: "detail_panel",
+      variant: "A",
+      rfp_id: rfp.id,
+    });
   }, [rfp.id]);
 
   const saved = isSaved(rfp.id);
@@ -134,6 +141,11 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
   const handleSave = async () => {
     const wasSaved = saved;
     await toggleSaveRfp(rfp.id);
+    trackABTestEvent("rfp_action", {
+      action: wasSaved ? "unsave" : "save",
+      variant: "A",
+      rfp_id: rfp.id,
+    });
     if (wasSaved) {
       showToast("Removed from saved opportunities.");
     } else {
@@ -144,19 +156,30 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
   const handleSummary = async () => {
     captureEvent("rag_summary_requested", { rfp_id: rfp.id });
     const found = await tryLoadCachedSummary(rfp.id);
+    trackABTestEvent("rfp_action", {
+      action: "generate_summary",
+      variant: "A",
+      rfp_id: rfp.id,
+      cached: found,
+    });
     if (found) {
       showToast("Loaded cached summary from the database.");
       captureEvent("rag_summary_cached_hit", { rfp_id: rfp.id });
       return;
     }
     showToast(
-      "No cached summary yet. Generating new summaries requires a server-side pipeline (service role) — not available from the browser.",
+      "No cached summary yet. Generating new summaries requires a server-side pipeline (service role) - not available from the browser.",
     );
   };
 
   const handleProposal = () => {
+    trackABTestEvent("rfp_action", {
+      action: "draft_proposal",
+      variant: "A",
+      rfp_id: rfp.id,
+    });
     showToast(
-      "Draft proposal (stretch) — would use past performance + template generation.",
+      "Draft proposal (stretch) - would use past performance + template generation.",
     );
   };
 

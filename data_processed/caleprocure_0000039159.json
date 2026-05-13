@@ -3,9 +3,11 @@
   "external_id": "0000039159",
   "title": "RFO-ITS 1940 - eRPA System Enhancements",
   "name": "RFO-ITS 1940 - eRPA System Enhancements",
-  "statement_of_work": "California Department of Forestry and Fire Protection (CAL FIRE) is inviting you to review and respond to this Request for Offer (RFO), entitled RFO-ITS 1940 - eRPA System Enhancements. By submitting an offer, your firm agrees to the terms and conditions stated in this RFO. The Offeror must hold a current Technology, Digital and Data Consulting, Master Service Agreement 5-22-70-25-001 to 359.",
+  "statement_of_work": "California Department of Forestry and Fire Protection (CAL FIRE) is inviting you to review and respond to this Request for Offer (RFO), entitled RFO-ITS 1940 - eRPA System Enhancements. CAL FIRE utilizes the Electronic Request for Personnel Action (eRPA) system (Power Apps application) to manage classification, hiring, personnel transactions, and recruitment-related workflows.",
   "deliverables": [
-    "Support expanded Personnel, Recruitment, and Transactions workflows."
+    "Support end-to-end requirements of program staff",
+    "Support personnel Specialists",
+    "Support regional approvers"
   ],
   "location_level": "state",
   "location": "California",

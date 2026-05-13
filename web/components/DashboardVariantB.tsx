@@ -2,19 +2,25 @@
 
 import { useDashboard } from "@/context/DashboardContext";
 import { useABTest } from "@/context/ABTestContext";
-import { ABTestToggle } from "./ABTestToggle";
 import { DetailPanel } from "./DetailPanel";
 import { DetailPanelVariantB } from "./DetailPanelVariantB";
-import { DashboardVariantB } from "./DashboardVariantB";
 import { GlobalHeader } from "./GlobalHeader";
 import { ProfileDrawer } from "./ProfileDrawer";
 import { RfpFeed } from "./RfpFeed";
 import { RfpSidebar } from "./RfpSidebar";
 import { Walkthrough } from "./Walkthrough/Walkthrough";
 
-export function Dashboard() {
+/**
+ * Dashboard Variant B - Reversed Layout
+ * 
+ * Key differences from Variant A:
+ * - DetailPanel appears on the LEFT side
+ * - RfpFeed appears on the RIGHT side
+ * - This layout prioritizes the detail view, making it more prominent
+ */
+export function DashboardVariantB() {
   const { toast, authReady } = useDashboard();
-  const { dashboardVariant, detailPanelVariant } = useABTest();
+  const { detailPanelVariant } = useABTest();
 
   if (!authReady) {
     return (
@@ -24,17 +30,6 @@ export function Dashboard() {
     );
   }
 
-  // Render Dashboard Variant B if selected
-  if (dashboardVariant === "B") {
-    return (
-      <>
-        <DashboardVariantB />
-        <ABTestToggle />
-      </>
-    );
-  }
-
-  // Default: Dashboard Variant A
   return (
     <div className="flex min-h-dvh w-full min-w-0 flex-1 flex-col">
       <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col overflow-hidden bg-govbid-surface">
@@ -43,13 +38,16 @@ export function Dashboard() {
         <div className="grid min-h-0 min-w-0 flex-1 grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)]">
           <RfpSidebar />
 
-          <div className="grid min-h-0 min-w-0 grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
-            <div className="flex min-h-0 min-w-0 flex-col">
-              <RfpFeed />
+          {/* Variant B: Reversed layout - DetailPanel on left, RfpFeed on right */}
+          <div className="grid min-h-0 min-w-0 grid-cols-1 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
+            {/* Detail Panel - Now on the left and wider */}
+            <div className="order-2 flex min-h-[min(50vh,420px)] min-w-0 flex-col border-r border-govbid-border lg:order-1 lg:min-h-0">
+              {detailPanelVariant === "B" ? <DetailPanelVariantB /> : <DetailPanel />}
             </div>
 
-            <div className="flex min-h-[min(50vh,420px)] min-w-0 flex-col lg:min-h-0">
-              {detailPanelVariant === "B" ? <DetailPanelVariantB /> : <DetailPanel />}
+            {/* RFP Feed - Now on the right and narrower */}
+            <div className="order-1 flex min-h-0 min-w-0 flex-col lg:order-2">
+              <RfpFeed />
             </div>
           </div>
         </div>
@@ -57,7 +55,6 @@ export function Dashboard() {
 
       <ProfileDrawer />
       <Walkthrough />
-      <ABTestToggle />
       {toast && (
         <div
           role="status"
