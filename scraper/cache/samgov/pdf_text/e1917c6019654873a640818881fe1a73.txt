@@ -1,0 +1,23 @@
+The Centers for Disease Control and Prevention (CDC), National Center for Immunization and
+Respiratory Diseases (NCIRD), Office of Director (OD), Office of Laboratory Systems and Response
+(OLSR), intends to award a sole source firm fixed price purchase order to Key Solutions, Inc., 2803
+Lakeview Ct, Fremont, CA, 94538 for the purchase of the eProtocol software license for the Institutional
+Animal Care and Use Committee (IACUC) and for the purchase of Lab Animal Resource System (LARS)
+software license. The Centers for Disease Control and Prevention (CDC) utilizes the Key Solutions’ eProtocol modules to
+manage their animal care program. It currently supports the entire agency in the area of animal
+procurement and ordering; animal record keeping; data collection; reporting tools; and billing
+information. The Institutional Animal Care and Use Committee (IACUC) protocol compliance module
+ensures consistent protocol review, maintains full traceability, simplifies role -based access, and
+strengthens compliance oversight. The Lab Animal Resource System (LARS) module streamlines end -
+to-end activities, from animal requisition to daily management. Both software licenses will include up to
+50 active IACUC users, 16 hours of web-based training, an annual maintenance agreement, custom
+services, and data migration services. This contract action is for supplies or services for which the Government intends to solicit and negotiate
+with only one source under the authority of FAR 6.103-1(b) and 10 U.S.C. 3204(a)(1) or 41 U.S.C.
+3304(a)(1). The NAICS code for this acquisition is 541511, Custom Computer Software Programming
+Services. Interested entities may identify their interest and capability to respond to the requirement. This notice of
+intent is not a request for competitive quotations; however, all responses received within fifteen (15) days
+of the issuance of this notice will be considered by the government. A determination by the government
+not to compete this proposed contract based upon responses to this notice is solely within the discretion of
+the government. Information received will normally be considered solely for the purpose of determining
+whether to conduct competitive procurement. Any quotation/response should be emailed to contract
+specialist Felipe Cardenas at tpp5@cdc.gov by 4:00pm EST on May 12, 2026.

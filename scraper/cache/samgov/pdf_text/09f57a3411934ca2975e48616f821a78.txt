@@ -1,0 +1,26 @@
+This RFI is issued solely for
+information and planning purposes – it does not constitute a Request for Proposal (RFP) or
+a promise to issue an RFP in the future. This request for information does not commit the
+Government to contract for any supply or service whatsoever. Further, the Government is
+not at this time seeking proposals and will not accept unsolicited proposals. Responders
+are advised that the U.S. Government will not pay for any information or administrative
+costs incurred in response to this RFI; all costs associated with responding to this RFI will
+be solely at the interested party’s expense. Not responding to this RFI does not preclude
+participation in any future RFP , if any is issued.
+
+1.0 Description & Background
+Naval Surface Warfare Center Panama City Division (NSWC PCD) is seeking information on
+industry capabilities to perform a large-scale Computer-Aided Design (CAD) model
+conversion and engineering comment adjudication project. We currently maintain a system model consisting of approximately 8,000 individual part
+and assembly files. These files were developed in a variety of CAD software packages. The
+primary goal is to consolidate all of these files into a single, native SolidWorks format within
+a compressed timeframe. Additionally, a significant number of engineering comments
+associated with these models need to be professionally adjudicated. This RFI will be used to identify potential sources with the technical expertise, capacity,
+and project management skills to meet these requirements.
+2.0 Scope of Requirements
+The overall goal of this effort is to enable a robust, model-based configuration management
+environment for the system model within a SolidWorks PDM (Product Data Management)
+system. To achieve this, all system models must be converted to a uniform, native
+SolidWorks format. The work is divided into a primary, time-sensitive task and secondary tasks with a more
+flexible timeline. Interested parties are encouraged to propose timelines and approaches
+that reflect this prioritization.

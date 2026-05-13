@@ -226,10 +226,13 @@ def clean_description(text: str | None) -> str | None:
 
     lines = text.split("\n")
 
-    # Find an explicit "Description:" anchor; everything before it is metadata.
+    # Find an explicit "Description" / "N. Description" anchor; everything
+    # before it is metadata (typical of SAM.gov structured notices that lead
+    # with "1. Solicitation Number / 2. Notice Type / ... / 4. Description").
     body_start = 0
+    desc_anchor_re = re.compile(r"^\s*(?:\d+\.\s+)?description\s*:?\s*$", re.IGNORECASE)
     for i, line in enumerate(lines):
-        if line.strip().rstrip(":").lower() == "description":
+        if desc_anchor_re.match(line):
             body_start = i + 1
             break
 
@@ -271,7 +274,111 @@ def clean_description(text: str | None) -> str | None:
 
     result = "\n".join(cleaned).strip()
     result = strip_addendum_blocks(result)
+    result = strip_leading_admin_sentences(result) or ""
+    result = _soft_cap_description(result)
     return result or None
+
+
+def _soft_cap_description(text: str, *, target: int = 1800) -> str:
+    """Cap description at a paragraph boundary near ``target`` characters.
+
+    Long PDF dumps are unreadable as a description; we keep the first few
+    paragraphs up to ~1800 chars so the field reads like a project summary.
+    """
+    if not text or len(text) <= target:
+        return text
+    blocks = re.split(r"\n\s*\n", text)
+    out: list[str] = []
+    total = 0
+    for block in blocks:
+        block = block.strip()
+        if not block:
+            continue
+        out.append(block)
+        total += len(block) + 2
+        if total >= target:
+            break
+    return "\n\n".join(out).strip()
+
+
+# Procurement-process boilerplate that often opens SAM.gov notices. We strip
+# these from the head of the description so the field reads as project content,
+# not a procurement-mechanics intro.
+_ADMIN_LEAD_DESC_PATTERNS = (
+    "this is a combined synopsis",
+    "this announcement constitutes",
+    "this is a sources sought",
+    "this is a request for information",
+    "this notice does not constitute",
+    "issued solely for information",
+    "issued for market research",
+    "is conducting market research",
+    "is issuing this notice",
+    "notice of intent",
+    "offers are being requested",
+    "this solicitation is issued",
+    "the solicitation document and incorporated",
+    "the solicitation document is",
+    "incorporated provisions and clauses",
+    "this solicitation is set-aside",
+    "this solicitation is set aside",
+    "the associated north american industrial",
+    "the associated naics",
+    "the fsc/psc is",
+    "combined synopsis/solicitation notice",
+    "iaw far",
+    "in accordance with far",
+    "this synopsis is not a request",
+    "this notice is not a solicitation",
+    "as defined by far",
+    "disclaimer:",
+    "this is a sources sought notice only",
+    "all information submitted",
+    "all information contained in this rfi",
+    "all responses",
+    "shall not be construed as a commitment",
+    "is in no way binding",
+    "subject to modification",
+    "the government will not pay",
+    "the government is requesting",
+    "responsibility of the interested parties",
+    "interested parties to monitor",
+    "information submitted in response",
+    "is preliminary as well as subject",
+    "this request for information does not commit",
+    "this rfi is issued solely",
+    "is issued solely for information",
+    "does not constitute a request",
+    "promise to issue an rfp",
+)
+
+
+def strip_leading_admin_sentences(text: str | None) -> str | None:
+    """Drop opening sentences that are procurement-process boilerplate.
+
+    Only strips sentences appearing *before* the first substantive sentence —
+    once we keep one, all later content is preserved (admin language deeper
+    in the doc may be load-bearing context).
+    """
+    if not text:
+        return text
+    paragraphs = re.split(r"\n\s*\n", text)
+    out_paragraphs: list[str] = []
+    kept_anything = False
+    for para in paragraphs:
+        sentences = re.split(r"(?<=[.!?])\s+(?=[A-Z“\"'])", para)
+        kept_sentences: list[str] = []
+        for s in sentences:
+            low = s.lower().strip()
+            if not kept_anything and any(p in low for p in _ADMIN_LEAD_DESC_PATTERNS):
+                continue
+            kept_sentences.append(s)
+            if s.strip():
+                kept_anything = True
+        joined = " ".join(s.strip() for s in kept_sentences if s.strip()).strip()
+        if joined:
+            out_paragraphs.append(joined)
+    return "\n\n".join(out_paragraphs).strip() or None
 
 
 def clean_title(text: str | None) -> str | None:

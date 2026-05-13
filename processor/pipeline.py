@@ -15,6 +15,7 @@ from processor.classifier import Classifier, load_or_train
 from processor.enrich import EnrichmentCallback, enrich
 from processor.location import detect_location
 from processor.normalize import normalize_record
+from processor.pdf_extract import maybe_backfill_description
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_INPUT_DIR = PROJECT_ROOT / "data_raw"
@@ -66,6 +67,10 @@ def process_one(
     classifier: Classifier | None = None,
 ) -> dict[str, Any]:
     """Apply normalization + enrichment to a single raw RFP record."""
+    # Backfill description from attached PDFs when the scraper recorded
+    # an empty description (typical for SAM.gov RFIs / Special Notices).
+    maybe_backfill_description(raw)
+
     normalized = normalize_record(raw)
     location, level = detect_location(normalized)
     enriched = enrich(
@@ -76,6 +81,16 @@ def process_one(
         classifier=classifier,
     )
     merged = {**normalized, **enriched}
+
+    # Last-resort: if the description is still form-field junk (SF-1449 form
+    # PDF with no narrative), replace it with the synthesized SOW so the
+    # public field never displays form scaffolding.
+    from processor.enrich import _looks_like_pure_admin
+
+    desc = (merged.get("description") or "").strip()
+    if desc and _looks_like_pure_admin(desc):
+        merged["description"] = (merged.get("statement_of_work") or "").strip() or None
+
     return _ordered(merged)
 
 

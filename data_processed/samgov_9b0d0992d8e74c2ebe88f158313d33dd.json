@@ -3,11 +3,12 @@
   "external_id": "9b0d0992d8e74c2ebe88f158313d33dd",
   "title": "Request For Proposals: HAF/A2 Publicly Available Information (PAI) Alerting Services for Department of War (DoW) Enterprise Licensing",
   "name": "Request For Proposals: HAF/A2 Publicly Available Information (PAI) Alerting Services for Department of War (DoW) Enterprise Licensing",
-  "statement_of_work": "",
+  "statement_of_work": "This Statement of Objectives sets forth the objectives for Department of War (DoW)-wide access to a commercially available enterprise license (up to 3.5M users) subscription to a PAI-based alerting solution that has the attributes as described in section V. The commercially-available license subscription should leverage a variety of publicly available information sources, evaluate content to detect emerging events as they are developing, and push alerts to users based on user-defined areas and t",
   "deliverables": [
-    "Execute scope of work described in the Request For Proposals: HAF/A2 Publicly Available Information (PAI) Alerting Services for Department of War (DoW) Enterprise Licensing solicitation",
-    "Deliver milestones, status reporting, and acceptance documentation",
-    "Provide final handoff and post-deployment support per RFP terms"
+    "Certify in writing compliance with data sources’ terms of service",
+    "Detect emerging events in near real-time, incorporating data veracity into methods by which",
+    "Scale to support the full operational requirements and user base across all elements of the DoW",
+    "Deliver (push) alerts to users based on user-defined criteria"
   ],
   "location_level": "state",
   "location": "California",
@@ -17,7 +18,7 @@
     "California"
   ],
   "dept": "DEPT OF DEFENSE.DEPT OF THE AIR FORCE.AIR FORCE DISTRICT OF WASHINGTON.FA7014 AFDW PK",
-  "description": "",
+  "description": "This Statement of Objectives sets forth the objectives for Department of War (DoW)-wide access to a commercially available enterprise license (up to 3.5M users) subscription to a PAI-based alerting solution that has the attributes as described in section V. The commercially-available license subscription should leverage a variety of publicly available information sources, evaluate content to detect emerging events as they are developing, and push alerts to users based on user-defined areas and t",
   "published_date": "2026-04-30",
   "due_date": "2026-05-04T10:00:00-04:00",
   "contact_name": "Capt Richard Snyder",

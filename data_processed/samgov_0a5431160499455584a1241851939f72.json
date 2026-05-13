@@ -3,21 +3,22 @@
   "external_id": "0a5431160499455584a1241851939f72",
   "title": "DA10--ZEISS FORUM LICENSING SERVICE",
   "name": "DA10--ZEISS FORUM LICENSING SERVICE",
-  "statement_of_work": "",
+  "statement_of_work": "This requirement is to procure a Carl Zeiss FORUM Data Management Software for Phoenix VA Healthcare System. PVAHS already uses this software and is connected to VA system.",
   "deliverables": [
-    "Execute scope of work described in the DA10--ZEISS FORUM LICENSING SERVICE solicitation",
-    "Deliver milestones, status reporting, and acceptance documentation",
-    "Provide final handoff and post-deployment support per RFP terms"
+    "The data management system shall include all necessary software, licensing, and labor to fully set up and integrate the system with the existing equipment",
+    "The system must be able to connect with the VA’s current electronic health record, VistA",
+    "The system shall be approved by the Electronic Health Record Modernization Integration Office Healthcare Technology Management (EHRM-IO HTM) team to ensure compatibility with the incoming EHRM",
+    "The viewing software must be VA Technical Reference Manual (TRM) approved for use on standard VA information and technology issued computers"
   ],
-  "location_level": "state",
-  "location": "California",
+  "location_level": "city",
+  "location": "Long Beach",
   "tags": [
+    "Procurement",
     "Software",
-    "Health Services",
-    "California"
+    "Long Beach"
   ],
   "dept": "VETERANS AFFAIRS, DEPARTMENT OF.VETERANS AFFAIRS, DEPARTMENT OF.262-NETWORK CONTRACT OFFICE 22 (36C262)",
-  "description": "",
+  "description": "This requirement is to procure a Carl Zeiss FORUM Data Management Software for Phoenix VA Healthcare System. PVAHS already uses this software and is connected to VA system.",
   "published_date": "2026-04-30",
   "due_date": "2026-05-08T12:00:00-07:00",
   "contact_name": "ISRAEL GARCIA",

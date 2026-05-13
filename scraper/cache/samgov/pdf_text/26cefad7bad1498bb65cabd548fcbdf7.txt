@@ -1,0 +1,33 @@
+The FY24 National Defense Authorization Act established the Space Force Personnel
+Management Act (PMA) on December 22, 2023. The PMA allows the Space Force to design an
+alternative single military personnel management system that integrates active component
+Guardians and Air Force Reserve Airmen serving in space-focused career fields into a unified
+service, offering both full- and part-time work roles. In addition to adding part-time roles to the
+service without component - the Personnel Management Act also enables Space Force Inactive
+and Retired Status. By enabling both full-time and part-time service options, the Space Force can
+better attract and retain talent in an increasingly competitive labor market, especially in high-tech
+sectors. According to General Saltzman in his C-Note #42,
+The PMA is a fundamental shift from the traditional service model that
+employs distinct regular and reserve components that possess unique roles,
+responsibilities, organization, and management. It defines conditions for
+Guardians to serve in active status and move between full - and part-time
+roles. Presently, Regular Space Force Guardians are managed through the Air Force Active Component
+systems to include but not limited to instances in Military Personnel Data System (MilPDS),
+myVector, and myFSS suites of tools, databases, and software applications. These systems
+connect to 4
+th estate systems for pay and benefits including DMDC (DEERS), DFAS(DJMS),
+and external systems such as Learning Management tools, Defense Acquisition University
+transcripts, data analytics, and others require both pulling and pushing data for Guardian
+personnel records management. Within the current Air Force systems, in order to transfer between Air Force Active Component
+and Air Force Reserve Component, the service member must first separate from the Air Force
+and rejoin the military under the Air Force Reserve Component. This process takes an act of
+Congress to scroll the member. In addition, there are timeliness of pay and continuity of health
+care issues. The vision of the Space Force under the Personnel Management Act is for this
+process to be seamless and less cumbersome for both the personnelists and service-members. By
+enabling both full-time and part-time service options, the Space Force can better attract and
+retain talent in an increasingly competitive labor market, especially in high-tech sectors. Creating a service without component that offers both full and part-time work roles requires
+changing and creating new file types in MilPDS and changing data flows throughout the Air
+Force business enterprise systems that has shown to be both time and cost-prohibitive. The
+Space Force is seeking to procure, configure, and integrate a commercial software solution to
+enable the single military personnel management system for both full-time and part-time
+Guardians.

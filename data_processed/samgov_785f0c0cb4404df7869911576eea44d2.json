@@ -3,21 +3,22 @@
   "external_id": "785f0c0cb4404df7869911576eea44d2",
   "title": "AF EAD_IA/MA-PLMF",
   "name": "AF EAD_IA/MA-PLMF",
-  "statement_of_work": "",
+  "statement_of_work": "The Contractor shall provide a single rate for each labor category which will be charged no matter if the prime Contractor or a subcontractor is to perform the work.",
   "deliverables": [
-    "Execute scope of work described in the AF EAD_IA/MA-PLMF solicitation",
-    "Deliver milestones, status reporting, and acceptance documentation",
-    "Provide final handoff and post-deployment support per RFP terms"
+    "The work shall be performed in accordance with all Sections of this Performance Work Statement (PWS)",
+    "This TO shall have a separate Contract Line Item Number (CLIN) to cover this access fee, and this CAF shall be obligated at TO Award (TOA)",
+    "The Contractor shall provide a single rate for each labor category which will be charged no matter if the prime Contractor or a subcontractor is to perform the work",
+    "The contractor shall perform the effort required by this TO on a hybrid FFP + T&M basis for"
   ],
   "location_level": "state",
   "location": "California",
   "tags": [
-    "Software",
     "Procurement",
+    "Software",
     "California"
   ],
   "dept": "GENERAL SERVICES ADMINISTRATION.FEDERAL ACQUISITION SERVICE.GSA FAS AAS ARMY (QFB)",
-  "description": "",
+  "description": "The Contractor shall provide a single rate for each labor category which will be charged no matter if the prime Contractor or a subcontractor is to perform the work.",
   "published_date": "2026-05-04",
   "due_date": "2026-05-15T17:00:00-04:00",
   "contact_name": "Alex Budai",

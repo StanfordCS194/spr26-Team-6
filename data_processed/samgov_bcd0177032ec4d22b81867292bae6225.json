@@ -3,7 +3,7 @@
   "external_id": "bcd0177032ec4d22b81867292bae6225",
   "title": "Naval Information Warfighting Development Center Electronic Warfare Data Support",
   "name": "Naval Information Warfighting Development Center Electronic Warfare Data Support",
-  "statement_of_work": "",
+  "statement_of_work": "This Performance Work Statement (PWS) supports Naval Information Warfighting Development Center (NIWDC) warfighting capabilities with specific focus towards Electronic Warfare Data (EWD)production (using the Navy Information Operations Database (NIODB)) currently operated on an Amazon Web Service (AWS) Impact Level (IL6) cloud hosting environment.",
   "deliverables": [
     "Execute scope of work described in the Naval Information Warfighting Development Center Electronic Warfare Data Support solicitation",
     "Deliver milestones, status reporting, and acceptance documentation",
@@ -12,12 +12,12 @@
   "location_level": "state",
   "location": "California",
   "tags": [
-    "Software",
     "Procurement",
+    "Software",
     "California"
   ],
   "dept": "DEPT OF DEFENSE.DEPT OF THE NAVY.NAVSUP.NAVSUP GLOBAL LOGISTICS SUPPORT.NAVSUP FLC NORFOLK.NAVSUP FLT LOG CTR NORFOLK",
-  "description": "",
+  "description": "This Performance Work Statement (PWS) supports Naval Information Warfighting Development\nCenter (NIWDC) warfighting capabilities with specific focus towards Electronic Warfare Data\n(EWD)production (using the Navy Information Operations Database (NIODB)) currently operated\non an Amazon Web Service (AWS) Impact Level (IL6) cloud hosting environment. NIODB is a\nNavy approved source of parametric, and order of battle data used in the development of Electronic\nWarfare (EW) System Libraries. Aiding the warfighter with a single source of authoritative EW\ndata, it improves threat and own force identification, enables Anti-Ship Missile Defense, enhances\ninteroperability, and improves mission planning through improved threat data fidelity. OPNAV\nInstruction 3430.23D provides policy for United States Fleet Forces Command ( USFFC) and\nNaval Information Forces ( NAVIFOR) execution of the Electronic Warfare Reprogrammable\nSystems Support Program. NIWDC EWD is NAVIFOR designated EW Functional Data Manager\nand is the primary organization for this support.\n\n1.2 TYPE OF CONTRACT\nThe Government intends to award an Indefinite Delivery/Indefinite Quantity contract with Firm -\nFixed Price provisions for services. Individual task orders will specify positions.\n\n1.3 ORDERING PERIOD\nThe resultant Indefinite Delivery, Indefinite Quantity (IDIQ) contract will consist of the following\nfive year base ordering period and will contain FAR 52.217-8 – Option to Extend Services to allow\nfor a six- month extension of the ordering period if circ umstances necessitate the exercise of this\noption. The ordering periods are as follows:\n\nNOTE: The performance period of individual task orders will be established at the time of\ntask order issuance.\n\n1.5 PLACE OF PERFORMANCE/WORKING HOURS\nPerformance will occur at the following locations:\n• Naval Information Warfare Training Group Norfolk, 1247 West C Street, Building U-\n132, Naval Station, Norfolk, VA. 23511\n• Vendor company accredited facility/corporate office upon COR approval\n• Working hours are Monday – Friday, 7:30 am – 4:00 pm except Federal Holidays. The\nexpectation is an 8-hour day.",
   "published_date": "2026-04-20",
   "due_date": "2026-04-29T13:00:00-04:00",
   "contact_name": "Kendall Mulherin",

@@ -1,0 +1,39 @@
+I. Purpose. This Statement of Objectives sets forth the objectives for Department of War (DoW)-wide
+access to a commercially available enterprise license (up to 3.5M users) subscription to a PAI-based
+alerting solution that has the attributes as described in section V.
+
+II. Scope. The commercially-available license subscription should leverage a variety of publicly
+available information sources, evaluate content to detect emerging events as they are developing, and
+push alerts to users based on user-defined areas and topics of interest. The solution must be capable
+of distributing alerts in near real-time via email, application programming interface (API), web-based
+application, and mobile platforms. The solution must be available commercially in the marketplace,
+and able to scale to a DoW enterprise capability, and keep pace with developments and standards
+within the commercial industry sector.
+
+III. Period and place of performance. The period of performance is projected to begin in August 2026,
+base plus four (4) option years. This is a web-based subscription service.
+
+IV. Background. The DoW is seeking a commercially-available solution to evaluate publicly available
+information (PAI) in near real time, to provide the DoW with situational awareness, force protection,
+indications and warnings, and support for emergency and contingency operations concerning global
+events.
+
+1. Certify in writing compliance with data sources’ terms of service.
+2. Detect emerging events in near real-time, incorporating data veracity into methods by which
+alerts are generated.
+3. Scale to support the full operational requirements and user base across all elements of the DoW
+enterprise.
+4. Deliver (push) alerts to users based on user-defined criteria.
+5. Send alerts to users via, at a minimum; web-browser user interface, API, Push mode (text
+message or email), as selected by the user.
+6. Achieve comprehensive data coverage across all geographic locations critical to DoW operations
+by leveraging a wide variety of social media, news, and other publicly available information
+sources, including the most popular regional social media and news platforms.
+7. Provide translation capability for all alerts into English, with the option to view in original
+language.
+8. Display a map interface with event locations.
+9. Allow users to search events by text and location.
+10. Provide source attribution in alerts and notify the user before they leave the service’s web
+interface.
+11. Provide references to data sources used to generate alerts, without enabling direct hyperlinking. Statement of Objectives
+2

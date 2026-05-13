@@ -3,11 +3,12 @@
   "external_id": "aa09ebe607844a2ab2cf764056c7d260",
   "title": "RFI for Aeronautical Mobile Application (AMA)",
   "name": "RFI for Aeronautical Mobile Application (AMA)",
-  "statement_of_work": "",
+  "statement_of_work": "Request for Information (RFI) 03 April 2026 Table of Contents 1 (U) Introduction 4 2 (U) Background 4 3 (U) Scope 4 4 (U) General Requirements 5 5 (U) Transition Requirements 5 6 (U) Aeronautical Dataset Requirements 6 7 (U) Application Requirements 7 8 (U) Enhancement Requirements 8 9 (U) Dissemination & Support Requirements 8 10 (U) Cloud Storage 9 11 (U) Software Methodology and Delivery 9 12 (U) Software Security 10 13 (U) Program Management 11 14 (U) 508 Compliance 11 15 (U) Personnel Requi",
   "deliverables": [
-    "Execute scope of work described in the RFI for Aeronautical Mobile Application (AMA) solicitation",
-    "Deliver milestones, status reporting, and acceptance documentation",
-    "Provide final handoff and post-deployment support per RFP terms"
+    "Additionally, the Aero Data Server enables users to convert files into the MB Tile format for application use. (U) Scope (U) The Contractor shall provide NGA's domestic and foreign government customers with consistent access to aeronautical data across multiple operating systems",
+    "A Staffing Plan (CDRL A009) will be reported as outlined in SOW Attachment A. (U) Standards and Quality Management Process (U) ISO Conformance (U) The Contractor shall: (U) All AMA Program processes shall comply and be in conformance with the ISO 9001:2015 certification",
+    "The Contractor shall return a copy of the audit report with an original signature from the Contractor Management Representative within ten calendar days",
+    "The Contractor shall identify the root cause and generate a proposed solution"
   ],
   "location_level": "state",
   "location": "California",
@@ -17,7 +18,7 @@
     "California"
   ],
   "dept": "DEPT OF DEFENSE.NATIONAL GEOSPATIAL-INTELLIGENCE AGENCY (NGA).NATL GEOSPATIAL-INTELLIGENCE AGENCY",
-  "description": "",
+  "description": "Request for Information (RFI) 03 April 2026 Table of Contents 1 (U) Introduction 4 2 (U) Background 4 3 (U) Scope 4 4 (U) General Requirements 5 5 (U) Transition Requirements 5 6 (U) Aeronautical Dataset Requirements 6 7 (U) Application Requirements 7 8 (U) Enhancement Requirements 8 9 (U) Dissemination & Support Requirements 8 10 (U) Cloud Storage 9 11 (U) Software Methodology and Delivery 9 12 (U) Software Security 10 13 (U) Program Management 11 14 (U) 508 Compliance 11 15 (U) Personnel Requi",
   "published_date": "2026-04-20",
   "due_date": "2026-05-18T17:00:00-04:00",
   "contact_name": "Matthew A Hoffman",

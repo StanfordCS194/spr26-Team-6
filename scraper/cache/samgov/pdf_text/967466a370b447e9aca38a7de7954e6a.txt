@@ -1,0 +1,49 @@
+Department of the Air Force: Justification for Other Than Full and Open Competition
+March 2026 Page 1 of 3March 2026 Page 1 of 3
+Dollar Value of this Acquisition: < $10M > $10M and < $100M > $100M and < $500M > $500M
+CERTIFICATIONS: CO certification serves as J&A approval < $10M, See J&A Template Guidance at https://usaf.dps.mil/sites/
+AFCC/AQCP/KnowledgeCenter/SitePages/DAF-Contracting-Compass/Part-6---Competition-Requirements.aspx#exceptions-to-full-
+and-open-competition-mandatory J&A Template Guidance tab
+16 March 2026
+
+to the best of my knowledge and belief.
+17 March 2026
+Technical and Requirements Personnel (RFO 6.104(b))
+
+responsibility, is accurate and complete. COORDINATION Sign and Save Procedure
+** The text in the signature blocks below is editable, including the title.
+** To remove a row, click the "X" next to the signature block. CAUTION: Once removed, it can only be restored by downloading the BLANK FORM again.
+17 March 2026
+X
+APPROVALS ( RFO 6.104-2(a) Table 6-1 & R-DFARS 206.104-72 Table 206.1)
+Department of the Air Force: Justification for Other Than Full and Open Competition
+March 2026 Page 2 of 3March 2026 Page 2 of 3
+I. Agency and Contracting Activity (RFO 6.104-1(a)(1)):
+Agency: AFGSC
+Contracting Activity: 509th Contracting Squadron, 660 Tenth Street Suite 222, Whiteman AFB MO 65305
+
+II. Nature and/or description of the action being approved (RFO 6.104-1(a)(2)):
+The action to be processed is justification for the use of other than full and open competition due to the availability of only
+one responsible source. In this particular acquisition, HSQ Tech, Inc. is the sole manufacture and proprietor of their software
+and systems. This software and system monitors and controls the Waste Water Treatment Plant, Water Plant, Electrical
+Generators, Transfer Switches, Electrical Systems, and Fire Suppression System to ensure that all of the services are running
+within the correct parameters. In order to solicit this requirement under Full and Open Competition, the entire infrastructure
+in which this system utilizes would need to be reconstructed including the upgrade of 69 remote
+field RTU/PLC panels as well as all existing monitors, laptops, network switches, routers, radio, Oracle Dell Server, UPS's, and
+modems. Doing so would cost up to an estimated $7M. III. Description of supplies/services required to meet agency needs (RFO 6.104-1(a)(3)):
+This requirement is to provide service and maintenance for the Supervisory Control and Data Acquisition (SCADA) System
+which is currently installed at Whiteman AFB in accordance with the Statement of Work. The SCADA system monitors and
+controls the Waste Water Treatment Plant, Water Plant, Electrical Generators, Transfer Switches, Electrical Systems, and Fire
+Suppression System. This is a service for a base year and four (4) option years. IV. Statutory Authority Permitting Other Than Full and Open Competition (RFO 6.104-1(a)(4)):
+10 U.S.C. 3204(a)(1), Only one responsible source and no other supplies or services will satisfy agency requirements. V. Rationale for Use of Authority (RFO 6.104-1(a)(5)):
+This system must be serviced by HSQ Tech, Inc. due to its proprietary nature. HSQ Tech, Inc. is the only company trained to
+service and install their proprietary software and associated hardware. All of the software and a majority of the internal
+hardware for the current SCADA system is created by HSQ Tech, Inc. and can only be maintained by this contractor. HSQ
+Tech, Inc. has been selected for this service for several reasons: Whiteman AFB has a full complement of HSQ Tech, Inc.
+systems and HSQ Tech, Inc. has proprietary rights to all software and associated hardware. Purchasing services through HSQ
+Tech, Inc. will guarantee system performance, reliability, and security. Purchasing this service under Full and Open
+Competition would cause significant hardship to the Government and the internal systems that utilize the current SCADA
+system. VI. Integrated Market Analysis and Efforts to Solicit Competition (RFO 6.104-1(a)(6), (8), and (10)):
+Our agency contacted HSQ Tech, Inc. to verify if any other entities are certified to work on the company's software. Gus
+Jimenez, Vice President and Chief Operations Officer for HSQ Tech, Inc., responded to our agency on 19 February 2026 by
+stating, "No there is not." See "Email-Proprietary System."

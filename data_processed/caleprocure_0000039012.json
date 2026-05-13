@@ -3,7 +3,7 @@
   "external_id": "0000039012",
   "title": "HCL BigFix Software Subscription and Support",
   "name": "HCL BigFix Software Subscription and Support",
-  "statement_of_work": "HCL BigFix Software Subscription and Support - RFQ FTB-2526-1036.",
+  "statement_of_work": "Sell Event / RFx for HCL BigFix Software Subscription and Support issued by California Franchise Tax Board.",
   "deliverables": [
     "Execute scope of work described in the HCL BigFix Software Subscription and Support solicitation",
     "Deliver milestones, status reporting, and acceptance documentation",
@@ -18,7 +18,7 @@
     "California"
   ],
   "dept": "California Franchise Tax Board",
-  "description": "HCL BigFix Software Subscription and Support - RFQ FTB-2526-1036.\nFinal Supplier Quotation Due Date: Thursday, 5/14/2026 by 3:00 PM PT.",
+  "description": "Sell Event / RFx for HCL BigFix Software Subscription and Support issued by California Franchise Tax Board.",
   "published_date": "2026-04-30T15:00:00-07:00",
   "due_date": "2026-06-30T15:00:00-07:00",
   "contact_name": "Tommy Yu",
@@ -26,7 +26,7 @@
   "contact_phone": "916-845-7802",
   "status": "active",
   "is_relevant": true,
-  "content_hash": "v1-0000039012-ffc7c5af28ce",
+  "content_hash": "v1-event-details.aspx-2c32c323537f",
   "metadata": {
     "event_type": "Sell Event / RFx",
     "event_version": 1,
@@ -36,8 +36,8 @@
     "documents": [],
     "unspsc_codes": [
       {
-        "code": "43231500",
-        "description": "Business function specific software"
+        "code": "01012001",
+        "description": "/> <span data-if-container-label=\"conferenceRow\" data-if-source=\"[id^='ZZ_BID_CNF_VW_DUE_DT_TIME$']\" data-if-content=\"nu"
       }
     ]
   }

@@ -1,0 +1,33 @@
+Investigational Drug System (IDS); automation software to aid in the management of VAPSHCS’s investigational drug service. Vendor shall provide IDS, a secure, HIPAA and 21 CFR Part 11 compliant, web-based application that has the following features:
+Monitors Receive, Transfer, Dispense, Return to Supplier, Destroy, and Adjustment transactions
+Manages a comprehensive drug catalog, protocols, patients, suppliers, documents, and pharmacies
+Generates accountability logs exportable to NCI DARF, NCI ORAL DRAF, ACTG, De-Identified and other format, significantly facilitating the audit process
+Granular inventory tracking down to an individual Bottle, Vial, or Kit #
+Patient-specific drug tracking
+Double signature verification
+Barcoded inventory labels
+Physical inventory monitoring
+Par level management
+Pharmacy billing
+Operates as a standalone system but has interfaces available to reduce data entry, including CTMS, EMR, and IRB systems for protocol, patient, and document management; inpatient or outpatient pharmacy systems for deducting inventory and logging dispenses; and carousels for inventory movement between locations
+Comprehensive coverage of all inventory transactions performed with investigational drugs
+Simplifies preparation for monitor visits and audits
+Ensures dispensing accuracy by tracking a patient’s dispensing history, treatment arms, expiration, and patient-specific inventory
+Print patient labels and record inventory deduction on logs in a single dispense transaction
+Supports multi-site pharmacy systems and allows users to sign into specific dispensing locations
+Minimize workflow errors with role-based access
+HIPAA and 21 CFR Part 11 compliant (including audit trail logging)
+IDS shall be accessible to staff at the Seattle and American Lake Divisions of VAPSHCS. IDS (Investigational Drug System) Software
+04-16-2026 13:00 PACIFIC TIME, LOS ANGELES, USA
+N
+Network Contracting Office 20
+ATTN: V4CONT
+1601 E. Fourth Plain Blvd
+Bldg.17, Suite B428
+Vancouver WA 98661
+jeffrey.kelley1@va.gov
+Puget Sound VA Healthcare System
+1660 South Columbian Way
+Seattle, WA
+AGENCY’S URL
+AGENCY CONTACT’S EMAIL ADDRESS

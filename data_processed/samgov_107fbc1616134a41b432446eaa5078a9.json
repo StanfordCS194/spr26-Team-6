@@ -3,11 +3,12 @@
   "external_id": "107fbc1616134a41b432446eaa5078a9",
   "title": "Foundation Sustainment Support, Software and Integration (FS3i)",
   "name": "Foundation Sustainment Support, Software and Integration (FS3i)",
-  "statement_of_work": "",
+  "statement_of_work": "Amazon's trademarks and trade dress may not be used in connection with any product or service that is not Amazon's, in any manner that is likely to cause confusion among customers, or in any manner that disparages or discredits Amazon. All other trademarks not owned by Amazon are the property of their respective owners, who may or may not be aﬃliated with, connected to, or sponsored by Amazon.",
   "deliverables": [
-    "Execute scope of work described in the Foundation Sustainment Support, Software and Integration (FS3i) solicitation",
-    "Deliver milestones, status reporting, and acceptance documentation",
-    "Provide final handoff and post-deployment support per RFP terms"
+    "Conﬁgure additional functionality, guardrails, and security services, such as",
+    "Manage your foundational networking topology through services such as Amazon Virtual Private",
+    "Generate additional workload accounts by using the AWS Control Tower Account Factory. There are no additional charges or upfront commitments required to use Landing Zone Accelerator",
+    "Cloud Access Point (CAP) – Provides access to the cloud, and protects DoD networks from the"
   ],
   "location_level": "state",
   "location": "California",
@@ -19,7 +20,7 @@
     "California"
   ],
   "dept": "DEPT OF DEFENSE.NATIONAL GEOSPATIAL-INTELLIGENCE AGENCY (NGA).NATL GEOSPATIAL-INTELLIGENCE AGENCY",
-  "description": "",
+  "description": "Amazon's trademarks and trade dress may not be used in connection with any product or service that is not Amazon's, in any manner that is likely to cause confusion among customers, or in any manner that disparages or discredits Amazon. All other trademarks not owned by Amazon are the property of their respective owners, who may or may not be aﬃliated with, connected to, or sponsored by Amazon.",
   "published_date": "2026-04-24",
   "due_date": "2026-09-30T09:00:00-04:00",
   "contact_name": "Timothy Hull",

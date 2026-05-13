@@ -115,6 +115,97 @@ _FILLER_LEAD_PATTERNS = (
     "firms interested in responding",
     "must notify the university",
     "the offeror must hold",
+    # SAM admin / certification scaffolding.
+    "brand name item:",
+    "essential/significant physical",
+    "this notice does not constitute",
+    "this is a sources sought",
+    "this is a request for information",
+    "this is a combined synopsis",
+    "this announcement constitutes",
+    "offers are being requested",
+    "notice of intent to sole source",
+    "notice of intent (noi)",
+    "is conducting market research",
+    "issued solely for information",
+    "issued for market research",
+    "is issuing this notice",
+    "i certify",
+    "per vaar",
+    "per far",
+    "no contract will be awarded",
+    "salient characteristics listed",
+    "to my knowledge",
+    "approved by:",
+    "name, date:",
+    "distribution statement",
+    "this solicitation is issued",
+    "the solicitation document",
+    "incorporated provisions and clauses",
+    "this solicitation is set-aside",
+    "this solicitation is set aside",
+    "the associated north american industrial",
+    "the associated naics",
+    "combined synopsis/solicitation notice",
+    "iaw far",
+    "in accordance with far",
+    "this acquisition is set aside",
+    "1. solicitation number",
+    "2. notice type",
+    "3. classification code",
+    "psc:",
+    "naics:",
+    "size standard:",
+    "this synopsis is not a request",
+    "this notice is not a solicitation",
+    "as defined by far",
+    "disclaimer:",
+    "this is a sources sought notice only",
+    "shall not be construed as a commitment",
+    "is in no way binding",
+    "subject to modification",
+    "the government will not pay",
+    "the government is requesting",
+    "responsibility of the interested parties",
+    "information submitted in response",
+    "is preliminary as well as subject",
+    "this request for information does not commit",
+    "this rfi is issued solely",
+    "is issued solely for information",
+    "does not constitute a request",
+    "promise to issue an rfp",
+    "all offers are subject to all terms",
+    "sealed offers in original",
+    "amendment to clause",
+    "the government is not at this time seeking",
+    "responders are advised",
+    "respondents are advised",
+    "all costs associated with",
+    "justification for other than full and open",
+    "if this contract is covered by",
+    "when the government requires supplies",
+    "the contractor must provide employees",
+    "secure cloud computing architecture on aws",
+    "all rights reserved",
+    "aws prescriptive guidance",
+    "copyright ©",
+    "copyright (c)",
+    "fringe benefits required",
+    "wage determination",
+    "minimum order",
+    "maximum order",
+    "address the offer to",
+    "address offer to",
+    "issued by code",
+    "name and address of contractor",
+    "paid sick leave",
+    "executive order minimum wage",
+    "occupational listing",
+    "purchase number note",
+    "sealed bid solicitations",
+    "rated order under the defense priorities",
+    "applicable executive order minimum wage",
+    "must provide employees",
 )
 
 
@@ -129,7 +220,14 @@ def _split_sentences(text: str) -> list[str]:
 
 
 def _is_filler(sentence: str) -> bool:
-    low = sentence.lower()
+    stripped = sentence.strip()
+    # Sentences that start with a code / solicitation number / date — these
+    # are PDF form-value lines that got concatenated into the narrative.
+    if re.match(r"^\s*\d{2,}[\-/\.]", stripped):
+        return True
+    if re.match(r"^\s*[A-Z]\d+[A-Z0-9\-]{3,}\b", stripped):
+        return True
+    low = stripped.lower()
     return any(p in low for p in _FILLER_LEAD_PATTERNS)
 
 
@@ -182,11 +280,85 @@ def generate_statement_of_work(rfp: dict[str, Any]) -> str:
             joined = ", ".join(unspsc_phrases[:3])
             summary = f"Provide {joined} in support of the {name} engagement."
 
+    # Safety net: if the chosen SOW still reads as procurement boilerplate
+    # (e.g. an SF-1449 form had no narrative scope), synthesize a one-liner
+    # from the title + agency rather than emit a confusing admin sentence.
+    if summary and _looks_like_pure_admin(summary):
+        summary = _synthesize_sow_from_metadata(rfp)
+
     if not summary:
-        summary = (desc or rfp.get("title") or "").strip()
+        summary = _synthesize_sow_from_metadata(rfp) or (desc or rfp.get("title") or "").strip()
 
     # Cap to keep it succinct.
     return summary[:500].rstrip()
+
+
+_PROJECT_SIGNAL_PATTERNS = (
+    "shall provide", "shall ensure", "shall perform", "shall include",
+    "shall deliver", "shall supply", "shall install",
+    "will provide", "will deliver", "will perform", "will supply",
+    "is seeking", "seeks to procure", "seeks to", "intends to",
+    "is releasing", "is requesting proposals", "is requesting quotes",
+    "requirement is to", "this requirement is",
+    "the system will", "the system shall", "the system must",
+    "the solution will", "the solution shall",
+    "the project", "this project",
+    "the contractor shall", "the vendor shall",
+    "to procure", "to acquire", "to purchase",
+    "the platform", "the application",
+    "describes the framework", "sets forth the objectives",
+    "supports the", "supports naval", "supports the mission",
+    "provides the framework", "provides a framework",
+    "is to procure", "is to provide",
+)
+
+
+def _looks_like_pure_admin(text: str) -> bool:
+    """True if the candidate SOW reads as pure procurement-process boilerplate
+    or government form-field scaffolding rather than real project content."""
+    if not text:
+        return False
+    low = text.lower()
+    # 1. Explicit admin lead patterns immediately disqualify.
+    if any(p in low for p in _FILLER_LEAD_PATTERNS):
+        return True
+    # 2. Form-field pattern: many ALL-CAPS tokens.
+    words = re.findall(r"[A-Za-z][A-Za-z\-/]+", text)
+    if len(words) < 8:
+        return True
+    allcaps = sum(1 for w in words if len(w) >= 3 and w.isupper())
+    if allcaps / len(words) > 0.20:
+        return True
+    # 3. Numbered field markers ("1. X 2. Y 3. Z").
+    if len(re.findall(r"\b\d+\.\s+[A-Z]", text)) >= 2:
+        return True
+    # 4. Short SOWs without project signals are almost certainly fragments.
+    if len(text) < 120 and not any(p in low for p in _PROJECT_SIGNAL_PATTERNS):
+        return True
+    return False
+
+
+def _synthesize_sow_from_metadata(rfp: dict[str, Any]) -> str:
+    """Build a one-sentence SOW from title / dept / event_type / solicitation #.
+
+    Used as a last-resort fallback for SAM notices whose attached docs contain
+    no extractable narrative (SF-1449 / SF-30 form-only PDFs).
+    """
+    name = generate_name(rfp)
+    dept = (rfp.get("dept") or "").strip()
+    metadata = rfp.get("metadata") or {}
+    event_type = (metadata.get("event_type") or "Solicitation").strip()
+    sol_num = (metadata.get("solicitation_number") or "").strip()
+
+    # Format the dept chain into something readable (DEPT OF X.DEPT OF Y.Z → Z).
+    dept_pretty = dept.split(".")[-1].strip() if dept else ""
+
+    parts = [f"{event_type} for {name}"]
+    if sol_num:
+        parts.append(f"(solicitation {sol_num})")
+    if dept_pretty:
+        parts.append(f"issued by {dept_pretty}")
+    return " ".join(parts).strip() + "."
 
 
 # ---------------------------------------------------------------------------
@@ -247,16 +419,86 @@ _SUBMISSION_FILTERS = (
     "respond to this rf",
     "agrees to the terms",
     "by submitting an offer",
+    # SAM.gov administrative / disclaimer language that masquerades as
+    # "shall"/"will" obligations but is really about the procurement process.
+    "this notice does not constitute",
+    "this announcement constitutes",
+    "this is a sources sought",
+    "this is a request for information",
+    "no contract will be awarded",
+    "issued for market research",
+    "issued solely for information",
+    "respondents are responsible for",
+    "respondents should",
+    "interested parties should",
+    "i certify",
+    "per vaar",
+    "per far",
+    "salient characteristics listed",
+    "the government will not",
+    "the government does not",
+    "anticipated period of performance",
+    "period of performance shall be",
+    "to my knowledge",
 )
 
 # Trim noise that often hides in extracted bullets.
 _NOISE_TRIM_RE = re.compile(r"^[\s\-\*•\d\.\)\(\:]+|[\s:.;]+$")
+
+# Words that signal a phrase is a deliverable / action item, not a heading.
+_BULLET_ACTION_TOKENS = frozenset({
+    "shall", "must", "will", "provide", "deliver", "perform", "install",
+    "supply", "support", "develop", "implement", "configure", "integrate",
+    "design", "manage", "maintain", "operate", "execute", "address",
+    "create", "build", "produce", "track", "report", "monitor", "ensure",
+    "submit", "include", "process", "review",
+})
+_BULLET_STOPWORDS = frozenset({
+    "the", "of", "a", "an", "to", "in", "for", "and", "or", "with",
+    "from", "on", "by", "as", "that", "this", "are", "is", "be", "all",
+})
 
 
 def _normalize_bullet(text: str) -> str:
     cleaned = _NOISE_TRIM_RE.sub("", text).strip()
     cleaned = re.sub(r"\s+", " ", cleaned)
     return cleaned
+
+
+def _is_real_bullet(item: str) -> bool:
+    """Reject section headings, form-fill labels, and certifications that
+    show up as bullet-shaped lines in PDFs."""
+    if not item or len(item) < 25 or len(item) > 280:
+        return False
+    low = item.lower()
+    # Form fields like "Manufacturer name – N/A" / "Catalog number: N/A".
+    if re.search(r"[–—\-:]\s*N/?A\s*$", item, re.IGNORECASE):
+        return False
+    if "n/a" == low or low.endswith(" n/a"):
+        return False
+    # Certification / admin scaffolding.
+    if any(p in low for p in _SUBMISSION_FILTERS):
+        return False
+    # Form-field labels like "ISSUED BY CODE 6. ADDRESS THE OFFER TO" /
+    # "ACKNOWLEDGEMENT OF AMENDMENTS AMENDMENT NO. DATE".
+    tokens = re.findall(r"[A-Za-z][A-Za-z\-/']*", item)
+    if len(tokens) < 5:
+        return False
+    allcaps = sum(1 for t in tokens if len(t) >= 2 and t.isupper())
+    if allcaps / len(tokens) > 0.35:
+        return False
+    has_stop = any(t.lower() in _BULLET_STOPWORDS for t in tokens)
+    has_action = any(t.lower() in _BULLET_ACTION_TOKENS for t in tokens)
+    # Require natural English structure: either a clear action verb, or
+    # enough stop-word glue that this looks like a sentence (not a header).
+    if not (has_action or has_stop):
+        return False
+    # Reject phrases where every alphabetic token is title-cased — those are
+    # almost always section subheadings ("Flexible and Adaptive").
+    title_cased = sum(1 for t in tokens if t[0].isupper() and t[1:].islower())
+    if title_cased / max(len(tokens), 1) > 0.75 and not has_action:
+        return False
+    return True
 
 
 def _extract_bulleted_items(text: str) -> list[str]:
@@ -268,7 +510,7 @@ def _extract_bulleted_items(text: str) -> list[str]:
         if not m:
             continue
         cleaned = _normalize_bullet(m.group(1))
-        if cleaned and cleaned not in items:
+        if cleaned and cleaned not in items and _is_real_bullet(cleaned):
             items.append(cleaned)
     return items
 
@@ -306,7 +548,7 @@ def _extract_section_bullets(text: str) -> list[str]:
                 captured.append(_normalize_bullet(stripped))
             if len(captured) >= 8:
                 break
-        captured = [c for c in captured if c]
+        captured = [c for c in captured if c and _is_real_bullet(c)]
         if len(captured) >= 2:
             return captured
     return []
@@ -314,14 +556,24 @@ def _extract_section_bullets(text: str) -> list[str]:
 
 def _extract_obligation_sentences(text: str) -> list[str]:
     """Pull 'contractor shall ...' / 'will provide ...' style sentences,
-    skipping anything about how to submit the proposal itself."""
+    skipping anything about how to submit the proposal itself or RFI
+    questionnaire prompts asking respondents to fill in answers."""
     found: list[str] = []
+    questionnaire_markers = (
+        " if yes", " if no", "if \"yes\"", "if \"no\"", "draft pws",
+        "encompass the requirement", "more accurate proposal",
+        "technical and functional comments", "please provide your",
+    )
     for para in re.split(r"\n\s*\n", text or ""):
         for s in _split_sentences(para):
             low = s.lower()
             if not any(v in low for v in _OBLIGATION_VERBS):
                 continue
             if any(f in low for f in _SUBMISSION_FILTERS):
+                continue
+            if any(q in low for q in questionnaire_markers):
+                continue
+            if "?" in s:  # questionnaire prompt, not a deliverable
                 continue
             cleaned = _normalize_bullet(s)
             if 20 <= len(cleaned) <= 280 and cleaned not in found:
@@ -455,6 +707,21 @@ def _extract_inline_lists(text: str) -> list[str]:
         # Need at least two commas to look like a real list.
         if chunk.count(",") < 2:
             continue
+        # Skip RFI questionnaire prompts and form-fill instructions.
+        low_chunk = chunk.lower()
+        if any(q in low_chunk for q in (
+            "draft pws", "encompass the requirement", "more accurate proposal",
+            "technical and functional comments", "please provide your",
+            "if yes", "if no", "if \"yes\"", "if \"no\"",
+        )):
+            continue
+        # Skip "such as ... but not limited to ..." example lists — those are
+        # parenthetical examples, not project deliverables.
+        if "but not limited to" in low_chunk or "such as" in match.group(0).lower():
+            continue
+        # Question marks anywhere in the chunk = questionnaire content.
+        if "?" in chunk:
+            continue
         # Split on commas only (preserving "X and Y" as one chunk).
         parts = chunk.split(",")
         verb = match.group(0).split()[0].lower()
@@ -485,7 +752,7 @@ def _extract_inline_lists(text: str) -> list[str]:
                 continue
             # Drop nested fragments like "including X" / "etc" / "every other item".
             low = p.lower()
-            if low.startswith(("including ", "etc", "every other ")):
+            if low.startswith(("including ", "etc", "every other ", "but not limited to", "limited to")):
                 continue
             # Drop items starting with a bare verb that would conflict with
             # an action-verb prefix (e.g. "Support check their eligibility").

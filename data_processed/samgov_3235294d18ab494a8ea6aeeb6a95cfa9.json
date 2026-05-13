@@ -3,11 +3,12 @@
   "external_id": "3235294d18ab494a8ea6aeeb6a95cfa9",
   "title": "Census Bureau Transformation & Application Modernization (CenTAM) - Draft Solicitation Sections for Industry Review and Feedback",
   "name": "Census Bureau Transformation & Application Modernization (CenTAM) - Draft Solicitation Sections for Industry Review and Feedback",
-  "statement_of_work": "",
+  "statement_of_work": "The 2030 Census Integration and Implementation Plan (IIP) describes the framework for integrating Information Technology (IT) solutions that comprise the 2030 Census systems architecture. The IIP provides an actionable framework for the functional integration of IT activities and operational milestones.",
   "deliverables": [
-    "Execute scope of work described in the Census Bureau Transformation & Application Modernization (CenTAM) - Draft Solicitation Sections for Industry Review and Feedback solicitation",
-    "Deliver milestones, status reporting, and acceptance documentation",
-    "Provide final handoff and post-deployment support per RFP terms"
+    "Establishing an Integration Framework: The IIP outlines a framework and methods for",
+    "Coordinating Integration Issues: Driving early coordination and r esolution of integration",
+    "Providing a Comprehensive Overview: Offering a comprehensive overview of the 2030",
+    "Promoting a Collaborative Approach: Encouraging a collaborative approach to minimize"
   ],
   "location_level": "state",
   "location": "California",
@@ -17,7 +18,7 @@
     "California"
   ],
   "dept": "COMMERCE, DEPARTMENT OF.US CENSUS BUREAU",
-  "description": "",
+  "description": "The 2030 Census Integration and Implementation Plan (IIP) describes the framework for\nintegrating Information Technology (IT) solutions that comprise the 2030 Census systems\narchitecture. The IIP provides an actionable framework for the functional integration of IT\nactivities and operational milestones. It helps realize quality-driven designs, solutions, and\nmethods that fulfill the business goals of achieving a cost -efficient decennial census through\nmodern technology. The 2030 Census IIP also governs the implementation of the operations\noutlined in the 2030 Census Operational Plan. The 2030 Census IIP document has an accompanying IIP Milestone Dashboard developed for\neach decennial census effort (2026 Census Test (26CT), 2028 Dress Rehearsal (28DR), and 2030\nCensus). The IIP Milestone Dashboard is a living artifact refined and adjusted to minimize risk\nand maximize efficiency while meeting the required timelines of the 2030 Census.\n1.1 Purpose and Scope\nThe purpose of the 2030 Census IIP document is to outline the systematic approach for\nintegrating various components, solutions, and processes within the 2030 Census. The 2030\nCensus is a complex program with interdependent relationships among numerous systems,\nsolution providers, and stakeholders. This document outlines the integration process across all parties involved, aiming to facilitate\neffective communication, resource allocation, and timely execution. The specific objectives of\nthe IIP include:\n• Establishing an Integration Framework: The IIP outlines a framework and methods for\nactively monitoring and communicating progress among stakeholders, solution\nproviders, systems, and other relevant parties.\n• Coordinating Integration Issues: Driving early coordination and r esolution of integration\nissues to ensure the timely alignment of stakeholders, solution providers, and\nintegrators for testing and deployment.\n• Providing a Comprehensive Overview: Offering a comprehensive overview of the 2030\nCensus, aiding in identifying integration points and dependencies.\n• Promoting a Collaborative Approach: Encouraging a collaborative approach to minimize\nrisks, optimize efficiency, and adhere to the mandated timelines of the 203 0 Census.",
   "published_date": "2026-04-20",
   "due_date": "2026-05-11T17:00:00-04:00",
   "contact_name": "Bryan Shearer",
