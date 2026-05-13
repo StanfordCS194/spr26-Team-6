@@ -1,6 +1,7 @@
 "use client";
 
 import type { ListCardLayout } from "@/lib/analytics";
+import { shortenAgencyName } from "@/lib/formatAgency";
 import type { Rfp } from "@/lib/types";
 import { ScoreRing } from "./ScoreRing";
 
@@ -117,7 +118,6 @@ function HeadlineFirstCard({
   const { day, month } = dueParts(rfp.dueDate);
   const daysLeft = daysUntilDeadline(rfp.dueDate);
   const deadlineStatus = getDeadlineStatus(daysLeft);
-  const subtitle = rfp.tags[0] ?? rfp.agency;
 
   return (
     <button
@@ -141,9 +141,19 @@ function HeadlineFirstCard({
         <p className="line-clamp-2 text-sm font-semibold leading-snug text-govbid-text md:text-base">
           {rfp.title}
         </p>
-        <p className="mt-1 line-clamp-1 text-xs font-medium text-govbid-text-muted">{subtitle}</p>
+        <p
+          className="mt-1 line-clamp-1 text-xs font-medium text-govbid-text-muted"
+          title={rfp.tags[0] ?? rfp.agency}
+        >
+          {rfp.tags[0] ?? shortenAgencyName(rfp.agency, 52)}
+        </p>
         {rfp.tags[0] ? (
-          <p className="mt-0.5 line-clamp-1 text-[11px] text-govbid-text-muted">{rfp.agency}</p>
+          <p
+            className="mt-0.5 line-clamp-1 text-[11px] text-govbid-text-muted"
+            title={rfp.agency}
+          >
+            {shortenAgencyName(rfp.agency, 48)}
+          </p>
         ) : null}
         <div className="mt-2 flex flex-wrap gap-1">
           {rfp.tags?.map((tag) => (
@@ -218,7 +228,9 @@ function ScoreFirstCard({ rfp, active, onSelect }: Omit<Props, "layout">) {
         <p className="line-clamp-2 text-sm font-semibold leading-snug text-govbid-text md:text-base">
           {rfp.title}
         </p>
-        <p className="mt-1 line-clamp-1 text-xs font-medium text-govbid-text">{rfp.agency}</p>
+        <p className="mt-1 line-clamp-1 text-xs font-medium text-govbid-text" title={rfp.agency}>
+          {shortenAgencyName(rfp.agency, 52)}
+        </p>
         <p className="mt-1 text-xs font-semibold text-govbid-primary">{rfp.contract}</p>
         <div className="mt-2 flex flex-wrap gap-1">
           {rfp.tags.slice(0, 3).map((t) => (

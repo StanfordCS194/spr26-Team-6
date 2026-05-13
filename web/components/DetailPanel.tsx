@@ -10,6 +10,7 @@ import type { Rfp } from "@/lib/types";
 import { SourceDocumentEmbed } from "./SourceDocumentEmbed";
 import { TagBubble } from "./RfpCard";
 import { trackABTestEvent } from "@/app/posthog-provider";
+import { shortenAgencyName } from "@/lib/formatAgency";
 
 const RfpPdfViewer = dynamic(
   () => import("./RfpPdfViewer").then((m) => m.RfpPdfViewer),
@@ -285,17 +286,25 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
 
       <div className="min-h-0 flex-1 overflow-y-auto p-4 lg:p-5">
         {tab === "overview" && (
-          <div className="mx-auto max-w-2xl space-y-4">
-            <div>
-              <p className="text-xs font-medium uppercase tracking-wide text-govbid-text-muted">
-                {rfp.agency}
-              </p>
-              <h2 className="rfp-title mt-1 text-lg font-bold leading-snug text-govbid-text lg:text-xl">
+          <div className="mx-auto w-full max-w-5xl space-y-5">
+            <div className="space-y-3">
+              <h2 className="rfp-title text-xl font-bold leading-snug text-govbid-text lg:text-2xl">
                 {rfp.title}
               </h2>
-              <p className="rfp-overview mt-2 text-sm leading-relaxed text-govbid-text-muted">
-                {rfp.description}
+              <p
+                className="text-xs font-medium uppercase tracking-wide text-govbid-text-muted line-clamp-2"
+                title={rfp.agency}
+              >
+                {shortenAgencyName(rfp.agency, 96)}
               </p>
+              <div className="rounded-xl border border-govbid-border/80 bg-govbid-elevated/60 p-4 lg:p-5">
+                <p className="text-xs font-semibold uppercase tracking-wide text-govbid-text-muted">
+                  Overview
+                </p>
+                <p className="rfp-overview mt-2 text-base leading-relaxed text-govbid-text lg:text-[1.05rem] lg:leading-7">
+                  {rfp.description}
+                </p>
+              </div>
             </div>
             <dl className="rfp-location-date grid grid-cols-2 gap-3 text-sm">
               <div>
@@ -361,7 +370,7 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
         )}
 
         {tab === "ai" && (
-          <div className="prose prose-sm prose-slate mx-auto max-w-2xl text-govbid-text">
+          <div className="prose prose-sm prose-slate mx-auto max-w-5xl text-govbid-text">
             <ReactMarkdown>{rfp.aiAnalysisMarkdown}</ReactMarkdown>
           </div>
         )}

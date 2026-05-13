@@ -9,6 +9,7 @@ import type { Rfp } from "@/lib/types";
 import { SourceDocumentEmbed } from "./SourceDocumentEmbed";
 import { TagBubble } from "./RfpCard";
 import { trackABTestEvent } from "@/app/posthog-provider";
+import { shortenAgencyName } from "@/lib/formatAgency";
 
 const RfpPdfViewer = dynamic(
   () => import("./RfpPdfViewer").then((m) => m.RfpPdfViewer),
@@ -256,8 +257,11 @@ function DetailPanelBodyB({ rfp }: { rfp: Rfp }) {
       <div className="sticky top-0 z-10 flex flex-col gap-2 border-b border-govbid-border bg-govbid-surface px-4 py-3 lg:px-5">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-govbid-primary">
-              {rfp.agency}
+            <p
+              className="text-[10px] font-semibold uppercase tracking-wider text-govbid-primary line-clamp-2"
+              title={rfp.agency}
+            >
+              {shortenAgencyName(rfp.agency, 90)}
             </p>
             <h2 className="mt-0.5 truncate text-base font-bold leading-tight text-govbid-text">
               {rfp.title}

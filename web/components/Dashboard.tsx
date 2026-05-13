@@ -43,7 +43,8 @@ export function Dashboard() {
         <div className="grid min-h-0 min-w-0 flex-1 grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)]">
           <RfpSidebar />
 
-          <div className="grid min-h-0 min-w-0 grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+          {/* Slightly wider detail column (user testing: more room for overview copy) */}
+          <div className="grid min-h-0 min-w-0 grid-cols-1 lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)]">
             <div className="flex min-h-0 min-w-0 flex-col">
               <RfpFeed />
             </div>
