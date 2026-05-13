@@ -1,12 +1,18 @@
 "use client";
 
 import { DashboardProvider } from "@/context/DashboardContext";
+import { ABTestProvider } from "@/context/ABTestContext";
+import { PostHogProvider } from "./posthog-provider";
 import type { ReactNode } from "react";
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
-    <DashboardProvider>
-      <div className="flex min-h-dvh w-full min-w-0 flex-1 flex-col">{children}</div>
-    </DashboardProvider>
+    <PostHogProvider>
+      <ABTestProvider>
+        <DashboardProvider>
+          <div className="flex min-h-dvh w-full min-w-0 flex-1 flex-col">{children}</div>
+        </DashboardProvider>
+      </ABTestProvider>
+    </PostHogProvider>
   );
 }
