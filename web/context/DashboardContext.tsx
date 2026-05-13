@@ -21,6 +21,11 @@ import {
   mapRfpRow,
   profileToContractorUpdate,
 } from "@/lib/mappers";
+import {
+  captureEvent,
+  identifySessionUser,
+  resetPosthog,
+} from "@/lib/analytics";
 
 type RfpFilter = {
   tag?: string;
@@ -92,7 +97,12 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [walkthroughStep, setWalkthroughStep] = useState(0);
   const [rfpFilter, setRfpFilter] = useState<RfpFilter>({});
   const [toast, setToast] = useState<string | null>(null);
-  const [activeNav, setActiveNav] = useState<ActiveNav>("dashboard");
+  const [activeNav, setActiveNavState] = useState<ActiveNav>("dashboard");
+
+  const setActiveNav = useCallback((nav: ActiveNav) => {
+    captureEvent("main_nav_changed", { nav });
+    setActiveNavState(nav);
+  }, []);
 
   const showToast = useCallback((message: string) => {
     setToast(message);
@@ -178,6 +188,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
           rfpRows?.map((row) => mapRfpRow(row, cid, scoreRows ?? undefined)) ??
           [];
         setLoadedRfps(mapped);
+        identifySessionUser(userId, { contractor_id: cid });
       } catch (e) {
         const msg = e instanceof Error ? e.message : "Unexpected error";
         showToast(msg);
@@ -307,6 +318,9 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   }, [loadedRfps, selectedRfpId]);
 
   const selectRfp = useCallback((id: string | null) => {
+    if (id) {
+      captureEvent("rfp_selected", { rfp_id: id });
+    }
     setSelectedRfpId(id);
   }, []);
 
@@ -334,6 +348,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
           return;
         }
         setSavedRfpIds((prev) => prev.filter((x) => x !== id));
+        captureEvent("rfp_save_toggled", { rfp_id: id, now_saved: false });
       } else {
         const { error } = await supabase.from("saved_rfps").insert({
           contractor_id: contractorId,
@@ -344,6 +359,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
           return;
         }
         setSavedRfpIds((prev) => [...prev, id]);
+        captureEvent("rfp_save_toggled", { rfp_id: id, now_saved: true });
       }
     },
     [contractorId, savedRfpIds, showToast],
@@ -393,6 +409,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
 
       setProfileState(p);
       showToast("Profile saved.");
+      captureEvent("profile_saved", { contractor_id: contractorId });
     },
     [contractorId, showToast],
   );
@@ -426,6 +443,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const signOut = useCallback(async () => {
     const supabase = createClient();
     await supabase.auth.signOut();
+    resetPosthog();
     window.location.href = "/login";
   }, []);
 

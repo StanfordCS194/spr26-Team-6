@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { captureEvent } from "@/lib/analytics";
 
 type Mode = "signin" | "signup";
 
@@ -53,8 +54,13 @@ export default function LoginPage() {
           setEmail(trimmedEmail);
           setError(true);
           setMessage(formatAuthError(signErr));
+          captureEvent("auth_sign_in_fail", {
+            code: signErr.code ?? "unknown",
+            message: signErr.message,
+          });
           return;
         }
+        captureEvent("auth_sign_in_success", { mode: "signin" });
         router.push("/");
         router.refresh();
         return;
@@ -67,6 +73,10 @@ export default function LoginPage() {
       if (signUpErr) {
         setError(true);
         setMessage(formatAuthError(signUpErr));
+        captureEvent("auth_sign_up_fail", {
+          code: signUpErr.code ?? "unknown",
+          message: signUpErr.message,
+        });
         return;
       }
       if (data.user && !data.session) {
@@ -74,10 +84,14 @@ export default function LoginPage() {
         setMessage(
           "Account created. Check your email to confirm your address, then sign in.",
         );
+        captureEvent("auth_sign_up_pending_confirm", {
+          user_id: data.user.id,
+        });
         setMode("signin");
         setPassword("");
         return;
       }
+      captureEvent("auth_sign_up_success", { mode: "signup" });
       router.push("/");
       router.refresh();
     } catch (err) {
@@ -85,6 +99,10 @@ export default function LoginPage() {
       setMessage(
         err instanceof Error ? err.message : "Something went wrong.",
       );
+      captureEvent("auth_submit_exception", {
+        mode,
+        message: err instanceof Error ? err.message : "unknown",
+      });
     } finally {
       setBusy(false);
     }
