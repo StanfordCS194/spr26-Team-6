@@ -3,7 +3,6 @@
 import { PostHogProvider } from "@/components/PostHogProvider";
 import { DashboardProvider } from "@/context/DashboardContext";
 import { ABTestProvider } from "@/context/ABTestContext";
-import { PostHogProvider } from "./posthog-provider";
 import type { ReactNode } from "react";
 
 export function Providers({ children }: { children: ReactNode }) {
