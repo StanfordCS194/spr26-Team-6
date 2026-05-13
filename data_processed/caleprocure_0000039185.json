@@ -3,19 +3,19 @@
   "external_id": "0000039185",
   "title": "IFB A251017444 OneStream Implementation Services",
   "name": "IFB A251017444 OneStream Implementation Services",
-  "statement_of_work": "The California Governor¿s Office of Emergency Services, requires implementation and configuration services for the Software as a Service (SaaS) platform, OneStream. The system will support budget development, financial tracking, reporting, position control, grant management, and compliance oversight. The solution will replace manual processes, reduce reliance on spreadsheets, and provide a controlled, auditable financial management environment.",
+  "statement_of_work": "The California Governor¿s Office of Emergency Services, requires implementation and configuration services for the Software as a Service (SaaS) platform, OneStream. The system will support budget development, financial tracking, reporting, position control, grant management, and compliance oversight.",
   "deliverables": [
-    "Execute scope of work described in the IFB A251017444 OneStream Implementation Services solicitation",
-    "Deliver milestones, status reporting, and acceptance documentation",
-    "Provide final handoff and post-deployment support per RFP terms"
+    "Support budget development",
+    "Support financial tracking",
+    "Support compliance oversight"
   ],
   "location_level": "state",
   "location": "California",
   "tags": [
     "Environment",
     "Finance",
-    "System Development",
     "SaaS",
+    "System Development",
     "California"
   ],
   "dept": "California Governor's Office of Emergency Services (Cal OES)",

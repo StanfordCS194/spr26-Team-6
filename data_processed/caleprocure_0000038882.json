@@ -3,7 +3,7 @@
   "external_id": "0000038882",
   "title": "S25073069 - Device42 On-Prem Software Licensing Agreement",
   "name": "S25073069 - Device42 On-Prem Software Licensing Agreement",
-  "statement_of_work": "California State Parks seeks to procure Device42 software licenses. Please refer to the attached Event package for bid submission instructions.",
+  "statement_of_work": "California State Parks seeks to procure Device42 software licenses.",
   "deliverables": [
     "Execute scope of work described in the S25073069 - Device42 On-Prem Software Licensing Agreement solicitation",
     "Deliver milestones, status reporting, and acceptance documentation",
@@ -12,8 +12,8 @@
   "location_level": "state",
   "location": "California",
   "tags": [
-    "Software",
     "Procurement",
+    "Software",
     "California"
   ],
   "dept": "California Department of Parks and Recreation",

@@ -5,17 +5,17 @@
   "name": "Water Technical Access Portal (WaterTAP)",
   "statement_of_work": "On behalf of the California State Water Resources Control Board (SWRCB), the California Department of Technology seeks proposals from qualified bidders to provide a cloud-based SaaS solution for the Water Technical Access Portal (WaterTAP). These services will include development, design, and implementation of the WaterTAP solution, software licensing and maintenance, and optional post-implementation services.",
   "deliverables": [
-    "Execute scope of work described in the Water Technical Access Portal (WaterTAP) solicitation",
-    "Deliver milestones, status reporting, and acceptance documentation",
-    "Provide final handoff and post-deployment support per RFP terms"
+    "Deliver implementation of the WaterTAP solution",
+    "Deliver software licensing and maintenance",
+    "Deliver optional post-implementation services"
   ],
   "location_level": "state",
   "location": "California",
   "tags": [
-    "Environment",
     "Cloud",
+    "Environment",
     "Water",
-    "System Development",
+    "SaaS",
     "California"
   ],
   "dept": "California State Water Resources Control Board",
