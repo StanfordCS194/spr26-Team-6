@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  startTransition,
-  useEffect,
-  useState,
-  type Dispatch,
-  type SetStateAction,
-} from "react";
-import { useDashboard } from "@/context/DashboardContext";
+import { useDashboard, type RfpFilter } from "@/context/DashboardContext";
 
 function FunnelIcon() {
   return (
@@ -38,58 +31,25 @@ function XIcon() {
 export function RfpSidebar() {
   const { searchQuery, setSearchQuery, rfpFilter, setRfpFilter, loadedRfps } =
     useDashboard();
-  const [draftFilter, setDraftFilter] = useState({
-    tag: rfpFilter.tag ?? "",
-    dateFrom: rfpFilter.dateFrom ?? "",
-    dateTo: rfpFilter.dateTo ?? "",
-    priceMin: rfpFilter.priceMin?.toString() ?? "",
-    priceMax: rfpFilter.priceMax?.toString() ?? "",
-  });
 
-  // Track active filter count
-  const activeFilterCount = Object.values(rfpFilter).filter(v => v !== undefined && v !== "").length;
-
-  useEffect(() => {
-    startTransition(() => {
-      setDraftFilter({
-        tag: rfpFilter.tag ?? "",
-        dateFrom: rfpFilter.dateFrom ?? "",
-        dateTo: rfpFilter.dateTo ?? "",
-        priceMin: rfpFilter.priceMin?.toString() ?? "",
-        priceMax: rfpFilter.priceMax?.toString() ?? "",
-      });
-    });
-  }, [rfpFilter]);
+  const activeFilterCount = Object.values(rfpFilter).filter(
+    (v) => v !== undefined && v !== "",
+  ).length;
 
   const allTags = Array.from(
     new Set(loadedRfps.flatMap((rfp) => rfp.tags)),
   ).sort();
 
-  const applyFilter = () => {
-    setRfpFilter({
-      tag: draftFilter.tag || undefined,
-      dateFrom: draftFilter.dateFrom || undefined,
-      dateTo: draftFilter.dateTo || undefined,
-      priceMin: draftFilter.priceMin ? Number(draftFilter.priceMin) : undefined,
-      priceMax: draftFilter.priceMax ? Number(draftFilter.priceMax) : undefined,
-    });
+  const mergeRfpFilter = (patch: Partial<RfpFilter>) => {
+    setRfpFilter({ ...rfpFilter, ...patch });
   };
 
   const clearFilter = () => {
-    setDraftFilter({ tag: "", dateFrom: "", dateTo: "", priceMin: "", priceMax: "" });
     setRfpFilter({});
   };
 
-  const removeFilter = (key: keyof typeof draftFilter) => {
-    const updated = { ...draftFilter, [key]: "" };
-    setDraftFilter(updated);
-    setRfpFilter({
-      tag: updated.tag || undefined,
-      dateFrom: updated.dateFrom || undefined,
-      dateTo: updated.dateTo || undefined,
-      priceMin: updated.priceMin ? Number(updated.priceMin) : undefined,
-      priceMax: updated.priceMax ? Number(updated.priceMax) : undefined,
-    });
+  const removeFilter = (key: keyof RfpFilter) => {
+    setRfpFilter({ ...rfpFilter, [key]: undefined });
   };
 
   const inputClass =
@@ -116,10 +76,9 @@ export function RfpSidebar() {
           <SearchCardBody
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
-            draftFilter={draftFilter}
-            setDraftFilter={setDraftFilter}
+            rfpFilter={rfpFilter}
             allTags={allTags}
-            applyFilter={applyFilter}
+            mergeRfpFilter={mergeRfpFilter}
             clearFilter={clearFilter}
             removeFilter={removeFilter}
             activeFilterCount={activeFilterCount}
@@ -141,10 +100,9 @@ export function RfpSidebar() {
         <SearchCardBody
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-          draftFilter={draftFilter}
-          setDraftFilter={setDraftFilter}
+          rfpFilter={rfpFilter}
           allTags={allTags}
-          applyFilter={applyFilter}
+          mergeRfpFilter={mergeRfpFilter}
           clearFilter={clearFilter}
           removeFilter={removeFilter}
           activeFilterCount={activeFilterCount}
@@ -158,10 +116,9 @@ export function RfpSidebar() {
 function SearchCardBody({
   searchQuery,
   setSearchQuery,
-  draftFilter,
-  setDraftFilter,
+  rfpFilter,
   allTags,
-  applyFilter,
+  mergeRfpFilter,
   clearFilter,
   removeFilter,
   activeFilterCount,
@@ -169,26 +126,11 @@ function SearchCardBody({
 }: {
   searchQuery: string;
   setSearchQuery: (q: string) => void;
-  draftFilter: {
-    tag: string;
-    dateFrom: string;
-    dateTo: string;
-    priceMin: string;
-    priceMax: string;
-  };
-  setDraftFilter: Dispatch<
-    SetStateAction<{
-      tag: string;
-      dateFrom: string;
-      dateTo: string;
-      priceMin: string;
-      priceMax: string;
-    }>
-  >;
+  rfpFilter: RfpFilter;
   allTags: string[];
-  applyFilter: () => void;
+  mergeRfpFilter: (patch: Partial<RfpFilter>) => void;
   clearFilter: () => void;
-  removeFilter: (key: keyof typeof draftFilter) => void;
+  removeFilter: (key: keyof RfpFilter) => void;
   activeFilterCount: number;
   inputClass: string;
 }) {
@@ -215,22 +157,24 @@ function SearchCardBody({
         <div className="space-y-2 border-t border-govbid-border pt-3">
           <p className="text-xs font-medium text-govbid-text-muted">Active filters:</p>
           <div className="flex flex-wrap gap-2">
-            {draftFilter.tag && (
+            {rfpFilter.tag && (
               <div className="inline-flex items-center gap-2 rounded-full bg-govbid-primary-muted px-3 py-1 text-sm">
-                <span className="text-govbid-text">{draftFilter.tag}</span>
+                <span className="text-govbid-text">{rfpFilter.tag}</span>
                 <button
+                  type="button"
                   onClick={() => removeFilter("tag")}
                   className="text-govbid-text-muted hover:text-govbid-text"
-                  aria-label={`Remove ${draftFilter.tag} filter`}
+                  aria-label={`Remove ${rfpFilter.tag} filter`}
                 >
                   <XIcon />
                 </button>
               </div>
             )}
-            {draftFilter.dateFrom && (
+            {rfpFilter.dateFrom && (
               <div className="inline-flex items-center gap-2 rounded-full bg-govbid-primary-muted px-3 py-1 text-sm">
-                <span className="text-govbid-text">From {draftFilter.dateFrom}</span>
+                <span className="text-govbid-text">From {rfpFilter.dateFrom}</span>
                 <button
+                  type="button"
                   onClick={() => removeFilter("dateFrom")}
                   className="text-govbid-text-muted hover:text-govbid-text"
                   aria-label="Remove start date filter"
@@ -239,10 +183,11 @@ function SearchCardBody({
                 </button>
               </div>
             )}
-            {draftFilter.dateTo && (
+            {rfpFilter.dateTo && (
               <div className="inline-flex items-center gap-2 rounded-full bg-govbid-primary-muted px-3 py-1 text-sm">
-                <span className="text-govbid-text">To {draftFilter.dateTo}</span>
+                <span className="text-govbid-text">To {rfpFilter.dateTo}</span>
                 <button
+                  type="button"
                   onClick={() => removeFilter("dateTo")}
                   className="text-govbid-text-muted hover:text-govbid-text"
                   aria-label="Remove end date filter"
@@ -251,10 +196,11 @@ function SearchCardBody({
                 </button>
               </div>
             )}
-            {draftFilter.priceMin && (
+            {typeof rfpFilter.priceMin === "number" && (
               <div className="inline-flex items-center gap-2 rounded-full bg-govbid-primary-muted px-3 py-1 text-sm">
-                <span className="text-govbid-text">Min ${draftFilter.priceMin}</span>
+                <span className="text-govbid-text">Min ${rfpFilter.priceMin}</span>
                 <button
+                  type="button"
                   onClick={() => removeFilter("priceMin")}
                   className="text-govbid-text-muted hover:text-govbid-text"
                   aria-label="Remove minimum price filter"
@@ -263,10 +209,11 @@ function SearchCardBody({
                 </button>
               </div>
             )}
-            {draftFilter.priceMax && (
+            {typeof rfpFilter.priceMax === "number" && (
               <div className="inline-flex items-center gap-2 rounded-full bg-govbid-primary-muted px-3 py-1 text-sm">
-                <span className="text-govbid-text">Max ${draftFilter.priceMax}</span>
+                <span className="text-govbid-text">Max ${rfpFilter.priceMax}</span>
                 <button
+                  type="button"
                   onClick={() => removeFilter("priceMax")}
                   className="text-govbid-text-muted hover:text-govbid-text"
                   aria-label="Remove maximum price filter"
@@ -288,9 +235,9 @@ function SearchCardBody({
           Topic tag
           <select
             id="filter-button"
-            value={draftFilter.tag}
+            value={rfpFilter.tag ?? ""}
             onChange={(event) =>
-              setDraftFilter((prev) => ({ ...prev, tag: event.target.value }))
+              mergeRfpFilter({ tag: event.target.value || undefined })
             }
             className={inputClass}
           >
@@ -311,12 +258,9 @@ function SearchCardBody({
               From
               <input
                 type="date"
-                value={draftFilter.dateFrom}
+                value={rfpFilter.dateFrom ?? ""}
                 onChange={(event) =>
-                  setDraftFilter((prev) => ({
-                    ...prev,
-                    dateFrom: event.target.value,
-                  }))
+                  mergeRfpFilter({ dateFrom: event.target.value || undefined })
                 }
                 className={inputClass}
               />
@@ -325,12 +269,9 @@ function SearchCardBody({
               To
               <input
                 type="date"
-                value={draftFilter.dateTo}
+                value={rfpFilter.dateTo ?? ""}
                 onChange={(event) =>
-                  setDraftFilter((prev) => ({
-                    ...prev,
-                    dateTo: event.target.value,
-                  }))
+                  mergeRfpFilter({ dateTo: event.target.value || undefined })
                 }
                 className={inputClass}
               />
@@ -347,13 +288,18 @@ function SearchCardBody({
               <input
                 type="number"
                 min={0}
-                value={draftFilter.priceMin}
-                onChange={(event) =>
-                  setDraftFilter((prev) => ({
-                    ...prev,
-                    priceMin: event.target.value,
-                  }))
-                }
+                value={rfpFilter.priceMin ?? ""}
+                onChange={(event) => {
+                  const raw = event.target.value;
+                  if (raw === "") {
+                    mergeRfpFilter({ priceMin: undefined });
+                    return;
+                  }
+                  const n = Number(raw);
+                  mergeRfpFilter({
+                    priceMin: Number.isFinite(n) ? n : undefined,
+                  });
+                }}
                 placeholder="0"
                 className={inputClass}
               />
@@ -363,13 +309,18 @@ function SearchCardBody({
               <input
                 type="number"
                 min={0}
-                value={draftFilter.priceMax}
-                onChange={(event) =>
-                  setDraftFilter((prev) => ({
-                    ...prev,
-                    priceMax: event.target.value,
-                  }))
-                }
+                value={rfpFilter.priceMax ?? ""}
+                onChange={(event) => {
+                  const raw = event.target.value;
+                  if (raw === "") {
+                    mergeRfpFilter({ priceMax: undefined });
+                    return;
+                  }
+                  const n = Number(raw);
+                  mergeRfpFilter({
+                    priceMax: Number.isFinite(n) ? n : undefined,
+                  });
+                }}
                 placeholder="Any"
                 className={inputClass}
               />
@@ -378,25 +329,18 @@ function SearchCardBody({
         </div>
       </div>
 
-      {/* Actions */}
-      <div className="flex flex-wrap gap-2 border-t border-govbid-border pt-3">
-        <button
-          type="button"
-          onClick={applyFilter}
-          className="govbid-btn-primary rounded-lg px-4 py-2 text-sm flex-1"
-        >
-          Apply filters
-        </button>
-        {activeFilterCount > 0 && (
+      {/* Clear */}
+      {activeFilterCount > 0 && (
+        <div className="border-t border-govbid-border pt-3">
           <button
             type="button"
             onClick={clearFilter}
-            className="rounded-lg border border-govbid-border bg-govbid-surface px-4 py-2 text-sm font-semibold text-govbid-text transition hover:bg-govbid-primary-muted/40"
+            className="w-full rounded-lg border border-govbid-border bg-govbid-surface px-4 py-2 text-sm font-semibold text-govbid-text transition hover:bg-govbid-primary-muted/40"
           >
-            Clear all
+            Clear all filters
           </button>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

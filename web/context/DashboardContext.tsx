@@ -27,7 +27,7 @@ import {
   resetPosthog,
 } from "@/lib/analytics";
 
-type RfpFilter = {
+export type RfpFilter = {
   tag?: string;
   dateFrom?: string;
   dateTo?: string;
