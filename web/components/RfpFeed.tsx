@@ -35,13 +35,12 @@ export function RfpFeed() {
     filteredRfps,
     searchQuery,
     rfpFilter,
+    isSaved,
+    toggleSaveRfp,
   } = useDashboard();
 
-  const [favorites, setFavorites] = useDashboard().isFavorited ? [new Set<string>()] : [new Set<string>()];
-
   const handleFavoriteToggle = (id: string) => {
-    // This would be stored in state/database in a real app
-    console.log("[v0] Toggled favorite for RFP:", id);
+    void toggleSaveRfp(id);
   };
 
   if (activeNav === "history") {
@@ -64,7 +63,7 @@ export function RfpFeed() {
           layout={listLayout}
           active={selectedRfpId === rfp.id}
           onSelect={() => selectRfp(rfp.id)}
-          isFavorited={false}
+          isFavorited={isSaved(rfp.id)}
           onFavoriteToggle={handleFavoriteToggle}
         />
       ))}
