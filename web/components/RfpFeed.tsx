@@ -37,6 +37,13 @@ export function RfpFeed() {
     rfpFilter,
   } = useDashboard();
 
+  const [favorites, setFavorites] = useDashboard().isFavorited ? [new Set<string>()] : [new Set<string>()];
+
+  const handleFavoriteToggle = (id: string) => {
+    // This would be stored in state/database in a real app
+    console.log("[v0] Toggled favorite for RFP:", id);
+  };
+
   if (activeNav === "history") {
     return (
       <div className="flex min-h-[200px] flex-1 flex-col items-center justify-center gap-2 bg-govbid-surface px-6 py-12 text-center">
@@ -57,6 +64,8 @@ export function RfpFeed() {
           layout={listLayout}
           active={selectedRfpId === rfp.id}
           onSelect={() => selectRfp(rfp.id)}
+          isFavorited={false}
+          onFavoriteToggle={handleFavoriteToggle}
         />
       ))}
       {feedRfps.length === 0 && (

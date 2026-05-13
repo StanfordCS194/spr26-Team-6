@@ -47,6 +47,8 @@ type Props = {
   active: boolean;
   onSelect: () => void;
   layout: ListCardLayout;
+  isFavorited?: boolean;
+  onFavoriteToggle?: (id: string) => void;
 };
 
 function dueParts(iso: string) {
@@ -55,6 +57,21 @@ function dueParts(iso: string) {
     day: d.getDate(),
     month: d.toLocaleString("en-US", { month: "long" }),
   };
+}
+
+function daysUntilDeadline(iso: string): number {
+  const deadline = new Date(`${iso}T23:59:59`);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const diff = deadline.getTime() - today.getTime();
+  return Math.ceil(diff / (1000 * 60 * 60 * 24));
+}
+
+function getDeadlineStatus(days: number): { text: string; color: string; bgColor: string } {
+  if (days <= 0) return { text: "Expired", color: "text-red-700", bgColor: "bg-red-50 border-red-200" };
+  if (days <= 3) return { text: `${days} day${days !== 1 ? "s" : ""} left`, color: "text-red-700", bgColor: "bg-red-50 border-red-200" };
+  if (days <= 7) return { text: `${days} day${days !== 1 ? "s" : ""} left`, color: "text-yellow-700", bgColor: "bg-yellow-50 border-yellow-200" };
+  return { text: `${days} day${days !== 1 ? "s" : ""} left`, color: "text-govbid-text-muted", bgColor: "bg-govbid-primary-muted" };
 }
 
 function PinIcon() {
@@ -75,12 +92,31 @@ function ClockIcon() {
   );
 }
 
+function StarIcon({ filled }: { filled?: boolean }) {
+  if (filled) {
+    return (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+      </svg>
+    );
+  }
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+    </svg>
+  );
+}
+
 function HeadlineFirstCard({
   rfp,
   active,
   onSelect,
+  isFavorited,
+  onFavoriteToggle,
 }: Omit<Props, "layout">) {
   const { day, month } = dueParts(rfp.dueDate);
+  const daysLeft = daysUntilDeadline(rfp.dueDate);
+  const deadlineStatus = getDeadlineStatus(daysLeft);
   const subtitle = rfp.tags[0] ?? rfp.agency;
 
   return (
@@ -96,6 +132,9 @@ function HeadlineFirstCard({
       <div className="flex shrink-0 flex-col items-center border-r border-govbid-border/80 pr-4 text-center md:pr-5">
         <span className="text-2xl font-bold leading-none text-govbid-text md:text-3xl">{day}</span>
         <span className="mt-1 text-xs font-medium text-govbid-text-muted">{month}</span>
+        <span className={`mt-2 inline-block rounded-md border px-2 py-1 text-xs font-semibold ${deadlineStatus.bgColor} ${deadlineStatus.color}`}>
+          {deadlineStatus.text}
+        </span>
       </div>
 
       <div className="min-w-0 flex-1">
@@ -123,11 +162,31 @@ function HeadlineFirstCard({
         </div>
       </div>
 
-      <div className="flex shrink-0 flex-col items-end justify-start gap-1">
-        <span className="text-[10px] font-semibold uppercase tracking-wide text-govbid-text-muted">
-          Match
-        </span>
-        <ScoreRing score={rfp.score} size={36} stroke={2.5} />
+      <div className="flex shrink-0 flex-col items-end justify-between gap-1">
+        {onFavoriteToggle && (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onFavoriteToggle(rfp.id);
+            }}
+            className={`rounded p-1 transition ${
+              isFavorited
+                ? "text-yellow-500 hover:text-yellow-600"
+                : "text-govbid-text-muted hover:text-yellow-400"
+            }`}
+            aria-label={isFavorited ? "Remove from favorites" : "Add to favorites"}
+            title={isFavorited ? "Remove from favorites" : "Add to favorites"}
+          >
+            <StarIcon filled={isFavorited} />
+          </button>
+        )}
+        <div className="flex flex-col items-end gap-1">
+          <span className="text-[10px] font-semibold uppercase tracking-wide text-govbid-text-muted">
+            Match
+          </span>
+          <ScoreRing score={rfp.score} size={36} stroke={2.5} />
+        </div>
       </div>
     </button>
   );
@@ -135,6 +194,8 @@ function HeadlineFirstCard({
 
 function ScoreFirstCard({ rfp, active, onSelect }: Omit<Props, "layout">) {
   const { day, month } = dueParts(rfp.dueDate);
+  const daysLeft = daysUntilDeadline(rfp.dueDate);
+  const deadlineStatus = getDeadlineStatus(daysLeft);
 
   return (
     <button
@@ -169,7 +230,9 @@ function ScoreFirstCard({ rfp, active, onSelect }: Omit<Props, "layout">) {
       <div className="flex shrink-0 flex-col items-center justify-center border-l border-govbid-border/80 pl-3 text-center md:pl-4">
         <span className="text-xl font-bold leading-none text-govbid-text md:text-2xl">{day}</span>
         <span className="mt-0.5 text-[10px] font-medium text-govbid-text-muted">{month}</span>
-        <span className="mt-2 hidden text-[10px] text-govbid-text-muted sm:inline">Due {rfp.dueDate}</span>
+        <span className={`mt-2 inline-block rounded-md border px-1.5 py-0.5 text-[10px] font-semibold ${deadlineStatus.bgColor} ${deadlineStatus.color}`}>
+          {deadlineStatus.text}
+        </span>
       </div>
     </button>
   );

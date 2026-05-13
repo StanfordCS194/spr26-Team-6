@@ -8,23 +8,9 @@ import { captureEvent } from "@/lib/analytics";
 
 export type WalkthroughStep =
   | "intro"
-  | "profile"
-  | "save-profile"
-  | "close-profile"
-  | "search-bar"
-  | "rfp-list"
-  | "filter-menu"
-  | "open-rfp"
-  | "rfp-details"
-  | "rfp-title"
-  | "rfp-overview"
-  | "rfp-sow"
-  | "rfp-location"
-  | "pdf-viewer"
-  | "generate-summary"
-  | "save-to-profile"
-  | "return-to-profile"
-  | "saved-rfp"
+  | "setup-profile"
+  | "explore-dashboard"
+  | "view-opportunities"
   | "completion";
 
 interface WalkthroughContent {
@@ -38,137 +24,39 @@ const WALKTHROUGH_STEPS: Record<WalkthroughStep, WalkthroughContent> = {
     selector: null,
     title: "Welcome to GovBid",
     description:
-      "Let's take a walkthrough of how to use this platform to find relevant government contracting opportunities. This interactive tour will guide you through all the key features. Click 'Next' to continue.",
+      "Your all-in-one platform for finding government contracting opportunities. In this 3-step tour, you'll learn how to set up your profile, explore opportunities, and manage your pipeline.\n\nLet's get started!",
   },
-  "profile": {
+  "setup-profile": {
     selector: "#profile-drawer",
-    title: "Your Profile",
+    title: "Step 1: Set Up Your Profile",
     description:
-      "This is your profile page. Here you can input relevant information about your company, such as:\n\n• Industries - The sectors your company operates in\n• Sub-industries - More specific industry classifications\n• Goals - Your business objectives\n• Past experience - Previous projects and work history\n\nEnter your information in these text fields.",
+      "Your profile helps us match you with relevant opportunities. Add your company details:\n\n• Industries & sub-industries\n• Business goals\n• Past experience\n\nSaved profiles will personalize your recommendations.",
   },
-  "save-profile": {
-    selector: ".profile-save-button",
-    title: "Save Your Information",
-    description:
-      "When you're done typing in your information, click this 'Save my information' button. Your data will be stored and used to personalize your RFP recommendations based on your capabilities and interests. You can update this information at any time.",
-  },
-  "close-profile": {
-    selector: "#profile-drawer",
-    title: "Close the Profile",
-    description:
-      "Now let's close the profile window by clicking the 'Close' button so we can explore the main dashboard. Click 'Next' to continue.",
-  },
-  "search-bar": {
-    selector: "#search-bar",
-    title: "Search RFPs",
-    description:
-      "Use the search bar to look for specific government contracting opportunities. You can type keywords related to:\n\n• Project types\n• Agency names\n• Contract keywords\n• Technical requirements\n\nThe search will filter through all available RFPs to find matches relevant to your query.",
-  },
-  "rfp-list": {
+  "explore-dashboard": {
     selector: "#rfp-feed",
-    title: "RFP Recommendations",
+    title: "Step 2: Explore Opportunities",
     description:
-      "This left sidebar displays recommended RFPs specifically curated for you based on your profile. These recommendations are intelligently matched to your company's industries, sub-industries, goals, and past experience.\n\nEach card shows:\n• RFP Title\n• Agency name\n• Contract type\n• Match score indicating relevance\n\nThe higher the match score, the more relevant this opportunity is to your profile.",
+      "Your RFP feed shows curated opportunities based on your profile. Use filters to narrow results and search for specific projects. Each card shows the title, agency, and relevance score.",
   },
-  "filter-menu": {
-    selector: "#filter-button",
-    title: "Filter Your Recommendations",
-    description:
-      "Use the filter menu to narrow down your RFP recommendations by:\n\n• Tags - Filter by specific categories or keywords\n• Date range - Find opportunities based on due date\n• Contract value - Filter by budget range\n\nThese filters help you focus on opportunities that best match your interests and capabilities.",
-  },
-  "open-rfp": {
-    selector: "#rfp-feed",
-    title: "Click on an RFP",
-    description:
-      "Now click on one of the RFP cards in the list to open it and see the detailed information. This will help us explore the individual RFP details view. Click 'Next' when you've selected an RFP.",
-  },
-  "rfp-details": {
+  "view-opportunities": {
     selector: "#detail-panel",
-    title: "Individual RFP Details",
+    title: "Step 3: View & Save Opportunities",
     description:
-      "When you click on an RFP, its full details appear here in the detail panel. This panel shows comprehensive information about the specific opportunity, including all the key details you need to decide whether to pursue it.",
-  },
-  "rfp-title": {
-    selector: ".rfp-title",
-    title: "RFP Title",
-    description:
-      "This is the official title of the Request for Proposal. It typically describes the main project or service being requested by the government agency.",
-  },
-  "rfp-overview": {
-    selector: ".rfp-overview",
-    title: "Project Overview",
-    description:
-      "This section provides a brief summary of the project, including:\n\n• Project goals and objectives\n• General scope of work\n• Context and background\n\nRead this to quickly understand what the agency is looking for.",
-  },
-  "rfp-sow": {
-    selector: ".rfp-sow",
-    title: "Statement of Work & Deliverables",
-    description:
-      "The Statement of Work (SOW) outlines the detailed requirements for completing the project, including:\n\n• Specific tasks and deliverables required\n• Technical specifications\n• Performance requirements\n• Project timeline\n\nThis is a critical section to understand the full scope of what you'd be responsible for and what you must deliver.",
-  },
-  "rfp-location": {
-    selector: ".rfp-location-date",
-    title: "Location & Due Date",
-    description:
-      "This shows:\n\n• Project location - Where the work will be performed or where the agency is located\n• Due date - The deadline for submitting your proposal\n\nMake sure you understand the location requirements and can meet the submission deadline.",
-  },
-  "pdf-viewer": {
-    selector: "[data-walkthrough-tab='document']",
-    title: "Source PDF",
-    description:
-      "Click the 'Source PDF' tab to view the original PDF document from the government agency. Here you can:\n\n• See the complete official RFP document\n• Review official formatting and requirements\n• Scroll through the entire document\n• Access specific sections referenced in the summary\n\nThis is the authoritative source for all requirements.",
-  },
-  "generate-summary": {
-    selector: ".generate-summary-button",
-    title: "Generate AI Summary",
-    description:
-      "Click this button to generate a concise one-page AI summary of the RFP. This summary:\n\n• Condenses the key requirements\n• Highlights critical deadlines and deliverables\n• Extracts essential technical specifications\n• Saves you time reading through lengthy documents\n\nThe summary helps you quickly assess if this opportunity is right for your company.",
-  },
-  "save-to-profile": {
-    selector: ".save-rfp-button",
-    title: "Save to Profile",
-    description:
-      "Click this button to save this RFP to your profile for easy reference later. Saved RFPs:\n\n• Are stored in your profile\n• Can be quickly accessed from your profile page\n• Help you organize opportunities you're interested in\n• Can be unsaved at any time\n\nSaving helps you keep track of opportunities you want to pursue.",
-  },
-  "return-to-profile": {
-    selector: "#profile-drawer",
-    title: "Return to Your Profile",
-    description:
-      "Now let's return to your profile to see the RFP you just saved! You can:\n\n• See all your saved opportunities in one place\n• Click on any saved RFP to open its details\n• Manage your saved opportunities\n• Keep track of promising contracts\n\nYour profile becomes a central hub for managing your top opportunities. Click 'Next' to open the profile.",
-  },
-  "saved-rfp": {
-    selector: ".saved-rfp-item",
-    title: "Your Saved RFP",
-    description:
-      "This is the RFP you just saved to your profile! You can click on it to open the full details again and review all the information. If you decide this opportunity is no longer relevant, you can unsave it from the individual RFP details view by clicking the 'Unsave' button.",
+      "Click any RFP to view full details including timeline, requirements, and documents. Use the save button to bookmark opportunities for later review.",
   },
   "completion": {
     selector: null,
-    title: "Walkthrough Complete!",
+    title: "You're Ready!",
     description:
-      "Congratulations! You now know how to:\n\n✓ Set up and maintain your company profile\n✓ Search and filter RFP opportunities\n✓ Review detailed RFP information\n✓ Generate AI summaries of RFPs\n✓ Save and manage your opportunities\n\nYou're ready to start exploring government contracting opportunities!",
+      "You're all set to start exploring government contracts. Remember:\n\n• Update your profile for better recommendations\n• Use filters to find relevant opportunities\n• Save promising RFPs for later review\n\nHappy bidding!",
   },
 };
 
 const STEP_ORDER: WalkthroughStep[] = [
   "intro",
-  "profile",
-  "save-profile",
-  "close-profile",
-  "search-bar",
-  "rfp-list",
-  "filter-menu",
-  "open-rfp",
-  "rfp-details",
-  "rfp-title",
-  "rfp-overview",
-  "rfp-sow",
-  "rfp-location",
-  "pdf-viewer",
-  "generate-summary",
-  "save-to-profile",
-  "return-to-profile",
-  "saved-rfp",
+  "setup-profile",
+  "explore-dashboard",
+  "view-opportunities",
   "completion",
 ];
 
@@ -204,16 +92,10 @@ export function Walkthrough() {
     const stepContent = WALKTHROUGH_STEPS[currentStepId];
 
     // Handle specific step transitions and side effects
-    if (currentStepId === "profile") {
+    if (currentStepId === "setup-profile") {
       setProfileOpen(true);
-    } else if (currentStepId === "close-profile") {
-      // Show instructions but don't auto-close
-    } else if (currentStepId === "search-bar") {
+    } else if (currentStepId === "explore-dashboard") {
       setProfileOpen(false);
-    } else if (currentStepId === "open-rfp") {
-      // Guide user to click on an RFP
-    } else if (currentStepId === "return-to-profile") {
-      setProfileOpen(true);
     } else if (currentStepId === "completion") {
       setShowCompletion(true);
     }
@@ -221,18 +103,9 @@ export function Walkthrough() {
     // Find and set target element
     if (stepContent.selector) {
       const timer = setTimeout(() => {
-        // Try multiple attempts to find the element
-        let element = document.querySelector(
+        const element = document.querySelector(
           stepContent.selector as string
         ) as HTMLElement | null;
-        
-        // If not found and it's a data attribute, try again
-        if (!element && (stepContent.selector as string).startsWith("[data-")) {
-          element = document.querySelector(
-            stepContent.selector as string
-          ) as HTMLElement | null;
-        }
-        
         setTargetElement(element);
       }, 100);
       return () => clearTimeout(timer);

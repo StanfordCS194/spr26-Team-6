@@ -83,6 +83,30 @@ export function WalkthroughOverlay({
       ctx.stroke();
       
       ctx.shadowColor = "transparent";
+
+      // Draw animated arrow pointing to the highlighted element
+      const arrowSize = 20;
+      const arrowX = x + width + 30;
+      const arrowY = y + height / 2;
+
+      // Draw arrow shaft
+      ctx.strokeStyle = "rgba(79, 70, 229, 0.6)";
+      ctx.lineWidth = 2;
+      ctx.setLineDash([5, 5]);
+      ctx.beginPath();
+      ctx.moveTo(arrowX - arrowSize, arrowY);
+      ctx.lineTo(arrowX + arrowSize, arrowY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Draw arrowhead
+      ctx.fillStyle = "rgba(79, 70, 229, 0.6)";
+      ctx.beginPath();
+      ctx.moveTo(arrowX + arrowSize, arrowY);
+      ctx.lineTo(arrowX + arrowSize - 8, arrowY - 6);
+      ctx.lineTo(arrowX + arrowSize - 8, arrowY + 6);
+      ctx.closePath();
+      ctx.fill();
     }
   }, [targetElement, padding, isVisible]);
 

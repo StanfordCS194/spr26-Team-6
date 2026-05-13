@@ -23,6 +23,45 @@ const RfpPdfViewer = dynamic(
   },
 );
 
+function DeadlineCountdown({ dueDate }: { dueDate: string }) {
+  const [daysLeft, setDaysLeft] = useState(0);
+  const [hoursLeft, setHoursLeft] = useState(0);
+
+  useEffect(() => {
+    const updateCountdown = () => {
+      const deadline = new Date(`${dueDate}T23:59:59`);
+      const now = new Date();
+      const diff = deadline.getTime() - now.getTime();
+      
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      
+      setDaysLeft(Math.max(0, days));
+      setHoursLeft(Math.max(0, hours));
+    };
+
+    updateCountdown();
+    const timer = setInterval(updateCountdown, 3600000); // Update every hour
+    return () => clearInterval(timer);
+  }, [dueDate]);
+
+  const getColor = () => {
+    if (daysLeft <= 0) return "bg-red-50 border-red-200 text-red-700";
+    if (daysLeft <= 3) return "bg-red-50 border-red-200 text-red-700";
+    if (daysLeft <= 7) return "bg-yellow-50 border-yellow-200 text-yellow-700";
+    return "bg-blue-50 border-blue-200 text-blue-700";
+  };
+
+  return (
+    <div className={`rounded-lg border p-3 ${getColor()}`}>
+      <p className="text-xs font-semibold uppercase tracking-wide">Deadline countdown</p>
+      <p className="mt-1 text-lg font-bold">
+        {daysLeft}d {hoursLeft}h remaining
+      </p>
+    </div>
+  );
+}
+
 export function DetailPanel() {
   const { selectedRfp } = useDashboard();
 
@@ -268,7 +307,11 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
                 <dd className="font-semibold text-govbid-text">{rfp.dueDate}</dd>
               </div>
             </dl>
-            {/* TAGS: show all tags as colored bubbles below location/due date */}
+            
+            {/* Deadline Countdown Badge */}
+            <DeadlineCountdown dueDate={rfp.dueDate} />
+            
+            {/* Tags */}
             {rfp.tags?.length > 0 && (
               <div className="mt-2 flex flex-wrap gap-1">
                 {rfp.tags.map((tag) => (
@@ -276,6 +319,28 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
                 ))}
               </div>
             )}
+            
+            {/* Eligibility Requirements */}
+            <div className="rounded-xl border border-govbid-border bg-govbid-elevated p-4">
+              <h3 className="text-sm font-semibold text-govbid-text">
+                Eligibility Requirements
+              </h3>
+              <ul className="mt-3 space-y-2 text-sm text-govbid-text">
+                <li className="flex gap-2">
+                  <span className="shrink-0 text-govbid-primary">✓</span>
+                  <span>Valid SAM registration required</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="shrink-0 text-govbid-primary">✓</span>
+                  <span>Contractor with relevant experience preferred</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="shrink-0 text-govbid-primary">✓</span>
+                  <span>Certified small business status (if applicable)</span>
+                </li>
+              </ul>
+            </div>
+            
             <div className="rfp-sow rounded-xl border border-govbid-border bg-govbid-surface p-4">
               <h3 className="text-sm font-semibold text-govbid-text">
                 Statement of work
