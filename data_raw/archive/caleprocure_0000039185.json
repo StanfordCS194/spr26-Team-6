@@ -21,15 +21,39 @@
     "documents": [
       {
         "label": "IFB_A251017444_OneStream_Implementation.pdf",
-        "url": "https://drive.google.com/file/d/1MiEAVF6SmY5c5gUiS9RK-vIMRVWbeYmp/view?usp=drivesdk",
+        "url": "https://drive.google.com/file/d/1dS-L17y5cK5blLCkbNKMwRLJXE-3kFfe/view?usp=drivesdk",
         "type": "primary_spec",
         "attachment_description": ""
       }
     ],
     "unspsc_codes": [
       {
-        "code": "01012001",
-        "description": "/> <span data-if-container-label=\"conferenceRow\" data-if-source=\"[id^='ZZ_BID_CNF_VW_DUE_DT_TIME$']\" data-if-content=\"nu"
+        "code": "81162000",
+        "description": "Information Technology Service Delivery - Cloud-based software as a srvc"
+      },
+      {
+        "code": "81162004",
+        "description": "Information Technology Service Delivery - Cloud-based software as a srvc - Database management as a srvcs"
+      },
+      {
+        "code": "81162005",
+        "description": "Information Technology Service Delivery - Cloud-based software as a srvc - Dispatch software as a srvcs"
+      },
+      {
+        "code": "81162100",
+        "description": "Information Technology Service Delivery - Cloud-based platform as a srvc"
+      },
+      {
+        "code": "81162103",
+        "description": "Information Technology Service Delivery - Cloud-based platform as a srvc - Platform software as a srvcs"
+      },
+      {
+        "code": "81162204",
+        "description": "Information Technology Service Delivery - Cloud-based infrastructure as a srvc - Cloud network devices as a srvcs"
+      },
+      {
+        "code": "81162303",
+        "description": "Information Technology Service Delivery - Cloud-based business process as a srvcs - Content management process as a srvcs"
       }
     ]
   }

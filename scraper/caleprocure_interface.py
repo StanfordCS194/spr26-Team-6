@@ -50,27 +50,27 @@ DEFAULT_PDFS_FOR_UPLOAD_DIR = os.path.join(
 # Tech/IT/telecommunications keywords for portal search
 DEFAULT_TECH_KEYWORDS = [
     "software",
-    # "hardware",
+    "hardware",
     "computer",
-    # "server",
-    # "cloud",
-    # "cybersecurity",
-    # "network",
-    # "telecommunications",
-    # "data center",
-    # "it support",
+    "server",
+    "cloud",
+    "cybersecurity",
+    "network",
+    "telecommunications",
+    "data center",
+    "it support",
     "database"
-    # "ai",
-    # "machine learning",
-    # "laptop",
-    # "desktop",
-    # "devops",
-    # "mainframe",
-    # "encryption",
-    # "firewall",
-    # "data"
-    # "firmware",
-    # "microservices"
+    "ai",
+    "machine learning",
+    "laptop",
+    "desktop",
+    "devops",
+    "mainframe",
+    "encryption",
+    "firewall",
+    "data"
+    "firmware",
+    "microservices"
 ]
 
 # Conservative UNSPSC families frequently used for technology procurement

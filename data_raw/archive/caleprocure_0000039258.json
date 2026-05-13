@@ -1,0 +1,42 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "0000039258",
+  "title": "RFQ DTS 25-238 - ESRI Software Renewal",
+  "dept": "of Water Resources",
+  "description": "Event Details\nEvent : 0000039258\nRFQ DTS 25-238 - ESRI Software Renewal\nDetails\n\nEvent ID\n0000039258\n\nFormat/Type:\nSell Event / RFx\n\nPublished Date\n05/12/2026  4:23PM PDT\n\nDept:\nDepartment of Water Resources\n\nEvent Version\n1\n\nEvent End Date:\n05/27/2026  2:00PM PDT\n\nDescription:\n\n\nEnvironmental Systems Research Institute (ESRI) Enterprise Software Maintenance Renewal.\nView Event Package\nView Vendor Ads\nContact Information\nMark Mateo\nPhone:  \n\nEmail: mark.mateo@water.ca.gov\nPre Bid Conference(N/A)\nMandatory: Non Mandatory\nDate:  \nTime:  \nLocation:  \nComments:  \n\nUNSPSC Codes\nUNSPSC Classification\tUNSPSC Classification Description\n81112209\tComputer services - Software maintenance & support - Development software maint\nContractor License Type \n(N/A)\nService Area \n(N/A)",
+  "published_date": "2026-05-12T16:23:00-07:00",
+  "due_date": "2026-05-27T14:00:00-07:00",
+  "contact_name": "Mark Mateo",
+  "contact_email": "mark.mateo@water.ca.gov",
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-0000039258-0af1bd9a307f",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "Exhibit_A_-_Statement_of_Work_-_ESRI_SOFTWARE.pdf",
+        "url": "https://drive.google.com/file/d/1B_SSFmTP5osT-MMo4iMm6UKuzrcn6A-Q/view?usp=drivesdk",
+        "type": "primary_spec",
+        "attachment_description": ""
+      },
+      {
+        "label": "RFQ_DTS_25-238_-_ESRI_Renewal.pdf",
+        "url": "https://drive.google.com/file/d/1ha33spxRA1xP2uN-HR3kIYLLQOL3Cmx3/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      }
+    ],
+    "unspsc_codes": [
+      {
+        "code": "81112209",
+        "description": "Computer services - Software maintenance & support - Development software maint"
+      }
+    ]
+  }
+}

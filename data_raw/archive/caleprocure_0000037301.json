@@ -21,21 +21,89 @@
     "documents": [
       {
         "label": "1._WaterTAP__Request_For_Proposal_(RFP)_11.20.25.pdf",
-        "url": "https://drive.google.com/file/d/1auho7skjnWBVfZjJCwVC8BXA_Qqeykew/view?usp=drivesdk",
+        "url": "https://drive.google.com/file/d/1HJ8YkAafRV5wpYVIF1B7M-WFkPtDCHCM/view?usp=drivesdk",
         "type": "primary_spec",
         "attachment_description": ""
       },
       {
         "label": "2._EXHIBIT_A-_WaterTAP_STATEMENT_OF_WORK_(SOW)_11.20.25.pdf",
-        "url": "https://drive.google.com/file/d/13AfzMdSEYq8uhl7P1AVFOTGnuAQsWAo-/view?usp=drivesdk",
+        "url": "https://drive.google.com/file/d/1rnnp2vrU2H-y4IUuldIKIO_Qd2rSNqJ_/view?usp=drivesdk",
         "type": "attachment",
         "attachment_description": ""
       }
     ],
     "unspsc_codes": [
       {
-        "code": "01012001",
-        "description": "/> <span data-if-container-label=\"conferenceRow\" data-if-source=\"[id^='ZZ_BID_CNF_VW_DUE_DT_TIME$']\" data-if-content=\"nu"
+        "code": "81111700",
+        "description": "Computer services - Management information systems MIS"
+      },
+      {
+        "code": "43231512",
+        "description": "Business function specific software - License management software"
+      },
+      {
+        "code": "80101507",
+        "description": "MGMT Business Prof & Admin Services - Business corporate MGMT consult srvcs - Information technology consult srvcs"
+      },
+      {
+        "code": "81111503",
+        "description": "Computer services - Software or hardware engineering - Systems integration design"
+      },
+      {
+        "code": "81111504",
+        "description": "Computer services - Software or hardware engineering - Application programming srvcs"
+      },
+      {
+        "code": "81111508",
+        "description": "Computer services - Software or hardware engineering - Application implementation srvcs"
+      },
+      {
+        "code": "81111709",
+        "description": "Computer services - Management information systems MIS - Demining geographical or geospatial information system GIS"
+      },
+      {
+        "code": "81162000",
+        "description": "Information Technology Service Delivery - Cloud-based software as a srvc"
+      },
+      {
+        "code": "81162004",
+        "description": "Information Technology Service Delivery - Cloud-based software as a srvc - Database management as a srvcs"
+      },
+      {
+        "code": "81162007",
+        "description": "Information Technology Service Delivery - Cloud-based software as a srvc - E-mailing and calendaring software as a srvcs"
+      },
+      {
+        "code": "81162008",
+        "description": "Information Technology Service Delivery - Cloud-based software as a srvc - Enterprise resource planning software as a srvcs"
+      },
+      {
+        "code": "81162009",
+        "description": "Information Technology Service Delivery - Cloud-based software as a srvc - Portal software as a srvcs"
+      },
+      {
+        "code": "81162100",
+        "description": "Information Technology Service Delivery - Cloud-based platform as a srvc"
+      },
+      {
+        "code": "81162103",
+        "description": "Information Technology Service Delivery - Cloud-based platform as a srvc - Platform software as a srvcs"
+      },
+      {
+        "code": "81162104",
+        "description": "Information Technology Service Delivery - Cloud-based platform as a srvc - Platform software components as a srvcs"
+      },
+      {
+        "code": "81162200",
+        "description": "Information Technology Service Delivery - Cloud-based infrastructure as a srvc"
+      },
+      {
+        "code": "81162300",
+        "description": "Information Technology Service Delivery - Cloud-based business process as a srvcs"
+      },
+      {
+        "code": "81162302",
+        "description": "Information Technology Service Delivery - Cloud-based business process as a srvcs - Data analytics process as a srvcs"
       }
     ]
   }

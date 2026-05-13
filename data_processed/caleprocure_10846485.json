@@ -1,0 +1,61 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "10846485",
+  "title": "RFQ 10846485 - Microsoft Windows Server Core - On Prem",
+  "name": "RFQ 10846485 - Microsoft Windows Server Core - On Prem",
+  "statement_of_work": "Addendum 1: The purpose of this addendum is to post questions from potential bidders and responses from CDCR. The California Department of Corrections and Rehabilitation (CDCR) is requesting quotes for renewal of Microsoft Windows Core to support the California Department of Corrections and Rehabilitation (CDCR).",
+  "deliverables": [
+    "Address requirements in 'Introduction Letter RFQ 10846485'",
+    "Address requirements in 'RFQ 10846485 EIS 4004(C) Form'"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Software",
+    "Procurement",
+    "California"
+  ],
+  "dept": "California Department of Corrections and Rehabilitation",
+  "description": "Addendum 1: The purpose of this addendum is to post questions from potential bidders and responses from CDCR.\n\nThe California Department of Corrections and Rehabilitation (CDCR) is requesting quotes for renewal of Microsoft Windows Core to support the California Department of Corrections and Rehabilitation (CDCR). Vendors are advised of the dates and times shown below and are expected to adhere to them.  The CDCR may modify any part of the RFQ prior to the date quotes are due, by issuance of one (1) or more addendums.  Addendums will be numbered consecutively and added to the Event Package.  Quotes must comply with the instructions found herein. Failure to comply with any of the requirements may cause the quote to be rejected and deemed non-responsive. Refer to the EIS 4004(C) RFQ Form for the requirements related to this solicitation.",
+  "published_date": "2026-05-04T15:36:00-07:00",
+  "due_date": "2026-05-18T14:00:00-07:00",
+  "contact_name": "Robin Adams",
+  "contact_email": "robin.adams@cdcr.ca.gov",
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-10846485-5082f43a3bf9",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "Addendum_1_-_Q___A.pdf",
+        "url": "https://drive.google.com/file/d/1Zv7_9vMtJQkxXk3_cgw_TxSJR9fHLYjT/view?usp=drivesdk",
+        "type": "primary_spec",
+        "attachment_description": ""
+      },
+      {
+        "label": "Introduction_Letter_RFQ_10846485.pdf",
+        "url": "https://drive.google.com/file/d/1i8ivT8TirtLuAdPewkJkGvkJVSpZ3XEM/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "RFQ_10846485_-_EIS_4004(C)_Form.pdf",
+        "url": "https://drive.google.com/file/d/10J5eCuyA1p6y9Mp7v3lbQv6w-Pp6i8lI/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      }
+    ],
+    "unspsc_codes": [
+      {
+        "code": "43231500",
+        "description": "Business function specific software"
+      }
+    ]
+  }
+}

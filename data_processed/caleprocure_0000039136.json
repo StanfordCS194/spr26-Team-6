@@ -1,0 +1,60 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "0000039136",
+  "title": "RFQ - 25ITS0200 - Brivo Hosting and Maintenance",
+  "name": "RFQ - 25ITS0200 - Brivo Hosting and Maintenance",
+  "statement_of_work": "The State of California, California Public Utilities Commission (CPUC), requires the services of a Contractor to provide hosting service and support, additional access badges, and on-demand hardware service and repair for CPUC¿s existing access badge hardware, Brivo Access Control System.",
+  "deliverables": [
+    "Provide hosting service and support",
+    "Provide additional access badges",
+    "Provide on-demand hardware service and repair for CPUC¿s existing access badge hardware",
+    "Provide brivo Access Control System"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Software",
+    "System Development",
+    "California"
+  ],
+  "dept": "Public Utilities Commission",
+  "description": "The State of California, California Public Utilities Commission (CPUC), requires the services of a Contractor to provide hosting service and support, additional access badges, and on-demand hardware service and repair for CPUC¿s existing access badge hardware, Brivo Access Control System.",
+  "published_date": "2026-05-01T13:00:00-07:00",
+  "due_date": "2026-05-15T17:00:00-07:00",
+  "contact_name": "Alan Liang",
+  "contact_email": "alan.liang@cpuc.ca.gov",
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-0000039136-97906a97ffac",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [],
+    "unspsc_codes": [
+      {
+        "code": "72101500",
+        "description": "Building facility maintenance & repair services"
+      },
+      {
+        "code": "72102900",
+        "description": "Facility maintenance & repair services"
+      },
+      {
+        "code": "81112200",
+        "description": "Computer services - Software maintenance & support"
+      },
+      {
+        "code": "81161500",
+        "description": "Information Technology Service Delivery - Access management srvcs"
+      },
+      {
+        "code": "92121700",
+        "description": "Security & personal safety - Security systems services"
+      }
+    ]
+  }
+}

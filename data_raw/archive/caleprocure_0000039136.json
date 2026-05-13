@@ -1,0 +1,45 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "0000039136",
+  "title": "RFQ - 25ITS0200 - Brivo Hosting and Maintenance",
+  "dept": "Public Utilities Commission",
+  "description": "Event Details\nEvent : 0000039136\nRFQ - 25ITS0200 - Brivo Hosting and Maintenance\nDetails\n\nEvent ID\n0000039136\n\nFormat/Type:\nSell Event / RFx\n\nPublished Date\n05/01/2026  1:00PM PDT\n\nDept:\nPublic Utilities Commission\n\nEvent Version\n1\n\nEvent End Date:\n05/15/2026  5:00PM PDT\n\nDescription:\n\n\nThe State of California, California Public Utilities Commission (CPUC), requires the services of a Contractor to provide hosting service and support, additional access badges, and on-demand hardware service and repair for CPUC¿s existing access badge hardware, Brivo Access Control System.\nView Event Package\nView Vendor Ads\nContact Information\nAlan Liang\nPhone:  \n\nEmail: alan.liang@cpuc.ca.gov\nPre Bid Conference(N/A)\nMandatory: Non Mandatory\nDate:  \nTime:  \nLocation:  \nComments:  \n\nUNSPSC Codes\nUNSPSC Classification\tUNSPSC Classification Description\n72101500\tBuilding facility maintenance & repair services\n72102900\tFacility maintenance & repair services\n81112200\tComputer services - Software maintenance & support\n81161500\tInformation Technology Service Delivery - Access management srvcs\n92121700\tSecurity & personal safety - Security systems services\nContractor License Type \n(N/A)\nService Area \n(N/A)",
+  "published_date": "2026-05-01T13:00:00-07:00",
+  "due_date": "2026-05-15T17:00:00-07:00",
+  "contact_name": "Alan Liang",
+  "contact_email": "alan.liang@cpuc.ca.gov",
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-0000039136-97906a97ffac",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [],
+    "unspsc_codes": [
+      {
+        "code": "72101500",
+        "description": "Building facility maintenance & repair services"
+      },
+      {
+        "code": "72102900",
+        "description": "Facility maintenance & repair services"
+      },
+      {
+        "code": "81112200",
+        "description": "Computer services - Software maintenance & support"
+      },
+      {
+        "code": "81161500",
+        "description": "Information Technology Service Delivery - Access management srvcs"
+      },
+      {
+        "code": "92121700",
+        "description": "Security & personal safety - Security systems services"
+      }
+    ]
+  }
+}
