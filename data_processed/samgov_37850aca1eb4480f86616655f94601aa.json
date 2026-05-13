@@ -3,21 +3,22 @@
   "external_id": "37850aca1eb4480f86616655f94601aa",
   "title": "DRAFT SF1449 Electronic Tax Preparation Software",
   "name": "DRAFT SF1449 Electronic Tax Preparation Software",
-  "statement_of_work": "",
+  "statement_of_work": "Special Notice for DRAFT SF1449 Electronic Tax Preparation Software (solicitation 2043FY-26-R-00007) issued by INTERNAL REVENUE SERVICE.",
   "deliverables": [
-    "Execute scope of work described in the DRAFT SF1449 Electronic Tax Preparation Software solicitation",
-    "Deliver milestones, status reporting, and acceptance documentation",
-    "Provide final handoff and post-deployment support per RFP terms"
+    "The Contractor shall ensure the software functions as a web-based application",
+    "The Contractor shall ensure the site managers have the capability to track the status of",
+    "The system shall ensure that only one authorized user can edit a tax return at a time",
+    "The system shall allow for a real-time diagnostic form checks (aka schema"
   ],
   "location_level": "state",
   "location": "California",
   "tags": [
-    "Software",
     "Procurement",
+    "Software",
     "California"
   ],
   "dept": "TREASURY, DEPARTMENT OF THE.INTERNAL REVENUE SERVICE",
-  "description": "",
+  "description": "Special Notice for DRAFT SF1449 Electronic Tax Preparation Software (solicitation 2043FY-26-R-00007) issued by INTERNAL REVENUE SERVICE.",
   "published_date": "2026-04-26",
   "due_date": "2026-05-15T12:00:00-04:00",
   "contact_name": "Ladoris Tuck",

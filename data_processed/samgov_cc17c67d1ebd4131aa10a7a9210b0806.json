@@ -3,7 +3,7 @@
   "external_id": "cc17c67d1ebd4131aa10a7a9210b0806",
   "title": "7A21--IDS (Investigational Drug System) Software",
   "name": "7A21--IDS (Investigational Drug System) Software",
-  "statement_of_work": "",
+  "statement_of_work": "Vendor shall provide IDS, a secure, HIPAA and 21 CFR Part 11 compliant, web-based application that has the following features: Monitors Receive, Transfer, Dispense, Return to Supplier, Destroy, and Adjustment transactions Manages a comprehensive drug catalog, protocols, patients, suppliers, documents, and pharmacies Generates accountability logs exportable to NCI DARF, NCI ORAL DRAF, ACTG, De-Identified and other format, significantly facilitating the audit process Granular inventory tracking do",
   "deliverables": [
     "Execute scope of work described in the 7A21--IDS (Investigational Drug System) Software solicitation",
     "Deliver milestones, status reporting, and acceptance documentation",
@@ -13,11 +13,11 @@
   "location": "California",
   "tags": [
     "Software",
-    "Health Services",
+    "Procurement",
     "California"
   ],
   "dept": "VETERANS AFFAIRS, DEPARTMENT OF.VETERANS AFFAIRS, DEPARTMENT OF.260-NETWORK CONTRACT OFFICE 20 (36C260)",
-  "description": "",
+  "description": "Investigational Drug System (IDS); automation software to aid in the management of VAPSHCS’s investigational drug service. Vendor shall provide IDS, a secure, HIPAA and 21 CFR Part 11 compliant, web-based application that has the following features:\nMonitors Receive, Transfer, Dispense, Return to Supplier, Destroy, and Adjustment transactions\nManages a comprehensive drug catalog, protocols, patients, suppliers, documents, and pharmacies\nGenerates accountability logs exportable to NCI DARF, NCI ORAL DRAF, ACTG, De-Identified and other format, significantly facilitating the audit process\nGranular inventory tracking down to an individual Bottle, Vial, or Kit #\nPatient-specific drug tracking\nDouble signature verification\nBarcoded inventory labels\nPhysical inventory monitoring\nPar level management\nPharmacy billing\nOperates as a standalone system but has interfaces available to reduce data entry, including CTMS, EMR, and IRB systems for protocol, patient, and document management; inpatient or outpatient pharmacy systems for deducting inventory and logging dispenses; and carousels for inventory movement between locations\nComprehensive coverage of all inventory transactions performed with investigational drugs\nSimplifies preparation for monitor visits and audits\nEnsures dispensing accuracy by tracking a patient’s dispensing history, treatment arms, expiration, and patient-specific inventory\nPrint patient labels and record inventory deduction on logs in a single dispense transaction\nSupports multi-site pharmacy systems and allows users to sign into specific dispensing locations\nMinimize workflow errors with role-based access\nHIPAA and 21 CFR Part 11 compliant (including audit trail logging)\nIDS shall be accessible to staff at the Seattle and American Lake Divisions of VAPSHCS. IDS (Investigational Drug System) Software\n04-16-2026 13:00 PACIFIC TIME, LOS ANGELES, USA\nN\nNetwork Contracting Office 20\nATTN: V4CONT\n1601 E. Fourth Plain Blvd\nBldg.17, Suite B428\nVancouver WA 98661\njeffrey.kelley1@va.gov\nPuget Sound VA Healthcare System\n1660 South Columbian Way\nSeattle, WA\nAGENCY’S URL\nAGENCY CONTACT’S EMAIL ADDRESS",
   "published_date": "2026-04-10",
   "due_date": "2026-04-16T13:00:00-07:00",
   "contact_name": "Jeffrey E Kelley",

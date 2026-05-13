@@ -1,0 +1,1061 @@
+2. CONTRACT NO. 3. AWARD/EFFECTIVE
+4. ORDER NUMBER 5. SOLICITATION NUMBER 6. SOLICITATION ISSUE
+7. FOR SOLICITATION
+INFORMATION CALL:
+a. NAME b. TELEPHONE NUMBER (No collect
+calls)
+8. OFFER DUE DATE/
+9. ISSUED BY
+13b. RATING
+14. METHOD OF SOLICITATION
+15. DELIVER TO 16. ADMINISTERED BY CODE
+18a. PAYMENT WILL BE MADE BY CODE17a. CONTRACTOR/
+17b. CHECK IF REMITTANCE IS DIFFERENT AND PUT SUCH ADDRESS IN
+18b. SUBMIT INVOICES TO ADDRESS SHOWN IN BLOCK 18a UNLESS BLOCK
+19.
+20.
+21.
+22.
+23.
+24.
+(Use Reverse and/or Attach Additional Sheets as Necessary)
+25. ACCOUNTING AND APPROPRIATION DATA 26. TOTAL AWARD AMOUNT (For Govt. Use Only)
+28. CONTRACTOR IS REQUIRED TO SIGN THIS DOCUMENT AND RETURN
+29. AWARD OF CONTRACT: REF. OFFER
+(BLOCK 5), INCLUDING ANY ADDITIONS OR CHANGES WHICH ARE
+SET FORTH HEREIN, IS ACCEPTED AS TO ITEMS:
+30a. SIGNATURE OF OFFEROR/CONTRACTOR
+30b. NAME AND TITLE OF SIGNER (Type or print) 30c. DATE SIGNED
+31a. UNITED STATES OF AMERICA (SIGNATURE OF CONTRACTING OFFICER)
+31b. NAME OF CONTRACTING OFFICER (Type or print) 31c. DATE SIGNED
+Prescribed by GSA - FAR (48 CFR) 53.212
+10. THIS ACQUISITION IS UNRESTRICTED OR
+NAICS:
+SIZE STANDARD:
+13a. THIS CONTRACT IS A
+SET ASIDE: % FOR:
+11. DELIVERY FOR FOB DESTINA-
+12. DISCOUNT TERMS
+27a. SOLICITATION INCORPORATES BY REFERENCE FAR 52.212-1, 52.212-4. FAR 52.212-3 AND 52.212-5 ARE ATTACHED. ADDENDA
+27b. CONTRACT/PURCHASE ORDER INCORPORATES BY REFERENCE FAR 52.212-4. FAR 52.212-5 IS ATTACHED. ADDENDA
+8 (A)
+(WOSB) ELIGIBLE UNDER THE WOMEN-OWNED
+See Attached Schedule(s)
+Office of Procurement Operations-Office of Procurement
+1285 Carmichael Way
+Montgomery, AL 36106-3672
+Attn: Ladoris Tuck
+Tel: Email: ladoris.r.tuck@irs.gov
+;
+(OHFWURQLF7D[3UHSDUDWLRQDQG
+7UDQVPLVVLRQ6RIWZDUH6XSSRUW
+$5HVXOWLQJDZDUGLVH[SHFWHGWRLQFOXGHD6FKHGXOH
+EDVHGRQWKHFRPSOHWHG6HFWLRQ,3ULFH6FKHGXOH
+; ;
+1. CONTRACT T
+The purpose of this Statement of Work (SOW) is to establish a single-award contract for
+the procurement of commercial off-the-shelf (COTS) tax preparation software and
+associated support services. Firm-Fixed-Price (FFP) Contract Line-Item Numbers
+(CLINs) will be used for the acquisition of software licenses and related services, as
+required by volunteer sites. This acquisition will be conducted in accordance with Federal Acquisition Regulation
+(FAR) Part 15, Contracting by Negotiation. This contract does not obligate any funds at the time of award. Funds will be obligated
+through the issuance of orders or modifications in accordance with applicable funding
+procedures. The Government does not guarantee that the total quantity of supplies or
+services ordered will equal the maximum contract ceiling. The contractor is guaranteed a minimum order of 8,500 software licenses during the
+base period and, if exercised, during each of the four (4) option periods. The maximum contract ceiling amount the Government may award under this contract
+is (To Be Completed at Time of Award).
+2. PERIOD OF PERFORMANCE
+The base ordering period is a 12-month base period, with four (4)
+consecutive 12-month option ordering periods as stated below:
+• Base Period: August 17, 2026 – August 16, 2027
+• Option Period 1: August 17, 2027 – August 16, 2028
+• Option Period 2: August 17, 2028 – August 16, 2029
+• Option Period 3: August 17, 2029 – August 16, 2030
+• Option Period 4: August 17, 2030 – August 16, 2031
+Transition-in activities are required for the first (90) days of contract performance. During the initial contract period, transition activities such as knowledge
+transfer, system setup, data migration, help desk stand-up, training
+material development, live web-based training sessions, and system testing
+and acceptance, will be started in August 2026. In option years, training material development and live web-based training
+will be started in August and be completed before January each year. Software shall operate at its full capacity by the beginning of the 2027
+filing season (Tax Year 2026). Software licenses are valid one year of each contract period.
+2 of 124
+3. PLACE OF PERFORMANCE
+The place of performance will primarily be the Contractor’s site. Ta
+sk orders may be
+issued for performance to be at VITA sites, TCE site, Internal Revenue Service (IRS)
+facilities, or Treasury facilities. The specific place of performance shall be identified in
+the award.
+4. ORDERING PROCEDURES
+A Firm-Fixed-Price (FFP) single-award contract will be awarded to the Contractor based
+on the pricing submitted for each deliverable under the applicable Contract Line-Item
+Numbers (CLINs). The Contractor shall provide software licenses and associated
+support services in accordance with the requirements set forth in this contract. Performance shall be authorized through the contract award and any subsequent
+contract modifications, as applicable. Work shall be performed upon direction of the
+Representative (COR) or Program Office and supported by a valid, fully funded
+requisition.
+5. SHIP TO LOCATIONS
+Unless otherwise specified, all deliverables/ work products shall be provided to the IRS
+COR and shipping to approximately 12,000 domestic and 70 international shipping
+addresses which could include multiple deployments.
+6. DELIVERABLES
+Unless otherwise requested in writing by the COR, work products shall be produced
+using Microsoft Office 2010 or later Professional products and delivered in accordance
+with the deliverable schedule under Attachment 2. If it is required that deliverable(s) be
+submitted in media storage form, all devices must be scanned and certified as virus
+free.
+7. RAMP-UP PERIOD
+Work under this statement of work may require a ramp-up period at the initial start of
+this contract. Under the Ramp-up Period the Contractor will recruit and hire personnel
+specifically for this contract. Note: Refer to 4.6 TASK 6 in the SOW: RAMP-UP KNOWLEDGE TRANSFER-IN.
+8. ORDER ADMINISTRATIVE DATA
+8.1 Identification of Government Task Order Personnel
+The COR designation will be identified by the CO’s written designation memo. Similarly,
+the Alternate COR (ACOR) will be identified by the CO’s written designation memo. The
+CO will identify the (COR/ACOR) via e-mail to the Contractor
+8.2 Performance Required Beyond Standard Workday
+3 of 124
+If needed, performance may be required beyond the standard workday. Beginning with
+the delivery of software through April, help desk support shall be available as follows:
+Mon - Fri: 8 AM ET - 12 AM ET and Sat and Sun: 8 AM ET - 8 PM ET. Post filing
+season, normal help desk hours are required Mon-Fri: 8 AM ET – 5 PM ET. In the case
+of a problem the expectation is that the Contractor will have someone working on it until
+it is resolved or a work around is established.
+8.3 Personnel Removal and Replacement
+The applicable contractor employees are subject to investigation by the government. Applicable contractor employees who undergo contractor clearances that reveal, but are
+not limited to, the following may be unacceptable under this contract: conviction of a
+felony, a crime of violence or a serious misdemeanor, a record of arrests for continuing
+offenses, or failure to file or pay federal income tax. The government reserves the right
+to determine if a contractor employee assigned to a task shall continue with the task. The contractor shall agree to remove the person assigned within one day of official
+notification by the government and provide a replacement within five days. New hires or
+substitutions of personnel are subject to the contractor clearance requirement.
+8.4 Deliverables/ Work Products
+All contractor deliverables or work products shall remain categorized as "Official Use
+Only.” The release of any portion must be authorized in writing by the government. The contractor shall adhere to Section 508 of the Rehabilitation Act of 1973, which
+requires access to the Federal Government electronic and information technology. The
+law applies to all Federal agencies when they develop, procure, maintain, or use
+electronic and information technology. Federal agencies must ensure that this
+technology is accessible to employees and members of the public with disabilities.
+http://www.section508.gov/. Each Electronic and Information technology product or service furnished under this
+statement of work shall comply with the Electronic and Information Technology (EIT)
+Accessibility Standards (29 U.S.C. 87794(d)). For every EIT product or service accepted under this contract by the Government that
+does not comply with (29 U.S.C. 87794(d)), the contractor shall at the discretion of the
+Government, make every effort to replace or upgrade it with a compliant equivalent
+product or service, if commercially available and cost neutral, on either the planned
+refresh cycle of the product or service, or on the order renewal date, whichever shall
+occur first. The contractor will be working with sensitive taxpayer data under this contract and must
+demonstrate the ability to pass all IRS security reviews required to receive access to
+encrypted sensitive taxpayer data.
+4 of 124
+1. Background:
+The Stakeholder Partnerships, Education and Communication (SPEC) organization within
+Customer Assistance, Relationships and Education (CARE), provides free elec
+tronic tax
+preparation for taxpayers who are generally low-income, elderly, disabled or have limited
+English proficiency. This service is provided nationwide in approximately 12,000 volunteer
+sites. Most of the return preparation is performed by certified volunteers. Over each of the last three years, approximately 3.6 million Federal returns and 2.7 million state
+returns were processed at these sites by over 96,000 volunteers, partners and employees. Generally, sites operate from January (beginning of e-file) through April 15. Some sites remain
+open year around.
+1.1 Volunteer Income Tax Assistance (VITA):
+SPEC partners with Community Based Coalitions, Non-profit Organizations, and local City and
+State Governmental Agencies to provide free tax preparation services. These agencies support
+the Volunteer Income Tax Assistance (VITA) program. VITA partners and volunteers prepare
+basic tax returns for low-income taxpayers, who are U.S. citizens, residents and non-resident
+aliens. All tax preparation is performed by a certified volunteer with the taxpayer present or by a
+taxpayer with the assistance of a certified volunteer. These returns generally include income
+from wages. VITA sites are located at neighborhood community centers, libraries, churches, shopping malls
+and other locations that are convenient to the taxpayer, including a supplemental program for
+taxpayers living abroad or near U.S. embassies overseas. Internet accessibility is to be
+determined by location. SPEC also partners with the Armed Forces Tax Council to provide free return preparation for
+active and retired military personnel at military bases and ships across the nation and
+internationally. These returns can be more complex and include a wide- variety of forms and
+schedules. These sites have Internet access but operate in a secure environment which tends to
+impede communication speeds.
+1.2 Tax Counseling for the Elderly (TCE):
+Tax Counseling for the Elderly (TCE) offers tax assistance services similar to those provided
+by VITA, as well as free tax counseling for elderly taxpayers, who are restricted to retirement
+homes, neighborhood sites, or private care homes. These returns are generally more complex
+than those prepared through VITA and may include income from pensions, annuities, and
+social security benefits.
+2. Objectives:
+The objectives of this single award contract are the following:
+• provide secure, commercial off the shelf (COTS) Tax Preparation Software supporting
+VITA/TCE operations
+5 of 124
+• enable accurate preparation and transmission of federal and state taxes returns
+• provide reliable user support and training to ensure successful filing season operations
+• deliver timely and accurate reporting to support IRS program oversight
+3. Scope:
+The Contractor shall provide COTS tax preparation software, support services, training,
+reporting, and system capabilities necessary to support IRS VITA and TCE programs across
+approximately 12,000 sites globally.
+4. Task:
+CARE’s requirements include contractor support and facilitation of the following tasks:
+Task 1 - Orientation Briefing
+Task 2 - Software Production Environment: Software
+Task 3 - Reporting Capabilities: User Generated, Recurring Contractor Generated Management
+Reporting and Ad Hoc Contractor Generated Reporting
+Task 4 - Help desk assistance and technical problem resolution support
+Task 5 - Regulatory, Security and Privacy Standards
+Task 6 - Ramp-Up Knowledge Transfer-In
+Task 7 - Ramp-Up Knowledge Transfer-Out
+Task 8 - Period of Performance Summary Report
+Task 9 - Transition to Support
+Task 10 - Site File Upload to the Tax Software
+Task 11 - Direct Client Portal
+4.1. Task 1: Orientation Briefing
+Within two (2) weeks of award, the contractor shall conduct an orientation briefing for the
+Government. The Government does not desire an elaborate orientation briefing, nor does it
+expect the contractor to expend significant resources in preparation for this briefing. Rather, the
+intent of the briefing is to initiate the communication process between the Government and
+Contractor by introducing key participants, explaining their roles, reviewing communication
+ground rules, and assuring a common understanding of the requirements and objectives. The orientation briefing shall be held at an IRS facility or via a conference call. Both parties
+shall mutually agree upon which method, the date and time. The completion of this briefing shall
+result in the following:
+A. The contractor and Government personnel who will perform work under
+this contract will be introduced. B. Any issues concerning the contractor clearances for contractor personnel
+will be discussed. C. The contractor shall demonstrate confirmation of their understanding of
+the work to be accomplished under this statement of work.
+6 of 124
+4.2 Task 2: Software
+Production Environment: Software
+A. Core Functionality
+• Prepare federal, state, local returns
+• Support all required forms
+• Allow web + desktop operation +Facilitated Self Assisted (FSA) self-preparation
+• Utilize a taxpayer portal that allows taxpayers to upload income documents and fill in an intake sheet
+remotely or on site
+• Include VITA TCE intake sheet Form 13614C electronically
+• Allow the capability to compare the intake sheet and source documents to the final prepared return and
+any inconsistencies reported in diagnostic results
+• Include the ability to scan in income forms or direct upload into software from the taxpayer portal
+B. User Management & Security
+• Role-based access
+• Authentication
+• Audit tracking
+C. Data Handling
+• Secure storage
+• Upload/download capability
+• Data transfer between sites
+o Such as between taxpayer and sites via taxpayer portal
+D. Filing & Transmission
+• E-file capability
+• Acknowledgements
+• Error handling
+4.2.1 Functional Requirements for All Software:
+4.2.1.1 All software shall be capable of accurately preparing and filing any individual federal,
+state and local income tax returns for all possible tax situations prescribed by the IRS that may
+occur among those served by the VITA and TCE programs. At these sites, volunteers either
+prepare tax returns for taxpayers, or assist taxpayers with self-preparation. Not all volunteer sites
+7 of 124
+have internet access. The contractor must provide a method for the software to function as a
+Web-Based Version, Self-Preparer Web-Based Version, and a Desktop Version. (See Glossary)
+The software shall be capable of electronic return preparation for the following 1040 Series
+Family Forms, including but not limited to 1040, 1040SR, 1040NR, 1040NREZ, 1040PR and
+1040X. All tax software companies must have passed IRS Assurance Testing System (ATS)
+and have permission to transmit returns.
+4.2.1.1.a
+The Contractor shall provide/support/implement:
+• The Contractor shall ensure the software functions as a web-based application
+for assisted tax preparation.
+• Capability of the Desktop Version to install software and prepare tax returns on
+computers without an internet connection.
+• The Contractor shall ensure the site managers have the capability to track the status of
+prepared return as it passes through IRS-defined stages: Preparing, Reviewing & e-
+file/transmitting.
+• The system shall ensure that only one authorized user can edit a tax return at a time.
+• Functionality which allows for capturing generic preparer-user data fields to capture
+information not found on the return, such as client demographic information or other user
+defined fields.
+• The system shall allow for a real-time diagnostic form checks (aka schema
+validation) and tax law validation on tax returns.
+• Functionality of all Versions to support the indirect transmission of e-filed federal,
+applicable state, and local tax returns.
+• The system shall ensure it has the capability to securely download a taxpayer data file
+on fixed and removable storage media and import the data file back into the software.
+• The system shall ensure a user or taxpayer remotely at one location to be able to
+securely upload taxpayer documents and fill out intake sheet 13614-C to a different user
+at another location or at the tax preparation site.
+• The system shall potentially allow for the interface/upload of an IRS digital form (i.e. Form 13614-C).
+• The Contractor shall ensure that only authorized users (see Attachment 5 - Glossary)
+can use the software within distinct permission levels in order to restrict certain users
+from performing functions described in Attachment 1 – Roles and Responsibilities.
+• The system shall support transmission of returns for multiple EFINs at a site.
+• Quality review to compare intake sheet and source documents with final return.
+• Quality control features
+which require review of a completed tax return and the ability to
+print a return, prior to submission.
+• The system shall ensure authorized users can determine who is working on a return
+during each stage of the filing process.
+• Ability to identify who performed a quality review tracked in the system
+• Need for remote quality reviews
+o Video chat function
+8 of 124
+o Ability to obtain taxpayer consent to review their return prior to submission.
+o Ability to randomly select a return for review.
+o Ability to upload documents that support the quality review process.
+• Potentially adding a function to allow volunteers to share a document with the client and
+the client share with the preparer
+• Ability to restrict certain functions so the taxpayer can’t access a finalized document
+before signing their return.
+• Method for volunteers completing taxes to include notes.
+• Ability for software to calculate the allowable portion of the standard deduction when
+there’s exempt income.
+• Ability for the software to calculate the reduction in foreign taxes.
+• The system shall ensure for the administrator or designee to restrict a user to one Data entry (i.e.,
+prepare vs. transmitter) mode.
+• The system shall ensure EFIN/SIDNs of authorized licenses are associated with every return and
+preloaded into the default settings
+• Process for which the Contractor can authenticate the EFIN of every transmission to the
+authorized licensee of the software.
+• Notification process and the timeframe to acknowledge receipt, acceptance, and rejection
+of a return by the IRS.
+• Functionality to provide timely notifications for acknowledgements, receipt, acceptance,
+and rejection of a return by the IRS.
+• The system shall require volunteers to update passwords upon first login.
+• The system shall allow a return that is started on a software package at a site to be
+completed by another volunteer using the same software package at the same site.
+• The system shall print individual forms and/or a customizable package of forms for all printer types.
+• The system shall have a VITA informational blog platform so that performance and program related
+information can be shared to users.
+4.2.2 Requirements for Self-Preparation Version:
+Functionality of the Self-Preparer Version to return errors and acknowledgements to the taxpayer
+via electronic notification.
+4.2.3 Preparation Capabilities
+All software shall be capable of preparing and filing any individual federal, state and local
+income tax returns for all possible tax situations prescribed by the IRS that may occur among
+those served by the VITA and TCE programs. Refer to Publication 1345, Handbook for
+Authorized IRS e-file Providers of Individual Income Tax Returns and Publication 4012 Scope
+Chart. The Contractor shall provide/support/implement:
+• Software shall have no limit as to the number of local, state, and federal tax returns that
+can be filed per licensed copy.
+• Ability to send an email to taxpayers to upload their documents via a link or QR code
+and fill out the intake sheet within the taxpayer portal.
+• Ability for preparer to drag drop income documents from taxpayer portal.
+9 of 124
+• Ability for software to compare the intake sheet, source documents and prepared
+return and give feedback in diagnostics about any irregularities found.
+• The system shall scan/upload images of tax documents (i.e., W-2, 1099, supporting
+documents and form13614C etc.) at site A (intake site) or input by taxpayer into the
+software for temporary storage and transfer to site B (return preparation site). To increase
+VITA/TCE partner flexibility and facilitate the remote preparation of tax returns at
+offsite partner tax locations, the contractor shall provide the capability for volunteers and
+taxpayers to upload, view, and store files to the tax software. Documents can be
+uploaded to the contractor’s secure servers using either a scanner and/or a mobile device. The uploaded files must be associated with a specific client tax account or return. Users
+will have the ability to label and delete files as needed. File storage will be unlimited, and
+uploaded files will not be automatically deleted until the tax software is taken down for
+revisions/upgrades for the following tax year (i.e., November or December).
+• The system shall securely store data from the previous tax year returns and supporting
+the secure transfer of taxpayer information into the current tax return.
+• Ability to meet IRS assurance testing system standards for filing electronic returns as
+well as the ability to prepare non-e-file returns.
+• The system shall support interview-based data entry capabilities for federal, state, and
+local returns. (See Glossary)
+• The system shall support form-based data entry capabilities for federal, state and local
+returns. (See Glossary)
+• Data entry modes for different experience levels of tax preparation to assist with
+gathering information necessary to prepare a return, interview based and forms-
+based preparation.
+• The system shall switch between form-based and interview-based data entry modes in
+real- time, without losing any information already entered.
+• Ability for the software to support state income tax return preparation capabilities for all
+states with an income tax filing requirement by the 1st day of the filing season.
+• Ability to support multiple states, local, and municipal return preparation capabilities.
+• Ability to support independent federal and state return preparation capabilities. (e.g.
+either return may be prepared without preparing the other.)
+• Supported refund and payment methods including Electronic Funds transfer (EFT) (i.e.
+direct deposit, direct debit), paper check, split refunds and savings bond refunds. Provide diagnostic alert in review for returns with a refund without a direct deposit. Alert preparer that a notice may be sent to the taxpayer and delays may occur.
+• Capability to disable any feature that offers the taxpayers a debit card.
+• State return preparation capabilities for full and part year residents and non- residents.
+• The system shall auto-populate information between Form 13614-C intake sheet, sta
+te and federal
+returns.
+• The system shall access for user the self-service help features to understand how to
+navigate and complete a tax return and resolve errors. The help features must provide
+context sensitive help, including form-specific and field-specific help instructions.
+• Ability to prepare Federal, state and local individual tax returns for the current tax year
+and previous five tax years.
+• Ability to e-file federal individual tax returns for the current tax year and previous two tax
+years.
+10 of 124
+• Ability to prepare amended returns.
+• A method to carry forward permissible data to the next year’s tax return within each
+software version.
+4.3 Task 3: Reporting Capabilities: User-Generated, Recurring Contractor
+Generated Management Reporting and AD HOC Contractor Generated
+Each volunteer site is required to provide statistics on the taxpayers served at the site to its
+sponsoring organization. Therefore, the contractor shall provide, within the software, site level
+reporting capabilities. The respective software shall also provide the IRS POC, or their designee,
+with the ability to retrieve statistical data of taxpayers served for all IRS licenses. In addition to
+the standard reports the Contractor shall allow for custom reporting.
+4.3.1 User Generated Reports
+The contractor shall provide software that allows appropriately authorized users to create and run
+customized (also called “ad hoc”) management reports, based on a selection of data fields
+included but not limited to 4.3.2 Recurring Contractor Generated Management Reporting
+section below. This ability can be provided from within the software and must be accessible
+through a separate reporting website. The online reporting website for all IRS licensees shall run
+the same reports available from the desktop software. Users will be able to generate reports with
+any available data. They should also be able to customize reports by adding the features they
+require and exporting the file in a readable format such as MS Excel. Reports should be
+expanded such as FSA and remote reports. Be able to customize prior year returns reports on the
+dates needed. The contractor shall provide the following standard statistical reports on demand, for all
+platforms:
+• Summary report on federal tax returns, categorized by various parameters
+including EFIN, return status and date of preparation.
+• Detailed report on federal tax return s prepared by EFIN and SIDN including
+Adjusted Gross Income (AGI) and general information for each taxpayer and
+detailed information about each return prepared.
+• Summary and Detailed reports on federal tax returns by tax form type with
+schedules – and should include all forms and schedules prepared.
+• IRS e-Filing Acceptance and Rejects summary and detailed reports.
+• Pending Acknowledgement summary and detailed reports – from either the IRS or
+states.
+• Listing of all clients with summarized general information details for each client and
+categorized by EFIN and SIDN.
+• Listing of all Employer Identification Numbers (EIN) used in each tax return (state or
+federal) and summary across all tax returns. That is, the EINs from the taxpayer’s W-
+2
+, 1099.
+• Reports cross-referencing details captured within the generic data fields per
+prepared tax return.
+• Tax Preparer summary and detailed reports.
+• Number of claims and total dollar amount for state claims of EIC, refunds, and
+11 of 124
+balance due.
+• Summary reports on counts of self-prepared and volunteer prepared.
+• Develop and maintain reporting capabilities for the VI TA informational blog platform to track and
+report user engagement metrics for IRS-uploaded content, including views, downloads, and total file
+access counts.
+• Reports showing relevant tax law elements while active, i.e., Trump accounts, senior credit, overtime
+and tax on tips. Data to include number of taxpayers using and dollars affected on return.
+• Reports of how many people do not select Direct Deposit and prefer a paper check including
+percentage of total returns prepared
+4.3.2 Recurring Contractor Generated Management Reporting
+The Contractor shall provide accurate, timely management reports containing the required
+information weekly and monthly. Prior to the beginning of the filing season, the IRS would like
+the capability to discuss additional/deletion of fields annually based on tax law changes. In
+addition to reports provided to the licenses within the software, the contractor shall provide
+the following reports to the IRS POC:
+• Weekly management reports during January through April
+• Monthly management reports May through October
+• A summary report containing th e aggregate information belo w about the returns entered
+at each site and at all sites in accordance with the delivery schedule specified in the table
+of deliverables. The reports shall contain, but not limited to the following data fields:
+o 1040 Returns – Type of Return
+o 1040SR Returns – Type of Return
+o 1040X Returns – Type of Return
+o Single – Filing Status
+o Married Filing Joint – Filing Status
+o Married Filing Separately – Filing Status
+o Head of Household – Filing Status
+o Qualifying Widow(er) – Filing Status
+o Earned Income Tax Credit – Number of taxpayers that claimed EITC
+o Average EITC – Average dollar amount of EITC claimed
+o Total EITC – Total dollar amount of EITC claimed
+o Child Tax Credit/Credit for Other Dependents – Number of taxpayers that claimed
+CTC/Child tax credit/credit for other dependents
+o Average Child Tax Credit/Child tax credit/credit for other dependents – Average
+dollar amount of CTC/Child tax credit/credit for other dependents claimed
+o Total Child Tax Credit/Child tax credit/credit for other dependents – Total dollar
+amount of CTC/Child tax credit/credit for other dependents claimed
+o Education Tax Credit – Number of taxpayers that claimed the Education Tax Credit
+o Average Education Tax Credit – Average dollar amount of Education Tax Credit
+claimed
+o Total Education Tax Credit – Total dollar amount of Education Tax Credit claimed
+o Elderly Credit – Number of taxpayers that claimed the Elderly Tax Credit
+o Average Elderly Credit – Average dollar amount of Elderly Tax Credit claimed
+o Total Elderly Credit – Total dollar amount of Elderly Tax Credit claimed
+12 of 124
+o Total Marketplace – Total number of marketplace exemptions claimed
+o Total_Exemptions_7A – Total number exemptions claimed
+o Total IRS Exemptions – Total number of exemptions claimed
+o Full Year Count – Total number of returns with full year coverage
+o Resp Payment Count – Total number of returns with Shared Responsibility Payment
+(SRP)
+o Total Resp Payment – Total dollar amount of SRP
+o Average Payment – Average dollar amount of SRP
+o Adv PTC Repayment Count – Total number of returns with Advance PTC
+o Total Adv PTC Repayment – Total dollar amount of Advance PTC Repayment
+o Average Adv PTC Repayment – Average dollar amount of Advance PTC
+o PTC Count – Total number of returns with Premium Tax Credit
+o Total PTC – Total dollar amount of Premium Tax Credit
+o Average PTC – Average dollar amount of Premium Tax Credit
+o Transmitted – Total number of returns that were transmitted
+o Accepted – Total number of returns that were accepted
+o Rejected – Total number of returns that were rejected
+o First Transmission Date – Date the first transmission was sent to contractor
+o Last Transmission Date – Date the last transmission was sent to contractor
+o Requesting Direct Deposit – Total number of returns that requested Direct Deposit
+o Average AGI – Average Adjusted Gross Income
+o Total Refund Amt – Total refund amount for all transmitted returns
+o Average Refund Amt – Average refund amount for all transmitted returns
+o Total Bal Due Amt – Total balance due amount for all transmitted returns
+o Total Zero Balance Returns
+o Average Bal Due Amt – Average balance due amount for all transmitted returns
+o Primary or Secondary 60+ - Total number of primary taxpayers/spouses that were
+60 years of age or older
+o SIDN/PTIN – Site Identification Numb er
+o SCHED_1
+o SCHED_2
+o SCHED_3
+o SCHED_A – If a schedule A is included in the return = A
+o SCHED_B - If a schedule B is included in the return = B
+o SCHED_C - If a schedule C is included in the return = C
+o SCHED_D - If a schedule D is included in the return = D
+o SCHED_E - If a schedule E is included in the return = E
+o SCHED_F - If a schedule F is included in the return = F
+o SCHED_R - If a schedule R is included in the return = R
+o SCHED_SETP - If a schedule SE is included in the return = SE-TP
+o SCHED_SESP - If a schedule SE is included in the return = SE-SP
+o SCHED_EIC - If a schedule EIC is included in the return = EIC
+o SCHED_CEZ - If a schedule CEZ is included in the return = CEZ
+o EFIN – Electronic Filing Identification Number
+o USER_NAME – Username where the return is stored
+13 of 124
+o FIRST_NAME – Taxpayer’s first name
+o LAST_NAME – Taxpayer’s last name
+o FILING_STATUS – 1=Single; 2=Married filing Joint; 3=Married filing Separate;
+4=Head of Household; 5=Qualifying Widow/Widower
+o NUMBER_OF_DEPENDENTS – Number of dependents claimed on return
+o AGI - Total dollar amount of AGI on return
+o CHILD_CARE_CREDIT Total dollar amount of Child Care Credit claimed
+o TAX - Total dollar amount of tax on return
+o UNEMPLOYMENT - Total dollar amount of Unemployment Income reported
+o REFUND - Total dollar amount of refund on return
+o RETURN_TYPE – E = Electronic; P=Paper
+o DIRECT_DEPOSIT – T=Yes; F=No and dollar amount
+o MULTIPLE_REFUND_DEPOSIT – Total number of refunds deposited into a single
+bank account
+o STATE_REFUND - Total dollar amount of State Refund on return
+o STATE_REJECTED_DATE – Date return was rejected
+o STATE_ACCEPTED_DATE – Date return was accepted
+o STATE_TRANSMITTED – Total number of returns that were transmitted
+o TAXPAYER_AGE – Primary taxpayer’s age at time of the return
+o DATE_OF_BIRTH – Date of birth for primary taxpayer
+o CITY
+o STATE
+o ZIP
+o FORM_8888 – T=Yes; F=No
+o ITIN - Number of ITIN returns prepared
+o Number of paper refund checks requested including count, amount, and percentage of returns
+filed
+o Number of Trump Accounts set up including count and dollar amount
+o Number of Tips deducted including number of taxpayers and dollar amount
+• Number of Overtime Credit applied including number of taxpayer and dollar amount
+4.3.3 Ad Hoc Contractor Generated Reporting
+The Contractor shall provide accu
+rate, timely management reports containing the required
+information as needed for ad hoc requests. In addition to reports provided to the licensees within
+the software, the contractor shall provide management reports on an ad hoc basis to the IRS
+POC. The reports may contain the following information by the preparing EFIN:
+• The total number of accepted federal and state returns filed electronically
+identified as transmitted, accepted and rejected.
+• The total number of accepted returns by filing status, i.e. married filing jointly, single,
+etc. and by type of form (1040, 1040S-R, etc.).
+• Software package used, the SIDN, State EITC, State balance dues, State refund, the
+total number of accepted returns electronically filed claiming the earned income tax
+credit, child tax credit, education credit, and credit for the elderly, and the total
+amount of credits claimed.
+• Each EFIN’s beginning and ending transmission date.
+14 of 124
+• Total number of accepted returns electronically filed requesting direct deposit of
+refunds.
+• Average AGI of returns electronically filed.
+• The total number of federal returns that have zero or one-dollar AGI.
+• Number of accepted returns electronically filed where the primary or secondary
+filers were age 60 or over.
+• The total number of accepted returns electronically filed claiming a refund and the total
+amount of refunds.
+• The total number of zero balance returns.
+• Total number of self-prepared and preparer prepared returns.
+• The total number of accepted returns electronically filed claiming a balance due and
+the total amount of the balance due.
+• The total number of returns filed that used an ITIN.
+4.4 Task 4: Helpdesk Assistance and Technical Problem Resolution Support
+The Contractor shall provide a support website, toll-free telephone number, email, and chat
+help desk support to licensees for all products. The help desk will provide timely issue
+resolution to the licensees and detailed reporting to the IRS. Help desk support is defined as
+assistance that provides successful resolution of questions relating to software/hardware
+compatibility and functionality issues of the Contractor’s software. This includes providing
+support for trouble-shooting technical issues related to the installation and operation of the
+software (hardware, printers, etc.). Provided below are the minimum help desk requirements:
+• Beginning with the delivery of software through April, help desk support shall be
+available as follows: Mon - Fri: 8 AM ET - 12 AM ET and Sat and Sun: 8 AM ET - 8 PM
+ET. Post filing season (see Glossary), normal help desk hours are required Mon-Fri: 8
+AM ET – 5 PM ET. In the case of a problem the Contractor will have someone working
+on it until it is resolved or a work around is established.
+• The POCs for support issues shall provide contact information including a phone number,
+an email address, and contact information for after hours as necessary.
+• The help desk support shall permit unlimited contact from POC and IRS licenses by
+phone, email, chat, etc.
+• The help desk shall provide a first contact resolution rate of at least 95% regardless of the
+method of reporting the problem.
+• If resolution cannot be achieved during the initial contact, the Contractor shall provide a
+response within one hour with a status update. In no more than 4 hours the help desk shall
+present a plan for resolution. Problem resolution shall occur within 24 hours.
+• All calls shall receive first level help desk support with an on-hold time less than five
+minutes.
+• During the filing season, all he
+lp desk contacts shall be logged and accounted for in
+detail. The contact log shall contain a tracking number and capture the following:
+o The type of IRS program, i.e. VITA, TCE, etc.,
+o licensee's EFIN,
+o the problem identified,
+15 of 124
+o the solution that was provided to the licensee,
+o date of contact, time of day,
+o date of solution,
+o length of time to answer in minutes,
+o length of call in minutes if applicable,
+o number of incoming contacts,
+o number of abandoned contacts,
+o if contacts are categorized, the Contractor will provide a legend that defines the
+categories,
+o Software type (web-based, desktop or self-preparer version).
+• The Contractor shall provide, administer, and maintain a support website for licensee access
+including IRS licenses.
+• The support website shall be available to IRS licensees twenty-four hours a day, seven
+days a week.
+• All content on the support website (including FAQs, Blogs, etc.) shall be text
+searchable and accessible for a period of three years.
+• The Contractor’s support website shall provide product information, frequently asked
+questions and answers (FAQ’s), links to email support and software updates.
+• In the event of an unscheduled outage, the Contractor shall provide initial notification to
+the COR no later than (15) minutes after initial discovery, hourly updates, and a
+resolution of the problem via broadcast email to all licensed POCs.
+• In order to increase efficiency of interactions between VITA/TCE partners and clients,
+the contractor shall provide a client portal that allows for direct two-way communication
+between sites and clients.
+4.5 Task 5: Regulatory, Security and Privacy Standards
+Award of this contract will be contingent upon the contractor’s facility, systems, and
+procedures, successfully passing the IRS Contractor Review, performed within 2 weeks after
+notice of intent to award. After the Contractor Review, the Contractor will submit a plan of
+compliance to mitigate the risks within 2 weeks from IRS notification of vulnerabilities or risks
+disclosed during the review. The Contractor is solely responsible for the costs of the respective
+mitigation plan. The contractor shall be fully compliant with the risk mitigation plan, including
+IRS required changes to the risk mitigation plan. IRS will perform a follow-up safeguard
+review within 2 weeks after the 60-day deadline to validate contractor compliance. Because of
+heightened security awareness, the IRS may, from time to time, notify the contractor of
+increased risks, and request changed security procedures. The contractor shall negotiate with
+the IRS to determine the timing, scope, and resolution of the problems. The contractor shall comply with all applicable security rules and regulations as specified in
+this Statement of Work. In addition, the contractor shall comply with the most current
+version of the publications listed on Attachment 3 – Applicable IRS Publications and IRS
+Internal Revenue Manuals (IRM).
+4.6 Task 6: Ramp-Up Knowledge Transfer-In
+Ramp-Up Knowledge Transfer-In is defined as the Contractor obtaining and understanding the
+necessary documentation, information, readiness activities, and processes related to any work
+that is used for the VITA and TCE programs. This task includes meeting with the IRS Subject
+Matter Experts frequently to gather any tacit knowledge related to the Internal Revenue Service,
+16 of 124
+Information Technology (IT) computer systems and services (i.e. Core Systems, Compliance
+Document Matching, and Solutions Engineering/Enterprise Services) or programs in
+development. The government estimates this task will take approximately four to six months to
+complete after the contract is awarded. The Contractor shall appoint a knowledge transfer manager to oversee the transfer-in process. Prior to the process, the Contractor shall develop a draft Knowledge Transfer Plan (KTP) and
+present it to the Government within the first 15 business days after the contract is awarded. The
+KTP shall identify the Contractor resources and roles involved in the process, provide a list of
+risks and mitigation strategies for the transfer, and contain a detailed resource balanced project
+schedule. The KTP project schedule shall identify responsibilities, needs, milestones, and lessons
+learned under the previous contract. The project schedule shall be at sufficient level of detail to
+track progress on a bi-weekly basis, (i.e., all responsibilities will be detailed to a level such that
+no activity has duration of more than ten workdays). The Government shall have 20 business days to review the draft KTP plan and provide
+comments to the Contractor. Government and Contractor representatives will then meet to
+discuss the comments after which the Contractor shall incorporate the agreed-upon changes and
+deliver a final KTP plan within five working days of the government’s feedback. The contractor shall meet with the IRS bi-weekly (twice a month) to discuss the progress of the
+knowledge transfer. The Contractor shall show an updated KTP schedule/timeline and discuss
+any risks or concerns at this time. The Contractor shall implement the KTP (to not disrupt the tax season) and provide a schedule
+of events. In addition, the Contractor shall complete the following readiness activities:
+• customization of reporting capabilities.
+• software customizations, if applicable.
+• testing;
+• help desk stand up; and
+• training volunteers to use the software.
+4.7 Task 7: Ramp-Up Knowledge Transfer-Out
+At the end of this contract, the Contractor shall provide transfer-out services. The Contractor
+shall facilitate the transition of contracted activities and services to a new Contractor in
+accordance with the Government Approved Transfer-Out Plan. The transition period shall not
+exceed 90 days after the new contract is awarded. Should the incumbent not be awarded the re-
+compete contract, the Contractor will be required to support phase out activities and transition to
+the new Contractor, including knowledge transfer, data transfer, system handover, support
+continuity, training for successor and final deliverables. The Contractor shall provide a
+Knowledge Transfer Plan that is accepted by the Government and successfully completes
+knowledge transfer in accordance with the plan. The Contractor shall:
+• Minimize transition impact to the user community.
+• Ensure no breaks in service availability.
+• Maintain existing se
+rvice quality and performance levels.
+17 of 124
+• Ensure a transparent and seamless transition.
+• Maintain support and meet delivery milestones of ongoing projects.
+• Ensure that the IT security posture during transition is maintained at current levels
+without creating gaps and/or vulnerabilities.
+4.8 Task 8: Period of Performance Summary Report
+Customer Support Services for the IRS COR: The Contractor shall provide a full time point
+of contact (POC) to partner with the IRS Contracting Officer Representative (COR) to be
+available to discuss and address issues that may arise. The Contractor POC shall facilitate and
+participate in conference calls with IRS licenses at least twice a week at the beginning of the
+IRS’ fiscal year starting in October of each year throughout the filing season to discuss updates
+to the software and field questions from partners. In addition, as part of filing season readiness
+(starting in May of each year), the contractor shall facilitate and/or participate in post filing
+season activities (lessons learned, training, meetings, etc.), as needed by the request of the IRS
+POC. The Contractor shall provide a period of performance summary report which provides
+details on accomplishments, challenges, proposed changes, strategic planning, and anything
+noteworthy for the preceding period. The Contractor shall provide the ability for IRS licensees to designate additional notification
+points of contact (POC) who will also receive automatic e-mail notifications of updates and
+changes to the software. The Contractor POC shall work with the IRS on employee, partner,
+and volunteer communications relating to their products and services. The Contractor POC shall respond to reasonable requests for customization of features within
+the software. Examples of such requests include blocking bank products, linking to IRS
+training websites or customizing default values including SIDN and EFIN within the
+software (to reduce volunteer burden). The Contractor shall respond to requests for reports as needed on previously described data
+fields and for fields which are impacted by new tax law and tax law changes. The Contractor
+shall create and run customized management reports at the request of the IRS POC. The reports
+may be generated for internal or external use. The Contractor shall allow the IRS the right to include screenshots and Contractor product
+information material in written materials and collateral, that will be used in support of the Tax
+Assistance Programs. The Contractor shall partner with the IRS POC to verify accuracy of
+software screenshots or product information included in IRS publications. The Contractor may
+be asked to provide screenshots in the format needed to the IRS POC via email if the
+information is not readily available via the software. The Government also reserves the right to request this report at any point during the performance
+of the contract at the discretion of the Contracting Officer. This ad hoc report, if desired, will
+only be requested once during the life of the contract and is in addition to the regularly
+scheduled Period of Performance Summary report. The Contractor shall provide the Period of Performance Summary Report. The Contractor shall
+provide customer support/helpdesk to the licensee sites, deployment of software and associated
+material
+s and training to the volunteers. The goal is to facilitate open communications between
+18 of 124
+the Contractor and IRS POC. The Contractor and IRS POC shall remain in constant
+communication regarding the software, updates, reporting, required training, or any other tasks
+within the scope of the Statement of Work.
+4.9 Task 9: Transition to Support
+The transition to support process shall include, but not be limited, to the following:
+Training requirements and materials:
+The volunteers who are preparing tax returns and assisting taxpayers may have limited
+experience with tax preparation and using the Contractor’s software. The Contractor shall
+provide/implement a method of delivery in which to provide training that is effective, efficient,
+and feasible to ensure that up to 96,000 volunteers and employees are trained to use the
+software. The Contractor shall provide/implement their methods to deliver online and face-to-
+face training. The contractor’s training methods shall include use of online training modules including videos,
+face-to-face, webinars, recordings of webinars, a practice environment to enter mock return
+information and Contractor facilitated training forums. The Contractor should provide a testing environment for volunteer training purposes. During contract performance, the contractor shall provide a Beta version of all software and
+documentation, prior to it becoming commercially available, no later than October 15
+thof each
+year. This software will be made available to the IRS Workstations Standards Idea Lab for
+testing and to the IRS Point of Contact (POC). Functionality of the Web-Based Professional Version and Desktop Professional Version is such
+that they would require the same training to us e both of them. The contractor shall provide a
+training plan. The training plan shall be subject to modification based on feedback from the IRS
+POC once the contract has been awarded. (See Attachment 2 - Deliverables)
+The contractor’s training plan shall specify the following training details:
+• trouble-shooting scenarios;
+• a training pilot session;
+• length of training;
+• training schedule;
+• course objectives;
+• course content outline with each section or topic indicating user roles and user
+segments targeted;
+• course material to include exercises and examples, for each user role and user
+segment;
+• measurement method/tool to indicate successful completion of specific exercises
+or test; and
+• a plan for IRS licensee training over the life of the contract. The contractor’s web-based training software must provide three second or shorter response
+19 of 124
+time. The Contractor shall describe/provide/implement a registration process for student
+enrollment in training sessions. The Contractor shall describe/provide/implement a method to capture participants no later
+than 5 days after attending each training session. The Contractor shall describe/provide/implement a method to customize the training,
+curriculum and materials for IRS requirements based on user responsibilities. (See Attachment
+1- Roles and Responsibilities)
+The Contractor shall describe/provide/implement a method for training IRS volunteers
+without access to the internet. The Contractor shall describe/provide/implement a method to access reference materials
+within the software. The contractor shall provide a printed user guide to accompany each software package
+delivered. The contractor shall also make th e user guide accessible online to all users. Training materials shall cover accurately preparing federal tax returns, transmitting the
+returns, generating reports, picking up acknowledgement/ rejected files, and correcting
+rejected returns. The Contractor shall make printed and electronic training materials available in English and
+Spanish. The Contractor shall describe/provide/implement their method of providing training
+materials in all software versions. The Contractor shall provide online training for multiple users per site to practice creating,
+modifying, and printing sample returns with solutions to practice problems. The Contractor shall provide an online training environment that replicates the Desk/Web
+version of federal returns and requires users to create a unique account. The Contractor shall
+provide training materials for IRS use. Software Production Environment: Software, Maintenance, Distribution, and Disaster
+Recovery (i.e. fix software bugs/problems, updates, and upgrades)
+The Contractor shall provide/support/implement their:
+• The Contractor shall ensure distribution of software.
+• The Contractor shall ensure maintenance for software packages (including release
+notes for bug fixes, patches, notification regarding updates to users, and upgrades).
+• The Contractor shall ensure a process for ordering, providing immediate
+acknowledgement of orders, tracking, and distributing software to the IRS and
+shipping to approximately 12,000 domestic and 70 international shipping addresses
+20 of 124
+which could include multiple deployments.
+• The Contractor shall ensure a procedure for unused licenses to be transferred from one user to a
+different user.
+• The system shall provide credit for unused licenses.
+• Ability to provide deployment metrics back to the IRS Contracting Officer
+Representative such as real-time counts of the software units purchased, distributed,
+deployed, and un-delivered shipments.
+• Ordering process that allows only the IRS COR or designee to place software orders and
+authorize software distribution upon receipt of a signed delivery order.
+• The system shall allow a site administrator to create a local network, to manage user
+accounts, passwords, system updates, shared printing, and other configurable items. Availability Requirements at a minimum shall:
+• Web-based software shall be available 99% of the time each week based on a 168-hour
+week and excluding time for weekly scheduled maintenance.
+• Scheduled maintenance shall not disrupt VITA operations utilizing overnight updates as feasible.
+• Web-based software shall provide a three (3) second or shorter system response/refresh
+time at all times that the system is available.
+• Contingency plan in the event the web-based version is not available. Access codes shall
+be interchangeable between the web-based and desktop packages of professional
+software. That is, every access code may be used to activate either the web-based
+software or desktop software. Disaster Recovery at a minimum shall include the following:
+• The Contractor shall provide/support/implement their disaster recovery plan and business
+continuity plan/procedures.
+• The Contractor shall provide the results of the disaster recovery tests. (See deliverable
+table).
+• In the event of a catastrophic event (e.g. natural disasters, technological failures, human
+threats, etc.), the Contractor shall provide a recovery to full service as quickly as possible
+(i.e. to prevent an outage from exceeding 24 hours from the beginning of the reported
+event.)
+• The disaster recovery, business continuity plan and instructions shall be provided to the
+IRS POC in the event an outage occurs.
+• The Contractor shall provide the capability to re-establish IRS licensee’s data files to a
+condition that existed no more than 2 hours before the interruption in the event of system
+failures or facility disasters to prevent loss of data and provide business continuity.
+• The Contractor shall deliver on-going training that is efficient and feasible to ensure that
+up to 96,000 volunteers and employees are trained to effectively use the software.
+• During the initial contract year, the training sessions will star t in August.
+• In option years following the initial contract year, training sessions will start in
+October and be available through January.
+• The Contractor shall provide access to training materials as described in this statement of
+work.
+• The Contractor shall provide a process that ensures efficient deployment(s) of the
+software to licensees or any other tasks within the scope of the Statement of
+21 of 124
+Work.
+4.10 Task 10: Site File Upload to the Tax Software
+In order to increase VITA/TCE partner flexibility and facilitate the remote preparation of tax
+returns at offsite partner tax locations, the contractor shall provide the capability for volunteers
+and taxpayers to upload, view, and store files to the tax software. Documents can be uploaded to
+the contractor’s secure servers using either a scanner and/or a mobile device. The uploaded files
+must be associated with a specific client tax account or return. Users will have the ability to label
+and delete files as needed. File storage will be unlimited, and uploaded files will not be
+automatically deleted until the tax software is taken down for revisions/upgrades for the
+following tax year (i.e., November or December). Files should be able to drag drop into tax
+preparation software. Ability to send email or link to taxpayers to upload documents and fill out
+the Form 13614-C.
+4.11 Task 11: Direct Client Portal
+In order to increase efficiency of interactions between VITA/TCE partners and clients, the
+contractor shall provide a client portal that allows for direct two-way communication between
+sites and clients. The portal will allow clients to:
+The portal will allow clients to:
+2) Securely upload files, including income documents, to their account using a computer or other
+device. These documents should be able to drag/drop into software.
+3) Fill out a Form 13614-C Intake Sheet. Diagnostics for preparer should be able to compare
+entries on intake sheet, income documents and the prepared return and give the preparer any
+alerts to issues or mismatch that could cause an inaccurate return. The IRS SPEC definition of
+an accurate return is the intake sheet and source documents match the return prepared. It is
+important to know if the intake sheet had income or deductions that didn’t end up on a return.
+5) Send and receive messages about their account from their tax preparation site
+5. Period of Performance:
+The base ordering period is a 12-month base period, with four (4) consecutive 12-month option
+ordering periods as stated below:
+• Base Period: August 17, 2026 – August 16, 2027
+• Option Period 1: August 17, 2027 – August 16, 2028
+• Option Period 2: August 17, 2028 – August 16, 2029
+• Option Period 3: August 17, 2029 – August 16, 2030
+• Option Period 4: August 17, 2030 – August 16, 2031
+Transition-in activities are required for the first (90) days of contract performance. During the initial contract period, transition activities such as knowledge transfer, system setup,
+data migration, help desk stand-up, training material development, live web-based training
+sessions, and system testing and acceptance, will be started in August 2026.
+22 of 124
+In option years, training material development and live web-based training will be started in
+August and be completed before January each year. Software shall operate at its full capacity by the beginning of the 2027 filing season (Tax Year
+2026). Software licenses are valid one year from November – November of each contract period.
+6. Place of Performance:
+The place of performance will primarily be at the Contractor’s site. The award may be issued
+for performance to be at VITA sites, TCE site, Internal Revenue Service (IRS) facilities, or
+Treasury facilities. The specific place of performance will be specified within the contract. On Ordering Procedures:
+The Award will be issued to the Contractor using the pricing submitted for each deliverable, for
+the Contract Line-Item Number (CLIN), as the need for software and support arises. Awards
+issued against the contract will only be issued from the Procurement Office via a Contracting
+Officer and/or Contract Specialist when the Contracting Officer’s Representative (COR) or
+Program Officer requires the next level of support for a specific CLIN and a fully funded
+requisition is provided.
+7. Ship to locations:
+Unless otherwise specified, all deliverable/work products shall be provided to the IRS COR
+and shipping to approximately 12,000 domestic and 70 international shipping addresses which
+could include multiple deployments.
+8. Deliverables:
+Unless otherwise requested in writing by the COR, work products shall be produced using
+Microsoft Office 2010 or later Professional products and delivered in accordance with the
+deliverable schedule under Attachment 2. If it is required that deliverable(s) be submitted in
+media storage form, all devices must be scanned and certified as virus free.
+9. Ramp-Up Period
+Work under this statement of work may require a ramp-up period at the initial start of this
+contract. Under the Ramp-up Period the Contractor will recruit and hire personnel specifically
+for this contract. Note: Refer to 4.6 TASK 6: RAMP-UP KNOWLEDGE TRANSFER-IN.
+10. Order Administrative Data
+10.1 Identification of Government Personnel
+The COR designation will be identified by the CO’s written designation memo. Similarly, the
+Alternate COR (ACOR) will be identified by the CO’s written designation memo. The CO will
+identify the (COR/ACOR) via e-mail to the Contractor.
+10.2 Performance Required Beyond Standard Workday
+23 of 124
+If needed, performance may be required beyond the standard workday. Beginning with the
+delivery of software through April, help desk support shall be available as follows: Mon - Fri: 8
+AM ET - 12 AM ET and Sat and Sun: 8 AM ET - 8 PM ET. Post filing season, normal help desk
+hours are required Mon-Fri: 8 AM ET – 5 PM ET. In the case of a problem the expectation is
+that the Contractor will have someone working on it until it is resolved or a work around is
+established.
+10.3 Personnel Removal and Replacement
+The applicable contractor employees are subject to investigation by the government. Applicable
+contractor employees who undergo contractor clearances that reveal, but are not limited to, the
+following, may be unacceptable under this contract: conviction of a felony, a crime of violence
+or a serious misdemeanor, a record of arrests for continuing offenses, or failure to file or pay
+federal income tax. The government reserves the right to determine if a contractor employee
+assigned to a task shall continue with the task. The contractor shall agree to remove the person
+assigned within one day of official notification by the government and provide a replacement
+within five days. New hires or substitutions of personnel are subject to the contractor clearance
+requirement.
+10.4 Deliverables/ Work Products
+All contractor deliverables or work products shall remain categorized as "Official Use Only.”
+The release of any portion must be authorized in writing by the government. The contractor shall adhere to Section 508 of the Rehabilitation Act of 1973, which requires
+access to the Federal Government electronic and information technology. The law applies to all
+Federal agencies when they develop, procure, maintain, or use electronic and information
+technology. Federal agencies must ensure that this technology is accessible to employees and
+members of the public with disabilities. http://www.section508.gov/. Each Electronic and Information technology product or service furnished under this statement of
+work shall comply with the Electronic and Information Technology (EIT) Accessibility
+Standards (29 U.S.C. 87794(d)). For every EIT product or service accepted under this contract by the Government that does not
+comply with (29 U.S.C. 87794(d)), the contractor shall at the discretion of the Government,
+make every effort to replace or upgrade it with a compliant equivalent product or service, if
+commercially available and cost neutral, on either the planned refresh cycle of the product or
+service, or on the order renewal date, whichever shall occur first. The contractor will be working with sensitive taxpayer data under this contract and must
+demonstrate the ability to pass all IRS security reviews required to receive access to encrypted
+sensitive taxpayer data. The Remainer of his page is intentionally left blank.
+24 of 124
+11. Contractor Requirements
+The contractor will be working with sensitive taxpayer data under this contract and must
+demonstrate the ability to pass all IRS security reviews required to receive access to encrypted
+sensitive taxpayer data. The Contractor shall meet the Minimum Operating System Requirements. The volunteer sites
+that will use the software utilize a wide variety of technology. The software shall be able to
+operate with 1.0 GB of free hard drive space. Many sites use old versions of computer hardware
+and software, so the software must be compatible with older systems. The software (desktop &
+web-based) must operate on the specified minimum system requirements and maintain
+compatibility with newer systems as they become available. The software, including sample software submitted, will be tested for compliance with the IRS
+Common Operating Environment (COE) to ensure the software will work on the IRS IT
+environment. That is, the software will not require nor have dependencies on products not
+included within the IRS base product list. Example software included, but not limited to, in the
+COE is:
+End User Equipment and Services Division
+Standards Change & Release Mgmt. Development & Standards
+250 Murall Drive, Mailstop 5850
+Kearneysville, WV 25430
+Base Software Installed on Windows 10.1803.64
+New Driver Support: HPZ820 Existing Driver Support: EliteBook 2530p, EliteBook 2730p,
+EliteBook 6930p, EliteBook 8530p, EliteBook 2540p, HP ProBook 6440b, HP ProBook 6540b,
+EliteBook 8540p, EliteBook 8740w, HP ProBook 6450b, HP ProBook 6460b, HP
+25 of 124
+EliteBook2570p, HP ProBook 6470b, HP EliteBook 8570p, : EliteBook 8770w, EliteBook 820
+G1, EliteBook 840 G1, EliteBook 850 G1, ZBook 14, ZBook 15, ZBook 17, ProBook 640 G1,
+DC5800, HP 6000 Pro, HP 6200 Pro, HP 6300 Pro, Z400 and HP ProDesk 600 G1.
+• Windows 10 Professional Service Pack 1
+• Internet Explorer 11
+• Net Framework 3.5.1 (Includes .net Framework 2.0 SP2, 3.0 SP2 and 3.5 SP1)
+Corporation 8.1.6243.0
+Corporation ActivID ActivClient x64 7.1.0 20190507
+Incorporated Adobe Acrobat DC (2015) 15.006.30306 20190507
+Incorporated Adobe Acrobat Reader DC (2015) MUI 15.006.30456 20190320
+Adobe Adobe Flash Player 32 NPAPI 32.0.0.171
+Adobe Systems,
+Inc. Adobe Shockwave Player 12.3 12.3.1.201
+Corporation Altiris Application Metering Agent 8.1.5636.0 20190507
+Corporation Altiris Inventory Agent 8.1.6288.0 20190507
+Corporation Arellia Agent 8.1.137.0 20190507
+Corporation Arellia Application Control Agent 8.1.1802.0 20190507
+26 of 124
+Corporation Arellia Local Security Agent 8.1.1602.0 20190507
+Corporation Arellia Security Analysis Agent 8.0.1204.0 20190507
+Service ARS Local Admin Sync Service 6.00.0000 20190507
+Corporation Bomgar Automatic Elevation Service 1.0.2.0 20190507
+Bomgar Bomgar Button 16.2.9
+[bomgartest.enterprise.irs.gov] 16.2.9
+bomgartest.enterprise.irs.gov 16.2.9 20190507
+Corporation Bomgar Virtual Smart Card Customer 1.0.36.0 20190507
+Cisco Systems,
+Inc. Cisco AnyConnect Diagnostics and
+Reporting Tool 4.5.05030 20190507
+Cisco Systems,
+Inc. Manager 4.5.05030 20190507
+Cisco Systems,
+Inc. Cisco AnyConnect Secure Mobility Client 4.5.05030 20190507
+Cisco Systems,
+Inc. Cisco AnyConnect Secure Mobility Client 4.5.05030
+Cisco Systems,
+Inc. Cisco AnyConnect Start Before Login
+Module 4.5.05030 20190507
+Cisco Systems,
+Inc Cisco Jabber 11.6.0.35037 20190320
+Cisco Systems,
+Inc. Cisco ViewMail for Outlook 11.5.1002 20190320
+27 of 124
+Corporation DIRECT! CP 8.00.0003 20190320
+Biscom FAXCOM Image Driver x64 01.03.0402 20190506
+Biscom FAXCOM Suite for Windows Client 10.01.0140 20190506
+HP HP Hotkey Support 6.2.39.1 20190506
+HP HP PC Hardware Diagnostics UEFI 6.6.2.0 20190320
+IBM Corp. IBM BigFix Client 9.5.9.62 20190507
+Software, LLC InformaCast Desktop Notifier 4.0.2.3 20190506
+Intel Corporation Intel(R) Management Engine Components 1.0.0.0 20190506
+Intel Corporation Intel(R) Management Engine Components 1.0.0.0 20190506
+Intel Corporation Intel(R) Management Engine Components 1829.12.0.1154
+Intel Corporation Intel(R) Management Engine Driver 1.0.0.0 20190506
+Intel Intel(R) Network Connections Drivers 23.5
+Intel Corporation Intel(R) Processor Graphics 25.20.100.6577
+Service IRS Network Printer Installer 1.0 20190506
+Consortium ISC BIND 9 9.9.6 20190320
+Corporation Java 8 Update 111 8.0.1110.14 20190507
+Corporation Java 8 Update 111 (64-bit) 8.0.1110.14 20190507
+Corporation Microsoft InfoPath 2013 15.0.4753.1001
+28 of 124
+Corporation Microsoft InfoPath 2013 15.0.4753.1001 20190507
+Corporation Microsoft InfoPath MUI (English) 2013 15.0.4753.1001 20190320
+Corporation Microsoft Office 365 ProPlus - en-us 16.0.10730.20334
+Corporation Microsoft Office 64-bit Components 2013 15.0.4753.1001 20190508
+Microsoft Office OSM MUI (English)
+2013 15.0.4753.1001 20190320
+Corporation Microsoft Office Proofing (English) 2013 15.0.4753.1001 20190320
+Microsoft Office Proofing Tools 2013 –
+English 15.0.4753.1001 20190320
+Microsoft Office Proofing Tools 2013 –
+Español 15.0.4753.1001 20190320
+Microsoft Office Shared 64-bit MUI
+(English) 2013 15.0.4753.1001 20190320
+Microsoft Office Shared 64-bit Setup
+Metadata MUI (English) 2013 15.0.4753.1001 20190320
+Microsoft Office Shared MUI (English)
+2013 15.0.4753.1001 20190507
+Microsoft Office Shared Setup Metadata
+MUI (English) 2013 15.0.4753.1001 20190320
+Corporation Microsoft Silverlight 5.1.50907.0 20190507
+Corporation Microsoft Visio Viewer 2013 15.0.4420.1017 20190320
+29 of 124
+Corporation Microsoft Visual C++ 2005 Redistributable 8.0.61001 20190320
+Microsoft Visual C++ 2005 Redistributable
+(x64) 8.0.50727.42 20190320
+Microsoft Visual C++ 2005 Redistributable
+(x64) 8.0.59192 20190320
+Microsoft Visual C++ 2008 Redistributable
+- x64 9.0.30729.6161 9.0.30729.6161 20190320
+Microsoft Visual C++ 2008 Redistributable
+- x86 9.0.21022 9.0.21022 20190506
+Microsoft Visual C++ 2008 Redistributable
+- x86 9.0.21022.218 9.0.21022.218 20190320
+Microsoft Visual C++ 2008 Redistributable
+- x86 9.0.30729.6161 9.0.30729.6161 20190320
+Microsoft Visual C++ 2010 x64
+Redistributable - 10.0.40219 10.0.40219 20190320
+Microsoft Visual C++ 2010 x86
+Redistributable - 10.0.40219 10.0.40219 20190320
+Microsoft Visual C++ 2012 Redistributable
+(x64) - 11.0.61030 11.0.61030.0
+Microsoft Visual C++ 2012 Redistributable
+(x86) - 11.0.61030 11.0.61030.0
+Microsoft Visual C++ 2012 x64 Additional
+Runtime - 11.0.61030 11.0.61030 20151022
+Microsoft Visual C++ 2012 x64 Minimum
+Runtime - 11.0.61030 11.0.61030 20151022
+Microsoft Visual C++ 2012 x86 Additional
+Runtime - 11.0.61030 11.0.61030 20190320
+30 of 124

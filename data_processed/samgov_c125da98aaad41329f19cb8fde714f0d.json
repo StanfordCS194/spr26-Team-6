@@ -3,11 +3,10 @@
   "external_id": "c125da98aaad41329f19cb8fde714f0d",
   "title": "Request for Information (RFI)/Sources Sought (SS) Program and Budget Enterprise System (PBES)_2026",
   "name": "Request for Information (RFI)/Sources Sought (SS) Program and Budget Enterprise System (PBES)_2026",
-  "statement_of_work": "",
+  "statement_of_work": "1 Is the Government open to considering relevant commercial or public sector past performance? The government believes public or commercial past performance is acceptable.",
   "deliverables": [
-    "Execute scope of work described in the Request for Information (RFI)/Sources Sought (SS) Program and Budget Enterprise System (PBES)_2026 solicitation",
-    "Deliver milestones, status reporting, and acceptance documentation",
-    "Provide final handoff and post-deployment support per RFP terms"
+    "There are minor challenges with data validation that must be addressed to reduce the manual workload required to maintain accuracy",
+    "System designs must provide structural continuity to mitigate process drift (divergence) while retaining the agility required for mission-critical flexibility"
   ],
   "location_level": "state",
   "location": "California",
@@ -17,7 +16,7 @@
     "California"
   ],
   "dept": "DEPT OF DEFENSE.DEPT OF THE AIR FORCE.AIR FORCE MATERIEL COMMAND.AIR FORCE LIFE CYCLE MANAGEMENT CENTER.BUSINESS AND ENTERPRISE SYSTEMS.FA8770 AFLCMC GBK",
-  "description": "",
+  "description": "1 Is the Government open to considering relevant commercial or public sector past performance? The government believes public or commercial past performance is acceptable.",
   "published_date": "2026-04-30",
   "due_date": "2026-05-13T15:00:00-04:00",
   "contact_name": "Amanda Stull",

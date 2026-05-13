@@ -1,0 +1,583 @@
+Request for Information (RFI)
+03 April 2026
+Table of Contents
+1 (U) Introduction 4
+2 (U) Background 4
+3 (U) Scope 4
+4 (U) General Requirements 5
+5 (U) Transition Requirements 5
+6 (U) Aeronautical Dataset Requirements 6
+7 (U) Application Requirements 7
+8 (U) Enhancement Requirements 8
+9 (U) Dissemination & Support Requirements 8
+10 (U) Cloud Storage 9
+11 (U) Software Methodology and Delivery 9
+12 (U) Software Security 10
+13 (U) Program Management 11
+14 (U) 508 Compliance 11
+15 (U) Personnel Requirements 12
+16 (U) Standards and Quality Management Process 12
+16.1 (U) ISO Conformance 12
+16.2 (U) Software Metrics 13
+16.3 (U) Quality Control Plan 13
+16.4 (U) Quality Assurance Acceptance Criteria 14
+17 (U) List of Applicable Documents 15
+18 (U) Unclassified Work Performance Security Requirement 16
+18.1 (U) Uncleared Personnel Security Requirements 16
+18.2 (U) Physical Security Requirements 17
+18.3 (U) Information Security Requirements 17
+18.4 (U) Cybersecurity Requirements 18
+19 (U) Operational Security 23
+19.1 (U) Information Handling 23
+20 (U) Contract Deliverable Requirements List (CDRLs) 23
+21 (U) Government Furnished Property and Information 25
+22 (U) Data Rights 25
+23 (U) Appendix A: Definition and Tasks for Software Maintenance 26
+24 (U) Appendix B: Annual –NGA’s Aeronautical Cycle Data, Datasets, and Products 28
+25 (U) Appendix C: Labor Categories Description 29
+26 (U) Appendix D: Security References 32
+27 (U) Appendix E: Acronym Listing 33
+(U) Introduction
+(U) The National Geospatial-Intelligence Agency's (NGA) Aeronautical Navigation Office provides time-sensitive Safety of Navigation (SoN) Aeronautical data to support Department of War (DOW), Federal Aviation Agency (FAA) and foreign partners' operational needs. The Aeronautical Mobile Application (AMA) Program enables users to securely download validated aeronautical data and products for their missions. Established in 2011, AMA provides digital access to NGA's Flight Information Publications (FLIP) products, Electronic Instrument Procedure Library (E-IPL), and worldwide datasets through a mobile platform, advancing toward a paperless operating environment while offering enhanced capabilities over legacy paper products.
+(U) Background
+(U) The Aero App program began in 2010 to meet U.S. Army requirements for digital display of Instrument Approach Procedures (IAPs) and Airport Diagrams (APD) at paper-product size. Mobile tablets provide a cost-effective solution with enhanced readability. The Tri-Services requested a FLIP delivery application for flight decks operating on iOS, Android, and Windows with common functionality and offline capability.
+(U) The "Aero App" suite functions as part of an Electronic Flight Bag (EFB)/Electronic Knee Board (EKB) that ingests NGA's Aeronautical Cycle Data, Datasets and Products. Success depends on immediate access to timely, relevant aeronautical data produced according to the 28-day Aeronautical Information Regulation and Control (AIRAC) cycle. This data dissemination minimizes navigational risk during missions.
+(U) AMA includes vector-based mobile applications with dynamic moving maps displaying NGA products (Terminal Area Charts, NAVPLAN Chart, Helicopter charts, etc.) and a server application (Aero Data Server) allowing pilots to download data at various locations over WiFi or wired connections, particularly in Denied Degrade Intermittent/Low-Bandwidth (DDIL) environments. Additionally, the Aero Data Server enables users to convert files into the MB Tile format for application use.
+(U) Scope
+(U) The Contractor shall provide NGA's domestic and foreign government customers with consistent access to aeronautical data across multiple operating systems. On a 28-day cycle, the Contractor will process 11-25 gigabytes of data from NGA, FAA, NavCanada and other sources for presentation on a mobile device that can be used in up to Impact Level (IL) 6 environments. This requires maintenance of over 4.5 million lines of code across multiple operating environments, with some data processed on ad-hoc 7, 14, 56, or 96-day cycles. All AMA applications and data are the property of the National Geospatial-Intelligence Agency.
+(U) General Requirements
+(U) The Contractor shall:
+(U) Operate on a 12-month base period with four 1-year options (Base + 4 option years)
+(U) Provide support during NGA business hours (0900-1700 EST, M-F)
+(U) Perform work at Contractor's facility or as directed by NGA
+(U) Provide and maintain user manuals for AMA application software outlining all capabilities
+(U) Create and provide version control of SDKs and APIs developed and delivered
+(U) Deliver requirements in Contractor-owned/managed Cloud environment
+(U) Absorb costs for errors requiring replacement deliverables
+(U) Update software capabilities per backlog document at the Government’s direction
+(U) Maintain SWAP compliance and remediate vulnerabilities for ATO
+(U) Whitelist AMA products on DoW and non-DoW systems
+(U) Maintain software in an NGA-approved development environment
+(U) Maintain and update software to meet Government mission needs
+(U) Provide software maintenance, enhancements, development, testing, deployment, and operations/sustainment
+(U) Submit all documentation (i.e., design documents, architecture artifacts, etc.) generated throughout the duration of the contract to the COR or designee, since these products are considered Government Property for review and approval
+(U) Ensure NGA approval of all application and data enhancement contracts issued by outside agencies or contractors impacting AMA products or services
+(U) Transition Requirements
+(U) The Contractor shall:
+Deliver a Transition-In Plan documenting the 15-30-60-day schedule as outlined in CDRL A003
+(U) Host a remote kick-off meeting within 10 business days of award
+(U) Submit incident/problem management processes within 25 days
+(U) Provide a release schedule within 60 days
+(U) Execute a Transition-Out Plan when requested, with 30 days to produce the plan and 180 days for transition as outlined in CDRL A007
+(U) Train a new Contractor to include the execution of a dual run, as directed by the Government.
+(U) Deliver data, source code, documentation such as version description document for each release, deployment instructions, relevant test plans, and testing scripts.
+(U) Aeronautical Dataset Requirements
+(U) The Contractor shall process all aeronautical datasets each AIRAC cycle to maintain current data across the AMA suite, including:
+(U) Georeferenced procedures in TIF and PNG formats
+(U) NavPlan Charts in MBTile format
+(U) FLIP, DAFIF, VO's, E-IPL DVDs
+Area Charts include, but not limited to, the following:
+Africa (AFR)
+Caribbean and South America (CSA)
+Eastern Europe and Asia (EEA)
+Europe North Africa and Middle East (ENAME)
+Pacific Australasia and Antarctica (PAA)
+North Atlantic Route Planning Chart
+US (AK, PAC, Atlantic)
+(U) U.S. TAC and helicopter charts
+(U) Additional elements as required
+(U) The Contractor shall:
+(U) Provide dataset deliverables to NGA websites in an Open Geospatial Consortium (OGC) compliant format. Document and update the Technical Data Standards facilitating the recreation of data or aid other applications with the ability to leverage NGA charts and data for use in 3rd party applications. Ensure data provided by 3rd Party sources (i.e. Foreign or mission specific purposed charts, GIANT Reports, etc.) are added as the capabilities of the Aero App expand in support of additional mission requirements. Be responsible for all data services work required for all versions of Aero App and ADS to be functional.
+(U) Application Requirements
+(U) The Contractor shall:
+Support Aero App on iOS and Android platforms, and ADS on MacOS and Windows
+Ensure all software is updated to full functionality on the most recent OS versions
+Maintain and provide support for three versions of each application
+Ensure backward compatibility with previous OS versions and hardware as defined by the Government and all features listed in most recent user manual is fully functional
+Ensure all application features are fully function that are listed in appropriate current user guides. Provide corrective, preventive, adaptive, and perfective maintenance as defined in Appendix A
+Meet all NGA security requirements
+Monitor SWAP lists and remediate vulnerabilities as directed by the Government
+Fix bugs within 96 hours or notify Government
+Maintain and improve system functionality
+Support whitelisting and FHA documentation
+Display map features including terrain, airspace, boundaries, time zones, and obstructions
+Maintain and support NGA’s library of custom maps and CADRG files
+Implement folder-guarded passwords for restricted access and restrict access to Limited Distribution and Unauthorized Data as directed by NGA. Deliver Open Geospatial Consortium (OGC)-compliant applications
+Develop and maintain Concept of Operations and Description Documents (CONOPS)
+Develop and maintain the System Design Specification (SDD)
+Develop and maintain the Interface Control Document (ICD)
+Develop and maintain the Database Design Document (DBDD)
+Develop and maintain the Version Description Document (VDD)
+Develop and maintain Application Program Interface (APIs)
+Develop and maintain Software Development Kit (SDK)
+(U) Enhancement Requirements
+(U) As directed by the Government, the Contractor shall:
+Research, identify, evaluate, and implement operational enhancements for AMA Program applications and associated systems by leveraging emerging technologies, innovative solutions, and processes. Support third party development efforts for integration into the Aero Application
+Implement new features and capabilities for operational enhancements in the Government’s backlog. Deliver a Design Review Presentation (CDRL A012) to the Government as outlined in the SOW Attachment A for each release
+Collaborate and coordinate code development with NGA approved External Development Groups. Ensure all third-party enhancements are delivered on one delivery schedule approved by NGA
+(U) Dissemination & Support Requirements
+(U) The Contractor shall:
+Leverage AWS services for data distribution to support both U.S. and Foreign Partners limiting access with NGA’s direction
+Maintain a customer support system with 2-day response time
+Route emergency requests to appropriate personnel
+Track and report program wide trends to SFA Mission Manager and COR
+Create/host a website for application and data downloads and support transition to a .mil site
+Create and update training videos for each feature release or update resulting in changes and upload to all applicable websites to include Intellipedia page as directed by the Government. Sign iOS applications with NGA's DoD Enterprise certificate
+Support multiple data exchange formats as directed by the Government
+Read and/or write data using APIs provided as GFI
+Ensure compatibility with NGA-approved software versions
+Provide diagnostic reports for troubleshooting
+Ensure the acquisition, download, installation and running of the digital signing certificates issued by Apple for macOS applications and Microsoft for Windows. Maintain certificates through annual acquisition renewal to sign updates and any new applications. Deliver applications and data via DVD Image (ISO) as directed by NGA. Leverage NGA’s CORE XC Environment and GitLab Development Processes to the greatest extent possible for all AMA applications
+(U) Cloud Storage
+(U) The contractor shall:
+Be responsible for creating and managing AWS GovCloud Services account that facilitates the downloading of all required data to enable all active features by all DoD and unique Foreign Partners requirements.
+(U) Software Methodology and Delivery
+(U) The Contractor shall:
+Follow an agile, iterative development approach
+Conduct Release Planning Events every 16 weeks
+Maintain a 16-week release cycle with 2-week sprints
+Provide comprehensive testing documentation and deployment instructions
+Deploy tested software to production
+Manage the product backlog in Jira
+Facilitate sprint planning and review events
+Establish and maintain a product roadmap
+Leverage NGA knowledge management tools
+Utilize hardware that mimics the inventory utilized by the Department of War’s flight crews (i.e. Samsung Tab Active 5s, MAGTAB, etc.) for application testing
+(U) Software Security
+(U) The Contractor shall meet all of NGA’s Whitelisting, SWAP, and security requirements, including security scans, security logfiles, etc. collaborating with NGA’s Security Group for the Cloud to receive SWAP guidance and review security scans, and implement updates and / or remediate software to meet and maintain NGA’s security requirements.
+(U) In response to new and emerging requirements, the Contractor shall update system monitoring and transactional logging capabilities to ensure comprehensive logging and monitoring capabilities are maintained throughout the lifecycle.
+(U) The Contractor shall conduct code quality checks and unit testing prior to delivering application source code to the test environment.
+(U) The Contractor shall follow NGAI 8010.1, Information Management Systems Risk Management Framework (RMF) Guide, and adhere to ICD 503 for the A&A of the newly delivered services.
+(U) The Contractor shall provide the results from security scans with each software delivery package. The scans must be run against the most current rule set, contain no hits from the Open Web Application Security Project (OWSAP) top ten, and have all false-positive hits addressed.
+(U) The Contractor shall update their architecture as needed and provide documentation throughout the System Engineering (SE) lifecycle as changes arise.
+(U) The Contractor shall deliver source code and ensure the source code and its components are SWAP compliant.
+(U) The Contractor shall ensure logs are collected and sent to an NGA directed collection tool in accordance with Intelligence Community Standard (ICS) 500-27.
+(U) The Contractor shall ensure applications and services leverage NGA's Identity Access Management solution in accordance with ICS 500-30, Intelligence Community Enterprise Attribute Exchange between IC Attribute Services Unified Identity Attribute Set.
+(U) The Contractor shall ensure systems and applications are Information Assurance Vulnerability Management (IAVM) compliant within the USCYBERCOM 21-day or current requirement or have an approved POA&M or waiver form.
+(U) The Contractor shall ensure all applications are developed in accordance with ICS 500-24, DoD STIGs requirements, and industry best practices for secure web application development. (Ex. OWASP).
+(U) The Contractor shall satisfy the Government’s security requirements necessary for the transition of all software deliverables into a test or operational environment in accordance with the NGA Software Assurance policy.
+(U) The Contractor shall provide support to the Security Control Assessor (SCA) Representatives as they ensure compliance of the entity being developed.
+(U) Program Management
+(U) The Contractor shall:
+Deliver a Monthly Staffing and Financial Report (CDRL A001) and conduct a Quarterly Program Management Review (CDRL A011) to the Government as outlined in SOW Attachment A. Deliver a Stakeholder Communications Plan (CDRL A014) to the Government as outlined in SOW Attachment A for approval designed to facilitate the program’s stakeholder communications.
+(U) If the Contractor does not meet one or more of the contract requirements, per Government direction, the Contractor shall develop and deliver a Corrective Action Report (CDRL A013) as outlined in SOW Attachment A.
+(U) The Contractor shall present a quarterly Program Management Review (CDRL 011) to the Government as outlined in SOW Attachment A to include but not limited to:
+Presenting schedule and operational risks and their mitigation strategies
+Ensuring all necessary stakeholders are informed of outages, impacts, schedules, blockers, showstoppers, and process failures. Presenting financial performance for each CLIN that includes burned rates and other financial information and projection.
+(U) 508 Compliance
+(U) The Contractor shall ensure that all systems, hardware, software, software engineering, and information technology associated with this effort is made in a manner that is accessible for people with disabilities as directed in the NGA Instruction 8400.4 and Section 508 of the Rehabilitation Act of 1973 as amended in 1998 (Section 508). Specifically, all Information and Communications Technology associated with this contract, may use the Web Content Accessibility Guidelines (WCAG) 2.1 to comply with Section 508 or use alternative designs or technologies which result in substantially equivalent or greater access to and use of the product for people with disabilities. Furthermore, the Contractor shall pursue human centered design and usability guidelines to ensure that all services associated with this contract are accessible by as many users as possible and to drive modernization, innovation, and enhance mission support.
+(U) Personnel Requirements
+(U) The Aeronautical Mobile Application Program Team will consist of contractors with a mix of skills to develop emerging requirements and sustain functionality for the software baseline and provide operations and sustainment services.
+(U) The following positions are key personnel: Program Manager and Lead Engineer.
+(U) All Contractor personnel shall be available at award of the contract. Desired responsibilities, experience, and education for Labor Categories are described in Appendix C. A Staffing Plan (CDRL A009) will be reported as outlined in SOW Attachment A.
+(U) Standards and Quality Management Process
+(U) ISO Conformance
+(U) The Contractor shall:
+(U) All AMA Program processes shall comply and be in conformance with the ISO 9001:2015 certification. The Contractor and/or sub-contractor shall perform all efforts to make the software to comply and be in conformance with ISO 9001:2015 (and future versions thereof) certification and with the Communication Navigation and Surveillance/Air Traffic Management (CNS/ATM) DO-200B/FAA AC-153B (or future versions thereof) standards to maintain the SFA FAA/CNS/ATM TYPE 1 Data Provider LOA.
+(U) The Contractor shall be AS9100D certified and maintain certification throughout the contract period of performance.
+(U) Obtain (within first 6 months of award) an AS9100D certification from an accredited certification body and provide NGA with a copy of the current certification documentation. Additionally, maintain certification throughout the contract period of performance.
+(U) Demonstrate their transition for recertification in the event there is an issuance of a new version of the standard during the period of performance.
+(U) Have a Quality Management System that is ISO 9001 certified.
+(U) The Contractor (and subcontractor, if applicable) shall supply their annual external ISO 9001 (and AS9100D) audit report and certificate to NGA within 30 calendar days of receipt from the certifying body.(U) Provide NGA with results of any ISO audit reports and corrective action responses within 15 business days of audit report receipt.
+(U) Software Metrics
+(U) The Contractor shall provide the following metrics to the Government at the end of each Sprint:
+(U) Sprint burndown chart - tracks development over a two-week sprint. Time and work left to complete are the two main parameters of measurement. This shows the teams’ forecasted workload at the beginning of a sprint and the target to complete the workload by the end of a sprint.
+(U) The Sprint Velocity chart - measures the average work a team does during a sprint. The more iterations, the more precise the forecast. The velocity helps determine the ability of a team to work through backlogs.
+(U) The Epic and Release burndown chart - allows focus on the big picture burndown. It tracks the progress over a large body of work, allowing for the entire team to be aware of workflow in the epic and version.
+(U) The Control chart - focuses on the time duration from the "in progress" to "complete" status of tasks.
+(U) Quality Control Plan
+(U) The Contractor shall:
+(U) Deliver a Quality Control Plan (QCP) which outlines the Quality Control functions that the Contractor performs to ensure all activities performed and products delivered under the Contract meet Government requirements (CDRL A008) as outlined in SOW Attachment A.
+(U) Implement tools, techniques and methods to ensure the highest quality of each application release (e.g., software reviews, unit testing, component testing, etc.).
+(U) implement tools, techniques, processes and methods to ensure the highest quality data release (e.g., quality assurance, etc.).
+(U) Implement and manage all aspects of a testing group, ensuring the highest quality of each data release and ensure requirements are being satisfied in accordance with NGA’s acceptance procedure(s).
+(U) Deliver a comprehensive Quality Assurance Report (See Attachment A) for each application and/or dataset release.
+(U) Maintain separate servers (onsite and offsite) to develop, test and maintain data and software code.
+(U) Maintain an FTP fail-safe redundancy, offsite backup and a disk copy of AWS. Submit to possible audits directed by NGA Quality Assurance Team to ensure all tools, techniques, processes and methods are being implemented in a manner to protect all applications and data from defects, security vulnerabilities, as well as providing NGA and its users an accurate, validated and consistent product for Safety of Navigation (SoN).
+(U) Provide access to their production facilities for observing analyst production methods, documented processes, quality records, and conduct interviews with managers and analysts. Discrepancies or issues discovered during initial interviews may warrant further investigation and follow-on interviews.
+(U) The NGA Audit Team will supply Contractor management with a summary of audit findings prior to leaving the Contractor’s facility. Disagreements will be documented and resolved, if possible, prior to the NGA audit team leaving the Contractor’s facility. If disagreements cannot be resolved, each party’s comments will become part of the audit record report. Disagreements will be referred to the COR and adjudicated by the CO. Action and decisions taken by the CO will be documented and saved for federal records retention under NI 8040.2.
+(U) The Contractor shall submit any required corrective action plans to NGA within 30 calendar days of audit report acceptance. NGA will review and provide feedback to the Contractor with concurrence or non-concurrence within 30 calendar days of receipt of the corrective action plan.
+(U) NGA’s lead auditor will supply an audit report to a Contractor Management Representative within ten calendar days from the last day of the audit. The Contractor shall return a copy of the audit report with an original signature from the Contractor Management Representative within ten calendar days. The signed audit report will constitute acceptance by the Contractor and closure of the audit.
+(U) If the Government creates a Supplier Corrective Action Report (SCAR) identifying a problem or observation, the Contractor shall work the SCAR to completion within the SCAR-specific timelines. The Contractor shall identify the root cause and generate a proposed solution. Upon the Government’s approval of the solution, the Contractor shall implement the solution and provide evidence of implementation. If the Government does not approve the solution, the Contractor shall generate another proposed solution.
+(U) Quality Assurance Acceptance Criteria
+(U) The required performance standards and/or quality levels are included in the Performance Requirements Summary Table below. Table is UNCLASSIFIED
+Table -16.4-1: (U) Performance Requirements Summary
+(U) List of Applicable Documents
+(U) The Contractor shall ensure compliance with the following documents for NGA standards, processes, and best practices:
+(U) The National Geospatial Intelligence Agency (NGA) Intelligence Community Directive (ICD) 503 RMF Implementation Guide, Version 8, September 2021
+(U) The NGA Software Way
+(U) National Geospatial-Intelligence Agency (NGA) Integrated Program Office-Foundation (IPF) Foundation GEOINT (FG) Software Solution Stack Standards, Version 1.2, March 24, 2022
+(U) National Geospatial-Intelligence Agency (NGA), Integrated Program Office-Foundation (IPF), Foundation GEOINT Capability Delivery Standard Operating Procedure (SOP), Version 2.0, June 24, 2022
+(U) NGA Information Technology Acquisition Design Elements (NGA IT ADE) for Contracts, Rev E
+(U) NGA Technology Strategy APR_20-512
+(U) PS/1FA/004/091 Instrument Approach Procedures (IAP) specification
+(U) PS/1FA/007 Departure Procedures (DP) specification
+(U) PS/1FA/014 Standard Terminal Arrival Charts (STAR) specification
+(U) DAFIF 8.1 Specification
+(U) Digital Coding Supplement
+(U) DoD FLIP General Planning Guide
+(U) Aero App – User Manual (iOS and Android - v1.2510 or newer)
+(U) API to ATAK Aero App Android – User Manual
+(U) Aero Data Server (ADS) – User Manual (macOS, Windows – v1.2510 or newer)
+(U) NGA Instruction 8400.4 (referenced in Section 14 regarding 508 Compliance)
+(U) NGAI 8220.1, Identity Authentication and Authorization
+(U) ICS 500-27 (log collection requirements)
+(U) ICS 500-24 (secure web application development)
+(U) ICS 500-30, Intelligence Community Enterprise Attribute Exchange between IC Attribute Services Unified Identity Attribute Set
+(U) NIST Special Publication (SP) 800-171, "Protecting Controlled Unclassified Information in Nonfederal Information Systems and Organizations"
+(U) NIST 800-190 "Application Container Security Guide"
+(U) NIST 800-207 "Zero Trust Architecture"
+(U) ICS 500-14 "IC Optimized Network Email PKI Standards"
+(U) Intelligence Community Directive (ICD) 710 "Classification Management and Control Marking Systems"
+(U) Executive Order 14208 Section 3c (ii) on Improving the Nation's Cybersecurity
+(U) Cybersecurity and Infrastructure Security Agency (CISA) Cloud Security Technical Reference Architecture (TRA)
+(U) NGA Zero Trust MFR, U-2022-0657/TES, Zero Trust Security Architecture
+(U) DoDD 8140.1, Cyberspace Workforce Management
+(U) Consolidated NGA (CoNGA) Security Classification Guide
+(U) Unclassified Work Performance Security Requirement
+(U) Uncleared Contractor personnel are authorized to work on this contract at the Unclassified level, with access up to DoD Controlled Unclassified Information (CUI) at the Contractor site without the requirement of a security clearance.
+(U) Uncleared Personnel Security Requirements
+(U) Any Contractor personnel working with CUI information must receive a favorable HSPD-12 and/or HSPD-12 Tier 1 adjudication prior to accessing CUI information. Contractor personnel who require access to CUI for 60 days or less must receive a favorable HSPD-12 adjudication. Contractor personnel who require CUI access for more than 60 days must receive a favorable HSPD-12 Tier 1 adjudication. NGA will sponsor the HSPD-12 and HSPD-12 Tier 1 background investigation for Contractor personnel as needed.
+(U) Foreign nationals are not permitted to perform unclassified work under the terms of this contract without prior written approval from the Contracting Officer (CO) or the COR. Should NGA identify the use of unauthorized personnel, the CO may direct the Contractor, at its own expense, to remove and replace any unauthorized Contractors, Subcontractors, or other personnel performing on the contract. Such action may be taken at the NGA's discretion without prejudice to its rights under any other contract provision, e.g., termination for default.
+(U) Uncleared Contractor personnel visiting NGA facilities or other sites may receive the appropriate visitor badge and be escorted, as appropriate. The Contractor will return the visitor badge at the end of each visit day.
+(U) Physical Security Requirements
+(U) Contractor personnel are forbidden from bringing prohibited or unauthorized items into any NGA installation or other secure facility covered under this contract. These items include weapons, cell phones, cameras, two-way pagers, laptops, recording devices of any kind, flash drives, or any other removable media. Exceptions may be granted by NGA Security upon the Contractor’s request. If granted, Contractor personnel must bring documentation showing approval prior to entering with the item(s). Violations may subject the Contractor and its offending personnel to civil and/or criminal liability IAW applicable laws and regulations governing access to secure Government facilities.
+(U) Information Security Requirements
+(U) NGA shall have the sole authority to determine whether, and to what extent, protected information shall be provided to the Contractor under the terms of the contract. The Contractor shall not access, download, print, or further disseminate any unclassified information outside the execution of the defined contract requirements without the guidance and written permission from the COR.
+(U) When the Contractor receives protected information under the terms of this contract, the Contractor will comply with all applicable NGA, DoD, and IC information security policies for the proper marking, handling, processing, storing, and safeguarding of unclassified and CUI material. The Contractor will ensure that document markings are given the lowest possible security classification to maximize dissemination while still maintaining the information’s confidentiality and integrity as necessary.
+(U) Access to CUI will be pursuant to DFARS clause 252.204.7012. The prime contractor shall include this clause, including paragraph (m), in subcontracts, or similar contractual instruments, for operationally critical support or for which subcontract performance will involve covered defense information, including subcontracts for commercial items, without alteration, except to identify the parties. The Contractor shall determine if the information required for Subcontractor performance retains its identity as covered defense information and will require protection under this clause. Contractor personnel shall not release any unclassified information, regardless of medium (e.g., film, tape, document), pertaining to any part of this contract or any program related to this contract, unless the COR has given prior written approval or in performance of a project that has been scoped and negotiated by NGA.
+(U) NGA will assess and authorize Contractors to process unclassified information on Government-owned information systems, conduct oversight of such information system processing, and provide information system security guidelines IAW with FAR clause 52.204-21 and other information system security control policies, standards, and procedures. Contractor will be responsible for executing specific provisions under the contract for the accreditation of classified information systems, and upon request, shall provide the COR a written statement confirming accreditation compliance with the minimum information systems requirements established in the DD254. The Contractor shall include the substance of FAR clause 52.204-21 in subcontracts under this contract (including subcontracts for the acquisition of commercial products or commercial services, other than commercially available off-the-shelf items), in which the Subcontractor may have federal contract information residing in or transiting through its information system.
+(U) In accordance with FAR Part 4.7 and FAR clause 52.215-2, the Contractor may retain one archival copy of any Government-furnished information provided to the Contractor during the course of performance of the contract, subject to Contractor following relevant data safeguarding practices and CUI restrictions. The disposition of such Government-furnished information is otherwise solely at the discretion of the Government. As directed by the NGA CO or COR, the Contractor will destroy or return to NGA all Government-furnished information upon contract termination or when no longer required for contract performance.
+(U) Cybersecurity Requirements
+(U) The Contractor must, at a minimum, implement 10 U.S.C. Sections 391 and 393 along with National Institute of Standards and Technology (NIST) Special Publication (SP) 800-171, “Protecting Controlled Unclassified Information in Nonfederal Information Systems and Organizations” requirements.
+(U) Development
+(U) The Contractor shall ensure all applications are developed in accordance with ICS 500-24, DoD STIGs requirements, and industry best practices for secure web application development. (Ex. OWASP).
+(U) Ensure all devices are configured to allow credentialed access for vulnerability scanning with Assured Compliance & Assessment Solution (ACAS) tools, as applicable.
+(U) Deliver current Operating System and application software.
+(U) Application software that is developed shall contain annotated source code for each security domain, including any software under current development and testing yet to be developed.
+(U) Ensure the development of containerized microservices is aligned with NGA’s Container Security and Micro Services Strategy.
+(U) Ensure software releases are conducted using Agile and DevSecOps methodologies.
+(U) Ensure software releases are conducted using Agile and DevSecOps methodologies. Utilize the Source Code Repository and Binary/Artifact Management Repository, for version/revision control in the NGA Enterprise DevSecOps environment(s) on each of the available security domains.
+(U) The Contractor shall deliver source code and ensure the source code and its components are SWAP compliant.
+(U) The Contractor shall provide the results from security scans with each software delivery package. The scans must be run against the most current rule set, contain no hits from the Open Web Application Security Project (OWSAP) top ten, and have all false-positive hits addressed.
+(U) The Contractor shall update their architecture as needed and provide documentation throughout the System Engineering (SE) lifecycle as changes arise.
+(U) The Contractor shall satisfy the Government’s security requirements necessary for the transition of all software deliverables into a test or operational environment in accordance with the NGA Software Assurance policy.
+(U) The Contractor shall comply with NIST 800-190 “Application Container Security Guide.
+(U) The Contractor shall comply with ICS 500-14 “IC Optimized Network Email PKI Standards”.
+(U) Configuration Management
+(U) Ensure all systems comply with DISA’s Ports, Protocols & Services (PPS) authorized by the Defense Information Systems Agency (DISA) Category Assurance List (CAL) and ensure the system is registered in the DISA PPS Management Database (through Risk Management).
+(U) Ensure externally accessible NIPR systems are registered in the DISA De-Militarized Zone (DMZ) Whitelist.
+(U) The Contractor shall ensure applications and services leverage NGA's Identity Access Management solution in accordance with ICS 500-30, Intelligence Community Enterprise Attribute Exchange between IC Attribute Services Unified Identity Attribute Set.
+(U) The Contractor shall ensure applications and services leverage NGA's Identity Access Management solution in accordance with NGAI 8220.1, Identity Authentication and Authorization.
+(U) The Contractor shall ensure logs are collected and sent to an NGA directed collection tool in accordance with Intelligence Community Standard (ICS) 500-27.
+(U) The Contractor shall ensure systems and applications are Information Assurance Vulnerability Management (IAVM) compliant within the USCYBERCOM 21-day or current requirement or have an approved POA&M or waiver form.
+(U) The Contractor shall ensure applications and services leverage NGA's Identity Access Management solution in accordance with NGAI 8220.1, Identity Authentication and Authorization.
+(U) Ensure systems, devices and applications are properly configured for discovery and tracking within the current enterprise configuration management tools.
+(U) The Contractor shall work with the CDSO as the Cross Domain Authority, and Cross Domain Support Element (CDSE) regarding all Cross Domain capabilities and Cross Domain Solution data flows.
+(U) The Contractor shall comply with the Cross Domain (CD) Policy for all CD capabilities and CD Solutions.
+(U) The Contractor shall comply with ICD 710 “Classification Management and Control Marking Systems”.
+(U) The Contractor shall provide the results from security scans with each software delivery package. The scans must be run against the most current rule set, contain no hits from the Open Web Application Security Project (OWSAP) top ten, and have all false-positive hits addressed.
+(U) Resiliency Support
+(U) The contractor shall design resilient systems and applications that are mission ready, reliable and flexible.
+(U) The contractor shall implement and sustain comprehensive Information System Continuity Plan (ISCP) before an Authorization is granted using the Government’s CPT (Continuity Planning Tool).
+(U) The contractor shall create comprehensive, technical Disaster Recovery Plans (DRPs) when the system(s) is integrated such that it is realistically tested prior to fielding to formally verify the Recovery Time Capability (RTC) and must be posted along with the ISCP in the CPT.
+(U) Incident Response
+(U) In the event that the Contractor discovers a cyber incident that affects a covered Contractor information system or covered defense information residing therein, or that affects the Contractor’s ability to perform the requirements of the contract that are designated as operationally critical support and identified in the contract, the Contractor shall:
+Notify the NGA Cybersecurity Operation Cell (CSOC) and the COR in writing within 72 hours of incident discovery
+Conduct a review for evidence of compromise of covered defense information, including, but not limited to, identifying compromised computers, servers, specific data, and user accounts. This review shall also include analyzing covered Contractor information system(s) that were part of the cyber incident, as well as other information systems on the Contractor’s network(s), that may have been accessed as a result of the incident in order to identify compromised covered defense information, or that affect the Contractor’s ability to provide operationally critical support.
+(U) In the event the Contractor discovers and isolates malicious software in connection with a reported cyber incident, the Contractor shall submit the malicious software to CSOC in accordance with instructions provided by the COR. The Contractor should NOT send the malicious software to the COR.
+(U) Cloud
+(U) If the Contractor intends to use an external cloud service provider to store, process, or transmit any covered defense information in performance of this contract, the Contractor shall require and ensure that the cloud service provider meets security requirements equivalent to those established by the Government for the Federal Risk and Authorization Management Program (FedRAMP) Moderate baseline ()
+(U) The Contractor shall comply with Cybersecurity and Infrastructure Security Agency (CISA) Cloud Security Technical Reference Architecture (TRA).
+(U) The Contractor shall ensure systems and applications are properly configured for discovery and tracking within the Cloud environment.
+(U) Assessment & Authorization
+(U) The Contractor shall work with NGA’s Risk Management Division’s Designated Authorizing Official (DAO) and NGA Chief Information Officer – Technology (CIO-T) regarding system Assessment and Authorization (A&A) lifecycles.
+(U) The Contractor shall provide Information System Security Officer (ISSO) and Information System Security Engineer (ISSE) support, which are also DoDD 8140.1, Cyberspace Workforce Management certified to support the A&A Process and provide the required documentation.
+(U) The Contractor shall support all necessary Assessment and Authorization (A&A) work for the newly delivered services, to include software scans. The Contractor shall follow NGAI 8010.1, Information Management Systems Risk Management Framework (RMF) Guide, and adhere to ICD 503 for the A&A of newly delivered services.
+(U) The Contractor shall provide support to the Security Control Assessor (SCA) Representatives as they ensure compliance of the entity being developed.
+(U) The Contractor shall provide DoD 8140.01 Information Assurance Training (IAT) Level II and III certified Information Assurance and security Engineers to support enterprise engineering efforts and development of engineering artifacts.
+(U) POA&M Lien Management: Upon issuance of an ATO, the Contractor shall execute the approved POA&M to remediate and/or mitigate findings. In the event a lien is not addressed as agreed within the POA&M, NGA’s Designated Authorizing Official Representative (DAOR) will engage with the program to resolve the issue. If the issue cannot be resolved (e.g. renegotiated resolution or due date) in a timely fashion or to an acceptable level, the issue is escalated to the Designated Authorizing Official (DAO) or Authorizing Official (AO) for potential re-adjudication of the ATO.
+(U) Zero-Trust
+(U) The Contractor shall comply with Executive Order 14208 Section 3c (ii) on Improving the Nation’s Cybersecurity.
+(U) The Contractor shall comply with NIST 800-207 “Zero Trust Architecture”.
+(U) The Contractor shall abide by NGA Zero Trust MFR, U-2022-0657/TES, Zero Trust Security Architecture.
+(U) Onboard/ingest Enterprise Security Services/Common Control Providers (ESS/CCP) wherever possible to inherit all the benefits (Configuration Management, Security Automation & Orchestration, monitoring & compliance) of these services without the cost, management & oversight of delivering these services themselves.
+(U) Operational Security
+(U) The Contractor shall ensure it maintains Operational Security (OPSEC) in performance of the contract. OPSEC includes the awareness of potential threats and the adoption of behaviors to mitigate those threats. As an OPSEC best practice, the Contractor should assume it is being monitored by adversaries. The Contractor shall follow all applicable NGA, IC, and DoD information security, operational security, and cybersecurity policies and guidance when accessing and transmitting data over networks during performance of the contract.
+(U) Information Handling
+(U) Contractor personnel will comply with the NGA, DoW, and IC policies and regulations (to include, but not limited to, the Consolidated NGA (CoNGA) Security Classification Guide) to properly mark (to include portion marking) classified and unclassified documentation, media, etc.
+(U) Document markings will be in accordance with the lowest security classification possible to ensure the confidentiality and integrity for the greatest release to partners in accordance with NGA and mission partner marking guides for classified information.
+(U) All Government-furnished information released to the Contractor or created in the performance of this contract will be destroyed or returned by the Contractor to NGA upon contract termination or when no longer required for contract performance. The determination to destroy or return will be at the direction of the NGA CO or COR.
+(U) Contract Deliverable Requirements List (CDRLs)
+(U) The Contractor shall provide the Government with the following CDRLs as directed by the Government. Contract Deliverable Requirements List (CDRLs)
+Table is UNCLASSIFIED
+Table 20-1: (U) Contract Data Requirement List
+(U) Government Furnished Property and Information
+(U) NGA will provide the Contractor with one or more of the following data sources, database models and account accessibility:
+Base code for all versions of Aero App and ADS applications
+Access to agency Aeronautical data models (current/future)
+Outputs from Aeronautical Database as required to support current versions of Aero App
+Agency data holdings to support Aeronautical charting in Aero App
+Applicable APIs supporting SFA production
+Airfield Shapefiles required for Aero App
+Vertical obstruction outputs if required for Aero App
+Production Timelines (Appendix B)
+Logins for Contractor OSS on APS Servers and workstations on the Agency’s Unclassified and Classified Servers
+File requirements for acceptance by the printing contractor
+SFA QMDC/QMS-approved documentation for enhancement/maintenance support
+(U) The Contractor shall deliver the Government with a GFP / GFI Material List (CDRL A004) as outlined in the SOW Attachment A of this document.
+(U) Data Rights
+(U) All technical data and noncommercial computer software required to be developed and delivered under this contract (including technical data and noncommercial computer software delivered or ordered under DFARS 252.227-7026 and 252.227-7027) will be delivered to the Government with no less than Government Purpose Rights as defined in DFARS 252.227-7013 and 252.227-7014, unless otherwise agreed to in writing by the Contracting Officer specifically mentioning this provision. However, if the Government is entitled to greater rights pursuant to DFARS 252.227-7013 and 252.227-7014, the technical data or non-commercial computer software will be delivered with greater rights. Specifically, the Government requires the delivery of the code written to perform the functions required in the SOW with no less than Government Purpose Rights.
+(U) Appendix A: Definition and Tasks for Software Maintenance
+(U) For purposes of this Contract, Operations Support and Sustainment Support are defined as follows:
+(U) Software maintenance support consists of Corrective Maintenance, Perfective Maintenance, and Adaptive Maintenance as defined below:
+(U) Corrective Maintenance. Identify, isolate, and rectify a fault or problem to restore a system or application to an operational state. The Contractor shall ensure resolution of Priority 1 and 2 INC .
+(U) Software maintenance to provide data translator/integration and associated upgrades to sustain production to include the installation of bug fixes and patches coordinated with APS system administrators. (U) Operations Support is the performance of those activities that enable systems and applications to meet performance and other defined mission requirements or service in a cost-effective manner.
+(U) Sustainment Support consists of Corrective Maintenance, Perfective Maintenance, and Adaptive Maintenance as defined below.
+(U) Corrective Maintenance. Identify, isolate, and rectify a fault or problem to restore a system or application to an operational state. The Contractor shall ensure resolution of Priority 1 and 2 INC and PBIs, Discrepancy Reports (DR), Information Assurance Vulnerability Assessments (IAVA) and Requests for Change (RFC) per NGA timelines for operational tickets.
+(U) Perfective Maintenance. Modification to improve system or application performance or maintainability.
+(U) Adaptive Maintenance. Modification to keep a system or application usable in a changed or changing environment, which will include a broad range of activities to include:
+(U) Small and simple tasks (e.g., processing a new or modified data type from an existing source).
+(U) Moderately complex tasks (e.g., incorporating a new collector type).
+(U) Extensive and highly complex changes requiring modification of the system, components or application design, source code and/or COTS modification, and testing (regression testing on all deliverables, verification, validation, and security). The extensive/complex changes require close coordination with users, other contractors, COTS vendors, and external customers. Examples, of the larger and highly complex tasking include redesign of critical interfaces (e.g. ADDE DB, Source files), database major version upgrades, significant code re-writes due to security-driven code base updates, etc.), adapting a system or application to a new platform (hardware, and/or operating systems), transitioning to/from cloud environments or to different cloud providers), and incorporating a new phenomenology.
+(U) Tasks include the following activities:
+(U) The Contractor shall maintain a customer support system to respond to AMA related inquiries.
+(U) The Contractor shall respond to all inquiries to the system within two (2) business days.
+(U) The Contractor shall respond to all inquiries to the system within 2 (two) business days.
+(U) The Contractor shall route after-hour emergency requests to the National GEOINT Operations Center (NGOC) NGOCMailbox@nga.mil 571-557-8000 and/or the Mission Manager.
+(U) The Contractor shall review and respond to the AMA related e-mails and inquiries from the Aeronautical Quality Feedback System (AQFS) provided by AMA Mission Manager within 2 business days of receipt.
+(U) The Contractor shall provide the customer support system’s metrics to NGA monthly. The reports should contain, at a minimum, the number of support requests, type of issue, resolution status, response (resolution) times, and mission impact, if known.
+(U) The Contractor shall track and report trends to AMA Mission Manager and COR identifying any potential or recurring issues.
+(U) The Contractor shall create and host website for mobile / desktop applications with download capabilities to support: Android, iOS, MacOS and Windows operating systems.
+(U) The Contractor must work in conjunction with the government to sign every iOS application update using NGA’s Apple provided DoD Enterprise certificate.
+(U) The Contractor shall read and/or write data using APIs provided as GFI.
+(U) The Contractor shall import from multiple aeronautical data exchange formats (e.g. ARINC, AIXM, GML).
+(U) The Contractor shall ensure compatibility with most recently NGA-approved versions of PostgreSQL, Microsoft .NET frameworks, web browsers and imbedded HTTP protocols.
+(U) The Contractor shall provide diagnostic reports for troubleshooting system/UI/data errors and deconfliction.
+(U) Appendix B: Annual –NGA’s Aeronautical Cycle Data, Datasets, and Products
+(Sample) – This table is Unclassified
+Table 25-1: (U) Sample of NGA’s Aeronautical Cycle Data, Datasets, and Products
+(U) NOTES:
+(U) Products are published in accordance with the 28-day Aeronautical International Regulation and Control (AIRAC) cycle listed in the General Planning (GP) Chapter 11 Revision Schedules section accessible via the ACES 2.0 website. The Aeronautical Content Exploitation System (ACES) 2.0 online portal will be utilized to access aeronautical safety of navigation information for inclusion in flight planning systems such as the Electronic Knee Board (EKB) and mission planning software.
+(U) These sample dates included in this appendix are to serve as an example of the delivery times required for each cycle’s effective date.
+(U) The actual task order delivery schedule will be updated at task order award once the exact start date is determined.
+(U) Appendix C: Labor Categories Description
+(U) STAFFING
+(U) The Contractor is responsible for proposing the team composition best suited to meet the AMA requirements. The Contractor shall provide fully qualified personnel to satisfy the conditions of this SOW. The Contractor is responsible for ensuring all personnel performing work under this contract possess and maintain current certifications during the execution of this contract. The contractor will not be reimbursed for maintaining qualifications. All contractors are expected to be professional, and able to work in a fast-paced team.
+(U) Because of the complexity of the contract, all contractor personnel are expected to perform for a minimum of 6 months under the resulting contract. The contractor shall provide the government notification 10 business days prior to personnel leaving the effort and backfill their positions within 15 business days by submitting a resume for the Contracting Officer’s Representative (COR)’s approval with an individual with qualifications that meet or exceed the qualifications of the person to be replaced. Resumes should include a brief description of the experience and capability for all contract employees on the proposed team. Resumes should also address the individual’s technical background, education, work experience, and accomplishments related to the activities described in this requirement.
+(U) Key Personnel
+(U) The Government has identified the following key personnel positions: Program Manager (PM) and Lead Engineer. The PM must be the single point of contact for any programmatic issues that may arise under this task order. The Contractor shall also designate an individual to be the backup for the PM, to ensure the customer has uninterrupted access to the Contractor.
+(U) Key Personnel positions are required to possess and maintain the following skills and experience: -
+(U) Program Manager: Performs day-to-day management of overall contract support operations, possibly involving multiple projects and groups of personnel at multiple locations. Organizes, directs and coordinates planning and production of all contract support activities. Must have professional writing and oral skills. Required Experience: At least 5 (five) years of IT/Software/Application management experience. Must demonstrate experience on leading projects that involve the successful management of teams composed of engineers, computer programmers, web/application/software developers and management professionals who have been involved in analyzing, designing, developing, integrating, training, testing, documenting, implementing and maintaining complex systems. Demonstrates proven skills in those technical areas addressed by the contract. Organizes, directs and coordinates planning and production of all activities associated with assigned contract projects. Desired Education: Bachelor’s degree in computer science or related field.
+(U) Lead Engineer: Responsible for the overall software program architecture, as well as for overseeing the work being accomplished by the Software Engineers working on the program. The Lead Engineer will serve as an interface between the programmers and management and have a supervisory role in delegating work and ensuring all work is accomplished within the agreed to parameters. Lead Programmers will also serve as technical advisors to management and provide programming perspective on requirements. Required Experience: Minimum of 10 (five) years in the mobile application field and a bachelor's degree in computer science or related field.
+(U) Non-Key Personnel Team Structure/Composition - Required Skills and Knowledge for the Team
+(U) Ability to analyze and test software or systems to identify errors and ensure conformance to specifications/requirements.
+(U) Ability to modify programming code and corrects/prevents code problems.
+(U) Ability to formulate, modify, and design software code to meet the requirements as directed by the Senior Engineer.
+(U) Capable of evaluating software, applications and associated documentation.
+(U) Ability to examine and evaluate the quality assurance process and recommend enhancements and modifications.
+(U) Ability to develop information technology quality standards.
+(U) Ability to apply business and functional knowledge including testing standards, guidelines, and methodology to meet the programs requirements.
+(U) Ability to create visual concepts with software tools to communicate ideas and inform the software user.
+(U) Ability to create recognizable graphics by selecting color, images, icons that represent a particular idea or identity to be used in designing web and mobile interfaces.
+(U) Ability to collect and organize information for preparation of user manuals, training materials, installation guides, proposals and reports.
+(U) Demonstrated ability to edit functional descriptions, system specifications, user manuals, special reports and any other customer deliverables and documents.
+(U) Demonstrate the ability to lead operations and sustainment efforts for the AMA development, integration, testing, deployment and operational environments.
+(U) Demonstrated experience deploying, managing, and operating workload in AWS as well as implementing security controls and compliance requirements. Leads deployment of new requirements to operations using Dev/Sec/Ops framework.
+(U) Demonstrated Software Agile experience
+Ability to ensure compliance and support all necessary Assessment and Authorization work for the delivered AMA services, to include software scans. Follow Information Management Systems (IS) Risk Management Framework (RMF) Guide and adhere to ICD 503 for the Assessment and Authorization of the newly delivered AMA services. In addition:
+(U) Ability to meet SWAP and Software Whitelist requirements
+(U) Ability to support the NGA Information Assurance Vulnerability Assessment (IAVA) process to ensure AMA sustained components stay compliant with A&A standards, while continuing to meet stated availability/reliability requirements.
+(U) Ability to adhere to NGA vulnerability response timelines, in concert with Government priority direction and to the extent practical to not unduly jeopardize mission system availability/reliability.
+(U) Ability to monitor and improve DevSecOps processes, developed in collaboration with the development teams and NGA Security.
+(U) Ability to generate and maintain the required documents in accordance with Federal Information Security Management Act (FISMA) and ICD 503 series regulations and instructions. Ability to support inspection requests and activities as necessary and mitigate/remediate FISMA findings within the specified period provided.
+(U) Demonstrated AWS Security Specialty
+(U) Demonstrated familiarity of NGA Cyber Security Eco-system
+(U) Demonstrated understanding of CISSP certification
+(U) Appendix D: Security References
+Table is UNCLASSIFIED
+(U) Appendix E: Acronym Listing
+Table is UNCLASSIFIED
+Aero App (Android and iOS.)
+Delivery executable files of new version of each application and schedule to include source code.
+99.5%
+Load application on appropriate platform
+and conduct visual &
+operational tests
+Core data
+Delivery datasets on schedule to meet
+AIRAC cycle dates
+99.5%
+Load and test data to ensure it displays as required on each application. Delivery datasets on schedule to meet
+AIRAC cycle dates
+99.5%
+Load and test data to ensure it displays as required on each application. Update and maintain website as directed by government
+99%
+Review and ensure information posted on the website is correct and Aero App data is accessible from site and user accounts are issued and maintained allowing only authorized users to download. Aero App data hosting on Amazon
+Upload / test next cycle data and remove
+previous cycle data
+from cloud
+99.5%
+Download and test data. Read-Me files and User Manuals
+Inform the User of steps to use functions
+Steps are 100% accurate/in step with approved software. Random inspection of files and manuals in conjunction with each software release. CDRL #
+Monthly Staffing and Financial Report
+Transition-In Plan
+Within 30 days ARO
+GFP / GFI / Material List
+When directed by Government
+Customer Engagement, Meeting Minutes and Action Items
+Within 5 business days after meeting; monthly for action items
+Software Code and Software Documentation
+When delivered
+Transition-Out (TO) Plan
+Draft 45 days prior to TO; final 30 days prior to TO
+Initial delivery 30 days ARO
+5 business days after event
+When requested by Government
+Within 30 days ARO; updates as needed
+End of Release Report
+5 business days after release
+Concept of Operations (CONOPS)
+Within 30 days ARO; updates as needed
+Version Description Document (VDD)
+Upon each software release
+System Design Document (SDD)
+Within 60 days ARO; updates as needed
+Interface Control Document (ICD)
+Within 60 days ARO; updates as needed
+Database Design Document (DBDD)
+Within 60 days ARO; updates as needed
+Application Program Interface (API) D
+Initial release of SW; updates as needed
+Software Development Kit (SDK) Document
+Initial release of SW; updates as needed
+Within 30 days ARO; updates as needed
+NGA Database cutoff 2400HRS
+Digital Text & Chart Files Complete (1200L)
+DVD Delivery (1200L)
+25-Jan-24
+0
+02-Jan-24
+08-Jan-24
+09-Jan-24
+10-Jan-24
+22-Feb-24
+0
+30-Jan-24
+05-Feb-24
+06-Feb-24
+07-Feb-24
+21-Mar-24
+0
+27-Feb-24
+04-Mar-24
+05-Mar-24
+06-Mar-24
+18-Apr-24
+0
+26-Mar-24
+01-Apr-24
+02-Apr-24
+03-Apr-24
+16-May-24
+0
+23-Apr-24
+29-Apr-24
+30-Apr-24
+01-May-24
+13-Jun-24
+0
+21-May-24
+27-May-24
+28-May-24
+29-May-24
+11-Jul-24
+0
+18-Jun-24
+24-Jun-24
+25-Jun-24
+26-Jun-24
+8-Aug-24
+0
+16-Jul-24
+22-Jul-24
+23-Jul-24
+24-Jul-24
+5-Sep-24
+0
+13-Aug-24
+19-Aug-24
+20-Aug-24
+21-Aug-24
+3-Oct-24
+0
+10-Sep-24
+16-Sep-24
+17-Sep-24
+18-Sep-24
+31-Oct-24
+0
+08-Oct-24
+14-Oct-24
+15-Oct-24
+16-Oct-24
+28-Nov-24
+0
+05-Nov-24
+11-Nov-24
+12-Nov-24
+13-Nov-24
+26-Dec-24
+0
+03-Dec-24
+09-Dec-24
+10-Dec-24
+11-Dec-24
+National Security Memorandum-8
+Improving the Cybersecurity of National Security, Department of Defense, and Intelligence Community Systems
+DoDI 8500.1
+DoDI 8531.01
+DoDD 8140.01
+Capability Requirements Process, Intelligence Community Capability Requirements (ICCR) Framework
+IC Information Technology Systems Security Risk Management
+Information Systems Risk Management Framework
+Health and Performance Monitoring of Information Systems and Applications
+NGA Annex I
+A&A
+Assessment and Authorization
+Automated Air Facilities Information File
+Assured Compliance & Assessment Solution
+Aeronautical International Regulation and Control
+Air Mobility Command GIANT Reports
+Air Route Traffic Control Centers Low & High
+Chief Information Officer – Technology
+Cybersecurity and Infrastructure Security Agency
+Concept of Operations
+Caribbean and South America
+Digital Aeronautical Flight Information File (8.1, 9.0)
+Denied Degrade Intermittent/Low-Bandwidth
+De-Militarized Zone
+Department of Defense
+Department of War
+Eastern Europe and Asia
+Europe North Africa and Middle East
+Enterprise Security Services and/or Enterprise Security Services/Common Control Providers (ESS/CCP)
+Federal Risk and Authorization Management Program
+Federal Information Security Management Act
+Government Furnished Information/Property
+iOS
+iPhone Operating System
+National Geospatial-Intelligence Agency
+National Institute of Standards and Technology
+Open Web Application Security Project
+Pacific Australasia and Antarctica
+Plan of Action & Milestones
+Ports, Protocols & Services
+Requests for Change
+Request for Information
+Search and Rescue
+Safety of Navigation
+Statement of Work
+Helicopter and Terminal Area Chart Maps
+Table Formatted Aeronautical Data Set – Obstruction

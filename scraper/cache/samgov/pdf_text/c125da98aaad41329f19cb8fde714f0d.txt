@@ -1,0 +1,195 @@
+1 Is the Government open to considering relevant commercial or
+public sector past performance? The government believes public or commercial past performance is acceptable.
+2 Can the Government share the current PBES overall system
+architecture, including external and internal interfaces, reporting
+capabilities, source systems, and data warehouse components or
+constructs? Yes, the government can provide OV1 and Network Topology. Currently there are no
+interfaces.
+3 What data integration technologies or tools are currently
+employed, as opposed to manual data integration? Most are manual data integration processes.
+4 What are the current challenges associated with system support,
+and what are the top functional, technical, and/or PMO
+challenges that a future solution should address? Challenges: utilize cloud native technology with PBES. PBES was an on premises system
+placed on top of Cloud One and made to work. It did not take advantage of any cloud
+native technologies to improve the system. RHEL 8 upgrade. Middleware upgrade.
+5 Is there a desire to provide greater flexibility to different user
+groups while maintaining a single, customized platform? Yes, its an enterprise system used by planners, programmers and budgeteers.
+6 Does the Government have an interest in reducing variability and
+enforcing increased standardization across users, processes, or
+configurations? Yes
+7 How many distinct budgeting methodologies are currently
+employed, and which approaches are used (e.g., baseline or
+factor
+‑
+based, zero
+‑
+based, driver
+‑
+based)? All the above. Basline budgeting is the standard starting point for most program budget
+formulation and also for incremental increases based on basic economic assusmptions
+such as inflation. A factor-based approach is also used to determine funding
+requirements based on execution (burn) rates for specific programs. Zero-based budget
+analysis is usually part of every budget cycle to identify areas to reduce costs and align
+future (and current) budgets with strategic goals. Prior year budget proposals and
+matched against actual execution of past budgets is also used to support driver-based
+budgeting.
+8 Are there specific aspects of the financial process—such as
+speed, accuracy, standard reporting, or ad hoc reporting—that
+the Government would like to see enhanced, and if so, which are
+the highest priority? Data integrity is most important. There are minor challenges with data validation that
+must be addressed to reduce the manual workload required to maintain accuracy. Recent user feedback support the need for improvements to seamless integration
+between database tables, data entry, and reporting capabilities to reduce significant
+bottlenecks exists that hinder productivity and efficiency during peak periods of the
+budget cycles. Standard reporting exists but there are calls for improvement along with
+a more intuitive UI experience.
+9 Given that Hyperion Planning is currently projected to remain in
+sustaining support through approximately 2034 and is not
+expected to receive significant new functional enhancements,
+what are the Government’s plans or assumptions regarding the
+future evolution of the PPE capability? We'd like to migrate to newer planning products/technology.
+10 Has the Government evaluated a transition to a cloud based
+environment? If so, what assessments have been performed to
+date to determine the feasibility of leveraging Oracle EPM Cloud? Yes, we are assessing the feasibility of leveraging Oracle EPM Cloud. Oracle has done an
+initial analysis for the feasiblity of leveraging Oracle EPM Cloud.
+11 Does the Government have an interest in utilizing artificial
+intelligence to enhance predictive capabilities or to generate
+‑
+assisted reference outputs? Yes, GenAI
+12 Is the current financial process operating in a stable equilibrium,
+or is it exhibiting signs of convergence or divergence? The financial processes at the core are mainly solid. Each budget cycle will always
+introduce new challenges which are driven by current events and changing political
+priorities among other factors requiring constant adaptation. Steady turnover among
+analysts adds to the challenges of maintaining continuity of established process
+continuity and institutional knowledge. System designs must provide structural
+continuity to mitigate process drift (divergence) while retaining the agility required for
+mission-critical flexibility.
+13 Does the Government have an interest in enhancing reporting
+capabilities, such as report books, report bursting, increased
+self
+‑
+service reporting, or greater standardization?
+14 Oracle EPM is currently authorized at FedRAMP IL4 (CUI). Since
+PBES operates on SIPRNet and requires IL6 or higher
+authorization, how does the Government envision meeting these
+security requirements, and is AWS Cloud One expected to be the
+primary near
+‑
+term deployment approach? AWS Cloud One is the primary near-term deployment approach; PBES currently operates
+in AWS Cloud One IL6.
+15 Can the Government provide the current organizational support
+model, including internal and external organizations and their
+respective roles and responsibilities? PBES SS_RFI 2026
+Q&A
+16 What documentation is currently in place to support operations
+and sustainment (e.g., SOPs, CONOPs), and are these
+documents considered current and sufficient to provide adequate
+support today? Yes, bidders library.
+17 How many support tickets are currently processed per month,
+broken down by functional and technical categories (e.g.,
+metadata updates, model changes, defects, security
+‑
+related
+issues)? Roughly 185-200 a month
+18 On average, how many process or configuration change requests
+are submitted per month? 5-10 changes to back-end; Front-end changes range from 185-200 a month
+19 What SLAs are currently defined for the system, and what is the
+Government’s assessment of performance against those SLA
+objectives to date? None
+20 Can the Government describe the current help desk ticket
+workflow, including average time to resolution for functional, data
+integration, and technical ticket types? Tickets are tracked through Jira and have an average resolution time of 10-15 minutes.
+21 What percentage or number of help desk tickets are resolved on
+the first pass (i.e., first
+‑
+contact resolution)?
+98%
+22 Has the government formalized the acquisition approach and
+timeline?
+23 Has the government completed the migration for CloudOne? Yes, August 2025
+24 Will the Government indicate the anticipated inclusive dates of
+the Transition In period? How many days are planned for the
+Transition In? Not at the moment but plan is 60 days
+25 Will the Government consider adding a rating/score above the
+current “Meets” (such as Outstanding) to allow Offerors to be
+rated/scored for demonstrating strengths such as an innovation,
+value add, efficiency, and/or cost savings? Evaluation criteria has not been finalized.
+26 Will the Government be providing any labor categories, level of
+effort numbers, or historical staffing information, to assist offerors
+in ensuring adequate qualified personnel are proposed to support
+PBES? We can suggest some labor categories but not all.
+27 Can the government provide a breakdown of current LCATs and
+quantities by geographic location as well as
+government/contractor site? The current LCATs were based on the contractors determination of our needs from
+the PWS. SMEs for Planning, Programming and Budget are required. Typically, DRM,
+BI and Hyerpion Developers and Engineers are needed. If you would like to submit a
+staffing plan, we can take a look and give you feedback. As far as location, Help, SME
+and maybe a couple others will be required to work in DC.
+28 What Agile framework is currently in use (SAFe, Scrum, hybrid)? Scrumban
+29 Are there plans to modernize or replace Oracle components
+(DRM, Hyperion, OAS)? Yes, currently in work.
+30 What are the current help desk volumes and SLAs? Roughly 185-200 tickets a month
+31 What tools/platforms are used for ticketing and knowledge
+management? Jira/Confluence/SharePoint
+32 What KPIs or performance metrics will define success for this
+effort? In-work
+33 How does the Government measure user experience and system
+effectiveness?
+34 The RFI states that the Government is seeking vendor capabilities
+for the configuration, operation, maintenance, enhancement, and
+cloud migration of PBES. Can the Government clarify the relative
+priority among these areas and the expected balance of effort
+across them? Currently in the Cloud as of August 2025. Help Desk, Sustainment and Development
+would be the priorities.
+35 The RFI references Oracle Hyperion, Oracle Data Relationship
+Management (DRM), Oracle Analytics Server (OAS), Oracle
+Internet Directory (OID), and AWS cloud migration. Are there
+additional systems, tools, or external interfaces that vendors
+should anticipate supporting? Software that needs to be supported: Oracle EPM 11.2.24, Oracle Analytics Server
+5.9, Oracle Data Integrator 12.2.1.4, Oracle Data Relationship Management 11.2.24,
+Oracle Database 19c, Oracle HTTP Server 12.2.1.4, Oracle Hyperion Planning
+11.2.24, Oracle Internet Directory 12.2.1.4, Oracle WebLogic Server 12.2.1.4, Oracle
+Data Visualization, Oracle Essbase 21c, Docker 19.0.3 (updating to Apache/Mellon),
+RHEL 7.9 (updating to RHEL 8), and Windows Server 2019. There is no AWS cloud
+migration requirement. We fully migrated to Cloud One AWS in August 2025.
+36 The RFI indicates PBES operates on the SIPR network. What are
+the anticipated security clearance requirements for personnel,
+and what proportion of the workforce is expected to require SIPR
+access? Secret Clearance (including Help Desk Support) and all required certifications will
+be included in official PWS. PBES SS_RFI 2026
+Q&A
+37 Can the Government provide additional detail regarding the
+current PBES technical baseline, including system architecture,
+versioning, and the current status of any cloud migration
+activities?
+38 How does the scope of this effort compare to the current PBES
+contract awarded under SBEAS in August 2023? Is this effort
+intended as a recompete, follow-on, or new requirement? Yes, this is a recompete.
+39 If this effort differs from the current PBES contract, is any portion
+of the work currently being performed by an existing contractor? If
+so, can the Government provide the applicable contract vehicle
+and scope boundaries?
+40 If portions of this requirement are new, does this represent net-
+new capability or a reorganization of existing PBES support
+activities?
+41 Given PBES supports Air Force planning, programming, and
+budgeting processes, will the Government assess potential
+Organizational Conflict of Interest (OCI) considerations for
+vendors supporting BES Directorate or related efforts? If so, what
+mitigation approaches are anticipated? You will claim any OCI concerns you may and mitigate with a plan. We will also
+inform you of any contractor that is involved in our source selection process.
+42 The RFI specifies responses should be submitted in MS Word
+format. Can the Government clarify whether responses to the
+accompanying Excel questionnaire may be submitted in narrative
+Word format, or if both formats are required? Yes, will be clarified in the RFP.
+43 Are there expected workload fluctuations tied to the Planning,
+Programming, and Budgeting cycle that vendors should consider
+for staffing? Yes, POM and PB timelines.
+44 Can the Government provide insight into the anticipated
+acquisition strategy, including potential contract vehicles and
+whether a set-aside is being considered? Not at this time.
+45 What are the primary challenges or pain points with the current
+PBES environment that this effort is intended to address? None at this time.
+46 Does the Government anticipate conducting an Industry Day or
+releasing a draft RFP or PWS following this RFI? We are in the planning stages but yes, we plan to conduct an industry day or draft
+RFP release. PBES SS_RFI 2026
+Q&A

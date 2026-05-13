@@ -3,21 +3,21 @@
   "external_id": "2059183976784a5595b522a738d27305",
   "title": "DB01--VISN | PYXIS HOST CONVERSION SERVICE",
   "name": "DB01--VISN | PYXIS HOST CONVERSION SERVICE",
-  "statement_of_work": "",
+  "statement_of_work": "Carefusion Solutions, LLC, will provide the Pyxis Host Conversion to the existing Pyxis IV Prep, MedStations, and supply systems. The Pyxis system is proprietary and may only be upgraded by Carefusion Solutions, LLC.",
   "deliverables": [
-    "Execute scope of work described in the DB01--VISN | PYXIS HOST CONVERSION SERVICE solicitation",
-    "Deliver milestones, status reporting, and acceptance documentation",
-    "Provide final handoff and post-deployment support per RFP terms"
+    "Carefusion Solutions, LLC, will provide the Pyxis Host Conversion to the existing Pyxis IV Prep, MedStations, and supply systems",
+    "The capabilities statement must provide clear and unambiguous evidence to substantiate the capability of the party to provide the required services",
+    "If after 05/06/2026, no viable responses have been received in response to this announcement, the Department of Veterans Affairs shall negotiate solely with Carefusion Solutions, LLC"
   ],
-  "location_level": "state",
-  "location": "California",
+  "location_level": "city",
+  "location": "San Diego",
   "tags": [
-    "Hardware",
     "Software",
-    "California"
+    "Procurement",
+    "San Diego"
   ],
   "dept": "VETERANS AFFAIRS, DEPARTMENT OF.VETERANS AFFAIRS, DEPARTMENT OF.255-NETWORK CONTRACT OFFICE 15 (36C255)",
-  "description": "",
+  "description": "Carefusion Solutions, LLC, will provide the Pyxis Host Conversion to the existing Pyxis IV Prep, MedStations, and supply systems. The Pyxis system is proprietary and may only be upgraded by Carefusion Solutions, LLC.",
   "published_date": "2026-04-28",
   "due_date": "2026-05-06T11:00:00-05:00",
   "contact_name": "Betty Flores",
