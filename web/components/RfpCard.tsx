@@ -1,5 +1,6 @@
 "use client";
 
+import type { ListCardLayout } from "@/lib/analytics";
 import type { Rfp } from "@/lib/types";
 import { ScoreRing } from "./ScoreRing";
 
@@ -45,6 +46,7 @@ type Props = {
   rfp: Rfp;
   active: boolean;
   onSelect: () => void;
+  layout: ListCardLayout;
 };
 
 function dueParts(iso: string) {
@@ -73,7 +75,11 @@ function ClockIcon() {
   );
 }
 
-export function RfpCard({ rfp, active, onSelect }: Props) {
+function HeadlineFirstCard({
+  rfp,
+  active,
+  onSelect,
+}: Omit<Props, "layout">) {
   const { day, month } = dueParts(rfp.dueDate);
   const subtitle = rfp.tags[0] ?? rfp.agency;
 
@@ -96,8 +102,10 @@ export function RfpCard({ rfp, active, onSelect }: Props) {
         <p className="line-clamp-2 text-sm font-semibold leading-snug text-govbid-text md:text-base">
           {rfp.title}
         </p>
-        <p className="mt-1 line-clamp-1 text-xs text-govbid-text-muted">{subtitle}</p>
-        {/* TAGS: show all tags as colored bubbles */}
+        <p className="mt-1 line-clamp-1 text-xs font-medium text-govbid-text-muted">{subtitle}</p>
+        {rfp.tags[0] ? (
+          <p className="mt-0.5 line-clamp-1 text-[11px] text-govbid-text-muted">{rfp.agency}</p>
+        ) : null}
         <div className="mt-2 flex flex-wrap gap-1">
           {rfp.tags?.map((tag) => (
             <TagBubble key={tag} tag={tag} />
@@ -115,9 +123,61 @@ export function RfpCard({ rfp, active, onSelect }: Props) {
         </div>
       </div>
 
-      <div className="flex shrink-0 flex-col items-end justify-start gap-2">
-        <ScoreRing score={rfp.score} size={44} stroke={3} />
+      <div className="flex shrink-0 flex-col items-end justify-start gap-1">
+        <span className="text-[10px] font-semibold uppercase tracking-wide text-govbid-text-muted">
+          Match
+        </span>
+        <ScoreRing score={rfp.score} size={36} stroke={2.5} />
       </div>
     </button>
   );
+}
+
+function ScoreFirstCard({ rfp, active, onSelect }: Omit<Props, "layout">) {
+  const { day, month } = dueParts(rfp.dueDate);
+
+  return (
+    <button
+      type="button"
+      onClick={onSelect}
+      className={`flex w-full gap-3 rounded-xl border bg-govbid-surface p-4 text-left shadow-[var(--govbid-shadow)] transition md:gap-4 md:p-5 ${
+        active
+          ? "border-govbid-primary/45 bg-govbid-primary-soft/60 shadow-[0_1px_3px_rgb(79_70_229/0.12)]"
+          : "border-govbid-border hover:border-govbid-border-strong"
+      }`}
+    >
+      <div className="flex shrink-0 flex-col items-center gap-1">
+        <span className="text-[10px] font-bold uppercase tracking-wide text-govbid-primary">
+          Fit
+        </span>
+        <ScoreRing score={rfp.score} size={56} stroke={4} />
+      </div>
+
+      <div className="min-w-0 flex-1">
+        <p className="line-clamp-2 text-sm font-semibold leading-snug text-govbid-text md:text-base">
+          {rfp.title}
+        </p>
+        <p className="mt-1 line-clamp-1 text-xs font-medium text-govbid-text">{rfp.agency}</p>
+        <p className="mt-1 text-xs font-semibold text-govbid-primary">{rfp.contract}</p>
+        <div className="mt-2 flex flex-wrap gap-1">
+          {rfp.tags.slice(0, 3).map((t) => (
+            <TagBubble key={t} tag={t} />
+          ))}
+        </div>
+      </div>
+
+      <div className="flex shrink-0 flex-col items-center justify-center border-l border-govbid-border/80 pl-3 text-center md:pl-4">
+        <span className="text-xl font-bold leading-none text-govbid-text md:text-2xl">{day}</span>
+        <span className="mt-0.5 text-[10px] font-medium text-govbid-text-muted">{month}</span>
+        <span className="mt-2 hidden text-[10px] text-govbid-text-muted sm:inline">Due {rfp.dueDate}</span>
+      </div>
+    </button>
+  );
+}
+
+export function RfpCard({ rfp, active, onSelect, layout }: Props) {
+  if (layout === "score_first") {
+    return <ScoreFirstCard rfp={rfp} active={active} onSelect={onSelect} />;
+  }
+  return <HeadlineFirstCard rfp={rfp} active={active} onSelect={onSelect} />;
 }

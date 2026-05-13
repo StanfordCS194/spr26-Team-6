@@ -9,13 +9,17 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@ai-sdk/groq": "^3.0.39",
+    "@ai-sdk/openai": "^3.0.63",
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.89.0",
     "@tailwindcss/typography": "^0.5.19",
+    "ai": "^6.0.177",
     "next": "^16.2.4",
     "posthog-js": "^1.373.4",
     "react-markdown": "^10.1.0",
-    "react-pdf": "^10.4.1"
+    "react-pdf": "^10.4.1",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

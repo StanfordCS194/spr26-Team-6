@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { WalkthroughOverlay } from "./WalkthroughOverlay";
 import { WalkthroughTooltip } from "./WalkthroughTooltip";
 import { useDashboard } from "@/context/DashboardContext";
+import { captureEvent } from "@/lib/analytics";
 
 export type WalkthroughStep =
   | "intro"
@@ -186,6 +187,14 @@ export function Walkthrough() {
 
   const [targetElement, setTargetElement] = useState<HTMLElement | null>(null);
   const [showCompletion, setShowCompletion] = useState(false);
+  const wasWalkthroughActive = useRef(false);
+
+  useEffect(() => {
+    if (walkthroughActive && !wasWalkthroughActive.current) {
+      captureEvent("walkthrough_started", { step_index: 0 });
+    }
+    wasWalkthroughActive.current = walkthroughActive;
+  }, [walkthroughActive]);
 
   // Update target element and handle step-specific logic
   useEffect(() => {
@@ -260,7 +269,7 @@ export function Walkthrough() {
     if (walkthroughStep < STEP_ORDER.length - 1) {
       setWalkthroughStep(walkthroughStep + 1);
     } else if (showCompletion) {
-      handleClose();
+      handleCompletionClick();
     }
   };
 
@@ -270,14 +279,23 @@ export function Walkthrough() {
     }
   };
 
-  const handleClose = () => {
+  const endWalkthroughUi = () => {
     setWalkthroughActive(false);
     setShowCompletion(false);
     setProfileOpen(false);
   };
 
+  const handleClose = () => {
+    captureEvent("walkthrough_dismissed", {
+      step_index: walkthroughStep,
+      show_completion: showCompletion,
+    });
+    endWalkthroughUi();
+  };
+
   const handleCompletionClick = () => {
-    handleClose();
+    captureEvent("walkthrough_completed", { step_index: walkthroughStep });
+    endWalkthroughUi();
   };
 
   if (!walkthroughActive) return null;

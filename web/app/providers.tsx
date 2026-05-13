@@ -1,5 +1,6 @@
 "use client";
 
+import { PostHogProvider } from "@/components/PostHogProvider";
 import { DashboardProvider } from "@/context/DashboardContext";
 import { ABTestProvider } from "@/context/ABTestContext";
 import { PostHogProvider } from "./posthog-provider";
