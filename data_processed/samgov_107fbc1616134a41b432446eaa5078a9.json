@@ -3,12 +3,10 @@
   "external_id": "107fbc1616134a41b432446eaa5078a9",
   "title": "Foundation Sustainment Support, Software and Integration (FS3i)",
   "name": "Foundation Sustainment Support, Software and Integration (FS3i)",
-  "statement_of_work": "Amazon's trademarks and trade dress may not be used in connection with any product or service that is not Amazon's, in any manner that is likely to cause confusion among customers, or in any manner that disparages or discredits Amazon. All other trademarks not owned by Amazon are the property of their respective owners, who may or may not be aﬃliated with, connected to, or sponsored by Amazon.",
+  "statement_of_work": "Amazon's trademarks and trade dress may not be used in connection with any product or service that is not Amazon's, in any manner that is likely to cause confusion among customers, or in any manner that disparages or discredits Amazon. All other trademarks not owned by Amazon are the property of their respective owners, who may or may not be aﬃliated with, connected to, or sponsored by Amazon. The impact level is associated with the sensitivity of the information and the risk of losing the conﬁdentiality, integrity, or availability of that information. IL4 accommodates DoD Controlled Unclassiﬁed Information (CUI), and IL5 accommodates DoD CUI and National Security Systems (NSS) information.",
   "deliverables": [
-    "Conﬁgure additional functionality, guardrails, and security services, such as",
-    "Manage your foundational networking topology through services such as Amazon Virtual Private",
-    "Generate additional workload accounts by using the AWS Control Tower Account Factory. There are no additional charges or upfront commitments required to use Landing Zone Accelerator",
-    "Cloud Access Point (CAP) – Provides access to the cloud, and protects DoD networks from the"
+    "Address requirements in '(U) AWS Prescriptive Guidance Secure Cloud Computing Architecture DoD'",
+    "Address requirements in '(U) DoD Cloud Computing Sec Requirements Guide'"
   ],
   "location_level": "state",
   "location": "California",
@@ -20,7 +18,7 @@
     "California"
   ],
   "dept": "DEPT OF DEFENSE.NATIONAL GEOSPATIAL-INTELLIGENCE AGENCY (NGA).NATL GEOSPATIAL-INTELLIGENCE AGENCY",
-  "description": "Amazon's trademarks and trade dress may not be used in connection with any product or service that is not Amazon's, in any manner that is likely to cause confusion among customers, or in any manner that disparages or discredits Amazon. All other trademarks not owned by Amazon are the property of their respective owners, who may or may not be aﬃliated with, connected to, or sponsored by Amazon.",
+  "description": "Amazon's trademarks and trade dress may not be used in connection with any product or service that is not Amazon's, in any manner that is likely to cause confusion among customers, or in any manner that disparages or discredits Amazon. All other trademarks not owned by Amazon are the property of their respective owners, who may or may not be aﬃliated with, connected to, or sponsored by Amazon. The impact level is associated with the sensitivity of the information and the risk of losing the conﬁdentiality, integrity, or availability of that information. IL4 accommodates DoD Controlled Unclassiﬁed Information (CUI), and IL5 accommodates DoD CUI and National Security Systems (NSS) information. This guide is designed to help you build a landing zone that supports IL4 and IL5 information.",
   "published_date": "2026-04-24",
   "due_date": "2026-09-30T09:00:00-04:00",
   "contact_name": "Timothy Hull",

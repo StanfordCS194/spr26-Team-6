@@ -2,11 +2,12 @@
   "source": "sam.gov",
   "external_id": "c125da98aaad41329f19cb8fde714f0d",
   "title": "Request for Information (RFI)/Sources Sought (SS) Program and Budget Enterprise System (PBES)_2026",
-  "name": "Request for Information (RFI)/Sources Sought (SS) Program and Budget Enterprise System (PBES)_2026",
-  "statement_of_work": "1 Is the Government open to considering relevant commercial or public sector past performance? The government believes public or commercial past performance is acceptable.",
+  "name": "/Sources Sought Program and Budget Enterprise System_2026",
+  "statement_of_work": "1 Is the Government open to considering relevant commercial or public sector past performance? The government believes public or commercial past performance is acceptable. 2 Can the Government share the current PBES overall system architecture, including external and internal interfaces, reporting capabilities, source systems, and data warehouse components or constructs? Yes, the government can provide OV1 and Network Topology.",
   "deliverables": [
-    "There are minor challenges with data validation that must be addressed to reduce the manual workload required to maintain accuracy",
-    "System designs must provide structural continuity to mitigate process drift (divergence) while retaining the agility required for mission-critical flexibility"
+    "Address requirements in 'PBES RFI QAs 2026'",
+    "Address requirements in 'PBES RFI 2026 Final'",
+    "Address requirements in 'PBES RFI 2026 Final Amend1'"
   ],
   "location_level": "state",
   "location": "California",
@@ -16,7 +17,7 @@
     "California"
   ],
   "dept": "DEPT OF DEFENSE.DEPT OF THE AIR FORCE.AIR FORCE MATERIEL COMMAND.AIR FORCE LIFE CYCLE MANAGEMENT CENTER.BUSINESS AND ENTERPRISE SYSTEMS.FA8770 AFLCMC GBK",
-  "description": "1 Is the Government open to considering relevant commercial or public sector past performance? The government believes public or commercial past performance is acceptable.",
+  "description": "1 Is the Government open to considering relevant commercial or public sector past performance? The government believes public or commercial past performance is acceptable. 2 Can the Government share the current PBES overall system architecture, including external and internal interfaces, reporting capabilities, source systems, and data warehouse components or constructs? Yes, the government can provide OV1 and Network Topology. Currently there are no interfaces.",
   "published_date": "2026-04-30",
   "due_date": "2026-05-13T15:00:00-04:00",
   "contact_name": "Amanda Stull",

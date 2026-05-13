@@ -3,10 +3,11 @@
   "external_id": "b4ea569babbc4b589b8a2bdfea639941",
   "title": "Nuclear Medicine Radiopharmaceutical Dose Tracking Software",
   "name": "Nuclear Medicine Radiopharmaceutical Dose Tracking Software",
-  "statement_of_work": "Allows nuclear medicine departments to keep track of radioactive inventory, radiopharmaceutical doses, patient dose records information and radiopharmaceutical billing. The fully integrated Nuclear Medicine dose tracking software shall include: Patient dose amounts, procedures, referring physicians and radioactive waste disposal Automated daily reporting Automated monthly record keeping",
+  "statement_of_work": "Allows nuclear medicine departments to keep track of radioactive inventory, radiopharmaceutical doses, patient dose records information and radiopharmaceutical billing. The fully integrated Nuclear Medicine dose tracking software shall include: Patient dose amounts, procedures, referring physicians and radioactive waste disposal Automated daily reporting Automated monthly record keeping. Access everything from one main screen Have convenient shortcuts for day-to-day tasks Ability to quickly view all patient information View satellite department data Produce daily and monthly inspection reports Health physics services Export reports to Excel View a patient's scheduled exams and exam history View a patient’s dose record from previous exams Track shipping containers Track records of sealed sources and radioactive waste disposal Sort inventory Barcoded inventory. Patient dose record keeping.",
   "deliverables": [
-    "QA & QM for all nuclear medicine hot lab equipment",
-    "Daily and weekly survey and wipes record keeping"
+    "Execute scope of work described in the Nuclear Medicine Radiopharmaceutical Dose Tracking Software solicitation",
+    "Deliver milestones, status reporting, and acceptance documentation",
+    "Provide final handoff and post-deployment support per RFP terms"
   ],
   "location_level": "state",
   "location": "California",
@@ -16,7 +17,7 @@
     "California"
   ],
   "dept": "VETERANS AFFAIRS, DEPARTMENT OF.VETERANS AFFAIRS, DEPARTMENT OF.261-NETWORK CONTRACT OFFICE 21 (36C261)",
-  "description": "Allows nuclear medicine departments to keep track of radioactive inventory, radiopharmaceutical doses, patient dose records information and radiopharmaceutical billing. The fully integrated Nuclear Medicine dose tracking software shall include: Patient dose amounts, procedures, referring physicians and radioactive waste disposal Automated daily reporting Automated monthly record keeping",
+  "description": "Allows nuclear medicine departments to keep track of radioactive inventory, radiopharmaceutical doses, patient dose records information and radiopharmaceutical billing. The fully integrated Nuclear Medicine dose tracking software shall include: Patient dose amounts, procedures, referring physicians and radioactive waste disposal Automated daily reporting Automated monthly record keeping. Access everything from one main screen Have convenient shortcuts for day-to-day tasks Ability to quickly view all patient information View satellite department data Produce daily and monthly inspection reports Health physics services Export reports to Excel View a patient's scheduled exams and exam history View a patient’s dose record from previous exams Track shipping containers Track records of sealed sources and radioactive waste disposal Sort inventory Barcoded inventory. Patient dose record keeping. Radiopharmaceutical inventory.",
   "published_date": "2026-04-20",
   "due_date": "2026-04-28T12:00:00-07:00",
   "contact_name": "Jason Olliff",
