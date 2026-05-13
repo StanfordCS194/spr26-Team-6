@@ -1,0 +1,81 @@
+{
+  "source": "SAM.gov",
+  "external_id": "26cefad7bad1498bb65cabd548fcbdf7",
+  "title": "United States Space Force (USSF) Human Resources Information Technology (HRIT) Guardian Automation Layer (GAL) Request for Information",
+  "dept": "DEPT OF DEFENSE.DEPT OF THE AIR FORCE.FA2553 OPRN TEST & TRG INFR OTTI PK",
+  "description": "",
+  "published_date": "2026-04-08",
+  "due_date": "2026-05-08T12:00:00-06:00",
+  "contact_name": "Crystal Price",
+  "contact_email": "crystal.price.6@spaceforce.mil",
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-26cefad7bad1498bb65cabd548fcbdf7-79d0b958e6f3",
+  "metadata": {
+    "event_type": "Special Notice",
+    "solicitation_number": "FA2553-HRIT-GAL-RFI",
+    "ui_link": "https://sam.gov/workspace/contract/opp/26cefad7bad1498bb65cabd548fcbdf7/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": null,
+    "set_aside": null,
+    "set_aside_description": null,
+    "place_of_performance": null,
+    "office_address": {
+      "zipcode": "80914",
+      "city": "PETERSON SFB",
+      "countryCode": "USA",
+      "state": "CO"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "SRD-SF Guardian PMS v1.0.pdf",
+        "url": "https://drive.google.com/file/d/1ceY5ptpK4RGrLtvvk3pQjlyaB8QqA8Xa/view?usp=drivesdk",
+        "type": "primary_spec",
+        "original_extension": "pdf",
+        "size_bytes": 685108,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/1889229b78bc49a490c83698ac5bb96f/download"
+      },
+      {
+        "label": "SRD_Response_Spreadsheet.xlsx",
+        "url": "https://docs.google.com/spreadsheets/d/16kngFYQA01DN_nHXA4YRdyQkRw_MtJww/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "xlsx",
+        "size_bytes": 24110,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/9320138ff8954b24ab88a1b93978ae76/download"
+      },
+      {
+        "label": "USSF_HRIT_GAL_RFI.pdf",
+        "url": "https://drive.google.com/file/d/1fZLTnPjN-8WZGY5-DxeuPOst6Y1CUcNm/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 216528,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/0d009a5f793c4c08933aab0a9130a867/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "crystal.price.6@spaceforce.mil",
+        "phone": "",
+        "title": null,
+        "fullName": "Crystal Price"
+      },
+      {
+        "fax": "",
+        "type": "secondary",
+        "email": "cassie.debree@spaceforce.mil",
+        "phone": "",
+        "title": null,
+        "fullName": "Cassie DeBree"
+      }
+    ]
+  }
+}

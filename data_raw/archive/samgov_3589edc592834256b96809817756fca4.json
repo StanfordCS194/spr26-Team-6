@@ -1,0 +1,144 @@
+{
+  "source": "SAM.gov",
+  "external_id": "3589edc592834256b96809817756fca4",
+  "title": "Wireless Network Deployment at Peterson Space Force Base",
+  "dept": "DEPT OF DEFENSE.US SPECIAL OPERATIONS COMMAND (USSOCOM).SOCNORTH PB",
+  "description": "This is a combined synopsis/solicitation issued as a Request for Quotation (RFQ) for commercial services prepared in accordance with FAR Part 12. This announcement constitutes the only solicitation. Offers are being requested, and a separate written solicitation will not be issued for the following requirement.\n\nThe Government requires Commercial Solutions for Classified (CSfC) Wireless Local Area Network (WLAN) services to support SOCNORTH at Peterson Space Force Base, Colorado. The requirement includes a phased execution approach for study, design, equipment procurement, installation, testing, and final validation of the wireless network. The contractor shall ensure compliance with NSA CSfC Capabilities Package (CP), DoD Security Technical Implementation Guide (STIG), and other applicable federal security standards.\n\nThis acquisition is set aside for small business concerns under NAICS Code 541512 – Computer Systems Design Services, with a small business size standard of $34M.\n\nThis solicitation incorporates provisions and clauses by reference. The full text of provisions and clauses may be accessed electronically at https://www.acquisition.gov/far-overhaul/far-part-deviation-guide.\n\nDESCRIPTION OF REQUIREMENTS\n\nThe contractor shall perform all work in accordance with the attached Performance Work Statement (PWS). Deliverables and performance milestones are as follows:\n\nDATE(S) AND PLACE(S) OF DELIVERY AND ACCEPTANCE\n\nDelivery Location: Peterson Space Force Base, Colorado\n\nFOB Point: Destination\n\nAcceptance: Deliverables will be reviewed and accepted by the designated Government POC upon validation that all requirements are met.\n\nINSTRUCTIONS TO OFFERORS\n\nOfferors shall prepare and submit proposals that include the following:\n\nTechnical Approach:\n\nProvide a detailed narrative describing the approach to executing each phase of the requirement, including:\n\nPre-onsite assessment: Identify methods for assessing infrastructure readiness (e.g., tools, processes).\n\nWireless site surveys: Include details on the tools and methodologies to be used (e.g., heatmaps, signal strength analysis, channel planning).\n\nCompliance: Describe how the proposed solution will meet NSA CSfC Capabilities Package requirements, DoD STIGs, and NSA Common Criteria.\n\nSecurity and Risk Management: Outline strategies for ensuring cybersecurity compliance and mitigating risks.\n\nProposed Schedule:\n\nSubmit a detailed project schedule (e.g., Gantt chart or similar format) showing how all tasks and deliverables will be completed within 60 calendar days of contract award.\n\nInclude key milestones, task durations, dependencies, and any concurrent work planned to meet the timeline.\n\nPricing Information:\n\nProvide firm-fixed pricing for CLIN 0001.\n\nAcknowledge that pricing for CLINs 0002 and 0003 will be submitted as part of the deliverables for CLIN 0001.\n\nRepresentation and Certifications:\n\nEnsure the offeror’s System for Award Management (SAM) registration is active and up to date.\n\nEVALUATION\n\nThe Government will evaluate offers in accordance with FAR 52.212-2, Evaluation—Commercial Products and Commercial Services (Deviation Date), as follows:\n\nEvaluation Factors (in descending order of importance):\n\nTechnical Approach:\n\nThe Government will evaluate the offeror’s technical approach for its ability to meet the requirements outlined in the PWS.\n\nThe evaluation will consider the proposed methodologies, tools, and processes for completing the study, design, installation, and testing phases.\n\nEmphasis will be placed on the offeror’s understanding of CSfC, NSA compliance, DoD STIG standards, and their ability to deliver a fully compliant solution.\n\nSchedule Feasibility:\n\nThe Government will evaluate the offeror’s proposed schedule for its ability to meet the requirement to complete all phases of work within 60 calendar days of contract award.\n\nThe evaluation will consider the realism of the schedule, the logical sequencing of tasks, and the ability to perform concurrent work where applicable.\n\nPrice:\n\nPrice will be evaluated for reasonableness, realism, and balance:\n\nReasonableness: The proposed price will be compared to historical data, market research, and other offers to ensure it is fair.\n\nRealism: The price will be analyzed to ensure it reflects a sound understanding of the work and is not unrealistically low.\n\nBalance: The price will be reviewed to ensure it is appropriately distributed across all CLINs and does not indicate front-loading or disproportionate allocation.\n\nBasis for Award:\n\nThe Government intends to make an award to the offeror whose proposal represents the best value to the Government. Technical Approach is significantly more important than Schedule Feasibility, which is slightly more important than Price. However, as proposals become more equal in their technical merit and schedule feasibility, the evaluated price will become more important in determining the overall best value.\n\n(End of Evaluation Section)\n\nSUBMISSION DEADLINES\n\nSite Visit: 11 May 2026, 12:00 PM Mountain Time. Please submit names to the Contracting Officer, Capt Byron S. Irving, Contract Specialist, Matthew B Clark at matthew.b.clark.ctr@socom.mil, and Technical POC, CW3 Chimere Chuta no later than close of business 7 May 2026.\n\nQuestions Due: 15 May 2026, 12:00 PM Mountain Time. Questions must be submitted via email to the Contracting Officer, Capt Byron S. Irving, Contract Specialist, Matthew B Clark at matthew.b.clark.ctr@socom.mil, and Technical POC, CW3 Chimere Chuta.\n\nProposals Due: 21 May 2026, 12:00 PM Mountain Time. Proposals must be submitted electronically to the Contracting Officer, Capt Byron S. Irving, Contract Specialist, Matthew B Clark at matthew.b.clark.ctr@socom.mil, and Technical POC, CW3 Chimere Chuta.\n\nSOLICITATION PROVISIONS AND CONTRACT CLAUSES\n\nThe provisions and clauses applicable to this solicitation are those listed in RFO 12.205 Solicitation provisions and contract clauses.",
+  "published_date": "2026-05-08",
+  "due_date": "2026-05-21T12:00:00-06:00",
+  "contact_name": "Capt Byron S. Irving",
+  "contact_email": "byron.s.irving.mil@socom.mil",
+  "contact_phone": "(719) 723-6413",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-3589edc592834256b96809817756fca4-ee3b612b99c8",
+  "metadata": {
+    "event_type": "Combined Synopsis/Solicitation",
+    "solicitation_number": "H9229526QB001",
+    "ui_link": "https://sam.gov/workspace/contract/opp/3589edc592834256b96809817756fca4/view",
+    "naics_codes": [
+      "541512"
+    ],
+    "classification_code": "DA01",
+    "set_aside": "SBA",
+    "set_aside_description": "Total Small Business Set-Aside (FAR 19.5)",
+    "place_of_performance": {
+      "city": {
+        "code": "16000",
+        "name": "Colorado Springs"
+      },
+      "state": {
+        "code": "CO",
+        "name": "Colorado"
+      },
+      "zip": "80914",
+      "country": {
+        "code": "USA",
+        "name": "UNITED STATES"
+      }
+    },
+    "office_address": {
+      "zipcode": "80914",
+      "city": "COLORADO SPRINGS",
+      "countryCode": "USA",
+      "state": "CO"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false,
+      "detected_by": "description_heuristic"
+    },
+    "documents": [
+      {
+        "label": "Apendix 3_DD254_WLAN_SOCNORTH_vendor name.pdf",
+        "url": "https://drive.google.com/file/d/1_HNIeIk6CflFsRkxXFteVCmVAUwx2n0-/view?usp=drivesdk",
+        "type": "primary_spec",
+        "original_extension": "pdf",
+        "size_bytes": 121933,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/b4223a69b29e4d3892849b94915004f8/download"
+      },
+      {
+        "label": "Appendix 1 SOCNORTH On-Hand Equipment.xlsx",
+        "url": "https://docs.google.com/spreadsheets/d/1rEvLNxAzdKD22skp1t6WlrJCiGpAgMCb/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "xlsx",
+        "size_bytes": 26549,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/0af6dc00a0a24124bb39b7bac7c62f5b/download"
+      },
+      {
+        "label": "Appendix 2_SOCNORTH Visitor Map Guide.pptx",
+        "url": "https://docs.google.com/presentation/d/1_2bnArCYo7vYk5LNw1tilOCbZIeC_TTE/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "pptx",
+        "size_bytes": 899015,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/2be90e2306d34d11bbbeaac5aeab8b9a/download"
+      },
+      {
+        "label": "DoD 8420 Unclass and Class WLAN.pdf",
+        "url": "https://drive.google.com/file/d/1EJwMDN5DPz6cdHt0JjZKO6nDCdutEdMC/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 459241,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/3c8a43b26eea4a1cbd54dc43587b86b4/download"
+      },
+      {
+        "label": "Questions and Answers for Wireless Network Deployment.docx",
+        "url": "https://docs.google.com/document/d/1t6InhCmM4V448VEdfp05W3Ig4VXoTvXs/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 14457,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/bc993f41372f44d89303e36c4b890885/download"
+      },
+      {
+        "label": "SOCNORTH WAN Bid Schedule.xlsx",
+        "url": "https://docs.google.com/spreadsheets/d/1T8yD2uDe39I7SB567W73eQ1S4Wv_qRPs/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "xlsx",
+        "size_bytes": 11299,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/1596f1fdc7744736adca0818b32a0c0e/download"
+      },
+      {
+        "label": "SOCNORTH_PWS WAN at PSFB 7 May 2026.docx",
+        "url": "https://docs.google.com/document/d/1AZNWGUclKQ3O6rHW4hr9CYbpPHtEPp3d/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 27298,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/6d945dd1c3ee476aae4f79326d67e0de/download"
+      },
+      {
+        "label": "_CP_CampusWLAN_v3.1.0_d28Jan25.pdf",
+        "url": "https://drive.google.com/file/d/14ISiCXrUwDxQ2uU2hDAYDRkWR_lMYFuJ/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 4994129,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/2d7afa57fe3a4717bd203315fd563dc4/download"
+      },
+      {
+        "label": "_CP_ContinuousMonitoringAnnex_v1.1_d02Mar21.pdf",
+        "url": "https://drive.google.com/file/d/1W0p8LM1B7TYF_gYJJsxmWQe2KVNoga1l/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 3118364,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/6d93065b2a524a528c7ba42a18eba779/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": null,
+        "type": "primary",
+        "email": "byron.s.irving.mil@socom.mil",
+        "phone": "(719) 723-6413",
+        "title": null,
+        "fullName": "Capt Byron S. Irving"
+      },
+      {
+        "fax": null,
+        "type": "secondary",
+        "email": "chimere.chuta.mil@socom.mil",
+        "phone": "(719) 723-6607",
+        "title": null,
+        "fullName": "CW3 Chimere O. Chuta"
+      }
+    ]
+  }
+}

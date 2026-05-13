@@ -129,8 +129,16 @@ class Classifier:
 # ---------------------------------------------------------------------------
 
 def _read_raw_records(input_dir: Path) -> list[dict[str, Any]]:
+    """Read raw JSONs from input_dir and any input_dir/archive/ subdir.
+    Archived files have already been pushed through the pipeline once but
+    are still valid training data for the tag classifier.
+    """
     records: list[dict[str, Any]] = []
-    for src in sorted(input_dir.glob("*.json")):
+    sources = list(input_dir.glob("*.json"))
+    archive_dir = input_dir / "archive"
+    if archive_dir.is_dir():
+        sources.extend(archive_dir.glob("*.json"))
+    for src in sorted(sources):
         with src.open("r", encoding="utf-8") as fh:
             records.append(json.load(fh))
     return records

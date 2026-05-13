@@ -1,0 +1,702 @@
+{
+  "source": "sam.gov",
+  "external_id": "107fbc1616134a41b432446eaa5078a9",
+  "title": "Foundation Sustainment Support, Software and Integration (FS3i)",
+  "name": "Foundation Sustainment Support, Software and Integration (FS3i)",
+  "statement_of_work": "",
+  "deliverables": [
+    "Execute scope of work described in the Foundation Sustainment Support, Software and Integration (FS3i) solicitation",
+    "Deliver milestones, status reporting, and acceptance documentation",
+    "Provide final handoff and post-deployment support per RFP terms"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Cloud",
+    "Environment",
+    "Cybersecurity",
+    "Software",
+    "California"
+  ],
+  "dept": "DEPT OF DEFENSE.NATIONAL GEOSPATIAL-INTELLIGENCE AGENCY (NGA).NATL GEOSPATIAL-INTELLIGENCE AGENCY",
+  "description": "",
+  "published_date": "2026-04-24",
+  "due_date": "2026-09-30T09:00:00-04:00",
+  "contact_name": "Timothy Hull",
+  "contact_email": "timothy.j.hull@nga.mil",
+  "contact_phone": "314-676-0352",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-107fbc1616134a41b432446eaa5078a9-f19c671542b6",
+  "metadata": {
+    "event_type": "Presolicitation",
+    "solicitation_number": "HM047625R0016_Bidder_Library",
+    "ui_link": "https://sam.gov/workspace/contract/opp/107fbc1616134a41b432446eaa5078a9/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": "DF01",
+    "set_aside": "NONE",
+    "set_aside_description": "No Set aside used",
+    "place_of_performance": {
+      "country": {
+        "code": "USA",
+        "name": "UNITED STATES"
+      }
+    },
+    "office_address": {
+      "zipcode": "630106238",
+      "city": "ARNOLD",
+      "countryCode": "USA",
+      "state": "MO"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "(U) ACE-GTO to FS2 Addendum_v4_20240108.pdf",
+        "url": "https://drive.google.com/file/d/1oyJ-eCP3HyzAiKjUP7aT_Z0XMCCS03RP/view?usp=drivesdk",
+        "type": "primary_spec",
+        "original_extension": "pdf",
+        "size_bytes": 475525,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/f7987e9e80294422960b788d3dd0a29e/download"
+      },
+      {
+        "label": "(U) AWS_Prescriptive_Guidance_Secure_Cloud_Computing_Architecture-DoD.pdf",
+        "url": "https://drive.google.com/file/d/1Qe00LBpZhNyU9i1BsOnVlA_lW7Iab9VR/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 5104384,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/9ffff19f49d64ef384a9a2a42f6cbed6/download"
+      },
+      {
+        "label": "(U) Air_AAS_VDD_v170.3.pdf",
+        "url": "https://drive.google.com/file/d/1vTqDPkJqOD1FjbUkT917Y9bmBTm-BhiW/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 390552,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/9b0596865e1f4284b9ee24af2e210a0e/download"
+      },
+      {
+        "label": "(U) Air_ACE_GTO_VDD_v1.0.28.pdf",
+        "url": "https://drive.google.com/file/d/1tsGTGIrp5WGOY-IIHsmmWGJuNse9afrU/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 544916,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/98fba69cb4714e54a49e64e41173024d/download"
+      },
+      {
+        "label": "(U) Air_ASE_NOTAMS_VDD_1.0.1.pdf",
+        "url": "https://drive.google.com/file/d/1T79pPBg3p4Ny9Py7kVUSz2-e4WEX7FHc/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 388444,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/f6c1eeec836848baa194cfbe44d2beb3/download"
+      },
+      {
+        "label": "(U) Air_SLO_VDD v1.0.3.pdf",
+        "url": "https://drive.google.com/file/d/1MmB-WlZKhXUxO4eJVhYqwpVSDyKl1_Mn/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 385577,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/a3eab2282cfe43ea85a34e7727488dd8/download"
+      },
+      {
+        "label": "(U) Air_TAPS_VDD_1.0.0.pdf",
+        "url": "https://drive.google.com/file/d/1hwIa3dtu4tG_N58tMVq0UMAqqScTaxtg/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 366953,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/217438d1704d4cca98c7298db66ed210/download"
+      },
+      {
+        "label": "(U) Air_WebDVOF_VDD v6.0.1.pdf",
+        "url": "https://drive.google.com/file/d/1AbbFUoYqAg4R3HzTJGfl6WD91vMaNrw5/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 430529,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/c8a85192f7e648b19002a8f4fcf79050/download"
+      },
+      {
+        "label": "(U) Annex_A_IC_ITE_Services_and_Providers_v5.2.pdf",
+        "url": "https://drive.google.com/file/d/1BdZx7tzkV7R9ij65VHFLRijagDzWrWU9/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 968022,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/e7a9bb33d66b45d08ff7d786a28a124a/download"
+      },
+      {
+        "label": "(U) Annex_D_Enterprise_Services_v5.2.pdf",
+        "url": "https://drive.google.com/file/d/1BSdudU3GtiUJ_FAqCwKLEifyarjPXGZ5/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 854824,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/1915f7b1ec9d451cbacfaabdc94df159/download"
+      },
+      {
+        "label": "(U) Annex_E_Lifecycle_Guidance_v5.0.pdf",
+        "url": "https://drive.google.com/file/d/1qDOoL93iNq7KFxhCwzZVCSsyqzQvAspN/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 1767957,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/48423ebff6e2434899798cbc4241518d/download"
+      },
+      {
+        "label": "(U) Annex_F_Cloud_Design_Guidance_v5.2.pdf",
+        "url": "https://drive.google.com/file/d/1iddbvCTSqcdOC8Z5YaEFfKTh6iLKB93j/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 1157632,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/d5d1658bf3de44dc8e421988a0fc6089/download"
+      },
+      {
+        "label": "(U) Annex_G_Cloud_Data_Guidance_v5.2.pdf",
+        "url": "https://drive.google.com/file/d/1SpfVDKgY3zDm-Oq9ZKVe685TX0IWcmOF/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 2736692,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/7246a601c9274d4a99780897bd780c6d/download"
+      },
+      {
+        "label": "(U) Annex_K_Cloud_Business_Guidance_v5.2.pdf",
+        "url": "https://drive.google.com/file/d/1-BXERyRv2piBM47_u-AaZTOH-A1_4PU0/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 2647436,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/0fc5cc5241bb4e72891171521c62f296/download"
+      },
+      {
+        "label": "(U) As-Is FG IT Governance Processes Summary Final.pdf",
+        "url": "https://drive.google.com/file/d/1SZnv2HJTIQ1pS2bRk0Ew_GaEZ8JzP8EA/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 1355967,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/215b2834e3b5498fa234d99593098542/download"
+      },
+      {
+        "label": "(U) DODD8140.01_Cyberspace_Workforce_Management_5OCT2020.pdf",
+        "url": "https://drive.google.com/file/d/1hKQixwF_KBYfmFCXSVRXr_IyVUcy_aol/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 345486,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/9acef0eff62b4c2d8d3e422c946a105a/download"
+      },
+      {
+        "label": "(U) DODI_5000.87 SoftwareAcqPathway.pdf",
+        "url": "https://drive.google.com/file/d/1oNgoR6us2bN7f-c2IVs8rcSFTDvailqT/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 443122,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/11e50312b791400ebff8278d87e4ee35/download"
+      },
+      {
+        "label": "(U) DOD_CIO_SW_Dev_Open_Source_Guidance_SW_26JAN2022.pdf",
+        "url": "https://drive.google.com/file/d/1vUvE8KAQqp_baVPjIuBRFIguSJGCTPhy/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 167146,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/91270d0b8e1a44969fbd8165a98bbab0/download"
+      },
+      {
+        "label": "(U) DoDI8510-01_RMF_DoD_IT_change_3.pdf",
+        "url": "https://drive.google.com/file/d/13N7bTexdYl91jfScaKsNdWdKIpM8KRB3/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 972380,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/2b0958b028354475986ce2027251fd45/download"
+      },
+      {
+        "label": "(U) DoD_Cloud_Computing_Sec Requirements_Guide.pdf",
+        "url": "https://drive.google.com/file/d/1wAsER7n518YBEXywT6TTRtm1_8zaGQgN/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 183774,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/5a92a0cec9f74d1a9bd3b5d5b3b01581/download"
+      },
+      {
+        "label": "(U) FGModProgramOverview-JUNE2022-NGA.pdf",
+        "url": "https://drive.google.com/file/d/1-ouO3gFsMPbKsfAo8I1FDh2Aph0w_RgK/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 7641539,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/1b9300bde2504f149dd9597aa0ca5638/download"
+      },
+      {
+        "label": "(U) FS2 Aero Task Order APS Addendum.pdf",
+        "url": "https://drive.google.com/file/d/12Jd7aqnTGFuobLJVB1KrgcD6blE7zQV_/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 218066,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/ab029aa1512646d2baa07c645b1381c6/download"
+      },
+      {
+        "label": "(U) FS2 Aero Task Order APS CONOPS.pdf",
+        "url": "https://drive.google.com/file/d/1bBFjSfjxRxcEzT0vX_LHZaFjlQ_cyA1y/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 231666,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/7ce4836bb1b54680b93753035c88af60/download"
+      },
+      {
+        "label": "(U) FS2_INC_Notfication_Process.pdf",
+        "url": "https://drive.google.com/file/d/1Szgfaajf5NrrOwWEwwlkBqTgaVP_Kcxs/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 317488,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/d3cef2ab12f345d7a05afcb815230cfe/download"
+      },
+      {
+        "label": "(U) Federal_Cloud_Computing_Strategy_24JUN2019.pdf",
+        "url": "https://drive.google.com/file/d/1h4VVdE6cD1j66XaBbZKfHbmTNO3DsFFZ/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 406654,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/f3d0fbb8700340ad8ec322902689cd2e/download"
+      },
+      {
+        "label": "(U) Final_FS3i_Industry_Day_01 30 26.pptx",
+        "url": "https://docs.google.com/presentation/d/1fsTLh9xyFtIRREaCaDfTexSAtEOXk-lQ/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "pptx",
+        "size_bytes": 2648998,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/9e8c9a3958c74f43b0f9a2f7a44d95f2/download"
+      },
+      {
+        "label": "(U) Gov_Furnished_Property_List_(GFP).pdf",
+        "url": "https://drive.google.com/file/d/1ZUyXXct66BOCcgrIEzTQZj9SdyZu-fhs/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 754936,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/54d587a208794b63b50ad11f8293b773/download"
+      },
+      {
+        "label": "(U) IPMR_Implementation_Guide_5FEB2016.pdf",
+        "url": "https://drive.google.com/file/d/1FjYR4GBNy-HbSwLKnUo3Ut897Zd3t3Nm/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 1258435,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/1e25e22b984342bcb2ae7dc164e18adb/download"
+      },
+      {
+        "label": "(U) NGA Cybersecurity Strategy_Gold.pdf",
+        "url": "https://drive.google.com/file/d/1jXmxio6njHNX_p05NajujurWCtXHAEKg/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 5409593,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/1251f667a51a415b85cf15933d5b8eb6/download"
+      },
+      {
+        "label": "(U) NGA IT ADE_Rev F_Draft Accepted.pdf",
+        "url": "https://drive.google.com/file/d/1V8y1VS-210lx1MgBoX_YrXjG2DNAL3eJ/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 963049,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/d061ac01c11b4d9aadafc2613d7668dd/download"
+      },
+      {
+        "label": "(U) NGA Program Level Agile Process.docx",
+        "url": "https://docs.google.com/document/d/1oklxuvG4ml9QiyMloHJB-Sh6KCucLHe7/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 2591591,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/8c983c7544b34d34b84282f31fff0804/download"
+      },
+      {
+        "label": "(U) NGAD8010_Info_Sys_RMF_Update_16.pdf",
+        "url": "https://drive.google.com/file/d/1bVL3V6Coq4cNj3y5XVGVRPEicmhapsAa/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 149926,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/ad8a046a77c7404198ef905621bf17cd/download"
+      },
+      {
+        "label": "(U) NGAI 3020.26_Continuity of Operations Program_Update_1.pdf",
+        "url": "https://drive.google.com/file/d/1Ib7M5aN-sdSjSjCD90T2Iq-WcTKm93iy/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 319318,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/922f3b874f9743f0bf5bbc29ca575683/download"
+      },
+      {
+        "label": "(U) NGAI 5100.1_NGA Acq Regulation Implementation_Update_29.pdf",
+        "url": "https://drive.google.com/file/d/1-AcbwLLTk_yF2AGwRMPkr4NRapyaCEox/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 1513404,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/eb1fa687675c4066a454811463ca8e0d/download"
+      },
+      {
+        "label": "(U) NGAI 5200.1_Info Security_Update_1.pdf",
+        "url": "https://drive.google.com/file/d/1ghujw_beAH3f5tB-lAflc7DxxzX9hAlW/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 371363,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/160106dd68f64a8a9b02ecb91db5ce2b/download"
+      },
+      {
+        "label": "(U) NGAI 5205.6_Lifecycle Protection of Geospatial Info_16OCT2018.pdf",
+        "url": "https://drive.google.com/file/d/1NfLt5e9KS2KjAVf3FwffZMid5-8Z0kzW/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 362771,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/2dc5d3620a3b4acb90383884fe1cb163/download"
+      },
+      {
+        "label": "(U) NGAI 5401.1_Privacy & Civil Liberties Prog_26JAN2020.pdf",
+        "url": "https://drive.google.com/file/d/19R8GKrADYQCslhjLkLUGpAF3-5TAQ2Kh/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 382970,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/5c85920dc8204ce7b441230040b2f00f/download"
+      },
+      {
+        "label": "(U) NGAI 8010.1_Info Sys Risk Mgmt Framework_Update_1.pdf",
+        "url": "https://drive.google.com/file/d/1b1S66BodIak5dRCtg6B1AwmY3DU87Tq7/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 161607,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/3cf1cacd783c47deb695f42b8d440dd8/download"
+      },
+      {
+        "label": "(U) NGAI 8040.1_Configuration Mgmt_21NOV2018.pdf",
+        "url": "https://drive.google.com/file/d/1x8qz-fTtxtm9O-1iX6OiEAm9bJiDrUW3/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 166746,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/0383e89d99ed4986a91ae2dfa587c64a/download"
+      },
+      {
+        "label": "(U) NGAI 8040.2_Records Mgmt Prog_21OCT2020.pdf",
+        "url": "https://drive.google.com/file/d/10lrH93oyYsJE3iMdPDkosJ6XuCZa2L8O/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 406056,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/67f096c3233246a2b7a3b5fe7b63d6c9/download"
+      },
+      {
+        "label": "(U) NGAI 8120.1_Electronic Waste Mgmt_1SEPT2020.pdf",
+        "url": "https://drive.google.com/file/d/1YzTyhAo6UW7vxN9XwKYjvvTOGBY-waw_/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 184789,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/dc93bc4cfe454bf5b96725a3d4e56494/download"
+      },
+      {
+        "label": "(U) NGAI 8400.4_Implementation of Electronic & Info Tech Accessibility Sec 508 Prog_Update_1.pdf",
+        "url": "https://drive.google.com/file/d/1K2xbIgY8Ko5bYypulXanE8FfocZluMDV/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 257641,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/a926233fcd8e4bb591da9bfecb858404/download"
+      },
+      {
+        "label": "(U) NGAI 8410.2_Software Asset Mgmt_Update_4.pdf",
+        "url": "https://drive.google.com/file/d/1VtYnVa0nJ72sUqTvhH4no7rVdWD6TZdD/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 213274,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/df3b63fd6d3b4fcdb073c56812e9fbcc/download"
+      },
+      {
+        "label": "(U) NGAI 8550.1_Health and Perf Monitoring of Info Sys & Apps_2NOV2020.pdf",
+        "url": "https://drive.google.com/file/d/1ORakBs0aIzqoJKou13vdJAGgOGOsLwms/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 291819,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/1502f68da0ff40a181f9f8e7fc73d631/download"
+      },
+      {
+        "label": "(U) NGAI 8955.6_NGA Web Property Standards & Guidelines_Update_1.pdf",
+        "url": "https://drive.google.com/file/d/1JlH0e681L8n9WZfnHg3HAMrg1vZ03dEG/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 445152,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/01e63752ffae4c4aa3064b1fae09383a/download"
+      },
+      {
+        "label": "(U) NGAI52004_rev1_Instruction_for_Operations_Security_OPSEC.pdf",
+        "url": "https://drive.google.com/file/d/1HTA_nD9QnKRH8ub-J_Cz2f8hq7m-rTp-/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 16120,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/546e4c4cd04a475fa434408dfae3e6bd/download"
+      },
+      {
+        "label": "(U) NGAI8010.14_Password_Management_Update_1.pdf",
+        "url": "https://drive.google.com/file/d/1ih7bpaVS363GvOR8IcXMa-W7gQhm0PLG/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 332960,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/1a7206df0acf454692ea4381a6cf1d0e/download"
+      },
+      {
+        "label": "(U) NGAI80102_rev7_Information_System_Security_Training.pdf",
+        "url": "https://drive.google.com/file/d/1FZj3wlGcH65pzyTs3-rQdxS2Cdb2BBgu/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 340014,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/7633c3ddab4241c9b4acb9014d513552/download"
+      },
+      {
+        "label": "(U) NGAI8040.2_Records_Management_Program_21OCT2020.pdf",
+        "url": "https://drive.google.com/file/d/1tMcVOcQT-5unRMeW15t6nRxx1X8aJTeO/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 406056,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/f82dac7090954db0ad9869c0c311fb61/download"
+      },
+      {
+        "label": "(U) NGAM 4160.1_Accountability & Mgmt of Property Plant Equip and Other Accountable Property_ Update_2.pdf",
+        "url": "https://drive.google.com/file/d/10OZwFV_M5JG1INfD3Y6Oq6SUBGUi6TnR/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 672505,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/fa319339a9ab4ea48264e4097033bd4f/download"
+      },
+      {
+        "label": "(U) NGA_CTDR_Template_05122025.xlsx",
+        "url": "https://docs.google.com/spreadsheets/d/13ZiIeXLcg-8f8L3vZW9khaKXK0aZ7uvO/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "xlsx",
+        "size_bytes": 191353,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/172fde321ea244cb99ae7aeabff4918c/download"
+      },
+      {
+        "label": "(U) NGA_Cloud_Guidance_Intro_v5.2_w_signature.pdf",
+        "url": "https://drive.google.com/file/d/1LVOR4UC5AUizLGW0m64ceEESWu4PO8ZP/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 875903,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/55d5fdb379594073bf939c5ab7f672c3/download"
+      },
+      {
+        "label": "(U) NGA_Data Item Description for Cost and Tech Data Report.pdf",
+        "url": "https://drive.google.com/file/d/1d4YHWAXqbB3G7JVpuG9UtuQr5rQbVSfO/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 479616,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/c7980ce3d7c242a79fdaaa18958967df/download"
+      },
+      {
+        "label": "(U) NGA_Systems_Engineering_Plan_SEP_Rev B.pdf",
+        "url": "https://drive.google.com/file/d/1Kkvjvi7RTBFKF_PegefXjy9D2xb-ckkC/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 2714436,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/c016951ff9e44f94911fd1e958cfd12d/download"
+      },
+      {
+        "label": "(U) NGA_Technology_Strategy_MAY2020.pdf",
+        "url": "https://drive.google.com/file/d/13HgFTlPIo99UriSP55ZWJO1ggu1di7zq/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 11408640,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/5af032182097414eb195ae5a437c087e/download"
+      },
+      {
+        "label": "(U) NIST500-317 Cloud Computing Accessibility Considerations_draft.pdf",
+        "url": "https://drive.google.com/file/d/1pHY4kP3fBuVbiHSGPkgRw0XhZuPyoYS6/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 4984257,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/39a53fce6eb544cda2f356583a07f37a/download"
+      },
+      {
+        "label": "(U) NSGD3201_GFMSA_Program_Directivew.pdf",
+        "url": "https://drive.google.com/file/d/1Cdj7MxYEapKwwLGsWDJAZSzfCDAfTfp6/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 422749,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/beb77370f053431fb6fb0f56faa491d8/download"
+      },
+      {
+        "label": "(U) NSGM3202_GFMSA_Program_Manual.pdf",
+        "url": "https://drive.google.com/file/d/1G3MRLVn7DtpBZfUzqZnaLKB9MtO7nhZH/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 1636361,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/7e9192b720ed487cac4710cf672adc77/download"
+      },
+      {
+        "label": "(U) OMB M-17-06_Policy for Fed Agency Pub Websites Digital Services.pdf",
+        "url": "https://drive.google.com/file/d/1xr_7syU1rBzvSVAw5GfvwDhVRw-tCMEh/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 421954,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/42c1e1d69379409a9762d3060c08f225/download"
+      },
+      {
+        "label": "(U) SEAD-4-Adjudicative-Guidelines.pdf",
+        "url": "https://drive.google.com/file/d/13sO9DaC6xhf0xiXJml07QjezJFYoqkPv/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 14683851,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/4875f6e049b84956838d3172f9bc840e/download"
+      },
+      {
+        "label": "(U) SFA Air High-Level As-Is SV-1.png",
+        "url": "https://drive.google.com/file/d/1RW0VOMDM2NhuQLqVeuQzfBDin4dxmC7B/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "png",
+        "size_bytes": 173831,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/052341b2c5cf427b9fbc8ea6b2f1039f/download"
+      },
+      {
+        "label": "(U) TRB N01-0757_APS.pdf",
+        "url": "https://drive.google.com/file/d/16PQubGi0meO5hwW-yXnVJv-dUr9I20gi/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 102390,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/4af20e1794c84941b7e61954b1065d36/download"
+      },
+      {
+        "label": "(U) The_NGA_Software_Way_2022.pdf",
+        "url": "https://drive.google.com/file/d/1bX_7Xxo037K3ZMmCxKMku2a1PugRXwCe/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 724766,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/9b2da7b13a1d40bf9a4a298b5ac0c3db/download"
+      },
+      {
+        "label": "(U) VCPS_Breakout_Citrix_Alignment .pptx",
+        "url": "https://docs.google.com/presentation/d/1sDjK6ry9hyddASVTbu4K-BXCYE2egm4y/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "pptx",
+        "size_bytes": 719663,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/2ea3579756be4ee5949d6baf763eadc2/download"
+      },
+      {
+        "label": "(U) WebDVOF to FS2 Addendum_v9.pdf",
+        "url": "https://drive.google.com/file/d/1fVgeXPP4RrQ072OgqKiP9MXNP7xnB-jT/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 1053504,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/8bc632767ce243ea854a3e4f0fdb28ed/download"
+      },
+      {
+        "label": "(U)_VCPS_Breakout_Storage_Pool_2.pptx",
+        "url": "https://docs.google.com/presentation/d/1gAtugA6iYMnwmAN4AdaH1h6Vqbeo7Onf/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "pptx",
+        "size_bytes": 982014,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/a1bd5a81fc664dc99d71c11bc43ca6e8/download"
+      },
+      {
+        "label": "FINAL_Consolidated FS3i QA 2APR 2026.xlsx",
+        "url": "https://docs.google.com/spreadsheets/d/1m5xbjszuL7oDb8fUXVw39w9S0Aj8ef5i/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "xlsx",
+        "size_bytes": 49551,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/3aa180e191ff4122b82d1a2128f19645/download"
+      },
+      {
+        "label": "IPF Containerization Service Selection Guide.docx",
+        "url": "https://docs.google.com/document/d/1seIH_GWs4uUI6TakksTjH7754eNaXNFd/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 36182,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/f2617da8f1d24febb754678be0d50f3b/download"
+      },
+      {
+        "label": "IPF Developer Environment Guidance.docx",
+        "url": "https://docs.google.com/document/d/1HDNzt-_JSJQd5KyvjRVnQEUZJY17fd6K/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 35959,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/38e999940b394d5dbc4458605c043f1e/download"
+      },
+      {
+        "label": "IPF Standard - AWS Instance Type Management.docx",
+        "url": "https://docs.google.com/document/d/1fZ0Ber2krh2_ohTd-6QUNHS571xTcfSZ/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 37834,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/bade007ca78c4de88f2abe60034ed108/download"
+      },
+      {
+        "label": "IPF Standard - AWS Savings Plans and Reserved instances (08-01-2025).docx",
+        "url": "https://docs.google.com/document/d/1Oa7-GF2Rw9a8NTs9tfJcAadW2ocLIdSp/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 43248,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/f683f0bc08e94c9ba580508342997545/download"
+      },
+      {
+        "label": "IPF Standard - CloudWatch Agent Configuration (2023-06-22).docx",
+        "url": "https://docs.google.com/document/d/1iydtTpuu93VNSgytwClxeh2VkHe16TFN/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 33709,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/faf4dae2cc914e2bb25ddff0abcd2fe0/download"
+      },
+      {
+        "label": "IPF Standard - EBS Encryption (2023-08).docx",
+        "url": "https://docs.google.com/document/d/10xnL8fFbskCIjtEdeNWcuPTkC5jXlGsZ/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 287131,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/e9bc315121414f82a14a59154cdfec12/download"
+      },
+      {
+        "label": "IPF Standard - EBS Provisioned IOPS and Throughput (2023-06-22).docx",
+        "url": "https://docs.google.com/document/d/168L138ieMQfXT5uaFolGAMOoWAoNE5In/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 31139,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/5865bef560234007a05f8cb961acc9f9/download"
+      },
+      {
+        "label": "IPF Standard - EC2 Snapshot (2025-08-20).docx",
+        "url": "https://docs.google.com/document/d/1qX89JdLGRf2Hwz6l_FYyF7DD1oDmpSDd/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 33274,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/9e88629089aa45a9a88a0515a2e5ff0e/download"
+      },
+      {
+        "label": "IPF Standard - Orphaned EBS Volume Management (2023-06-22).docx",
+        "url": "https://docs.google.com/document/d/187k-DwkxMMF7TED-9VREnkrSBsd43eOd/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 30692,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/d2b58ab9541b4017a1eacee4e9c72569/download"
+      },
+      {
+        "label": "IPF Standard - S3 Object Lifecycle Management (2023-05-17).docx",
+        "url": "https://docs.google.com/document/d/1zyDfea-bZOvOh8xzncQY63ScoxZPSFks/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 194304,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/9bf62c549f7c42a598add49629c79fca/download"
+      },
+      {
+        "label": "IPF Standard - Tagging Standards (2023-05-17).docx",
+        "url": "https://docs.google.com/document/d/1pTBPzx7OdfsGn6E7vfx0MQ7r37hpQIdx/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 34799,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/5c4eaf46ef4d44c4ba4bb04f2f01c7e3/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "timothy.j.hull@nga.mil",
+        "phone": "3146760352",
+        "title": null,
+        "fullName": "Timothy Hull"
+      },
+      {
+        "fax": "",
+        "type": "secondary",
+        "email": "hannah.m.pulcher@nga.mil",
+        "phone": "3146761711",
+        "title": null,
+        "fullName": "Hannah M. Pulcher"
+      }
+    ]
+  }
+}

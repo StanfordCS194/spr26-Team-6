@@ -3,18 +3,18 @@
   "external_id": "0000039185",
   "title": "IFB A251017444 OneStream Implementation Services",
   "name": "IFB A251017444 OneStream Implementation Services",
-  "statement_of_work": "The California Governor¿s Office of Emergency Services, requires implementation and configuration services for the Software as a Service (SaaS) platform, OneStream. The system will support budget development, financial tracking, reporting, position control, grant management, and compliance oversight.",
+  "statement_of_work": "The California Governor¿s Office of Emergency Services, requires implementation and configuration services for the Software as a Service (SaaS) platform, OneStream. The system will support budget development, financial tracking, reporting, position control, grant management, and compliance oversight. The solution will replace manual processes, reduce reliance on spreadsheets, and provide a controlled, auditable financial management environment.",
   "deliverables": [
-    "Support budget development",
-    "Support financial tracking",
-    "Support compliance oversight"
+    "Execute scope of work described in the IFB A251017444 OneStream Implementation Services solicitation",
+    "Deliver milestones, status reporting, and acceptance documentation",
+    "Provide final handoff and post-deployment support per RFP terms"
   ],
   "location_level": "state",
   "location": "California",
   "tags": [
-    "Environment",
     "Finance",
     "SaaS",
+    "Environment",
     "System Development",
     "California"
   ],
@@ -37,39 +37,15 @@
     "documents": [
       {
         "label": "IFB_A251017444_OneStream_Implementation.pdf",
-        "url": "https://drive.google.com/file/d/1_Jlt6-r84ZIPCSL8VaTjJ64rC1urvYH6/view?usp=drivesdk",
+        "url": "https://drive.google.com/file/d/1MiEAVF6SmY5c5gUiS9RK-vIMRVWbeYmp/view?usp=drivesdk",
         "type": "primary_spec",
         "attachment_description": ""
       }
     ],
     "unspsc_codes": [
       {
-        "code": "81162000",
-        "description": "Information Technology Service Delivery - Cloud-based software as a srvc"
-      },
-      {
-        "code": "81162004",
-        "description": "Information Technology Service Delivery - Cloud-based software as a srvc - Database management as a srvcs"
-      },
-      {
-        "code": "81162005",
-        "description": "Information Technology Service Delivery - Cloud-based software as a srvc - Dispatch software as a srvcs"
-      },
-      {
-        "code": "81162100",
-        "description": "Information Technology Service Delivery - Cloud-based platform as a srvc"
-      },
-      {
-        "code": "81162103",
-        "description": "Information Technology Service Delivery - Cloud-based platform as a srvc - Platform software as a srvcs"
-      },
-      {
-        "code": "81162204",
-        "description": "Information Technology Service Delivery - Cloud-based infrastructure as a srvc - Cloud network devices as a srvcs"
-      },
-      {
-        "code": "81162303",
-        "description": "Information Technology Service Delivery - Cloud-based business process as a srvcs - Content management process as a srvcs"
+        "code": "01012001",
+        "description": "/> <span data-if-container-label=\"conferenceRow\" data-if-source=\"[id^='ZZ_BID_CNF_VW_DUE_DT_TIME$']\" data-if-content=\"nu"
       }
     ]
   }

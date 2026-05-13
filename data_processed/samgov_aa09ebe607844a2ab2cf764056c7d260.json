@@ -1,0 +1,124 @@
+{
+  "source": "sam.gov",
+  "external_id": "aa09ebe607844a2ab2cf764056c7d260",
+  "title": "RFI for Aeronautical Mobile Application (AMA)",
+  "name": "RFI for Aeronautical Mobile Application (AMA)",
+  "statement_of_work": "",
+  "deliverables": [
+    "Execute scope of work described in the RFI for Aeronautical Mobile Application (AMA) solicitation",
+    "Deliver milestones, status reporting, and acceptance documentation",
+    "Provide final handoff and post-deployment support per RFP terms"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Software",
+    "Procurement",
+    "California"
+  ],
+  "dept": "DEPT OF DEFENSE.NATIONAL GEOSPATIAL-INTELLIGENCE AGENCY (NGA).NATL GEOSPATIAL-INTELLIGENCE AGENCY",
+  "description": "",
+  "published_date": "2026-04-20",
+  "due_date": "2026-05-18T17:00:00-04:00",
+  "contact_name": "Matthew A Hoffman",
+  "contact_email": "matthew.a.hoffman@nga.mil",
+  "contact_phone": "314-676-2081",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-aa09ebe607844a2ab2cf764056c7d260-b98c47d04552",
+  "metadata": {
+    "event_type": "Sources Sought",
+    "solicitation_number": "RFIAMA2027",
+    "ui_link": "https://sam.gov/workspace/contract/opp/aa09ebe607844a2ab2cf764056c7d260/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": "DA10",
+    "set_aside": "NONE",
+    "set_aside_description": "No Set aside used",
+    "place_of_performance": {
+      "city": {
+        "code": "65000",
+        "name": "Saint Louis"
+      },
+      "state": {
+        "code": "MO",
+        "name": "Missouri"
+      },
+      "country": {
+        "code": "USA",
+        "name": "UNITED STATES"
+      }
+    },
+    "office_address": {
+      "zipcode": "630106238",
+      "city": "ARNOLD",
+      "countryCode": "USA",
+      "state": "MO"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "20260403_AMA Questions and Answers.docx",
+        "url": "https://docs.google.com/document/d/1oO2GNvbU60Q29ow3nwN4k1m5bRkS9knI/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "primary_spec",
+        "original_extension": "docx",
+        "size_bytes": 46177,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/9a9629e68fa7466487fdcf91de283c80/download"
+      },
+      {
+        "label": "20260403_AMA_RFI_Instructions.docx",
+        "url": "https://docs.google.com/document/d/1QPXbnC3DB41A2-L9m7CboSzYFKOzbUjB/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 135823,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/ab1e34e4fdf94896b64ce1becce70063/download"
+      },
+      {
+        "label": "20260403_AMA_RFI_Questions_Template.xlsx",
+        "url": "https://docs.google.com/spreadsheets/d/11ox6cSeNClVUlYCq1vRYRa-h4tiZ7WVk/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "xlsx",
+        "size_bytes": 18443,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/d7fd486bb6294e3d99e47af39a576007/download"
+      },
+      {
+        "label": "20260403_AMA_SOW_RFI.docx",
+        "url": "https://docs.google.com/document/d/1HJPmG-8Y9Lk0iq_-t_lgk3J-eo981iN8/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 357672,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/f8949aef0e6b45ac8cfe7661234e9950/download"
+      },
+      {
+        "label": "AppendixA-NGA_Data_Strategy.pdf",
+        "url": "https://drive.google.com/file/d/1oQ5zmnFS4qQCcJxpgmw3H4QiRUvKUHl9/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 7148643,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/f33f69613d1144ccb4e9560da1baa6ac/download"
+      },
+      {
+        "label": "AppendixB-NGA_Software_Way.pdf",
+        "url": "https://drive.google.com/file/d/1Ybts8DucBzqBllH4AkPgPjYPKZ9qWJjS/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 726733,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/aa12ec384fb041e98f55e1a61b130f4f/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "matthew.a.hoffman@nga.mil",
+        "phone": "3146762081",
+        "title": null,
+        "fullName": "Matthew A Hoffman"
+      }
+    ]
+  }
+}

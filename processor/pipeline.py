@@ -100,6 +100,9 @@ def process_directory(
         raise FileNotFoundError(f"Input directory does not exist: {in_path}")
     out_path.mkdir(parents=True, exist_ok=True)
 
+    archive_path = in_path / "archive"
+    archive_path.mkdir(parents=True, exist_ok=True)
+
     if classifier is None:
         classifier = load_or_train(in_path)
 
@@ -114,4 +117,9 @@ def process_directory(
             json.dump(processed, fh, indent=2, ensure_ascii=False)
             fh.write("\n")
         written.append(dst)
+        # Move the raw file to archive/ so it isn't reprocessed next run.
+        # Happens after the write succeeds — if processing crashes, the
+        # raw file stays put and gets retried on the next invocation.
+        src.replace(archive_path / src.name)
+
     return written

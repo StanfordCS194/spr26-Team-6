@@ -1,0 +1,93 @@
+{
+  "source": "sam.gov",
+  "external_id": "8d76cc46c02a4898ad8db637498bbd70",
+  "title": "J065--RALS for Hemochron Signature Elites Brand Name or Equal at the Central Arkansas VA Healthcare System",
+  "name": "J065--RALS for Hemochron Signature Elites Brand Name or Equal at the Central Arkansas VA Healthcare System",
+  "statement_of_work": "",
+  "deliverables": [
+    "Execute scope of work described in the J065--RALS for Hemochron Signature Elites Brand Name or Equal at the Central Arkansas VA Healthcare System solicitation",
+    "Deliver milestones, status reporting, and acceptance documentation",
+    "Provide final handoff and post-deployment support per RFP terms"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Health Services",
+    "Software",
+    "California"
+  ],
+  "dept": "VETERANS AFFAIRS, DEPARTMENT OF.VETERANS AFFAIRS, DEPARTMENT OF.256-NETWORK CONTRACT OFFICE 16 (36C256)",
+  "description": "",
+  "published_date": "2026-04-30",
+  "due_date": "2026-05-15T15:00:00-05:00",
+  "contact_name": "T Miller",
+  "contact_email": "t.miller@va.gov",
+  "contact_phone": "+7137911414229073",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-8d76cc46c02a4898ad8db637498bbd70-24054670f97d",
+  "metadata": {
+    "event_type": "Combined Synopsis/Solicitation",
+    "solicitation_number": "36C25626Q0735",
+    "ui_link": "https://sam.gov/workspace/contract/opp/8d76cc46c02a4898ad8db637498bbd70/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": "J065",
+    "set_aside": "SBA",
+    "set_aside_description": "Total Small Business Set-Aside (FAR 19.5)",
+    "place_of_performance": {
+      "streetAddress": "Department of Veterans Affairs Central Arkansas VA Healthcare System (CAVHS)",
+      "streetAddress2": " 4300 West 7th Street",
+      "city": {
+        "name": "Little Rock"
+      },
+      "state": {
+        "name": "AR"
+      },
+      "zip": "72205",
+      "country": {
+        "code": "USA",
+        "name": "UNITED STATES"
+      }
+    },
+    "office_address": {
+      "zipcode": "39157",
+      "city": "RIDGELAND",
+      "countryCode": "USA",
+      "state": "MS"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "36C25626Q0735.pdf",
+        "url": "https://drive.google.com/file/d/11_qYsrdcspc4gTbg98V4DphQg8nOFGKq/view?usp=drivesdk",
+        "type": "primary_spec",
+        "original_extension": "pdf",
+        "size_bytes": 764195,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/9d0566eb02f242d1addf04ba1cfc1fb5/download"
+      },
+      {
+        "label": "36C25626Q0735_1.docx",
+        "url": "https://docs.google.com/document/d/1vVv_9mgKf2NhvU36YrLzzigtUC0_QoM3/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 16633,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/66c2519268f7471f85aefba1b782cf49/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "t.miller@va.gov",
+        "phone": "713-791-1414 x229073",
+        "title": "Contracting Specialist",
+        "fullName": "T Miller"
+      }
+    ]
+  }
+}
