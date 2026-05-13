@@ -26,7 +26,7 @@
   "contact_phone": "916-845-7802",
   "status": "active",
   "is_relevant": true,
-  "content_hash": "v1-event-details.aspx-2c32c323537f",
+  "content_hash": "v1-0000039012-ffc7c5af28ce",
   "metadata": {
     "event_type": "Sell Event / RFx",
     "event_version": 1,
@@ -36,8 +36,8 @@
     "documents": [],
     "unspsc_codes": [
       {
-        "code": "01012001",
-        "description": "/> <span data-if-container-label=\"conferenceRow\" data-if-source=\"[id^='ZZ_BID_CNF_VW_DUE_DT_TIME$']\" data-if-content=\"nu"
+        "code": "43231500",
+        "description": "Business function specific software"
       }
     ]
   }

@@ -3,7 +3,7 @@
   "external_id": "0000037775",
   "title": "Request For Proposal 2025-002 for LIMSR solution",
   "name": "Request For Proposal 2025-002 for LIMSR solution",
-  "statement_of_work": "05/01/2026\nThis is Addendum 4. New proposal submission date is 05/18/2026. Refer to Summary of Changes for the other changes in solicitation",
+  "statement_of_work": "05/11/2015\nThis is Q&A Set 2 for this RFP",
   "deliverables": [
     "Execute scope of work described in the Request For Proposal 2025-002 for LIMSR solution solicitation",
     "Deliver milestones, status reporting, and acceptance documentation",
@@ -12,14 +12,14 @@
   "location_level": "state",
   "location": "California",
   "tags": [
+    "IT Systems",
     "Cannabis",
     "Cloud",
-    "IT Systems",
-    "SaaS",
+    "System Development",
     "California"
   ],
-  "dept": "California Department of Cannabis Control",
-  "description": "05/01/2026\nThis is Addendum 4. New proposal submission date is 05/18/2026. Refer to Summary of Changes for the other changes in solicitation\n\n03/23/2026\nThis is Addendum 3. New proposal submission date is 03/30/2026. Refer to Key Action Dates for the changes\n\n03/13/2026\nThis is Addendum 2\n\n02/23/2026\nThis is Addendum 1 along with Q&A Round 1\n\n01/16/2026\nDepartment of Cannabis Control (DCC) is seeking a   Cloud Software as a Service (SaaS) and Implementation Services for the Laboratory Information Management System Replacement project.\nBid due date is March 11, 2026",
+  "dept": "of Cannabis Control (DCC) is seeking a Cloud Software as a Service (SaaS) and Implementation Services for the Laboratory Information Management System Replacement project.",
+  "description": "05/11/2015\nThis is Q&A Set 2 for this RFP\n\n05/01/2026\nThis is Addendum 4. New proposal submission date is 05/18/2026. Refer to Summary of Changes for the other changes in solicitation\n\n03/23/2026\nThis is Addendum 3. New proposal submission date is 03/30/2026. Refer to Key Action Dates for the changes\n\n03/13/2026\nThis is Addendum 2\n\n02/23/2026\nThis is Addendum 1 along with Q&A Round 1\n\n01/16/2026\nDepartment of Cannabis Control (DCC) is seeking a   Cloud Software as a Service (SaaS) and Implementation Services for the Laboratory Information Management System Replacement project.\nBid due date is March 11, 2026",
   "published_date": "2026-01-16T17:00:00-08:00",
   "due_date": "2026-08-04T12:00:00-07:00",
   "contact_name": "Vaibhav Srivastava",
@@ -27,7 +27,7 @@
   "contact_phone": null,
   "status": "active",
   "is_relevant": true,
-  "content_hash": "v1-0000037775-bad14b6c2382",
+  "content_hash": "v1-0000037775-8cf5ce968810",
   "metadata": {
     "event_type": "Sell Event / RFx",
     "event_version": 1,
@@ -37,63 +37,73 @@
     "documents": [
       {
         "label": "02-19-2026_LIMS_KAD_letter.pdf",
-        "url": "https://drive.google.com/file/d/1ZTv5rARcr-Eau_ESvlmbYLmmeVR2Su6M/view?usp=drivesdk",
+        "url": "https://drive.google.com/file/d/1blOsJBGO6ej_kdYly9UEEsP2OAqO-CvZ/view?usp=drivesdk",
         "type": "primary_spec",
         "attachment_description": ""
       },
       {
         "label": "7._eVAQ-Manual_for_Vendors.pdf",
-        "url": "https://drive.google.com/file/d/1Voty-4-6HvoOFH3vyTsVr78_zNN1gAly/view?usp=drivesdk",
+        "url": "https://drive.google.com/file/d/1GQmaXo99myk0dRvGQVHxhq9Qe25y2jAM/view?usp=drivesdk",
         "type": "attachment",
         "attachment_description": ""
       },
       {
         "label": "Exhibit_B_Workflow_Business_Process.pdf",
-        "url": "https://drive.google.com/file/d/1RT2FGjUlbig7eRs2PicbC12VX-46g6Ru/view?usp=drivesdk",
-        "type": "attachment",
-        "attachment_description": ""
-      },
-      {
-        "label": "Exhibit_B_Workflow_Business_Process_Add_1.pdf",
-        "url": "https://drive.google.com/file/d/1XMTd3LKhr1wdOQ2ywHu4SjAyYhL3airy/view?usp=drivesdk",
-        "type": "attachment",
-        "attachment_description": ""
-      },
-      {
-        "label": "Exhibit_B_Workflow_Business_Process_Add_2.pdf",
-        "url": "https://drive.google.com/file/d/1n4RO64l4y2ueCXmgCoyHPoqPKXxBjYgw/view?usp=drivesdk",
-        "type": "attachment",
-        "attachment_description": ""
-      },
-      {
-        "label": "Exhibit_B_Workflow_Business_Process_Add_3.pdf",
-        "url": "https://drive.google.com/file/d/1OcPyrFuNxgg2EmAnloDkGoTX8IgkwQIe/view?usp=drivesdk",
-        "type": "attachment",
-        "attachment_description": ""
-      },
-      {
-        "label": "Exhibit_B_Workflow_Business_Process_Add_4.pdf",
-        "url": "https://drive.google.com/file/d/1CbWSBnOX-uFAD9sEEb8SOhEOx-qQF_QB/view?usp=drivesdk",
+        "url": "https://drive.google.com/file/d/1bkWIwGPpexS1_SKkQA13KmXqES_PXEkH/view?usp=drivesdk",
         "type": "attachment",
         "attachment_description": ""
       },
       {
         "label": "LIMS_2.0.pdf",
-        "url": "https://drive.google.com/file/d/1gYm-Uny1ZEI-zuP6jT-srNKkcuL9xIlQ/view?usp=drivesdk",
-        "type": "attachment",
-        "attachment_description": ""
-      },
-      {
-        "label": "Q_A_Set_1_LIMSR_2.0_RFP.pdf",
-        "url": "https://drive.google.com/file/d/1nbG4yDyi6Nt-wMN1JG0pf9QBjQ8Kgw5L/view?usp=drivesdk",
+        "url": "https://drive.google.com/file/d/1KS_Mby7nIQPXZDCcnXQ4qeTzWfI_-Xq1/view?usp=drivesdk",
         "type": "attachment",
         "attachment_description": ""
       }
     ],
     "unspsc_codes": [
       {
-        "code": "01012001",
-        "description": "/> <span data-if-container-label=\"conferenceRow\" data-if-source=\"[id^='ZZ_BID_CNF_VW_DUE_DT_TIME$']\" data-if-content=\"nu"
+        "code": "43231500",
+        "description": "Business function specific software"
+      },
+      {
+        "code": "43233700",
+        "description": "System management software"
+      },
+      {
+        "code": "81112200",
+        "description": "Computer services - Software maintenance & support"
+      },
+      {
+        "code": "43231511",
+        "description": "Business function specific software - Expert system software"
+      },
+      {
+        "code": "43232304",
+        "description": "Data management & query software - Data base management system software"
+      },
+      {
+        "code": "81111503",
+        "description": "Computer services - Software or hardware engineering - Systems integration design"
+      },
+      {
+        "code": "81112201",
+        "description": "Computer services - Software maintenance & support - maint or support fees"
+      },
+      {
+        "code": "81112205",
+        "description": "Computer services - Software maintenance & support - Database management system software maint"
+      },
+      {
+        "code": "81162000",
+        "description": "Information Technology Service Delivery - Cloud-based software as a srvc"
+      },
+      {
+        "code": "81162004",
+        "description": "Information Technology Service Delivery - Cloud-based software as a srvc - Database management as a srvcs"
+      },
+      {
+        "code": "81162008",
+        "description": "Information Technology Service Delivery - Cloud-based software as a srvc - Enterprise resource planning software as a srvcs"
       }
     ]
   }
