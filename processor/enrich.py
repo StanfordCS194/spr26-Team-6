@@ -41,15 +41,173 @@ def _get_default_classifier() -> Classifier:
     return _DEFAULT_CLASSIFIER
 
 
+_NAME_MIN_WORDS = 3
+_NAME_MAX_WORDS = 8
+
+# Trailing process / procurement tags that aren't part of the project name.
+_NAME_TRAILING_TAGS_RE = re.compile(
+    r"\s+(?:"
+    r"new\s+action|"
+    r"intent\s+to\s+sole\s+source|"
+    r"sole\s+source\s+notice|"
+    r"sole\s+source|"
+    r"amendment(?:\s+\d+)?|"
+    r"modification(?:\s+\d+)?|"
+    r"addendum(?:\s+\d+)?|"
+    r"errata|"
+    r"source(?:s)?\s+sought(?:\s+notice)?|"
+    r"sources?\s+sought|"
+    r"presolicitation|"
+    r"pre-solicitation|"
+    r"combined\s+synopsis(?:/solicitation)?|"
+    r"special\s+notice|"
+    r"draft\s+sf\d+|"
+    r"request\s+for\s+(?:information|proposal|quote|quotation|offer|task\s+execution\s+plan)|"
+    r"rfp|rfq|rfi|rfo|ifb"
+    r")\s*$",
+    re.IGNORECASE,
+)
+
+# ID-like parentheticals (e.g. "(VA-26-00046145)", "(solicitation X-Y-1234)")
+# get stripped; acronym parentheticals like "(WaterTAP)", "(CalHEERS)" stay.
+_NAME_ID_PAREN_RE = re.compile(
+    r"\s*\((?:[^)]*(?:solicitation|amendment|notice|modification)[^)]*"
+    r"|[A-Z0-9_]*[\-_]\S*[\d][^)]*"
+    r"|[A-Z0-9]{2,}[\-_]\d[^)]*"
+    r"|\s*[\d][\d\-_/.\s]*\s*"
+    r")\)",
+    re.IGNORECASE,
+)
+
+
+def _strip_acronym_paren(text: str) -> str:
+    """Drop trailing all-uppercase acronym parentheticals like '(USSF)' / '(HRIT)'
+    when stripping them keeps the remaining text intelligible."""
+    return re.sub(r"\s*\(\s*[A-Z0-9]{2,8}\s*\)", "", text)
+
+
 def generate_name(rfp: dict[str, Any]) -> str:
-    """Short descriptive name (Title Case-ish) — strips RFP/RFQ numbers."""
+    """Short descriptive project name (3-8 words).
+
+    Strategy:
+      1. Start from the title.
+      2. Strip leading agency / NAICS / PSC code prefixes ("DA10--", "6525--").
+      3. Strip ID parentheticals ("(VA-26-00046145)") and trailing solicitation
+         numbers ("RFP #73040873").
+      4. Strip trailing procurement-process tags ("New Action", "Intent to
+         Sole Source", "Request for Information").
+      5. If the result still exceeds 8 words, drop trailing acronym
+         parentheticals first, then hard-truncate.
+      6. If the result is < 3 words, fall back to a longer slice of the title.
+    """
     base = (rfp.get("title") or rfp.get("name") or "").strip()
-    # Drop trailing solicitation numbers like "RFP #73040873" or "(RFQ ...)".
-    base = re.sub(r"\s*\(?(RFP|RFQ|RFx|IFB)\s*#?\S*\)?\s*$", "", base, flags=re.IGNORECASE)
-    # Drop leading numeric solicitation IDs like "75350667 Civica MultiVue ...".
+    if not base:
+        return rfp.get("dept") or "Untitled RFP"
+
+    # 1. Leading code prefixes: "DA10--", "6525--", "Q601--", "7A21--", "R425--", "J065--".
+    base = re.sub(r"^\s*[A-Z0-9]{2,6}-{1,3}\s*", "", base)
+    # 1b. Leading numeric solicitation IDs: "75350667 Civica MultiVue".
     base = re.sub(r"^\s*\d{6,}\s+", "", base)
+    # 1c. Leading "Request For Proposal X for ..." → strip the proposal-type
+    # prefix so only the project name remains.
+    base = re.sub(
+        r"^\s*(?:request\s+for\s+(?:proposal|quote|quotation|information|offer))"
+        r"(?:\s+\S+)?\s+(?:for|to|on)\s+",
+        "",
+        base,
+        flags=re.IGNORECASE,
+    )
+    # 1d. Leading "RFP/RFQ/RFI/RFO <code> [-/—]" tags. Only fire if there's
+    # still substantive content after the strip; otherwise we'd erase the
+    # whole title for titles that ARE just the procurement code.
+    stripped = re.sub(
+        r"^\s*(?:RFP|RFQ|RFI|RFO|RFx|IFB)\s+[\w\-\d.#]+\s*[\-—:]?\s*",
+        "",
+        base,
+        flags=re.IGNORECASE,
+    )
+    if len(stripped.split()) >= _NAME_MIN_WORDS:
+        base = stripped
+
+    # 1e. Leading alphanumeric solicitation codes followed by separator:
+    # "S25073069 - ", "1CA07844 ", "FA8526-26-Q-0017 -", etc.
+    stripped = re.sub(
+        r"^\s*[A-Z]?\d[\w\-/.]{4,}\s*[\-—:|]\s*",
+        "",
+        base,
+    )
+    if len(stripped.split()) >= _NAME_MIN_WORDS:
+        base = stripped
+
+    # 1f. Leading agency abbreviation followed by pipe: "VISN | ", "VISN 15 | ".
+    stripped = re.sub(r"^\s*[A-Z]{2,}(?:\s+\d+)?\s*\|\s*", "", base)
+    if len(stripped.split()) >= _NAME_MIN_WORDS:
+        base = stripped
+
+    # 1g. Leading procurement-process tags: "REQUEST FOR INFORMATION - ",
+    # "Combined Synopsis/Solicitation:", "Notice of Intent to Sole Source -".
+    stripped = re.sub(
+        r"^\s*(?:request\s+for\s+(?:information|proposals?|quote|quotation|offers?)|"
+        r"combined\s+synopsis(?:/solicitation)?|"
+        r"notice\s+of\s+intent(?:\s+to\s+sole\s+source)?|"
+        r"sources?\s+sought|"
+        r"sole\s+source\s+notice|"
+        r"special\s+notice|"
+        r"draft\s+sf\d+)"
+        r"\s*[-—:]?\s*",
+        "",
+        base,
+        flags=re.IGNORECASE,
+    )
+    if len(stripped.split()) >= _NAME_MIN_WORDS:
+        base = stripped
+
+    # 2. Strip ID parentheticals.
+    base = _NAME_ID_PAREN_RE.sub("", base)
+
+    # 3. Strip trailing solicitation numbers in various shapes:
+    #    "RFP #73040873", "RFP Number: LSS-2026-207-RB", "RFQ No: 123",
+    #    "(RFP-2026-001)", "Reference #75350667", etc.
+    base = re.sub(
+        r"\s*\(?(?:RFP|RFQ|RFI|RFx|IFB|RFO)\s*"
+        r"(?:number|no|#)?\s*:?\s*\S*\)?\s*$",
+        "",
+        base,
+        flags=re.IGNORECASE,
+    )
+    base = re.sub(r"\s*(?:reference|ref)\s*#?\s*\S*\s*$", "", base, flags=re.IGNORECASE)
+
+    # 4. Iteratively strip trailing process tags.
+    prev: str | None = None
+    while prev != base:
+        prev = base
+        base = _NAME_TRAILING_TAGS_RE.sub("", base).strip()
+        base = base.rstrip(":-—–|/ ").strip()
+
     base = re.sub(r"\s+", " ", base).strip()
-    return base or (rfp.get("dept") or "Untitled RFP")
+
+    # 5. Cap at 8 words.
+    words = base.split()
+    if len(words) > _NAME_MAX_WORDS:
+        # Try dropping acronym parentheticals first.
+        trimmed = _strip_acronym_paren(base)
+        trimmed = re.sub(r"\s+", " ", trimmed).strip()
+        words = trimmed.split()
+        if len(words) <= _NAME_MAX_WORDS:
+            base = trimmed
+        else:
+            base = " ".join(words[:_NAME_MAX_WORDS])
+
+    # 6. Ensure ≥ 3 words: pad with department keyword or "Project".
+    if len(base.split()) < _NAME_MIN_WORDS:
+        dept = (rfp.get("dept") or "").split(".")[0].strip()
+        if base and dept and dept.lower() not in base.lower():
+            candidate = f"{base} ({dept})" if len(base.split()) + len(dept.split()) <= _NAME_MAX_WORDS else f"{base} Project"
+            base = candidate if len(candidate.split()) >= _NAME_MIN_WORDS else f"{base} Project"
+        elif base:
+            base = f"{base} Project" if len(base.split()) < _NAME_MIN_WORDS else base
+
+    return base.strip() or (rfp.get("dept") or "Untitled RFP")
 
 
 # Phrases that signal a paragraph is project-defining (not contact/admin chatter).
@@ -236,12 +394,19 @@ def _is_project_lead(sentence: str) -> bool:
     return any(p in low for p in _PROJECT_LEAD_PATTERNS)
 
 
+_SOW_MIN_SENTENCES = 3
+_SOW_MAX_SENTENCES = 4
+_SOW_MAX_CHARS = 900
+
+
 def generate_statement_of_work(rfp: dict[str, Any]) -> str:
-    """Concise 1–3 sentence summary of what the contractor will do.
+    """3–4 sentence overview of the work and what the project is about.
 
     Picks the first substantive, project-defining sentences from the cleaned
-    description. Falls back to UNSPSC code descriptions when the description
-    is too short / pointer-only ("Please see the attached RFQ for details").
+    description; falls back to UNSPSC code descriptions when the description
+    is too short / pointer-only ("Please see the attached RFQ for details");
+    falls back to a metadata-synthesized summary for pure form / disclaimer
+    PDFs.
     """
     desc = (rfp.get("description") or "").strip()
     sentences: list[str] = []
@@ -250,26 +415,40 @@ def generate_statement_of_work(rfp: dict[str, Any]) -> str:
             if len(s) < 25 or _is_filler(s):
                 continue
             sentences.append(s)
-            if len(sentences) >= 6:
+            if len(sentences) >= 12:
                 break
-        if len(sentences) >= 6:
+        if len(sentences) >= 12:
             break
 
-    # Prefer the first project-defining sentence as the lead. Keep at most two
-    # substantive sentences so the SOW reads concisely.
+    # Prefer the first project-defining sentence as the lead.
     lead_idx = 0
     for i, s in enumerate(sentences):
         if _is_project_lead(s):
             lead_idx = i
             break
 
-    summary_parts = sentences[lead_idx : lead_idx + 2]
+    summary_parts = sentences[lead_idx : lead_idx + _SOW_MAX_SENTENCES]
+
+    # Keep adding sentences until we have at least the minimum count or run
+    # out of substantive content.
+    if len(summary_parts) < _SOW_MIN_SENTENCES:
+        extra_pool = [s for i, s in enumerate(sentences) if i < lead_idx]
+        for s in extra_pool:
+            if s in summary_parts:
+                continue
+            summary_parts.append(s)
+            if len(summary_parts) >= _SOW_MIN_SENTENCES:
+                break
+
     summary = " ".join(summary_parts).strip()
 
-    # If the lead sentence already exceeds ~280 chars, just keep it solo so
-    # the SOW doesn't run away with two long sentences.
-    if summary_parts and len(summary_parts[0]) > 280:
-        summary = summary_parts[0]
+    # Trim if the running total balloons past the soft char cap; keep at
+    # least the lead sentence intact.
+    if len(summary) > _SOW_MAX_CHARS and len(summary_parts) > 1:
+        # Drop trailing sentences until under the cap.
+        while len(summary_parts) > 1 and len(" ".join(summary_parts)) > _SOW_MAX_CHARS:
+            summary_parts.pop()
+        summary = " ".join(summary_parts).strip()
 
     # Fallback: synthesize from UNSPSC descriptions when the description is
     # too thin to carry a real summary.
@@ -280,17 +459,14 @@ def generate_statement_of_work(rfp: dict[str, Any]) -> str:
             joined = ", ".join(unspsc_phrases[:3])
             summary = f"Provide {joined} in support of the {name} engagement."
 
-    # Safety net: if the chosen SOW still reads as procurement boilerplate
-    # (e.g. an SF-1449 form had no narrative scope), synthesize a one-liner
-    # from the title + agency rather than emit a confusing admin sentence.
+    # Safety net: pure form / disclaimer PDFs get a metadata-synthesized line.
     if summary and _looks_like_pure_admin(summary):
         summary = _synthesize_sow_from_metadata(rfp)
 
     if not summary:
         summary = _synthesize_sow_from_metadata(rfp) or (desc or rfp.get("title") or "").strip()
 
-    # Cap to keep it succinct.
-    return summary[:500].rstrip()
+    return summary[:_SOW_MAX_CHARS].rstrip()
 
 
 _PROJECT_SIGNAL_PATTERNS = (
@@ -332,7 +508,12 @@ def _looks_like_pure_admin(text: str) -> bool:
     # 3. Numbered field markers ("1. X 2. Y 3. Z").
     if len(re.findall(r"\b\d+\.\s+[A-Z]", text)) >= 2:
         return True
-    # 4. Short SOWs without project signals are almost certainly fragments.
+    # 4. Form-field label patterns: ALL-CAPS "NAME:" / "EMAIL:" / "ATTN:" /
+    # "PART I" markers are almost always pasted form scaffolding (not the
+    # lowercase "Email:" contact-info that real RFPs include in their body).
+    if re.search(r"\b(NAME|EMAIL|ATTN|PHONE|FAX|ADDRESS|PART\s+[IVX]+)\s*:", text):
+        return True
+    # 5. Short SOWs without project signals are almost certainly fragments.
     if len(text) < 120 and not any(p in low for p in _PROJECT_SIGNAL_PATTERNS):
         return True
     return False

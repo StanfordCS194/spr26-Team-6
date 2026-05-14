@@ -2,23 +2,21 @@
   "source": "sam.gov",
   "external_id": "785f0c0cb4404df7869911576eea44d2",
   "title": "AF EAD_IA/MA-PLMF",
-  "name": "AF EAD_IA/MA-PLMF",
-  "statement_of_work": "The Contractor shall provide a single rate for each labor category which will be charged no matter if the prime Contractor or a subcontractor is to perform the work.",
+  "name": "AF EAD_IA/MA-PLMF (GENERAL SERVICES ADMINISTRATION)",
+  "statement_of_work": "The work shall be performed in accordance with all Sections of this Performance Work Statement (PWS). The General Services Administration’s (GSA) operating costs associated with the management and administration of this contract are recovered through a CAF. This TO shall have a separate Contract Line Item Number (CLIN) to cover this access fee, and this CAF shall be obligated at TO Award (TOA). T&M is defined under FAR 16.6, T&M.",
   "deliverables": [
     "The work shall be performed in accordance with all Sections of this Performance Work Statement (PWS)",
-    "This TO shall have a separate Contract Line Item Number (CLIN) to cover this access fee, and this CAF shall be obligated at TO Award (TOA)",
-    "The Contractor shall provide a single rate for each labor category which will be charged no matter if the prime Contractor or a subcontractor is to perform the work",
-    "The contractor shall perform the effort required by this TO on a hybrid FFP + T&M basis for"
+    "This TO shall have a separate Contract Line Item Number (CLIN) to cover this access fee, and this CAF shall be obligated at TO Award (TOA)"
   ],
   "location_level": "state",
   "location": "California",
   "tags": [
-    "Procurement",
     "Software",
+    "Procurement",
     "California"
   ],
   "dept": "GENERAL SERVICES ADMINISTRATION.FEDERAL ACQUISITION SERVICE.GSA FAS AAS ARMY (QFB)",
-  "description": "The Contractor shall provide a single rate for each labor category which will be charged no matter if the prime Contractor or a subcontractor is to perform the work.",
+  "description": "The work shall be performed in accordance with all Sections of this Performance Work Statement (PWS). The General Services Administration’s (GSA) operating costs associated with the management and administration of this contract are recovered through a CAF. This TO shall have a separate Contract Line Item Number (CLIN) to cover this access fee, and this CAF shall be obligated at TO Award (TOA). T&M is defined under FAR 16.6, T&M. This TO also includes Direct Reimbursable Not-to-Exceed (NTE) Contract Line Item Numbers (CLINs) for Other Direct Costs (ODCs) and Travel.",
   "published_date": "2026-05-04",
   "due_date": "2026-05-15T17:00:00-04:00",
   "contact_name": "Alex Budai",

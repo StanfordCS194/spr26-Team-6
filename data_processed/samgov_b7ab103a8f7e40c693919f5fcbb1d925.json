@@ -2,8 +2,8 @@
   "source": "sam.gov",
   "external_id": "b7ab103a8f7e40c693919f5fcbb1d925",
   "title": "7A21--GAIT Analysis Machine (Medical Research) Intent to Sole Source",
-  "name": "7A21--GAIT Analysis Machine (Medical Research) Intent to Sole Source",
-  "statement_of_work": "The Department of Veterans Affairs, VISN 12, Network Contracting Office (NCO) 12, intends to issue a sole source purchase order to Stoelting Co., the exclusive authorized U.S. distributor of the Ugo Basile G.A.I.T. (Gait Analysis and Imaging Tool) system. This acquisition is for a commercial, integrated gait analysis platform required by the William S.",
+  "name": "GAIT Analysis Machine (Medical Research)",
+  "statement_of_work": "The Department of Veterans Affairs, VISN 12, Network Contracting Office (NCO) 12, intends to issue a sole source purchase order to Stoelting Co., the exclusive authorized U.S. distributor of the Ugo Basile G.A.I.T. (Gait Analysis and Imaging Tool) system. This acquisition is for a commercial, integrated gait analysis platform required by the William S. Middleton Memorial VA Medical Center, Madison, WI, for execution of a MERIT funded traumatic brain injury (TBI) research project. The G.A.I.T. system provides simultaneous ventral and lateral high resolution imaging, automated AI driven gait detection, and artifact correction essential for post TBI locomotion analysis in mice.",
   "deliverables": [
     "Provide simultaneous ventral and lateral high resolution imaging",
     "Provide automated AI driven gait detection",
@@ -12,14 +12,14 @@
   "location_level": "state",
   "location": "California",
   "tags": [
-    "Research",
     "Medical Imaging",
+    "Research",
     "Health Services",
-    "Procurement",
+    "Software",
     "California"
   ],
   "dept": "VETERANS AFFAIRS, DEPARTMENT OF.VETERANS AFFAIRS, DEPARTMENT OF.252-NETWORK CONTRACT OFFICE 12 (36C252)",
-  "description": "The Department of Veterans Affairs, VISN 12, Network Contracting Office (NCO) 12, intends to issue a sole source purchase order to Stoelting Co., the exclusive authorized U.S. distributor of the Ugo Basile G.A.I.T. (Gait Analysis and Imaging Tool) system. This acquisition is for a commercial, integrated gait analysis platform required by the William S.",
+  "description": "The Department of Veterans Affairs, VISN 12, Network Contracting Office (NCO) 12, intends to issue a sole source purchase order to Stoelting Co., the exclusive authorized U.S. distributor of the Ugo Basile G.A.I.T. (Gait Analysis and Imaging Tool) system. This acquisition is for a commercial, integrated gait analysis platform required by the William S. Middleton Memorial VA Medical Center, Madison, WI, for execution of a MERIT funded traumatic brain injury (TBI) research project. The G.A.I.T. system provides simultaneous ventral and lateral high resolution imaging, automated AI driven gait detection, and artifact correction essential for post TBI locomotion analysis in mice. Market research confirms that no other vendor can meet the required technical specifications, and no verified VOSB/SDVOSB or U.S. manufacturer provides an equivalent product.",
   "published_date": "2026-05-07",
   "due_date": "2026-05-14T17:00:00-04:00",
   "contact_name": "Stacy Massey",

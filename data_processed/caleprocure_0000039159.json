@@ -2,8 +2,8 @@
   "source": "Cal eProcure",
   "external_id": "0000039159",
   "title": "RFO-ITS 1940 - eRPA System Enhancements",
-  "name": "RFO-ITS 1940 - eRPA System Enhancements",
-  "statement_of_work": "California Department of Forestry and Fire Protection (CAL FIRE) is inviting you to review and respond to this Request for Offer (RFO), entitled RFO-ITS 1940 - eRPA System Enhancements. CAL FIRE utilizes the Electronic Request for Personnel Action (eRPA) system (Power Apps application) to manage classification, hiring, personnel transactions, and recruitment-related workflows.",
+  "name": "ITS 1940 - eRPA System Enhancements",
+  "statement_of_work": "California Department of Forestry and Fire Protection (CAL FIRE) is inviting you to review and respond to this Request for Offer (RFO), entitled RFO-ITS 1940 - eRPA System Enhancements. CAL FIRE utilizes the Electronic Request for Personnel Action (eRPA) system (Power Apps application) to manage classification, hiring, personnel transactions, and recruitment-related workflows. As statewide operational needs, hiring volume, and classification structures have evolved, existing eRPA functionality no longer fully supports the end-to-end requirements of program staff, Personnel Specialists, managers, and regional approvers. To ensure accuracy, efficiency, compliance with civil service rules, and support for high-volume staffing operations, CAL FIRE seeks to enhance, update, and correct various components of the eRPA system.",
   "deliverables": [
     "Support end-to-end requirements of program staff",
     "Support personnel Specialists",
@@ -19,7 +19,7 @@
     "California"
   ],
   "dept": "California Department of Forestry and Fire Protection (CAL FIRE)",
-  "description": "California Department of Forestry and Fire Protection (CAL FIRE) is inviting you to review and respond to this Request for Offer (RFO), entitled RFO-ITS 1940 - eRPA System Enhancements. CAL FIRE utilizes the Electronic Request for Personnel Action (eRPA) system (Power Apps application) to manage classification, hiring, personnel transactions, and recruitment-related workflows.",
+  "description": "California Department of Forestry and Fire Protection (CAL FIRE) is inviting you to review and respond to this Request for Offer (RFO), entitled RFO-ITS 1940 - eRPA System Enhancements. CAL FIRE utilizes the Electronic Request for Personnel Action (eRPA) system (Power Apps application) to manage classification, hiring, personnel transactions, and recruitment-related workflows. As statewide operational needs, hiring volume, and classification structures have evolved, existing eRPA functionality no longer fully supports the end-to-end requirements of program staff, Personnel Specialists, managers, and regional approvers. To ensure accuracy, efficiency, compliance with civil service rules, and support for high-volume staffing operations, CAL FIRE seeks to enhance, update, and correct various components of the eRPA system. These needs include improving frontend approval workflows, expanding backend data integration, updating classification values, strengthening reporting capabilities, and ensuring the system aligns with current hiring and recruitment processes.",
   "published_date": "2026-05-05T11:41:00-07:00",
   "due_date": "2026-05-29T16:00:00-07:00",
   "contact_name": "Charles Jackson-Kirkpatrick",

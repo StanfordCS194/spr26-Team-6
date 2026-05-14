@@ -3,22 +3,23 @@
   "external_id": "3589edc592834256b96809817756fca4",
   "title": "Wireless Network Deployment at Peterson Space Force Base",
   "name": "Wireless Network Deployment at Peterson Space Force Base",
-  "statement_of_work": "The contractor shall ensure compliance with NSA CSfC Capabilities Package (CP), DoD Security Technical Implementation Guide (STIG), and other applicable federal security standards. This solicitation incorporates provisions and clauses by reference.",
+  "statement_of_work": "The contractor shall ensure compliance with NSA CSfC Capabilities Package (CP), DoD Security Technical Implementation Guide (STIG), and other applicable federal security standards. This solicitation incorporates provisions and clauses by reference. The full text of provisions and clauses may be accessed electronically at https://www.acquisition.gov/far-overhaul/far-part-deviation-guide.",
   "deliverables": [
-    "The contractor shall ensure compliance with NSA CSfC Capabilities Package (CP), DoD Security Technical Implementation Guide (STIG), and other applicable federal security standards",
-    "The contractor shall perform all work in accordance with the attached Performance Work Statement (PWS)"
+    "Deliver a phased execution approach for study",
+    "Deliver equipment procurement",
+    "Deliver final validation of the wireless network"
   ],
   "location_level": "state",
   "location": "California",
   "tags": [
-    "Research",
-    "Infrastructure",
-    "Cybersecurity",
     "Procurement",
+    "Cybersecurity",
+    "Infrastructure",
+    "Research",
     "California"
   ],
   "dept": "DEPT OF DEFENSE.US SPECIAL OPERATIONS COMMAND (USSOCOM).SOCNORTH PB",
-  "description": "The contractor shall ensure compliance with NSA CSfC Capabilities Package (CP), DoD Security Technical Implementation Guide (STIG), and other applicable federal security standards. This solicitation incorporates provisions and clauses by reference.",
+  "description": "The Government requires Commercial Solutions for Classified (CSfC) Wireless Local Area Network (WLAN) services to support SOCNORTH at Peterson Space Force Base, Colorado. The requirement includes a phased execution approach for study, design, equipment procurement, installation, testing, and final validation of the wireless network. The contractor shall ensure compliance with NSA CSfC Capabilities Package (CP), DoD Security Technical Implementation Guide (STIG), and other applicable federal security standards. This solicitation incorporates provisions and clauses by reference. The full text of provisions and clauses may be accessed electronically at https://www.acquisition.gov/far-overhaul/far-part-deviation-guide.",
   "published_date": "2026-05-08",
   "due_date": "2026-05-21T12:00:00-06:00",
   "contact_name": "Capt Byron S. Irving",

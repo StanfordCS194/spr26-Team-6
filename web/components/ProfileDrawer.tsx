@@ -202,6 +202,45 @@ export function ProfileDrawer() {
               >
                 Save information
               </button>
+            </div>
+          </section>
+
+          <section className="mt-8 border-t border-govbid-border pt-6">
+            <h3 className="text-xs font-semibold uppercase tracking-wide text-govbid-text-muted">
+              Saved RFPs
+            </h3>
+            {savedRfps.length === 0 ? (
+              <p className="mt-2 text-sm text-govbid-text-muted">
+                No saved opportunities yet. Open an RFP and choose &quot;Save to profile&quot;.
+              </p>
+            ) : (
+              <ul className="mt-3 grid gap-2">
+                {savedRfps.map((rfp) => (
+                  <li key={rfp.id}>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        selectRfp(rfp.id);
+                        setProfileOpen(false);
+                      }}
+                      className="saved-rfp-item w-full rounded-xl border border-govbid-border bg-govbid-elevated p-3 text-left text-sm transition hover:border-govbid-border-strong hover:bg-govbid-primary-muted/50"
+                    >
+                      <span className="line-clamp-2 font-semibold text-govbid-text">
+                        {rfp.name}
+                      </span>
+                      <span className="mt-1 block text-xs text-govbid-text-muted">
+                        {rfp.agency} · {rfp.contract}
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </section>
+
+          <p className="mt-6 text-xs text-govbid-text-muted">
+            Stretch: LinkedIn / company URL ingest would auto-fill these fields via LLM (not implemented).
+          </p>
             </section>
           )}
 

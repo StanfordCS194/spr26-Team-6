@@ -276,14 +276,22 @@ def clean_description(text: str | None) -> str | None:
     result = strip_addendum_blocks(result)
     result = strip_leading_admin_sentences(result) or ""
     result = _soft_cap_description(result)
+    # Trim to ~4-5 substantive sentences so the description reads as a tight
+    # project summary rather than a dump of the underlying RFP body.
+    result = limit_description_sentences(result) or ""
     return result or None
 
 
-def _soft_cap_description(text: str, *, target: int = 1800) -> str:
+_DESCRIPTION_MIN_SENTENCES = 4
+_DESCRIPTION_MAX_SENTENCES = 5
+_DESCRIPTION_MAX_CHARS = 1400
+
+
+def _soft_cap_description(text: str, *, target: int = _DESCRIPTION_MAX_CHARS) -> str:
     """Cap description at a paragraph boundary near ``target`` characters.
 
     Long PDF dumps are unreadable as a description; we keep the first few
-    paragraphs up to ~1800 chars so the field reads like a project summary.
+    paragraphs so the field reads like a project summary.
     """
     if not text or len(text) <= target:
         return text
@@ -299,6 +307,81 @@ def _soft_cap_description(text: str, *, target: int = 1800) -> str:
         if total >= target:
             break
     return "\n\n".join(out).strip()
+
+
+_BULLET_LINE_RE = re.compile(r"^\s*(?:[\-\*•¿]|\d+[.)])\s+")
+
+
+def _split_into_units(text: str) -> list[str]:
+    """Split text into sentence-like units, treating bullet lines as their
+    own unit so list items don't merge into a mega-sentence when they lack
+    a terminating period. Non-bullet lines are joined back into paragraphs
+    so a wrapped sentence ('Space Force Personnel\\nManagement Act') stays
+    as one sentence.
+    """
+    units: list[str] = []
+    current_para: list[str] = []
+
+    def flush_para() -> None:
+        if not current_para:
+            return
+        joined = " ".join(current_para).strip()
+        current_para.clear()
+        if not joined:
+            return
+        for piece in re.split(r"(?<=[.!?])\s+(?=[A-Z“\"'0-9])", joined):
+            piece = piece.strip()
+            if piece:
+                units.append(piece)
+
+    for line in text.splitlines():
+        if _BULLET_LINE_RE.match(line):
+            flush_para()
+            cleaned = _BULLET_LINE_RE.sub("", line).strip().rstrip(",;")
+            if cleaned:
+                units.append(cleaned)
+            continue
+        if not line.strip():
+            flush_para()
+            continue
+        current_para.append(line.strip())
+    flush_para()
+    return units
+
+
+def limit_description_sentences(text: str | None) -> str | None:
+    """Trim the description to ~4-5 substantive sentences.
+
+    Skips filler / admin sentences when picking the lead, then keeps up to
+    five sentences (or fewer if the source genuinely has less content).
+    """
+    if not text:
+        return text
+    # Import lazily to avoid a circular import with processor.enrich.
+    from processor.enrich import _is_filler  # type: ignore
+
+    units = _split_into_units(text)
+    sentences: list[str] = []
+    for s in units:
+        if len(s) < 25:
+            continue
+        if _is_filler(s):
+            continue
+        sentences.append(s)
+        if len(sentences) >= _DESCRIPTION_MAX_SENTENCES:
+            break
+
+    # If filtering left us with too little content, fall back to including
+    # any units we filtered out so the description isn't empty.
+    if len(sentences) < _DESCRIPTION_MIN_SENTENCES:
+        sentences = [s for s in units if len(s) >= 25][:_DESCRIPTION_MAX_SENTENCES]
+
+    if not sentences:
+        return text
+    # Ensure each sentence ends with terminal punctuation so the joined
+    # result reads as prose, not a run-on.
+    rendered = [s if s[-1] in ".!?" else f"{s}." for s in sentences]
+    return " ".join(rendered).strip()
 
 
 # Procurement-process boilerplate that often opens SAM.gov notices. We strip

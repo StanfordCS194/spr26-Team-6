@@ -2,8 +2,8 @@
   "source": "Cal eProcure",
   "external_id": "0000036719",
   "title": "CalHEERS SDMO RFP #73040873",
-  "name": "CalHEERS SDMO",
-  "statement_of_work": "The State of California, Office of Technology and Solutions Integration (OTSI), is releasing a Request for Proposal (RFP) #73040873 for System Development, Maintenance & Operations (SDMO) for the California Healthcare Eligibility, Enrollment and Retention System (CalHEERS). The CalHEERS Project supports the enhancement, maintenance and operations, and on-going business of both Covered California and the Department of Health Care Services (DHCS).",
+  "name": "CalHEERS SDMO Project",
+  "statement_of_work": "The State of California, Office of Technology and Solutions Integration (OTSI), is releasing a Request for Proposal (RFP) #73040873 for System Development, Maintenance & Operations (SDMO) for the California Healthcare Eligibility, Enrollment and Retention System (CalHEERS). The CalHEERS Project supports the enhancement, maintenance and operations, and on-going business of both Covered California and the Department of Health Care Services (DHCS). CalHEERS supports account creation, consumer application, eligibility rules, and health plan selection for insurance affordability programs, streamlining Californian's ability to research, compare, check their eligibility for, and purchase health coverage.",
   "deliverables": [
     "Support consumer application",
     "Support health plan selection for insurance affordability programs",
@@ -18,7 +18,7 @@
     "California"
   ],
   "dept": "Office of Technology and Solutions Integration (OTSI)",
-  "description": "The State of California, Office of Technology and Solutions Integration (OTSI), is releasing a Request for Proposal (RFP) #73040873 for System Development, Maintenance & Operations (SDMO) for the California Healthcare Eligibility, Enrollment and Retention System (CalHEERS). The CalHEERS Project supports the enhancement, maintenance and operations, and on-going business of both Covered California and the Department of Health Care Services (DHCS).",
+  "description": "The State of California, Office of Technology and Solutions Integration (OTSI), is releasing a Request for Proposal (RFP) #73040873 for System Development, Maintenance & Operations (SDMO) for the California Healthcare Eligibility, Enrollment and Retention System (CalHEERS). The CalHEERS Project supports the enhancement, maintenance and operations, and on-going business of both Covered California and the Department of Health Care Services (DHCS). CalHEERS supports account creation, consumer application, eligibility rules, and health plan selection for insurance affordability programs, streamlining Californian's ability to research, compare, check their eligibility for, and purchase health coverage. CalHEERS interfaces with the Statewide Automated Welfare Systems (SAWS) for Modified Adjusted Gross Income (MAGI) Medi-Cal eligibility, enrollment and reporting, and provides data for potential eligibility to other programs such as, non-MAGI Medi-Cal, CalFresh, and California Work Opportunities and Responsibility for Kids (CalWORKS).",
   "published_date": "2025-09-17T17:00:00-07:00",
   "due_date": "2026-10-31T17:00:00-07:00",
   "contact_name": "Alina Corpus",
