@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  startTransition,
-  useEffect,
-  useState,
-  type Dispatch,
-  type SetStateAction,
-} from "react";
-import { useDashboard } from "@/context/DashboardContext";
+import { useDashboard, type RfpFilter } from "@/context/DashboardContext";
 
 function FunnelIcon() {
   return (
@@ -26,46 +19,37 @@ function SearchIcon() {
   );
 }
 
+function XIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+  );
+}
+
 export function RfpSidebar() {
   const { searchQuery, setSearchQuery, rfpFilter, setRfpFilter, loadedRfps } =
     useDashboard();
-  const [draftFilter, setDraftFilter] = useState({
-    tag: rfpFilter.tag ?? "",
-    dateFrom: rfpFilter.dateFrom ?? "",
-    dateTo: rfpFilter.dateTo ?? "",
-    priceMin: rfpFilter.priceMin?.toString() ?? "",
-    priceMax: rfpFilter.priceMax?.toString() ?? "",
-  });
 
-  useEffect(() => {
-    startTransition(() => {
-      setDraftFilter({
-        tag: rfpFilter.tag ?? "",
-        dateFrom: rfpFilter.dateFrom ?? "",
-        dateTo: rfpFilter.dateTo ?? "",
-        priceMin: rfpFilter.priceMin?.toString() ?? "",
-        priceMax: rfpFilter.priceMax?.toString() ?? "",
-      });
-    });
-  }, [rfpFilter]);
+  const activeFilterCount = Object.values(rfpFilter).filter(
+    (v) => v !== undefined && v !== "",
+  ).length;
 
   const allTags = Array.from(
     new Set(loadedRfps.flatMap((rfp) => rfp.tags)),
   ).sort();
 
-  const applyFilter = () => {
-    setRfpFilter({
-      tag: draftFilter.tag || undefined,
-      dateFrom: draftFilter.dateFrom || undefined,
-      dateTo: draftFilter.dateTo || undefined,
-      priceMin: draftFilter.priceMin ? Number(draftFilter.priceMin) : undefined,
-      priceMax: draftFilter.priceMax ? Number(draftFilter.priceMax) : undefined,
-    });
+  const mergeRfpFilter = (patch: Partial<RfpFilter>) => {
+    setRfpFilter({ ...rfpFilter, ...patch });
   };
 
   const clearFilter = () => {
-    setDraftFilter({ tag: "", dateFrom: "", dateTo: "", priceMin: "", priceMax: "" });
     setRfpFilter({});
+  };
+
+  const removeFilter = (key: keyof RfpFilter) => {
+    setRfpFilter({ ...rfpFilter, [key]: undefined });
   };
 
   const inputClass =
@@ -76,7 +60,15 @@ export function RfpSidebar() {
       <details className="group rounded-xl lg:hidden" open>
         <summary className="cursor-pointer list-none rounded-lg border border-govbid-border bg-govbid-surface px-3 py-2 text-sm font-semibold text-govbid-text [&::-webkit-details-marker]:hidden">
           <span className="flex items-center justify-between gap-2">
-            Search &amp; filters
+            <span className="flex items-center gap-2">
+              <FunnelIcon />
+              Search &amp; filters
+              {activeFilterCount > 0 && (
+                <span className="flex size-5 items-center justify-center rounded-full bg-govbid-primary text-xs font-bold text-white">
+                  {activeFilterCount}
+                </span>
+              )}
+            </span>
             <span className="text-govbid-text-muted group-open:rotate-180">▼</span>
           </span>
         </summary>
@@ -84,11 +76,12 @@ export function RfpSidebar() {
           <SearchCardBody
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
-            draftFilter={draftFilter}
-            setDraftFilter={setDraftFilter}
+            rfpFilter={rfpFilter}
             allTags={allTags}
-            applyFilter={applyFilter}
+            mergeRfpFilter={mergeRfpFilter}
             clearFilter={clearFilter}
+            removeFilter={removeFilter}
+            activeFilterCount={activeFilterCount}
             inputClass={inputClass}
           />
         </div>
@@ -97,16 +90,22 @@ export function RfpSidebar() {
       <div className="hidden rounded-xl border border-govbid-border bg-govbid-surface p-4 lg:block">
         <div className="mb-4 flex items-center gap-2 text-sm font-semibold text-govbid-text">
           <FunnelIcon />
-          Search
+          Search &amp; filters
+          {activeFilterCount > 0 && (
+            <span className="ml-auto flex size-5 items-center justify-center rounded-full bg-govbid-primary text-xs font-bold text-white">
+              {activeFilterCount}
+            </span>
+          )}
         </div>
         <SearchCardBody
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
-          draftFilter={draftFilter}
-          setDraftFilter={setDraftFilter}
+          rfpFilter={rfpFilter}
           allTags={allTags}
-          applyFilter={applyFilter}
+          mergeRfpFilter={mergeRfpFilter}
           clearFilter={clearFilter}
+          removeFilter={removeFilter}
+          activeFilterCount={activeFilterCount}
           inputClass={inputClass}
         />
       </div>
@@ -117,154 +116,231 @@ export function RfpSidebar() {
 function SearchCardBody({
   searchQuery,
   setSearchQuery,
-  draftFilter,
-  setDraftFilter,
+  rfpFilter,
   allTags,
-  applyFilter,
+  mergeRfpFilter,
   clearFilter,
+  removeFilter,
+  activeFilterCount,
   inputClass,
 }: {
   searchQuery: string;
   setSearchQuery: (q: string) => void;
-  draftFilter: {
-    tag: string;
-    dateFrom: string;
-    dateTo: string;
-    priceMin: string;
-    priceMax: string;
-  };
-  setDraftFilter: Dispatch<
-    SetStateAction<{
-      tag: string;
-      dateFrom: string;
-      dateTo: string;
-      priceMin: string;
-      priceMax: string;
-    }>
-  >;
+  rfpFilter: RfpFilter;
   allTags: string[];
-  applyFilter: () => void;
+  mergeRfpFilter: (patch: Partial<RfpFilter>) => void;
   clearFilter: () => void;
+  removeFilter: (key: keyof RfpFilter) => void;
+  activeFilterCount: number;
   inputClass: string;
 }) {
   return (
     <div className="space-y-4">
+      {/* Search */}
       <label className="block text-xs font-medium text-govbid-text-muted">
         <span className="flex items-center gap-1.5 text-govbid-text">
           <SearchIcon />
-          Keyword
+          Search
         </span>
         <input
           id="search-bar"
           type="search"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Title, agency, tags…"
+          placeholder="RFP title, agency, keywords…"
           className={inputClass}
         />
       </label>
 
-      <div>
-        <label className="text-xs font-medium text-govbid-text-muted">Topic tag</label>
-        <select
-          id="filter-button"
-          value={draftFilter.tag}
-          onChange={(event) =>
-            setDraftFilter((prev) => ({ ...prev, tag: event.target.value }))
-          }
-          className={inputClass}
-        >
-          <option value="">Any</option>
-          {allTags.map((tag) => (
-            <option key={tag} value={tag}>
-              {tag}
-            </option>
-          ))}
-        </select>
+      {/* Active Filters Display */}
+      {activeFilterCount > 0 && (
+        <div className="space-y-2 border-t border-govbid-border pt-3">
+          <p className="text-xs font-medium text-govbid-text-muted">Active filters:</p>
+          <div className="flex flex-wrap gap-2">
+            {rfpFilter.tag && (
+              <div className="inline-flex items-center gap-2 rounded-full bg-govbid-primary-muted px-3 py-1 text-sm">
+                <span className="text-govbid-text">{rfpFilter.tag}</span>
+                <button
+                  type="button"
+                  onClick={() => removeFilter("tag")}
+                  className="text-govbid-text-muted hover:text-govbid-text"
+                  aria-label={`Remove ${rfpFilter.tag} filter`}
+                >
+                  <XIcon />
+                </button>
+              </div>
+            )}
+            {rfpFilter.dateFrom && (
+              <div className="inline-flex items-center gap-2 rounded-full bg-govbid-primary-muted px-3 py-1 text-sm">
+                <span className="text-govbid-text">From {rfpFilter.dateFrom}</span>
+                <button
+                  type="button"
+                  onClick={() => removeFilter("dateFrom")}
+                  className="text-govbid-text-muted hover:text-govbid-text"
+                  aria-label="Remove start date filter"
+                >
+                  <XIcon />
+                </button>
+              </div>
+            )}
+            {rfpFilter.dateTo && (
+              <div className="inline-flex items-center gap-2 rounded-full bg-govbid-primary-muted px-3 py-1 text-sm">
+                <span className="text-govbid-text">To {rfpFilter.dateTo}</span>
+                <button
+                  type="button"
+                  onClick={() => removeFilter("dateTo")}
+                  className="text-govbid-text-muted hover:text-govbid-text"
+                  aria-label="Remove end date filter"
+                >
+                  <XIcon />
+                </button>
+              </div>
+            )}
+            {typeof rfpFilter.priceMin === "number" && (
+              <div className="inline-flex items-center gap-2 rounded-full bg-govbid-primary-muted px-3 py-1 text-sm">
+                <span className="text-govbid-text">Min ${rfpFilter.priceMin}</span>
+                <button
+                  type="button"
+                  onClick={() => removeFilter("priceMin")}
+                  className="text-govbid-text-muted hover:text-govbid-text"
+                  aria-label="Remove minimum price filter"
+                >
+                  <XIcon />
+                </button>
+              </div>
+            )}
+            {typeof rfpFilter.priceMax === "number" && (
+              <div className="inline-flex items-center gap-2 rounded-full bg-govbid-primary-muted px-3 py-1 text-sm">
+                <span className="text-govbid-text">Max ${rfpFilter.priceMax}</span>
+                <button
+                  type="button"
+                  onClick={() => removeFilter("priceMax")}
+                  className="text-govbid-text-muted hover:text-govbid-text"
+                  aria-label="Remove maximum price filter"
+                >
+                  <XIcon />
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Filter Section */}
+      <div className="space-y-3 border-t border-govbid-border pt-3">
+        <p className="text-xs font-medium text-govbid-text-muted">Filter by</p>
+
+        {/* Topic Tag */}
+        <label className="block text-xs font-medium text-govbid-text-muted">
+          Topic tag
+          <select
+            id="filter-button"
+            value={rfpFilter.tag ?? ""}
+            onChange={(event) =>
+              mergeRfpFilter({ tag: event.target.value || undefined })
+            }
+            className={inputClass}
+          >
+            <option value="">Any topic</option>
+            {allTags.map((tag) => (
+              <option key={tag} value={tag}>
+                {tag}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        {/* Date Range */}
+        <div>
+          <p className="mb-2 text-xs font-medium text-govbid-text-muted">Due date range</p>
+          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
+            <label className="block text-xs font-medium text-govbid-text-muted">
+              From
+              <input
+                type="date"
+                value={rfpFilter.dateFrom ?? ""}
+                onChange={(event) =>
+                  mergeRfpFilter({ dateFrom: event.target.value || undefined })
+                }
+                className={inputClass}
+              />
+            </label>
+            <label className="block text-xs font-medium text-govbid-text-muted">
+              To
+              <input
+                type="date"
+                value={rfpFilter.dateTo ?? ""}
+                onChange={(event) =>
+                  mergeRfpFilter({ dateTo: event.target.value || undefined })
+                }
+                className={inputClass}
+              />
+            </label>
+          </div>
+        </div>
+
+        {/* Price Range */}
+        <div>
+          <p className="mb-2 text-xs font-medium text-govbid-text-muted">Contract value</p>
+          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
+            <label className="block text-xs font-medium text-govbid-text-muted">
+              Min ($)
+              <input
+                type="number"
+                min={0}
+                value={rfpFilter.priceMin ?? ""}
+                onChange={(event) => {
+                  const raw = event.target.value;
+                  if (raw === "") {
+                    mergeRfpFilter({ priceMin: undefined });
+                    return;
+                  }
+                  const n = Number(raw);
+                  mergeRfpFilter({
+                    priceMin: Number.isFinite(n) ? n : undefined,
+                  });
+                }}
+                placeholder="0"
+                className={inputClass}
+              />
+            </label>
+            <label className="block text-xs font-medium text-govbid-text-muted">
+              Max ($)
+              <input
+                type="number"
+                min={0}
+                value={rfpFilter.priceMax ?? ""}
+                onChange={(event) => {
+                  const raw = event.target.value;
+                  if (raw === "") {
+                    mergeRfpFilter({ priceMax: undefined });
+                    return;
+                  }
+                  const n = Number(raw);
+                  mergeRfpFilter({
+                    priceMax: Number.isFinite(n) ? n : undefined,
+                  });
+                }}
+                placeholder="Any"
+                className={inputClass}
+              />
+            </label>
+          </div>
+        </div>
       </div>
 
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-        <label className="block text-xs font-medium text-govbid-text-muted">
-          Due from
-          <input
-            type="date"
-            value={draftFilter.dateFrom}
-            onChange={(event) =>
-              setDraftFilter((prev) => ({
-                ...prev,
-                dateFrom: event.target.value,
-              }))
-            }
-            className={inputClass}
-          />
-        </label>
-        <label className="block text-xs font-medium text-govbid-text-muted">
-          Due to
-          <input
-            type="date"
-            value={draftFilter.dateTo}
-            onChange={(event) =>
-              setDraftFilter((prev) => ({
-                ...prev,
-                dateTo: event.target.value,
-              }))
-            }
-            className={inputClass}
-          />
-        </label>
-      </div>
-
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-        <label className="block text-xs font-medium text-govbid-text-muted">
-          Min price ($)
-          <input
-            type="number"
-            min={0}
-            value={draftFilter.priceMin}
-            onChange={(event) =>
-              setDraftFilter((prev) => ({
-                ...prev,
-                priceMin: event.target.value,
-              }))
-            }
-            placeholder="0"
-            className={inputClass}
-          />
-        </label>
-        <label className="block text-xs font-medium text-govbid-text-muted">
-          Max price ($)
-          <input
-            type="number"
-            min={0}
-            value={draftFilter.priceMax}
-            onChange={(event) =>
-              setDraftFilter((prev) => ({
-                ...prev,
-                priceMax: event.target.value,
-              }))
-            }
-            placeholder="Any"
-            className={inputClass}
-          />
-        </label>
-      </div>
-
-      <div className="flex flex-wrap gap-2 pt-1">
-        <button
-          type="button"
-          onClick={applyFilter}
-          className="govbid-btn-primary rounded-lg px-4 py-2 text-sm"
-        >
-          Apply
-        </button>
-        <button
-          type="button"
-          onClick={clearFilter}
-          className="rounded-lg border border-govbid-border bg-govbid-surface px-4 py-2 text-sm font-semibold text-govbid-text transition hover:bg-govbid-primary-muted/40"
-        >
-          Clear
-        </button>
-      </div>
+      {/* Clear */}
+      {activeFilterCount > 0 && (
+        <div className="border-t border-govbid-border pt-3">
+          <button
+            type="button"
+            onClick={clearFilter}
+            className="w-full rounded-lg border border-govbid-border bg-govbid-surface px-4 py-2 text-sm font-semibold text-govbid-text transition hover:bg-govbid-primary-muted/40"
+          >
+            Clear all filters
+          </button>
+        </div>
+      )}
     </div>
   );
 }

@@ -10,6 +10,7 @@ import type { Rfp } from "@/lib/types";
 import { SourceDocumentEmbed } from "./SourceDocumentEmbed";
 import { TagBubble } from "./RfpCard";
 import { trackABTestEvent } from "@/app/posthog-provider";
+import { shortenAgencyName } from "@/lib/formatAgency";
 
 const RfpPdfViewer = dynamic(
   () => import("./RfpPdfViewer").then((m) => m.RfpPdfViewer),
@@ -22,6 +23,45 @@ const RfpPdfViewer = dynamic(
     ),
   },
 );
+
+function DeadlineCountdown({ dueDate }: { dueDate: string }) {
+  const [daysLeft, setDaysLeft] = useState(0);
+  const [hoursLeft, setHoursLeft] = useState(0);
+
+  useEffect(() => {
+    const updateCountdown = () => {
+      const deadline = new Date(`${dueDate}T23:59:59`);
+      const now = new Date();
+      const diff = deadline.getTime() - now.getTime();
+      
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      
+      setDaysLeft(Math.max(0, days));
+      setHoursLeft(Math.max(0, hours));
+    };
+
+    updateCountdown();
+    const timer = setInterval(updateCountdown, 3600000); // Update every hour
+    return () => clearInterval(timer);
+  }, [dueDate]);
+
+  const getColor = () => {
+    if (daysLeft <= 0) return "bg-red-50 border-red-200 text-red-700";
+    if (daysLeft <= 3) return "bg-red-50 border-red-200 text-red-700";
+    if (daysLeft <= 7) return "bg-yellow-50 border-yellow-200 text-yellow-700";
+    return "bg-blue-50 border-blue-200 text-blue-700";
+  };
+
+  return (
+    <div className={`rounded-lg border p-3 ${getColor()}`}>
+      <p className="text-xs font-semibold uppercase tracking-wide">Deadline countdown</p>
+      <p className="mt-1 text-lg font-bold">
+        {daysLeft}d {hoursLeft}h remaining
+      </p>
+    </div>
+  );
+}
 
 export function DetailPanel() {
   const { selectedRfp } = useDashboard();
@@ -246,17 +286,25 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
 
       <div className="min-h-0 flex-1 overflow-y-auto p-4 lg:p-5">
         {tab === "overview" && (
-          <div className="mx-auto max-w-2xl space-y-4">
-            <div>
-              <p className="text-xs font-medium uppercase tracking-wide text-govbid-text-muted">
-                {rfp.agency}
-              </p>
-              <h2 className="rfp-title mt-1 text-lg font-bold leading-snug text-govbid-text lg:text-xl">
+          <div className="mx-auto w-full max-w-5xl space-y-5">
+            <div className="space-y-3">
+              <h2 className="rfp-title text-xl font-bold leading-snug text-govbid-text lg:text-2xl">
                 {rfp.title}
               </h2>
-              <p className="rfp-overview mt-2 text-sm leading-relaxed text-govbid-text-muted">
-                {rfp.description}
+              <p
+                className="text-xs font-medium uppercase tracking-wide text-govbid-text-muted line-clamp-2"
+                title={rfp.agency}
+              >
+                {shortenAgencyName(rfp.agency, 96)}
               </p>
+              <div className="rounded-xl border border-govbid-border/80 bg-govbid-elevated/60 p-4 lg:p-5">
+                <p className="text-xs font-semibold uppercase tracking-wide text-govbid-text-muted">
+                  Overview
+                </p>
+                <p className="rfp-overview mt-2 text-base leading-relaxed text-govbid-text lg:text-[1.05rem] lg:leading-7">
+                  {rfp.description}
+                </p>
+              </div>
             </div>
             <dl className="rfp-location-date grid grid-cols-2 gap-3 text-sm">
               <div>
@@ -268,7 +316,11 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
                 <dd className="font-semibold text-govbid-text">{rfp.dueDate}</dd>
               </div>
             </dl>
-            {/* TAGS: show all tags as colored bubbles below location/due date */}
+            
+            {/* Deadline Countdown Badge */}
+            <DeadlineCountdown dueDate={rfp.dueDate} />
+            
+            {/* Tags */}
             {rfp.tags?.length > 0 && (
               <div className="mt-2 flex flex-wrap gap-1">
                 {rfp.tags.map((tag) => (
@@ -276,6 +328,28 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
                 ))}
               </div>
             )}
+            
+            {/* Eligibility Requirements */}
+            <div className="rounded-xl border border-govbid-border bg-govbid-elevated p-4">
+              <h3 className="text-sm font-semibold text-govbid-text">
+                Eligibility Requirements
+              </h3>
+              <ul className="mt-3 space-y-2 text-sm text-govbid-text">
+                <li className="flex gap-2">
+                  <span className="shrink-0 text-govbid-primary">✓</span>
+                  <span>Valid SAM registration required</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="shrink-0 text-govbid-primary">✓</span>
+                  <span>Contractor with relevant experience preferred</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="shrink-0 text-govbid-primary">✓</span>
+                  <span>Certified small business status (if applicable)</span>
+                </li>
+              </ul>
+            </div>
+            
             <div className="rfp-sow rounded-xl border border-govbid-border bg-govbid-surface p-4">
               <h3 className="text-sm font-semibold text-govbid-text">
                 Statement of work
@@ -296,7 +370,7 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
         )}
 
         {tab === "ai" && (
-          <div className="prose prose-sm prose-slate mx-auto max-w-2xl text-govbid-text">
+          <div className="prose prose-sm prose-slate mx-auto max-w-5xl text-govbid-text">
             <ReactMarkdown>{rfp.aiAnalysisMarkdown}</ReactMarkdown>
           </div>
         )}

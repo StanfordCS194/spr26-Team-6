@@ -35,7 +35,13 @@ export function RfpFeed() {
     filteredRfps,
     searchQuery,
     rfpFilter,
+    isSaved,
+    toggleSaveRfp,
   } = useDashboard();
+
+  const handleFavoriteToggle = (id: string) => {
+    void toggleSaveRfp(id);
+  };
 
   if (activeNav === "history") {
     return (
@@ -57,6 +63,8 @@ export function RfpFeed() {
           layout={listLayout}
           active={selectedRfpId === rfp.id}
           onSelect={() => selectRfp(rfp.id)}
+          isFavorited={isSaved(rfp.id)}
+          onFavoriteToggle={handleFavoriteToggle}
         />
       ))}
       {feedRfps.length === 0 && (
