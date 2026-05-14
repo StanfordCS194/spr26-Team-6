@@ -286,13 +286,6 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
 
       <div className="min-h-0 flex-1 overflow-y-auto p-4 lg:p-5">
         {tab === "overview" && (
-          <div className="mx-auto max-w-2xl space-y-4">
-            <div>
-              <p className="text-xs font-medium uppercase tracking-wide text-govbid-text-muted">
-                {rfp.agency}
-              </p>
-              <h2 className="rfp-title mt-1 text-lg font-bold leading-snug text-govbid-text lg:text-xl">
-                {rfp.name}
           <div className="mx-auto w-full max-w-5xl space-y-5">
             <div className="space-y-3">
               <h2 className="rfp-title text-xl font-bold leading-snug text-govbid-text lg:text-2xl">
