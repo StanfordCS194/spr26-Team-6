@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useDashboard, type ActiveNav } from "@/context/DashboardContext";
+import { NotificationPanel } from "./NotificationPanel";
 
 function NavIconHome({ active }: { active: boolean }) {
   return (
@@ -106,22 +107,22 @@ export function GlobalHeader() {
   const { setProfileOpen, profileOpen, showToast, signOut } = useDashboard();
 
   return (
-    <header className="flex shrink-0 flex-col gap-3 border-b border-govbid-border bg-govbid-surface px-4 py-3 md:px-6">
-      <div className="flex w-full min-w-0 items-center gap-3">
-        <div className="flex min-w-0 shrink-0 items-center gap-2.5">
+    <header className="flex shrink-0 flex-col gap-2 border-b border-govbid-border bg-govbid-surface px-3 py-2 md:gap-3 md:px-6 md:py-3">
+      <div className="flex w-full min-w-0 items-center gap-2 md:gap-3">
+        <div className="flex min-w-0 shrink-0 items-center gap-2">
           <Image
             src="/govbid-logo.svg"
-            alt=""
+            alt="GovBid logo"
             width={40}
             height={40}
-            className="size-9 shrink-0 rounded-lg md:size-10"
+            className="size-8 shrink-0 rounded-lg md:size-10"
             priority
           />
           <div className="min-w-0 leading-tight">
-            <p className="truncate text-base font-bold tracking-tight text-govbid-text md:text-lg">
+            <p className="truncate text-sm font-bold tracking-tight text-govbid-text md:text-base lg:text-lg">
               GovBid
             </p>
-            <p className="truncate text-[10px] font-medium uppercase tracking-wider text-govbid-text-muted md:text-xs">
+            <p className="hidden truncate text-[9px] font-medium uppercase tracking-wider text-govbid-text-muted md:block md:text-xs">
               Government bids
             </p>
           </div>
@@ -129,35 +130,27 @@ export function GlobalHeader() {
 
         <NavButtons className="mx-auto hidden min-w-0 flex-1 flex-wrap items-center justify-center gap-0.5 md:flex lg:gap-1" />
 
-        <div className="ml-auto flex shrink-0 items-center gap-2 md:gap-3">
+        <div className="ml-auto flex shrink-0 items-center gap-1.5 md:gap-3">
           <button
             type="button"
             onClick={() => {
               showToast("Create flow — connect to SAM.gov ingest later.");
             }}
-            className="govbid-btn-primary flex size-10 items-center justify-center rounded-lg text-lg font-light"
+            className="govbid-btn-primary flex size-9 items-center justify-center rounded-lg text-lg font-light md:size-10"
             title="New opportunity"
             aria-label="New opportunity"
           >
             +
           </button>
-          <button
-            type="button"
-            className="relative flex size-10 items-center justify-center rounded-lg text-govbid-text-muted transition hover:bg-govbid-primary-muted/60 hover:text-govbid-text"
-            title="Notifications"
-            aria-label="Notifications"
-          >
-            <BellIcon />
-            <span className="absolute right-1 top-1 flex size-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
-              5
-            </span>
-          </button>
+          <div className="relative">
+            <NotificationPanel />
+          </div>
           <button
             type="button"
             onClick={() => setProfileOpen(!profileOpen)}
             aria-expanded={profileOpen}
             aria-controls="profile-drawer"
-            className="flex size-10 shrink-0 items-center justify-center rounded-full border border-govbid-border bg-govbid-primary-muted text-sm font-semibold text-govbid-primary transition hover:border-govbid-border-strong hover:bg-govbid-primary-soft"
+            className="flex size-9 shrink-0 items-center justify-center rounded-full border border-govbid-border bg-govbid-primary-muted text-xs font-bold text-govbid-primary transition hover:border-govbid-border-strong hover:bg-govbid-primary-soft md:size-10 md:text-sm"
             title="Profile and saved RFPs"
           >
             <span aria-hidden>Me</span>
@@ -166,7 +159,7 @@ export function GlobalHeader() {
           <button
             type="button"
             onClick={() => void signOut()}
-            className="rounded-lg border border-govbid-border px-2.5 py-1.5 text-[11px] font-semibold uppercase tracking-wide text-govbid-text-muted transition hover:bg-govbid-primary-muted/50 hover:text-govbid-text"
+            className="hidden rounded-lg border border-govbid-border px-2.5 py-1.5 text-[10px] font-bold uppercase tracking-wide text-govbid-text-muted transition hover:bg-govbid-primary-muted/50 hover:text-govbid-text md:block"
           >
             Sign out
           </button>

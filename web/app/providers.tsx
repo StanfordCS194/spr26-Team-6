@@ -3,6 +3,7 @@
 import { PostHogProvider } from "@/components/PostHogProvider";
 import { DashboardProvider } from "@/context/DashboardContext";
 import { ABTestProvider } from "@/context/ABTestContext";
+import { NotificationProvider } from "@/context/NotificationContext";
 import type { ReactNode } from "react";
 
 export function Providers({ children }: { children: ReactNode }) {
@@ -10,7 +11,9 @@ export function Providers({ children }: { children: ReactNode }) {
     <PostHogProvider>
       <ABTestProvider>
         <DashboardProvider>
-          <div className="flex min-h-dvh w-full min-w-0 flex-1 flex-col">{children}</div>
+          <NotificationProvider>
+            <div className="flex min-h-dvh w-full min-w-0 flex-1 flex-col">{children}</div>
+          </NotificationProvider>
         </DashboardProvider>
       </ABTestProvider>
     </PostHogProvider>

@@ -1,36 +1,42 @@
 "use client";
 
 import { useState } from "react";
+import { trackABTestEvent } from "@/app/posthog-provider";
 import { useABTest, type Variant } from "@/context/ABTestContext";
 
 function ToggleSwitch({
   label,
+  detail,
   variant,
   onToggle,
 }: {
   label: string;
+  detail: string;
   variant: Variant;
   onToggle: () => void;
 }) {
   return (
-    <div className="flex items-center justify-between gap-3">
-      <span className="text-xs font-medium text-govbid-text">{label}</span>
-      <button
-        type="button"
-        onClick={onToggle}
-        className="flex h-6 w-11 items-center rounded-full border border-govbid-border bg-govbid-surface p-0.5 transition-colors"
-        aria-label={`Toggle ${label} variant`}
-      >
-        <span
-          className={`flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold transition-all ${
-            variant === "B"
-              ? "translate-x-5 bg-govbid-primary text-white"
-              : "translate-x-0 bg-govbid-border-strong text-govbid-text-muted"
-          }`}
+    <div className="flex flex-col gap-0.5">
+      <div className="flex items-center justify-between gap-3">
+        <span className="text-xs font-medium text-govbid-text">{label}</span>
+        <button
+          type="button"
+          onClick={onToggle}
+          className="flex h-6 w-11 shrink-0 items-center rounded-full border border-govbid-border bg-govbid-surface p-0.5 transition-colors"
+          aria-label={`Toggle ${label} variant, currently ${variant}`}
         >
-          {variant}
-        </span>
-      </button>
+          <span
+            className={`flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold transition-all ${
+              variant === "B"
+                ? "translate-x-5 bg-govbid-primary text-white"
+                : "translate-x-0 bg-govbid-border-strong text-govbid-text-muted"
+            }`}
+          >
+            {variant}
+          </span>
+        </button>
+      </div>
+      <p className="text-[10px] leading-snug text-govbid-text-muted">{detail}</p>
     </div>
   );
 }
@@ -42,39 +48,61 @@ export function ABTestToggle() {
     detailPanelVariant,
     toggleDashboardVariant,
     toggleDetailPanelVariant,
+    setDashboardVariant,
+    setDetailPanelVariant,
   } = useABTest();
+
+  const useRecommended = () => {
+    trackABTestEvent("ab_test_reset_to_recommended", {
+      from_dashboard: dashboardVariant,
+      from_detail_panel: detailPanelVariant,
+    });
+    setDashboardVariant("A");
+    setDetailPanelVariant("A");
+  };
 
   return (
     <div className="fixed bottom-4 right-4 z-50 flex flex-col items-end gap-2">
       {isExpanded && (
-        <div className="flex flex-col gap-3 rounded-xl border border-govbid-border bg-govbid-surface p-4 shadow-lg">
-          <div className="flex items-center justify-between gap-4">
+        <div className="flex w-[min(100vw-2rem,18rem)] flex-col gap-3 rounded-xl border border-govbid-border bg-govbid-surface p-4 shadow-lg">
+          <div>
             <h3 className="text-xs font-semibold uppercase tracking-wide text-govbid-text-muted">
-              A/B Test Variants
+              UI variants (internal testing)
             </h3>
+            <p className="mt-1 text-[10px] leading-snug text-govbid-text-muted">
+              Session research favored the default layout: list + detail with the tabbed detail panel (A). Variant B options stay available for comparison and demos.
+            </p>
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-3">
             <ToggleSwitch
-              label="Dashboard"
+              label="Dashboard layout"
+              detail="A: sidebar, list, then detail. B: detail left, list right."
               variant={dashboardVariant}
               onToggle={toggleDashboardVariant}
             />
             <ToggleSwitch
-              label="Detail Panel"
+              label="Detail panel"
+              detail="A: tabs + overview (recommended). B: card-style header and sections."
               variant={detailPanelVariant}
               onToggle={toggleDetailPanelVariant}
             />
           </div>
-          <p className="text-[10px] leading-tight text-govbid-text-muted">
-            Switch between UI variants to compare designs.
-          </p>
+          {(dashboardVariant !== "A" || detailPanelVariant !== "A") && (
+            <button
+              type="button"
+              onClick={useRecommended}
+              className="rounded-lg border border-govbid-primary/40 bg-govbid-primary-muted px-3 py-2 text-xs font-semibold text-govbid-primary transition hover:bg-govbid-primary-soft"
+            >
+              Reset to recommended (A / A)
+            </button>
+          )}
         </div>
       )}
       <button
         type="button"
         onClick={() => setIsExpanded(!isExpanded)}
         className="flex h-10 w-10 items-center justify-center rounded-full border border-govbid-border bg-govbid-primary text-white shadow-lg transition-transform hover:scale-105"
-        aria-label={isExpanded ? "Close A/B test panel" : "Open A/B test panel"}
+        aria-label={isExpanded ? "Close UI variants panel" : "Open UI variants panel"}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

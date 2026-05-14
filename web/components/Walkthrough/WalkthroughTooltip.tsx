@@ -184,7 +184,7 @@ export function WalkthroughTooltip({
       </div>
 
       {/* Navigation */}
-      <div className="mt-4 flex items-center justify-between">
+      <div className="mt-4 flex items-center justify-between gap-2">
         <button
           onClick={onPrev}
           disabled={currentStep === 0}
@@ -193,16 +193,27 @@ export function WalkthroughTooltip({
           ← Previous
         </button>
 
-        <span className="text-xs font-medium text-govbid-text-muted">
-          {currentStep + 1} / {totalSteps}
-        </span>
+        <div className="flex items-center gap-2">
+          <div className="flex gap-1">
+            {Array.from({ length: totalSteps }).map((_, i) => (
+              <div
+                key={i}
+                className={`h-1.5 w-1.5 rounded-full transition ${
+                  i === currentStep ? "bg-govbid-primary" : "bg-govbid-border"
+                }`}
+              />
+            ))}
+          </div>
+          <span className="text-xs font-medium text-govbid-text-muted ml-1">
+            {currentStep + 1}/{totalSteps}
+          </span>
+        </div>
 
         <button
           onClick={onNext}
-          disabled={currentStep === totalSteps - 1}
-          className="rounded-lg px-3 py-1.5 text-sm font-medium text-govbid-text-muted transition disabled:opacity-50 hover:bg-govbid-primary-muted disabled:hover:bg-transparent"
+          className="rounded-lg px-3 py-1.5 text-sm font-medium bg-govbid-primary text-white transition hover:opacity-90"
         >
-          Next →
+          {currentStep === totalSteps - 1 ? "Finish" : "Next →"}
         </button>
       </div>
 
