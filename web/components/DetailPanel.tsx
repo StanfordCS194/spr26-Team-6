@@ -252,7 +252,7 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
                 {rfp.agency}
               </p>
               <h2 className="rfp-title mt-1 text-lg font-bold leading-snug text-govbid-text lg:text-xl">
-                {rfp.title}
+                {rfp.name}
               </h2>
               <p className="rfp-overview mt-2 text-sm leading-relaxed text-govbid-text-muted">
                 {rfp.description}
@@ -278,11 +278,33 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
             )}
             <div className="rfp-sow rounded-xl border border-govbid-border bg-govbid-surface p-4">
               <h3 className="text-sm font-semibold text-govbid-text">
-                Statement of work
+                Statement of Work
               </h3>
-              <div className="prose prose-sm prose-slate mt-3 max-w-none text-govbid-text">
-                <ReactMarkdown>{rfp.sowMarkdown}</ReactMarkdown>
-              </div>
+              {rfp.statementOfWork ? (
+                <p className="mt-3 whitespace-pre-line text-sm leading-relaxed text-govbid-text">
+                  {rfp.statementOfWork}
+                </p>
+              ) : (
+                <p className="mt-3 text-sm italic text-govbid-text-muted">
+                  No statement of work available for this RFP.
+                </p>
+              )}
+            </div>
+            <div className="rfp-deliverables rounded-xl border border-govbid-border bg-govbid-surface p-4">
+              <h3 className="text-sm font-semibold text-govbid-text">
+                Deliverables
+              </h3>
+              {rfp.deliverables.length > 0 ? (
+                <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-govbid-text">
+                  {rfp.deliverables.map((d, i) => (
+                    <li key={i}>{d}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="mt-3 text-sm italic text-govbid-text-muted">
+                  No deliverables listed for this RFP.
+                </p>
+              )}
             </div>
           </div>
         )}

@@ -6,7 +6,11 @@ const SAMPLE_PUBLIC_PDF =
 
 type RfpSeed = Omit<
   Rfp,
-  "sowMarkdown" | "aiAnalysisMarkdown" | "pdfUrls" | "deliverables"
+  | "aiAnalysisMarkdown"
+  | "pdfUrls"
+  | "deliverables"
+  | "statementOfWork"
+  | "name"
 >;
 
 const MOCK_DELIVERABLES = [
@@ -15,11 +19,8 @@ const MOCK_DELIVERABLES = [
   "Final acceptance testing and handoff documentation.",
 ];
 
-function buildSow(description: string, deliverables: readonly string[]): string {
-  const items = deliverables.length
-    ? deliverables.map((d) => `- ${d}`).join("\n")
-    : "_No deliverables extracted from the RFP package._";
-  return `## Statement of work\n\n${description}\n\n### Deliverables\n\n${items}\n`;
+function buildMockSow(description: string): string {
+  return description;
 }
 
 function buildAiAnalysis(score: number, location: string): string {
@@ -154,8 +155,11 @@ const raw: RfpSeed[] = [
 
 export const MOCK_RFPS: Rfp[] = raw.map((r, i) => ({
   ...r,
+  // Strip trailing solicitation numbers / "Request for ..." chunks for the
+  // mock short name so cards/detail panels see a tidy label.
+  name: r.title.replace(/\s+(RFP|RFQ|RFI)[^\s]*$/i, "").trim() || r.title,
   pdfUrls: i === 0 ? [SAMPLE_PUBLIC_PDF] : [],
   deliverables: [...MOCK_DELIVERABLES],
-  sowMarkdown: buildSow(r.description, MOCK_DELIVERABLES),
+  statementOfWork: buildMockSow(r.description),
   aiAnalysisMarkdown: buildAiAnalysis(r.score, r.location),
 }));

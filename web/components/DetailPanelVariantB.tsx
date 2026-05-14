@@ -260,7 +260,7 @@ function DetailPanelBodyB({ rfp }: { rfp: Rfp }) {
               {rfp.agency}
             </p>
             <h2 className="mt-0.5 truncate text-base font-bold leading-tight text-govbid-text">
-              {rfp.title}
+              {rfp.name}
             </h2>
           </div>
           {/* Action Buttons - Icon Style */}
@@ -408,9 +408,33 @@ function DetailPanelBodyB({ rfp }: { rfp: Rfp }) {
               <h3 className="text-xs font-semibold uppercase tracking-wide text-govbid-text-muted">
                 Statement of Work
               </h3>
-              <div className="prose prose-sm prose-slate mt-3 max-w-none text-govbid-text">
-                <ReactMarkdown>{rfp.sowMarkdown}</ReactMarkdown>
-              </div>
+              {rfp.statementOfWork ? (
+                <p className="mt-3 whitespace-pre-line text-sm leading-relaxed text-govbid-text">
+                  {rfp.statementOfWork}
+                </p>
+              ) : (
+                <p className="mt-3 text-sm italic text-govbid-text-muted">
+                  No statement of work available for this RFP.
+                </p>
+              )}
+            </div>
+
+            {/* Deliverables Card */}
+            <div className="rounded-xl border border-govbid-border bg-govbid-surface p-4">
+              <h3 className="text-xs font-semibold uppercase tracking-wide text-govbid-text-muted">
+                Deliverables
+              </h3>
+              {rfp.deliverables.length > 0 ? (
+                <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-govbid-text">
+                  {rfp.deliverables.map((d, i) => (
+                    <li key={i}>{d}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="mt-3 text-sm italic text-govbid-text-muted">
+                  No deliverables listed for this RFP.
+                </p>
+              )}
             </div>
           </div>
         )}

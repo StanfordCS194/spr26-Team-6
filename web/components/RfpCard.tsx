@@ -100,7 +100,7 @@ function HeadlineFirstCard({
 
       <div className="min-w-0 flex-1">
         <p className="line-clamp-2 text-sm font-semibold leading-snug text-govbid-text md:text-base">
-          {rfp.title}
+          {rfp.name}
         </p>
         <p className="mt-1 line-clamp-1 text-xs font-medium text-govbid-text-muted">{subtitle}</p>
         {rfp.tags[0] ? (
@@ -155,7 +155,7 @@ function ScoreFirstCard({ rfp, active, onSelect }: Omit<Props, "layout">) {
 
       <div className="min-w-0 flex-1">
         <p className="line-clamp-2 text-sm font-semibold leading-snug text-govbid-text md:text-base">
-          {rfp.title}
+          {rfp.name}
         </p>
         <p className="mt-1 line-clamp-1 text-xs font-medium text-govbid-text">{rfp.agency}</p>
         <p className="mt-1 text-xs font-semibold text-govbid-primary">{rfp.contract}</p>

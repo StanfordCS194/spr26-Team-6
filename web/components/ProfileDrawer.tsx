@@ -166,7 +166,7 @@ export function ProfileDrawer() {
                       className="saved-rfp-item w-full rounded-xl border border-govbid-border bg-govbid-elevated p-3 text-left text-sm transition hover:border-govbid-border-strong hover:bg-govbid-primary-muted/50"
                     >
                       <span className="line-clamp-2 font-semibold text-govbid-text">
-                        {rfp.title}
+                        {rfp.name}
                       </span>
                       <span className="mt-1 block text-xs text-govbid-text-muted">
                         {rfp.agency} · {rfp.contract}
