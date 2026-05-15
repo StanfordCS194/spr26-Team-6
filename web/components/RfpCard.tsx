@@ -1,5 +1,6 @@
 "use client";
 
+import { useDashboard } from "@/context/DashboardContext";
 import type { ListCardLayout } from "@/lib/analytics";
 import { shortenAgencyName } from "@/lib/formatAgency";
 import type { Rfp } from "@/lib/types";
@@ -114,7 +115,8 @@ function HeadlineFirstCard({
   onSelect,
   isFavorited,
   onFavoriteToggle,
-}: Omit<Props, "layout">) {
+  scoring,
+}: Omit<Props, "layout"> & { scoring: boolean }) {
   const { day, month } = dueParts(rfp.dueDate);
   const daysLeft = daysUntilDeadline(rfp.dueDate);
   const deadlineStatus = getDeadlineStatus(daysLeft);
@@ -195,14 +197,24 @@ function HeadlineFirstCard({
           <span className="text-[10px] font-semibold uppercase tracking-wide text-govbid-text-muted">
             Match
           </span>
-          <ScoreRing score={rfp.score} size={36} stroke={2.5} />
+          <div className={scoring ? "animate-pulse" : ""}>
+            <ScoreRing score={rfp.score} size={36} stroke={2.5} />
+          </div>
+          {scoring ? (
+            <span className="text-[9px] text-govbid-text-muted">scoring…</span>
+          ) : null}
         </div>
       </div>
     </button>
   );
 }
 
-function ScoreFirstCard({ rfp, active, onSelect }: Omit<Props, "layout">) {
+function ScoreFirstCard({
+  rfp,
+  active,
+  onSelect,
+  scoring,
+}: Omit<Props, "layout"> & { scoring: boolean }) {
   const { day, month } = dueParts(rfp.dueDate);
   const daysLeft = daysUntilDeadline(rfp.dueDate);
   const deadlineStatus = getDeadlineStatus(daysLeft);
@@ -221,7 +233,12 @@ function ScoreFirstCard({ rfp, active, onSelect }: Omit<Props, "layout">) {
         <span className="text-[10px] font-bold uppercase tracking-wide text-govbid-primary">
           Fit
         </span>
-        <ScoreRing score={rfp.score} size={56} stroke={4} />
+        <div className={scoring ? "animate-pulse" : ""}>
+          <ScoreRing score={rfp.score} size={56} stroke={4} />
+        </div>
+        {scoring ? (
+          <span className="text-[9px] text-govbid-text-muted">scoring…</span>
+        ) : null}
       </div>
 
       <div className="min-w-0 flex-1">
@@ -251,8 +268,24 @@ function ScoreFirstCard({ rfp, active, onSelect }: Omit<Props, "layout">) {
 }
 
 export function RfpCard({ rfp, active, onSelect, layout }: Props) {
+  const { isScoring } = useDashboard();
+  const scoring = isScoring(rfp.id);
   if (layout === "score_first") {
-    return <ScoreFirstCard rfp={rfp} active={active} onSelect={onSelect} />;
+    return (
+      <ScoreFirstCard
+        rfp={rfp}
+        active={active}
+        onSelect={onSelect}
+        scoring={scoring}
+      />
+    );
   }
-  return <HeadlineFirstCard rfp={rfp} active={active} onSelect={onSelect} />;
+  return (
+    <HeadlineFirstCard
+      rfp={rfp}
+      active={active}
+      onSelect={onSelect}
+      scoring={scoring}
+    />
+  );
 }

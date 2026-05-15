@@ -49,6 +49,33 @@ type RfpMetadata = {
   naics_codes?: string[] | null;
 };
 
+/**
+ * NAICS hierarchy comparison. Codes are 6-digit strings.
+ *   exact 6-digit          → 1.0
+ *   same 4-digit prefix    → 0.6   (industry-group / industry)
+ *   same 2-digit prefix    → 0.3   (sector)
+ *   otherwise              → 0
+ */
+function naicsMatch(
+  required: string,
+  held: string,
+): {
+  score: number;
+  level: "exact" | "industry-group" | "sector" | "none";
+} {
+  const a = (required ?? "").replace(/\D/g, "");
+  const b = (held ?? "").replace(/\D/g, "");
+  if (!a || !b) return { score: 0, level: "none" };
+  if (a === b) return { score: 1, level: "exact" };
+  if (a.length >= 4 && b.length >= 4 && a.slice(0, 4) === b.slice(0, 4)) {
+    return { score: 0.6, level: "industry-group" };
+  }
+  if (a.length >= 2 && b.length >= 2 && a.slice(0, 2) === b.slice(0, 2)) {
+    return { score: 0.3, level: "sector" };
+  }
+  return { score: 0, level: "none" };
+}
+
 function extractRfpMetadata(raw: Json): RfpMetadata {
   if (raw && typeof raw === "object" && !Array.isArray(raw)) {
     const m = raw as Record<string, Json | undefined>;
@@ -91,20 +118,70 @@ export async function scorePrereqs({
   let structuredCount = 0;
   const reasons: string[] = [];
 
-  // NAICS
+  // NAICS — hierarchy-aware matching. For each required RFP code we take the
+  // best match against any contractor-registered code:
+  //   full 6-digit equal → 1.0  (counts as met)
+  //   first 4 digits equal → 0.6 (counts as met, "industry group match")
+  //   first 2 digits equal → 0.3 (counts as partial, NOT met)
+  //   no overlap → 0           (counts as unmet)
+  // A required code counts as "met" when the best match is ≥ 0.6.
   if (meta.naics_codes && meta.naics_codes.length > 0) {
     structuredCount++;
-    const overlap = meta.naics_codes.filter((code) =>
-      contractor.naics_codes.includes(code),
-    );
-    if (overlap.length > 0) {
-      met.push(`NAICS code match: ${overlap.join(", ")}`);
-      reasons.push(`Matches NAICS ${overlap.join(", ")}.`);
-    } else {
-      unmet.push(
-        `NAICS codes required (${meta.naics_codes.join(", ")}); contractor registered for ${contractor.naics_codes.join(", ") || "none"}.`,
+    const matchDetails = meta.naics_codes.map((req) => {
+      let bestScore = 0;
+      let bestCode = "";
+      let bestLevel: "exact" | "industry-group" | "sector" | "none" = "none";
+      for (const have of contractor.naics_codes) {
+        const r = naicsMatch(req, have);
+        if (r.score > bestScore) {
+          bestScore = r.score;
+          bestCode = have;
+          bestLevel = r.level;
+        }
+      }
+      return { required: req, bestScore, bestCode, bestLevel };
+    });
+
+    const exact = matchDetails.filter((m) => m.bestLevel === "exact");
+    const group = matchDetails.filter((m) => m.bestLevel === "industry-group");
+    const sector = matchDetails.filter((m) => m.bestLevel === "sector");
+    const none = matchDetails.filter((m) => m.bestLevel === "none");
+
+    if (exact.length > 0) {
+      met.push(
+        `NAICS exact match: ${exact.map((m) => m.required).join(", ")}`,
       );
-      reasons.push("Missing required NAICS code.");
+      reasons.push(
+        `Matches NAICS ${exact.map((m) => m.required).join(", ")}.`,
+      );
+    }
+    if (group.length > 0) {
+      met.push(
+        `NAICS industry-group match: ${group
+          .map((m) => `${m.required}~${m.bestCode}`)
+          .join(", ")}`,
+      );
+      reasons.push(
+        `Adjacent NAICS match (4-digit) for ${group.map((m) => m.required).join(", ")}.`,
+      );
+    }
+    if (sector.length > 0) {
+      unmet.push(
+        `NAICS sector-only match (2-digit): ${sector
+          .map((m) => `${m.required}~${m.bestCode}`)
+          .join(", ")}`,
+      );
+      reasons.push(
+        `Only broad sector overlap on NAICS ${sector.map((m) => m.required).join(", ")}.`,
+      );
+    }
+    if (none.length > 0) {
+      unmet.push(
+        `NAICS not held: ${none.map((m) => m.required).join(", ")}.`,
+      );
+      reasons.push(
+        `Missing NAICS ${none.map((m) => m.required).join(", ")}.`,
+      );
     }
   }
 

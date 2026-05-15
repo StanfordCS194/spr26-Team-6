@@ -152,6 +152,7 @@ export function contractorRowToProfile(
     certifications: [...row.certifications],
     setAsideEligibility: [...row.set_aside_eligibility],
     naicsCodes: row.naics_codes.join(", "),
+    exclusions: row.exclusions.join(", "),
   };
 }
 
@@ -186,6 +187,7 @@ export function profileToContractorUpdate(
     certifications: [...p.certifications],
     set_aside_eligibility: [...p.setAsideEligibility],
     naics_codes: splitList(p.naicsCodes),
+    exclusions: splitList(p.exclusions),
     updated_at: new Date().toISOString(),
   };
 }

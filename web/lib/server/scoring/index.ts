@@ -11,9 +11,13 @@ import {
   ensurePastProjectsEmbedded,
   ensureRfpChunksEmbedded,
 } from "@/lib/server/ragPipeline";
+import { scoreAgency } from "./agency";
 import { scoreAward } from "./award";
+import { checkExclusions } from "./exclusions";
 import { scoreExperience } from "./experience";
+import { scoreGeography } from "./geography";
 import { scoreGoals } from "./goals";
+import { scoreKeywords } from "./keywords";
 import { scorePrereqs } from "./prereqs";
 import { buildReasoningPrompt, SCORING_PROMPTS } from "./prompts";
 import { scoreTiming } from "./timing";
@@ -21,16 +25,20 @@ import { renormalizeWeights, weightedTotal } from "./weights";
 
 type AdminClient = SupabaseClient<Database>;
 
-const MODEL_VERSION = "compat-v1";
+const MODEL_VERSION = "compat-v2";
 
 export type ScoringResult = CompatibilityScore & {
   reasoning: string;
 };
 
 /**
- * Compute the 5-factor compatibility score for one (contractor, RFP) pair and
+ * Compute the 8-factor compatibility score for one (contractor, RFP) pair and
  * upsert it into `scores`. Requires the service-role client because the embed-
  * on-demand step writes to `rfp_chunks` / `contractor_past_projects.embedding`.
+ *
+ * If a contractor exclusion term matches the RFP text, the total is forced to
+ * 0 and the breakdown carries an `excluded` field — factor sub-scores are
+ * still computed and stored for transparency.
  */
 export async function scoreContractorAgainstRfp(
   admin: AdminClient,
@@ -60,6 +68,15 @@ export async function scoreContractorAgainstRfp(
     .select("*")
     .eq("contractor_id", contractorId);
 
+  // Hard-zero gate: if an exclusion term matches the RFP, short-circuit the
+  // expensive LLM judges and return 0.
+  const exclusion = checkExclusions({
+    exclusions: contractor.exclusions,
+    rfpTitle: rfp.title,
+    rfpDescription: rfp.description,
+    rfpTags: rfp.tags,
+  });
+
   // Make sure both sides have embeddings before similarity-based factors run.
   await ensureRfpChunksEmbedded(admin, {
     id: rfp.id,
@@ -80,7 +97,22 @@ export async function scoreContractorAgainstRfp(
     rfpMax: rfp.contract_amount_max,
   });
 
-  const [experience, goals, prereqs] = await Promise.all([
+  const geography = scoreGeography({
+    preferredLocations: contractor.preferred_locations,
+    rfpState: rfp.state,
+    rfpLocation: rfp.location,
+  });
+
+  const keywords = scoreKeywords({
+    rfpTitle: rfp.title,
+    rfpDescription: rfp.description,
+    rfpTags: rfp.tags,
+    pastProjectTags: (pastProjects ?? []).flatMap((p) => p.tags),
+    contractorIndustries: contractor.industries,
+    contractorSubIndustries: contractor.sub_industries,
+  });
+
+  const [experience, goals, prereqs, agency] = await Promise.all([
     scoreExperience(admin, {
       rfpId: rfp.id,
       contractorId: contractor.id,
@@ -103,6 +135,10 @@ export async function scoreContractorAgainstRfp(
       rfp: { title: rfp.title, description: rfp.description, metadata: rfp.metadata },
       pastProjects: pastProjects ?? [],
     }),
+    scoreAgency(admin, {
+      rfpDepartment: rfp.department,
+      pastClients: (pastProjects ?? []).map((p) => p.client),
+    }),
   ]);
 
   const nullFactors: ScoreFactorName[] = [];
@@ -111,6 +147,9 @@ export async function scoreContractorAgainstRfp(
   if (experience.isNull) nullFactors.push("experience");
   if (goals.isNull) nullFactors.push("goals");
   if (prereqs.isNull) nullFactors.push("prereqs");
+  if (geography.isNull) nullFactors.push("geography");
+  if (agency.isNull) nullFactors.push("agency");
+  if (keywords.isNull) nullFactors.push("keywords");
 
   const weights = renormalizeWeights(nullFactors);
 
@@ -121,9 +160,13 @@ export async function scoreContractorAgainstRfp(
     experience: experience.factor.score / 100,
     goals: goals.factor.score / 100,
     prereqs: prereqs.factor.score / 100,
+    geography: geography.factor.score / 100,
+    agency: agency.factor.score / 100,
+    keywords: keywords.factor.score / 100,
   };
 
-  const total = weightedTotal(normalized, weights);
+  let total = weightedTotal(normalized, weights);
+  if (exclusion.excluded) total = 0;
 
   const factors: CompatibilityFactors = {
     timing: timing.factor,
@@ -131,20 +174,28 @@ export async function scoreContractorAgainstRfp(
     goals: goals.factor,
     award: award.factor,
     prereqs: prereqs.factor,
+    geography: geography.factor,
+    agency: agency.factor,
+    keywords: keywords.factor,
   };
 
-  const reasoning = await generateReasoning({
-    total,
-    rfpTitle: rfp.title,
-    companyName: contractor.company_name,
-    factors,
-  });
+  const reasoning = exclusion.excluded
+    ? exclusion.reason
+    : await generateReasoning({
+        total,
+        rfpTitle: rfp.title,
+        companyName: contractor.company_name,
+        factors,
+      });
 
   const breakdown: CompatibilityScore = {
     total,
     weights,
     factors,
     null_factors: nullFactors,
+    ...(exclusion.excluded
+      ? { excluded: { term: exclusion.term, reason: exclusion.reason } }
+      : {}),
     model_version: MODEL_VERSION,
   };
 

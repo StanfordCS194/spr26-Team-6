@@ -378,6 +378,27 @@ export function ProfileDrawer() {
                 </p>
               </div>
 
+              <div>
+                <label className="block text-xs font-semibold text-govbid-text-muted">
+                  Exclusions
+                </label>
+                <input
+                  className={fieldClass}
+                  placeholder="e.g., DoD, fixed-price, hardware"
+                  value={draftProfile.exclusions}
+                  onChange={(e) =>
+                    setDraftProfile((prev) => ({
+                      ...prev,
+                      exclusions: e.target.value,
+                    }))
+                  }
+                />
+                <p className="mt-1 text-xs text-govbid-text-muted">
+                  Comma-separated terms. If any appears in an RFP, that match is
+                  hard-zeroed.
+                </p>
+              </div>
+
               <button
                 type="button"
                 onClick={() => void saveProfile(draftProfile)}

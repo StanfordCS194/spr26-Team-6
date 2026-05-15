@@ -38,6 +38,8 @@ export type ContractorProfile = {
   setAsideEligibility: string[];
   /** Comma-separated free text, 6-digit NAICS codes. */
   naicsCodes: string;
+  /** Comma-separated terms that hard-zero a match when found in an RFP. */
+  exclusions: string;
 };
 
 export const defaultContractorProfile: ContractorProfile = {
@@ -52,6 +54,7 @@ export const defaultContractorProfile: ContractorProfile = {
   certifications: [],
   setAsideEligibility: [],
   naicsCodes: "",
+  exclusions: "",
 };
 
 /**
@@ -79,7 +82,10 @@ export type ScoreFactorName =
   | "experience"
   | "goals"
   | "award"
-  | "prereqs";
+  | "prereqs"
+  | "geography"
+  | "agency"
+  | "keywords";
 
 export type CompatibilityFactors = {
   timing: { score: 0 | 1; reason: string };
@@ -97,6 +103,13 @@ export type CompatibilityFactors = {
     unmet: string[];
     total: number;
   };
+  geography: { score: number; reason: string };
+  agency: { score: number; reason: string; matched_clients: string[] };
+  keywords: {
+    score: number;
+    reason: string;
+    matched_terms: string[];
+  };
 };
 
 export type CompatibilityScore = {
@@ -104,5 +117,7 @@ export type CompatibilityScore = {
   weights: Record<ScoreFactorName, number>;
   factors: CompatibilityFactors;
   null_factors: ScoreFactorName[];
+  /** When set, an exclusion term matched and the total was hard-zeroed. */
+  excluded?: { term: string; reason: string };
   model_version: string;
 };

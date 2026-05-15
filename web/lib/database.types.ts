@@ -51,6 +51,7 @@ export interface Database {
           certifications: string[]
           set_aside_eligibility: string[]
           naics_codes: string[]
+          exclusions: string[]
           created_at: string
           updated_at: string
         }
@@ -71,6 +72,7 @@ export interface Database {
           certifications?: string[]
           set_aside_eligibility?: string[]
           naics_codes?: string[]
+          exclusions?: string[]
           created_at?: string
           updated_at?: string
         }

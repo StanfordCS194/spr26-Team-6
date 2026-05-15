@@ -1,14 +1,17 @@
 import type { ScoreFactorName } from "@/lib/types";
 
-const DEFAULT_WEIGHT = 0.2;
-
 export const FACTOR_NAMES: ScoreFactorName[] = [
   "timing",
   "experience",
   "goals",
   "award",
   "prereqs",
+  "geography",
+  "agency",
+  "keywords",
 ];
+
+const DEFAULT_WEIGHT = 1 / FACTOR_NAMES.length;
 
 /**
  * Drop any null factors from the weight set and renormalize the remaining
