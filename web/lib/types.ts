@@ -34,3 +34,40 @@ export const defaultContractorProfile: ContractorProfile = {
   goals: "",
   pastExperience: "",
 };
+
+/**
+ * Structured breakdown stored in `scores.factors` (JSONB).
+ * Mirrors the 5-category compatibility rubric.
+ */
+export type ScoreFactorName =
+  | "timing"
+  | "experience"
+  | "goals"
+  | "award"
+  | "prereqs";
+
+export type CompatibilityFactors = {
+  timing: { score: 0 | 1; reason: string };
+  experience: {
+    score: number;
+    reason: string;
+    matched_past_projects: string[];
+  };
+  goals: { score: number; reason: string };
+  award: { score: 0 | 0.5 | 1; reason: string };
+  prereqs: {
+    score: number;
+    reason: string;
+    met: string[];
+    unmet: string[];
+    total: number;
+  };
+};
+
+export type CompatibilityScore = {
+  total: number;
+  weights: Record<ScoreFactorName, number>;
+  factors: CompatibilityFactors;
+  null_factors: ScoreFactorName[];
+  model_version: string;
+};

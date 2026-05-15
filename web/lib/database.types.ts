@@ -47,6 +47,10 @@ export interface Database {
           preferred_locations: string[]
           preferred_contract_min: number | null
           preferred_contract_max: number | null
+          preferred_response_window_days: number | null
+          certifications: string[]
+          set_aside_eligibility: string[]
+          naics_codes: string[]
           created_at: string
           updated_at: string
         }
@@ -63,6 +67,10 @@ export interface Database {
           preferred_locations?: string[]
           preferred_contract_min?: number | null
           preferred_contract_max?: number | null
+          preferred_response_window_days?: number | null
+          certifications?: string[]
+          set_aside_eligibility?: string[]
+          naics_codes?: string[]
           created_at?: string
           updated_at?: string
         }
