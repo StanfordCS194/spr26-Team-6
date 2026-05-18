@@ -20,14 +20,51 @@ import re
 import sys
 import time
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
+from email.utils import parsedate_to_datetime
+from pathlib import Path
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 from urllib.parse import unquote_plus
 
 import requests
 
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(_PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(_PROJECT_ROOT))
+
 from scraper import gdrive_interface
 from scraper import samgov_json_generator as json_generator
+
+
+class SamGovRateLimitError(RuntimeError):
+    """SAM.gov 429 with a long Retry-After (typically daily quota reset)."""
+
+    def __init__(self, reset_at: datetime, endpoint: str) -> None:
+        self.reset_at = reset_at
+        self.endpoint = endpoint
+        super().__init__(
+            f"SAM.gov rate limit on {endpoint}. "
+            f"Retry after {reset_at.isoformat()}. "
+            "To process existing raw JSON only: "
+            "`python run_pipeline.py sam --skip-scrape`."
+        )
+
+
+def _parse_retry_after_seconds(retry_after_hdr: Optional[str]) -> Optional[float]:
+    """Parse Retry-After as delta-seconds or HTTP-date (SAM.gov uses the latter)."""
+    if not retry_after_hdr or not str(retry_after_hdr).strip():
+        return None
+    raw = str(retry_after_hdr).strip()
+    if raw.isdigit():
+        return float(raw)
+    try:
+        reset_at = parsedate_to_datetime(raw)
+        if reset_at.tzinfo is None:
+            reset_at = reset_at.replace(tzinfo=timezone.utc)
+        now = datetime.now(timezone.utc)
+        return max(0.0, (reset_at - now).total_seconds())
+    except (TypeError, ValueError, OverflowError):
+        return None
 
 
 SEARCH_ENDPOINT = "https://api.sam.gov/opportunities/v2/search"
@@ -116,10 +153,20 @@ class SamGovClient:
         api_key: Optional[str] = None,
         timeout_seconds: int = 30,
         desc_cache_dir: Optional[str] = None,
+        request_delay_seconds: Optional[float] = None,
+        max_http_retries: Optional[int] = None,
     ) -> None:
         self.api_key = api_key or os.environ["SAM_GOV_API_KEY"]
         self.timeout_seconds = timeout_seconds
         self.desc_cache_dir = desc_cache_dir or DEFAULT_DESC_CACHE_DIR
+        self.request_delay_seconds = (
+            request_delay_seconds
+            if request_delay_seconds is not None
+            else float(os.environ.get("SAM_GOV_REQUEST_DELAY_SEC", "1.0"))
+        )
+        self.max_http_retries = max_http_retries or int(
+            os.environ.get("SAM_GOV_MAX_HTTP_RETRIES", "6")
+        )
 
         self.session = requests.Session()
         self.session.headers.update({
@@ -145,7 +192,9 @@ class SamGovClient:
         ptype = ",".join(procurement_types)
 
         deduped: Dict[str, Dict[str, Any]] = {}
-        for code in naics_codes:
+        for naics_idx, code in enumerate(naics_codes):
+            if naics_idx > 0 and self.request_delay_seconds > 0:
+                time.sleep(self.request_delay_seconds)
             for record in self._search_one_naics(code, posted_from, posted_to, ptype, max_records_per_naics):
                 if (record.get("active") or "").lower() != "yes":
                     continue
@@ -202,6 +251,8 @@ class SamGovClient:
             if fetched >= total or len(data) < params["limit"]:
                 break
             offset += len(data)
+            if self.request_delay_seconds > 0:
+                time.sleep(self.request_delay_seconds)
 
     # ----------------------------------------------------------- description
     def fetch_description_text(self, opportunity: Dict[str, Any]) -> str:
@@ -282,23 +333,39 @@ class SamGovClient:
 
     # ------------------------------------------------------------------- HTTP
     def _http_get_json(self, url: str, params: Dict[str, Any]) -> Dict[str, Any]:
-        """GET with a single retry on 429 / network error. Raises on persistent failure."""
-        for attempt in range(2):
+        """GET with exponential backoff on 429 / transient network errors."""
+        endpoint = url.rsplit("/", 1)[-1]
+        last_status: Optional[int] = None
+        for attempt in range(self.max_http_retries):
             try:
                 resp = self.session.get(url, params=params, timeout=self.timeout_seconds)
             except requests.RequestException:
-                if attempt == 0:
-                    time.sleep(1)
+                if attempt + 1 < self.max_http_retries:
+                    time.sleep(min(60, 2**attempt))
                     continue
                 raise
-            if resp.status_code == 429 and attempt == 0:
-                time.sleep(2)
-                continue
+            last_status = resp.status_code
+            if resp.status_code == 429:
+                retry_after_hdr = resp.headers.get("Retry-After")
+                parsed_sec = _parse_retry_after_seconds(retry_after_hdr)
+                max_single_wait = float(
+                    os.environ.get("SAM_GOV_MAX_RETRY_WAIT_SEC", "120")
+                )
+                backoff = min(60, 2 ** (attempt + 1))
+                wait = max(parsed_sec or 0.0, backoff)
+                if parsed_sec is not None and parsed_sec > max_single_wait:
+                    reset_at = datetime.now(timezone.utc) + timedelta(seconds=parsed_sec)
+                    raise SamGovRateLimitError(reset_at, endpoint)
+                if attempt + 1 < self.max_http_retries:
+                    time.sleep(wait)
+                    continue
             if not resp.ok:
                 # Don't echo resp.url — it contains api_key.
-                raise requests.HTTPError(f"SAM.gov {url} -> HTTP {resp.status_code}", response=resp)
+                raise requests.HTTPError(
+                    f"SAM.gov {url} -> HTTP {resp.status_code}", response=resp
+                )
             return resp.json()
-        raise RuntimeError(f"SAM.gov GET {url} exhausted retries")
+        raise RuntimeError(f"SAM.gov GET {url} exhausted retries (last HTTP {last_status})")
 
     # --------------------------------------------------------------- finalize
     def finalize_pipeline_after_downloads(
@@ -402,9 +469,18 @@ def main(argv: Optional[List[str]] = None) -> int:
                         help="Skip opportunities whose data_raw/samgov_<id>.json already exists (default).")
     parser.add_argument("--no-skip-existing", dest="skip_existing", action="store_false",
                         help="Re-scrape and overwrite opportunities even if a raw JSON already exists.")
+    parser.add_argument(
+        "--request-delay",
+        type=float,
+        default=None,
+        help="Seconds to wait between opportunities (default: SAM_GOV_REQUEST_DELAY_SEC or 1.0).",
+    )
     args = parser.parse_args(argv)
 
-    client = SamGovClient(timeout_seconds=args.timeout)
+    client = SamGovClient(
+        timeout_seconds=args.timeout,
+        request_delay_seconds=args.request_delay,
+    )
 
     if args.notice_id:
         opp = client.fetch_by_notice_id(args.notice_id, args.posted_from, args.posted_to)
@@ -448,22 +524,40 @@ def main(argv: Optional[List[str]] = None) -> int:
     dl_root = DEFAULT_FILES_FOR_UPLOAD_DIR
     os.makedirs(dl_root, exist_ok=True)
     kept = 0
+    consecutive_429 = 0
     for i, opp in enumerate(opportunities, 1):
         notice_id = opp.get("noticeId", "unknown")
         title = (opp.get("title") or "")[:72]
         print(f"\n  → {i}/{len(opportunities)} [{notice_id}] {title}", flush=True)
 
+        if client.request_delay_seconds > 0 and i > 1:
+            time.sleep(client.request_delay_seconds)
+
         gdrive_interface.delete_local_files_in_folder(dl_root, extensions=None)
 
         try:
             description_text = client.fetch_description_text(opp)
+            consecutive_429 = 0
             attachments = client.download_all_documents(opp, dl_root, max_attachments=args.max_attachments)
             json_path = client.finalize_pipeline_after_downloads(
                 opp, attachments, description_text,
                 download_dir=dl_root, skip_drive_upload=args.no_drive,
             )
+        except SamGovRateLimitError:
+            raise
         except Exception as exc:
             print(f"    error: {exc}", flush=True)
+            if "429" in str(exc):
+                consecutive_429 += 1
+                cooldown = min(120, 15 * consecutive_429)
+                print(
+                    f"    rate limit: pausing {cooldown}s before next opportunity "
+                    f"({consecutive_429} consecutive 429s)",
+                    flush=True,
+                )
+                time.sleep(cooldown)
+            else:
+                consecutive_429 = 0
             continue
 
         print(
