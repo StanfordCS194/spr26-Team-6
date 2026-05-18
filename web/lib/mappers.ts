@@ -136,7 +136,39 @@ export function contractorRowToProfile(
     subIndustries: row.sub_industries.join(", "),
     goals: row.goals ?? "",
     pastExperience,
+    preferredLocations: row.preferred_locations.join(", "),
+    preferredContractMin:
+      row.preferred_contract_min != null
+        ? String(row.preferred_contract_min)
+        : "",
+    preferredContractMax:
+      row.preferred_contract_max != null
+        ? String(row.preferred_contract_max)
+        : "",
+    preferredResponseWindowDays:
+      row.preferred_response_window_days != null
+        ? String(row.preferred_response_window_days)
+        : "",
+    certifications: [...row.certifications],
+    setAsideEligibility: [...row.set_aside_eligibility],
+    naicsCodes: row.naics_codes.join(", "),
+    exclusions: row.exclusions.join(", "),
   };
+}
+
+function parseOptionalNumber(s: string): number | null {
+  const t = s.trim();
+  if (!t) return null;
+  const n = Number(t);
+  return Number.isFinite(n) ? n : null;
+}
+
+function parseOptionalInt(s: string): number | null {
+  const t = s.trim();
+  if (!t) return null;
+  const n = Number(t);
+  if (!Number.isFinite(n)) return null;
+  return Math.trunc(n);
 }
 
 export function profileToContractorUpdate(
@@ -146,6 +178,16 @@ export function profileToContractorUpdate(
     industries: splitList(p.industries),
     sub_industries: splitList(p.subIndustries),
     goals: p.goals || null,
+    preferred_locations: splitList(p.preferredLocations),
+    preferred_contract_min: parseOptionalNumber(p.preferredContractMin),
+    preferred_contract_max: parseOptionalNumber(p.preferredContractMax),
+    preferred_response_window_days: parseOptionalInt(
+      p.preferredResponseWindowDays,
+    ),
+    certifications: [...p.certifications],
+    set_aside_eligibility: [...p.setAsideEligibility],
+    naics_codes: splitList(p.naicsCodes),
+    exclusions: splitList(p.exclusions),
     updated_at: new Date().toISOString(),
   };
 }

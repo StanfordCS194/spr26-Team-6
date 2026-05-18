@@ -2,8 +2,13 @@
 
 import { startTransition, useEffect, useState } from "react";
 import { useDashboard } from "@/context/DashboardContext";
+import { SBA_CERTIFICATION_OPTIONS } from "@/lib/types";
 
 type ProfileTab = "overview" | "contacts" | "documents";
+
+function toggleInArray(arr: string[], value: string): string[] {
+  return arr.includes(value) ? arr.filter((v) => v !== value) : [...arr, value];
+}
 
 export function ProfileDrawer() {
   const {
@@ -40,6 +45,11 @@ export function ProfileDrawer() {
 
   const fieldClass =
     "mt-1 w-full rounded-lg border border-govbid-border bg-govbid-surface px-3 py-2 text-sm text-govbid-text outline-none transition focus:border-govbid-primary focus:outline focus:outline-2 focus:outline-offset-0 focus:outline-govbid-primary";
+
+  const chipClass = (active: boolean) =>
+    active
+      ? "rounded-full border border-govbid-primary bg-govbid-primary px-3 py-1 text-xs font-semibold text-white transition"
+      : "rounded-full border border-govbid-border bg-govbid-surface px-3 py-1 text-xs font-medium text-govbid-text-muted transition hover:border-govbid-primary/40 hover:text-govbid-text";
 
   const tabClass = (active: boolean) =>
     `flex-1 border-b-2 px-4 py-3 text-sm font-semibold transition ${
@@ -193,6 +203,200 @@ export function ProfileDrawer() {
                     }))
                   }
                 />
+              </div>
+
+              <div className="border-t border-govbid-border pt-4">
+                <p className="text-xs font-semibold uppercase tracking-wide text-govbid-text-muted">
+                  Eligibility &amp; preferences
+                </p>
+                <p className="mt-1 text-xs text-govbid-text-muted">
+                  Used to score how well opportunities match your business.
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-govbid-text-muted">
+                  Preferred locations
+                </label>
+                <input
+                  className={fieldClass}
+                  placeholder="e.g., California, Federal"
+                  value={draftProfile.preferredLocations}
+                  onChange={(e) =>
+                    setDraftProfile((prev) => ({
+                      ...prev,
+                      preferredLocations: e.target.value,
+                    }))
+                  }
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-govbid-text-muted">
+                  Preferred contract range (USD)
+                </label>
+                <div className="mt-1 flex items-center gap-2">
+                  <input
+                    type="number"
+                    inputMode="numeric"
+                    min={0}
+                    className={fieldClass}
+                    placeholder="Min"
+                    value={draftProfile.preferredContractMin}
+                    onChange={(e) =>
+                      setDraftProfile((prev) => ({
+                        ...prev,
+                        preferredContractMin: e.target.value,
+                      }))
+                    }
+                  />
+                  <span className="text-xs text-govbid-text-muted">to</span>
+                  <input
+                    type="number"
+                    inputMode="numeric"
+                    min={0}
+                    className={fieldClass}
+                    placeholder="Max"
+                    value={draftProfile.preferredContractMax}
+                    onChange={(e) =>
+                      setDraftProfile((prev) => ({
+                        ...prev,
+                        preferredContractMax: e.target.value,
+                      }))
+                    }
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-govbid-text-muted">
+                  Response window (days)
+                </label>
+                <input
+                  type="number"
+                  inputMode="numeric"
+                  min={0}
+                  className={fieldClass}
+                  placeholder="e.g., 14"
+                  value={draftProfile.preferredResponseWindowDays}
+                  onChange={(e) =>
+                    setDraftProfile((prev) => ({
+                      ...prev,
+                      preferredResponseWindowDays: e.target.value,
+                    }))
+                  }
+                />
+                <p className="mt-1 text-xs text-govbid-text-muted">
+                  Minimum lead time you need before an RFP is due.
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-govbid-text-muted">
+                  Certifications
+                </label>
+                <p className="mt-1 text-xs text-govbid-text-muted">
+                  Select all that you hold.
+                </p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {SBA_CERTIFICATION_OPTIONS.map((opt) => {
+                    const active = draftProfile.certifications.includes(opt);
+                    return (
+                      <button
+                        key={opt}
+                        type="button"
+                        aria-pressed={active}
+                        className={chipClass(active)}
+                        onClick={() =>
+                          setDraftProfile((prev) => ({
+                            ...prev,
+                            certifications: toggleInArray(
+                              prev.certifications,
+                              opt,
+                            ),
+                          }))
+                        }
+                      >
+                        {opt}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-govbid-text-muted">
+                  Set-aside eligibility
+                </label>
+                <p className="mt-1 text-xs text-govbid-text-muted">
+                  Select the set-asides you qualify to bid on.
+                </p>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {SBA_CERTIFICATION_OPTIONS.map((opt) => {
+                    const active =
+                      draftProfile.setAsideEligibility.includes(opt);
+                    return (
+                      <button
+                        key={opt}
+                        type="button"
+                        aria-pressed={active}
+                        className={chipClass(active)}
+                        onClick={() =>
+                          setDraftProfile((prev) => ({
+                            ...prev,
+                            setAsideEligibility: toggleInArray(
+                              prev.setAsideEligibility,
+                              opt,
+                            ),
+                          }))
+                        }
+                      >
+                        {opt}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-govbid-text-muted">
+                  NAICS codes
+                </label>
+                <input
+                  className={fieldClass}
+                  placeholder="e.g., 541511, 541512"
+                  value={draftProfile.naicsCodes}
+                  onChange={(e) =>
+                    setDraftProfile((prev) => ({
+                      ...prev,
+                      naicsCodes: e.target.value,
+                    }))
+                  }
+                />
+                <p className="mt-1 text-xs text-govbid-text-muted">
+                  Comma-separated 6-digit codes you&apos;re registered under.
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-govbid-text-muted">
+                  Exclusions
+                </label>
+                <input
+                  className={fieldClass}
+                  placeholder="e.g., DoD, fixed-price, hardware"
+                  value={draftProfile.exclusions}
+                  onChange={(e) =>
+                    setDraftProfile((prev) => ({
+                      ...prev,
+                      exclusions: e.target.value,
+                    }))
+                  }
+                />
+                <p className="mt-1 text-xs text-govbid-text-muted">
+                  Comma-separated terms. If any appears in an RFP, that match is
+                  hard-zeroed.
+                </p>
               </div>
 
               <button
