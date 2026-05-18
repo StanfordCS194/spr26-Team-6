@@ -41,6 +41,8 @@ Create a `.env` file at the repo root (loaded automatically by `run_pipeline.py`
 | `SUPABASE_URL` | Ingest | Project URL from Supabase dashboard |
 | `SUPABASE_SERVICE_ROLE_KEY` | Ingest | Service role key — server/CI only, never in the browser |
 | `SAM_GOV_API_KEY` | SAM.gov scrape | [SAM.gov API key](https://sam.gov/content/api) |
+| `SAM_GOV_REQUEST_DELAY_SEC` | SAM.gov scrape | Optional seconds between API calls (default `1.0`) |
+| `SAM_GOV_MAX_RETRY_WAIT_SEC` | SAM.gov scrape | Max seconds to wait on 429 before failing (default `120`; daily quota resets use `Retry-After`) |
 | `GOOGLE_DRIVE_CREDENTIALS_PATH` | SAM.gov + Drive | Optional; omit when using `--no-drive` |
 | `GOOGLE_DRIVE_TOKEN_PATH` | SAM.gov + Drive | Optional OAuth token path |
 
