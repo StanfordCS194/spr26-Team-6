@@ -34,25 +34,54 @@ python -m playwright install chromium
 
 ## 4. Configure credentials
 
-- Add more info 
+Create a `.env` file at the repo root (loaded automatically by `run_pipeline.py`):
+
+| Variable | Required for | Notes |
+| -------- | ------------ | ----- |
+| `SUPABASE_URL` | Ingest | Project URL from Supabase dashboard |
+| `SUPABASE_SERVICE_ROLE_KEY` | Ingest | Service role key — server/CI only, never in the browser |
+| `SAM_GOV_API_KEY` | SAM.gov scrape | [SAM.gov API key](https://sam.gov/content/api) |
+| `GOOGLE_DRIVE_CREDENTIALS_PATH` | SAM.gov + Drive | Optional; omit when using `--no-drive` |
+| `GOOGLE_DRIVE_TOKEN_PATH` | SAM.gov + Drive | Optional OAuth token path |
+
+### GitHub Actions (scheduled daily ingest)
+
+Workflow: [`.github/workflows/daily-ingest.yml`](.github/workflows/daily-ingest.yml)
+
+Add these **repository secrets** (Settings → Secrets and variables → Actions):
+
+| Secret | Purpose |
+| ------ | ------- |
+| `SUPABASE_URL` | Supabase project URL |
+| `SUPABASE_SERVICE_ROLE_KEY` | Upsert into `public.rfps` |
+| `SAM_GOV_API_KEY` | SAM.gov Get Opportunities API |
+
+The workflow runs `scripts/daily_ingest.sh`, which uses `--no-drive` for SAM.gov (no Google OAuth in CI). Trigger manually via **Actions → Daily RFP ingest → Run workflow**.
 
 ## 5. Run the pipeline
 
-Full run (all 4 stages):
+One source at a time (scrape → normalize/tag → Supabase upsert):
 
 ```bash
-python run_pipeline.py
+python run_pipeline.py sam        # SAM.gov
+python run_pipeline.py eProcure   # Cal eProcure
 ```
 
-Useful flags:
+Both sources (same as the daily job):
 
 ```bash
-python run_pipeline.py --skip-samgov          # skip Stage 1
-python run_pipeline.py --skip-caleprocure     # skip Stage 2
-python run_pipeline.py --skip-process         # skip Stage 3
-python run_pipeline.py --skip-ingest          # skip Stage 4
-python run_pipeline.py --rescrape             # force re-scrape, ignore cache
-python run_pipeline.py --no-drive             # skip Google Drive upload
+bash scripts/daily_ingest.sh
+```
+
+Per-source flags:
+
+```bash
+python run_pipeline.py sam --skip-scrape      # re-process + ingest existing raw JSON
+python run_pipeline.py sam --skip-process
+python run_pipeline.py sam --skip-ingest
+python run_pipeline.py sam --rescrape         # force re-scrape
+python run_pipeline.py sam --no-drive       # SAM only: skip Google Drive upload
+python run_pipeline.py eProcure --rescrape
 ```
 
 ## Troubleshooting
