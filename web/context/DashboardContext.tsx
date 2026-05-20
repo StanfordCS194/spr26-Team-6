@@ -27,6 +27,7 @@ import {
   identifySessionUser,
   resetPosthog,
 } from "@/lib/analytics";
+import { formatRfpSummaryMarkdown, RfpSummarySchema } from "@/lib/rfpSummary";
 
 export type RfpFilter = {
   tag?: string;
@@ -67,7 +68,16 @@ type DashboardContextValue = {
   profile: ContractorProfile;
   setProfile: (p: Partial<ContractorProfile>) => void;
   saveProfile: (p: ContractorProfile) => Promise<void>;
-  tryLoadCachedSummary: (rfpId: string) => Promise<boolean>;
+  /**
+   * Show the structured summary for an RFP in the AI tab. Returns "cached"
+   * if a row was found in `rfp_summaries`, "generated" if the LLM produced
+   * a fresh summary via /api/summary, or "failed" otherwise.
+   */
+  loadOrGenerateSummary: (
+    rfpId: string,
+  ) => Promise<"cached" | "generated" | "failed">;
+  /** True while /api/summary is in flight for this RFP. */
+  isGeneratingSummary: (rfpId: string) => boolean;
   /** True when a compatibility score is being computed for this RFP. */
   isScoring: (id: string) => boolean;
   /** True when no cached score has been computed yet for this RFP. */
@@ -112,6 +122,14 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     () => new Set(),
   );
   const inFlightScoresRef = useRef<Set<string>>(new Set());
+  const inFlightSummariesRef = useRef<Set<string>>(new Set());
+  const [summariesInFlight, setSummariesInFlight] = useState<Set<string>>(
+    () => new Set(),
+  );
+  const loadedRfpsRef = useRef<Rfp[]>([]);
+  useEffect(() => {
+    loadedRfpsRef.current = loadedRfps;
+  }, [loadedRfps]);
 
   const setActiveNav = useCallback((nav: ActiveNav) => {
     captureEvent("main_nav_changed", { nav });
@@ -215,6 +233,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
 
         identifySessionUser(userId, { contractor_id: cid });
       } catch (e) {
+        console.error("loadWorkspace failed:", e);
         const msg = e instanceof Error ? e.message : "Unexpected error";
         showToast(msg);
       }
@@ -552,8 +571,15 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contractorId, loadedRfps.length]);
 
-  const tryLoadCachedSummary = useCallback(
-    async (rfpId: string): Promise<boolean> => {
+  const isGeneratingSummary = useCallback(
+    (rfpId: string) => summariesInFlight.has(rfpId),
+    [summariesInFlight],
+  );
+
+  const loadOrGenerateSummary = useCallback(
+    async (
+      rfpId: string,
+    ): Promise<"cached" | "generated" | "failed"> => {
       const supabase = createClient();
       const { data, error } = await supabase
         .from("rfp_summaries")
@@ -563,19 +589,84 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
         .order("generated_at", { ascending: false })
         .limit(1)
         .maybeSingle();
-      if (error || !data?.summary) {
-        return false;
+      if (!error && data?.summary) {
+        setLoadedRfps((prev) =>
+          prev.map((r) =>
+            r.id === rfpId ? { ...r, summaryMarkdown: data.summary } : r,
+          ),
+        );
+        return "cached";
       }
-      setLoadedRfps((prev) =>
-        prev.map((r) =>
-          r.id === rfpId
-            ? { ...r, aiAnalysisMarkdown: data.summary }
-            : r,
-        ),
-      );
-      return true;
+
+      if (inFlightSummariesRef.current.has(rfpId)) {
+        return "failed";
+      }
+
+      const rfp = loadedRfpsRef.current.find((r) => r.id === rfpId);
+      if (!rfp) return "failed";
+
+      const rfpText = [
+        rfp.description,
+        rfp.statementOfWork
+          ? `Statement of Work:\n${rfp.statementOfWork}`
+          : "",
+        rfp.deliverables.length
+          ? `Deliverables:\n- ${rfp.deliverables.join("\n- ")}`
+          : "",
+      ]
+        .filter(Boolean)
+        .join("\n\n")
+        .trim();
+      if (!rfpText) return "failed";
+
+      inFlightSummariesRef.current.add(rfpId);
+      setSummariesInFlight((prev) => {
+        const next = new Set(prev);
+        next.add(rfpId);
+        return next;
+      });
+
+      try {
+        const res = await fetch("/api/summary", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({ rfpText, rfpTitle: rfp.title }),
+        });
+        if (!res.ok) {
+          const errBody = (await res.json().catch(() => null)) as {
+            error?: string;
+          } | null;
+          showToast(errBody?.error ?? `Summary generation failed (${res.status}).`);
+          return "failed";
+        }
+        const json = await res.json();
+        const parsed = RfpSummarySchema.safeParse(json);
+        if (!parsed.success) {
+          console.error("[summary] schema parse failed:", parsed.error, json);
+          showToast("Summary response was not in the expected shape.");
+          return "failed";
+        }
+        const markdown = formatRfpSummaryMarkdown(parsed.data);
+        setLoadedRfps((prev) =>
+          prev.map((r) =>
+            r.id === rfpId ? { ...r, summaryMarkdown: markdown } : r,
+          ),
+        );
+        return "generated";
+      } catch (e) {
+        const msg = e instanceof Error ? e.message : "Network error";
+        showToast(msg);
+        return "failed";
+      } finally {
+        inFlightSummariesRef.current.delete(rfpId);
+        setSummariesInFlight((prev) => {
+          const next = new Set(prev);
+          next.delete(rfpId);
+          return next;
+        });
+      }
     },
-    [],
+    [showToast],
   );
 
   const signOut = useCallback(async () => {
@@ -604,7 +695,8 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       profile,
       setProfile,
       saveProfile,
-      tryLoadCachedSummary,
+      loadOrGenerateSummary,
+      isGeneratingSummary,
       isScoring,
       isUnscored,
       ensureScored,
@@ -636,7 +728,8 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       profile,
       setProfile,
       saveProfile,
-      tryLoadCachedSummary,
+      loadOrGenerateSummary,
+      isGeneratingSummary,
       isScoring,
       isUnscored,
       ensureScored,

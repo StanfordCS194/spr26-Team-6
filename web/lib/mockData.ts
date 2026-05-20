@@ -7,6 +7,7 @@ const SAMPLE_PUBLIC_PDF =
 type RfpSeed = Omit<
   Rfp,
   | "aiAnalysisMarkdown"
+  | "summaryMarkdown"
   | "pdfUrls"
   | "deliverables"
   | "statementOfWork"
@@ -162,4 +163,5 @@ export const MOCK_RFPS: Rfp[] = raw.map((r, i) => ({
   deliverables: [...MOCK_DELIVERABLES],
   statementOfWork: buildMockSow(r.description),
   aiAnalysisMarkdown: buildAiAnalysis(r.score, r.location),
+  summaryMarkdown: null,
 }));

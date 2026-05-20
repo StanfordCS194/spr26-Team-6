@@ -79,7 +79,7 @@ export function DetailPanel() {
   return <DetailPanelBody key={selectedRfp.id} rfp={selectedRfp} />;
 }
 
-type DetailTab = "overview" | "document" | "ai";
+type DetailTab = "overview" | "document" | "ai" | "summary";
 
 function DocumentTabContent({
   rfp,
@@ -161,10 +161,16 @@ function DocumentTabContent({
 }
 
 function DetailPanelBody({ rfp }: { rfp: Rfp }) {
-  const { toggleSaveRfp, isSaved, showToast, tryLoadCachedSummary } =
-    useDashboard();
+  const {
+    toggleSaveRfp,
+    isSaved,
+    showToast,
+    loadOrGenerateSummary,
+    isGeneratingSummary,
+  } = useDashboard();
   const [tab, setTab] = useState<DetailTab>("overview");
   const [activePdfIndex, setActivePdfIndex] = useState(0);
+  const generating = isGeneratingSummary(rfp.id);
 
   useEffect(() => {
     setActivePdfIndex(0);
@@ -194,22 +200,28 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
   };
 
   const handleSummary = async () => {
+    if (generating) return;
     captureEvent("rag_summary_requested", { rfp_id: rfp.id });
-    const found = await tryLoadCachedSummary(rfp.id);
+    showToast("Generating summary");
+    const result = await loadOrGenerateSummary(rfp.id);
     trackABTestEvent("rfp_action", {
       action: "generate_summary",
       variant: "A",
       rfp_id: rfp.id,
-      cached: found,
+      cached: result === "cached",
     });
-    if (found) {
-      showToast("Loaded cached summary from the database.");
+    if (result === "cached") {
+      showToast("Loaded cached summary. See the Summary tab.");
       captureEvent("rag_summary_cached_hit", { rfp_id: rfp.id });
+      setTab("summary");
       return;
     }
-    showToast(
-      "No cached summary yet. Generating new summaries requires a server-side pipeline (service role) - not available from the browser.",
-    );
+    if (result === "generated") {
+      showToast("Summary generated. See the Summary tab.");
+      captureEvent("rag_summary_generated", { rfp_id: rfp.id });
+      setTab("summary");
+      return;
+    }
   };
 
   const handleProposal = () => {
@@ -226,6 +238,7 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
   const tabs: { id: DetailTab; label: string }[] = [
     { id: "overview", label: "Overview" },
     { id: "document", label: "Source PDF" },
+    { id: "summary", label: "Summary" },
     { id: "ai", label: "AI analysis" },
   ];
 
@@ -266,9 +279,10 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
         <button
           type="button"
           onClick={handleSummary}
-          className="generate-summary-button govbid-btn-primary rounded-lg px-3 py-2 text-sm"
+          disabled={generating}
+          className="generate-summary-button govbid-btn-primary rounded-lg px-3 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-60"
         >
-          Generate summary
+          {generating ? "Generating…" : "Generate summary"}
         </button>
         <button
           type="button"
@@ -394,6 +408,20 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
         {tab === "ai" && (
           <div className="prose prose-sm prose-slate mx-auto max-w-5xl text-govbid-text">
             <ReactMarkdown>{rfp.aiAnalysisMarkdown}</ReactMarkdown>
+          </div>
+        )}
+
+        {tab === "summary" && (
+          <div className="prose prose-sm prose-slate mx-auto max-w-5xl text-govbid-text">
+            {rfp.summaryMarkdown ? (
+              <ReactMarkdown>{rfp.summaryMarkdown}</ReactMarkdown>
+            ) : (
+              <p className="text-sm italic text-govbid-text-muted">
+                {generating
+                  ? "Generating summary…"
+                  : "No summary yet. Click \"Generate summary\" above to extract scope of work, deadlines, and evaluation criteria from the RFP text."}
+              </p>
+            )}
           </div>
         )}
       </div>
