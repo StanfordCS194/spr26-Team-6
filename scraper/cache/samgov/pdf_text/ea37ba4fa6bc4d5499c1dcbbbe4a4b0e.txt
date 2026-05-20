@@ -1,0 +1,25 @@
+1. General: This is a non-personnel service contract to provide Cemetery Enterprise Application
+Support (CEAS) to the Office of the Chief Information Officer (OCIO) for Army National
+Military Cemeteries (ANMC) and the Office of Army Cemeteries (OAC). The OCIO CEAS is
+responsible for support for the following areas, project management, change management and
+governance, and Enterprise Architecture (EA) and OCIO strategic planning support. This is not
+a software development contract.
+
+1.1 Description of Services/Introduction: The Contractor shall provide all personnel,
+equipment, supplies, facilities, transportation, tools, materials, supervision, and other items and
+non-personnel services necessary to perform the tasks as defined in this PWS except, for those
+items specified as government furnished property and services. Contractor shall perform to the
+standards defined in this contract.
+
+1.2 Background: The Office of Army Cemeteries (OAC) is defined by Public Law as the
+statutory authority to manage and oversee operations at Arlington National Cemetery, the United
+States Soldiers’ and Airmen’s Home National Cemetery. The Department of the Army created a
+special staff Principal, the Executive Director for Army Cemeteries and a policy oversight
+directorate and compliance for all Army cemeteries, both post cemeteries and national
+cemeteries. In accordance with this law, this PWS outlines the contractor responsibilities in
+providing program management support, defining and establishing business processes,
+developing, implementing and sustaining plans for operations and maintenance for ANMC/OAC
+business systems which contain Department of War Cemetery data. Additionally, the contractor
+shall provide enterprise architecture support in accordance with the DOW Architecture
+Framework. Based on the special significance and the attention that national and post cemeteries
+receive, strict adherences to these specifications are essential.

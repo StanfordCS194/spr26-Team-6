@@ -1,0 +1,31 @@
+# SAM.gov scraper (scraper/samgov_interface.py)
+# HTTP client for SAM.gov API + attachment downloads
+requests>=2.28.0
+
+# Cal eProcure scraper (browser automation)
+playwright>=1.40.0
+
+# Google Drive client + OAuth (gdrive_interface.py, finalize_pipeline_after_downloads)
+google-api-python-client>=2.100.0
+google-auth-oauthlib>=1.1.0
+google-auth-httplib2>=0.2.0
+
+# Tests: tests/test_gdrive.py manual PDF fixture
+reportlab>=4.0.0
+
+# Normalize + tag stage (processor/)
+# Pinned to 1.8.0 to match pickled model artifacts in repo
+scikit-learn==1.8.0
+joblib>=1.3
+numpy>=1.24
+pandas>=2.0
+
+# PDF / DOCX description backfill for SAM.gov RFIs / Special Notices (processor/pdf_extract.py)
+pypdf>=4.0
+python-docx>=1.0
+
+# Supabase upload stage (processor/ingest_supabase.py)
+supabase>=2.0
+
+# Auto-load .env file for credentials
+python-dotenv>=1.0

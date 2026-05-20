@@ -4,10 +4,23 @@ import type { Rfp } from "./types";
 const SAMPLE_PUBLIC_PDF =
   "https://www.w3.org/WAI/WCAG21/working-examples/pdf-note/note.pdf";
 
-type RfpSeed = Omit<Rfp, "sowMarkdown" | "aiAnalysisMarkdown" | "pdfUrls">;
+type RfpSeed = Omit<
+  Rfp,
+  | "aiAnalysisMarkdown"
+  | "pdfUrls"
+  | "deliverables"
+  | "statementOfWork"
+  | "name"
+>;
 
-function buildSow(description: string): string {
-  return `## Statement of work\n\n${description}\n\n### Deliverables\n\n- Kickoff and discovery within 30 days of award.\n- Monthly status reporting through the performance period.\n- Final acceptance testing and handoff documentation.\n\n### Period of performance\n\nWork is expected to complete within **12 months** of contract start.\n`;
+const MOCK_DELIVERABLES = [
+  "Kickoff and discovery within 30 days of award.",
+  "Monthly status reporting through the performance period.",
+  "Final acceptance testing and handoff documentation.",
+];
+
+function buildMockSow(description: string): string {
+  return description;
 }
 
 function buildAiAnalysis(score: number, location: string): string {
@@ -142,7 +155,11 @@ const raw: RfpSeed[] = [
 
 export const MOCK_RFPS: Rfp[] = raw.map((r, i) => ({
   ...r,
+  // Strip trailing solicitation numbers / "Request for ..." chunks for the
+  // mock short name so cards/detail panels see a tidy label.
+  name: r.title.replace(/\s+(RFP|RFQ|RFI)[^\s]*$/i, "").trim() || r.title,
   pdfUrls: i === 0 ? [SAMPLE_PUBLIC_PDF] : [],
-  sowMarkdown: buildSow(r.description),
+  deliverables: [...MOCK_DELIVERABLES],
+  statementOfWork: buildMockSow(r.description),
   aiAnalysisMarkdown: buildAiAnalysis(r.score, r.location),
 }));

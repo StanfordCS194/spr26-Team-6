@@ -1,0 +1,58 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "0000037301",
+  "title": "Water Technical Access Portal (WaterTAP)",
+  "name": "Water Technical Access Portal (WaterTAP)",
+  "statement_of_work": "On behalf of the California State Water Resources Control Board (SWRCB), the California Department of Technology seeks proposals from qualified bidders to provide a cloud-based SaaS solution for the Water Technical Access Portal (WaterTAP). These services will include development, design, and implementation of the WaterTAP solution, software licensing and maintenance, and optional post-implementation services. The WaterTAP solution will replace legacy systems with a configurable, cloud-based Software as a Service (SaaS) solution that will be an enterprise-level data system which aims to minimize customization and:. Address current and future information and business needs.",
+  "deliverables": [
+    "Deliver implementation of the WaterTAP solution",
+    "Deliver software licensing and maintenance",
+    "Deliver optional post-implementation services"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "SaaS",
+    "Water",
+    "Cloud",
+    "System Development",
+    "California"
+  ],
+  "dept": "California State Water Resources Control Board",
+  "description": "On behalf of the California State Water Resources Control Board (SWRCB), the California Department of Technology seeks proposals from qualified bidders to provide a cloud-based SaaS solution for the Water Technical Access Portal (WaterTAP). These services will include development, design, and implementation of the WaterTAP solution, software licensing and maintenance, and optional post-implementation services. The WaterTAP solution will replace legacy systems with a configurable, cloud-based Software as a Service (SaaS) solution that will be an enterprise-level data system which aims to minimize customization and:. Address current and future information and business needs. Maintain an overarching architecture to connect existing foundational data systems.",
+  "published_date": "2025-11-20T13:11:00-08:00",
+  "due_date": "2027-01-15T10:00:00-08:00",
+  "contact_name": "Nichole Gutierrez",
+  "contact_email": "nichole.gutierrez@state.ca.gov",
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-0000037301-ea627df8d493",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "1._WaterTAP__Request_For_Proposal_(RFP)_11.20.25.pdf",
+        "url": "https://drive.google.com/file/d/1auho7skjnWBVfZjJCwVC8BXA_Qqeykew/view?usp=drivesdk",
+        "type": "primary_spec",
+        "attachment_description": ""
+      },
+      {
+        "label": "2._EXHIBIT_A-_WaterTAP_STATEMENT_OF_WORK_(SOW)_11.20.25.pdf",
+        "url": "https://drive.google.com/file/d/13AfzMdSEYq8uhl7P1AVFOTGnuAQsWAo-/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      }
+    ],
+    "unspsc_codes": [
+      {
+        "code": "01012001",
+        "description": "/> <span data-if-container-label=\"conferenceRow\" data-if-source=\"[id^='ZZ_BID_CNF_VW_DUE_DT_TIME$']\" data-if-content=\"nu"
+      }
+    ]
+  }
+}

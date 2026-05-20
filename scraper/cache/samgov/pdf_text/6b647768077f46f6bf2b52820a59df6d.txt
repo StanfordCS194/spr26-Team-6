@@ -1,0 +1,36 @@
+Justification and Approval
+For Other than Full and Open Competition
+Plan ID Number: 2026-LGO-0004
+
+As a legislative branch agency, the Library is subject to the competition and advertising requirements of 41 U.S.C. § 6101. Like the Competition in
+Contracting Act and the FAR, 41 U.S.C. § 6101 does not require competition when a contracting officer certifies that only one source or brand-name
+item is available, when dictated by public exigency, or when otherwise authorized by law.
+
+This document sets forth the justification and approval for award of a contract or order by means providing for other than full and open competition
+per 41 U.S.C. § 6101, LCR 7-210, and, as applicable, FAR 6.302, FAR 13.106-1, FAR 8.405, and FAR 16.505. Contracting without competition
+shall not be justified on the basis of a lack of advance planning or concerns related to availability of funds.
+
+This form shall be used to support instances where competition will be limited to a single source, a limited number of sources, including where a
+brand name product is required.
+
+1. Contracting Agency and Activity: Library of Congress, Library Collections and Services Group (LCSG),
+Financial Management Directorate (FMD)
+
+2. Nature of Action Being Approved
+Contract (or modification)
+LoC or Leg Branch Order (or modification)
+GSA Schedule or GWAC: Identify Schedule/Contract
+Other: Identify
+Plan ID Number: 2026-LGO-0004
+Contractor (or Brand Name): Springshare
+Estimated Value (Base and all options):
+Period of Performance: 7/1/2026-6/30/2031
+
+3. Description of Supplies or Services Required to Meet Library Needs
+Describe the supplies or services that are required to meet the Library’s minimum needs and the delivery schedule required to meet those needs. Do
+not focus on a description of the program.
+
+The Library requires an integrated public service platform that provides tools designed for the unique, not-for-profit public services of
+libraries. These services are distinct from for-profit operations and, consequently, do not align to generic commercial software
+designed for maximizing customer sales. The integrated tools must support and integrate the core public services work of the Library’s
+reference services. The services that need to be integrated include:

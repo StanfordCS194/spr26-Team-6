@@ -7,6 +7,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   type ReactNode,
 } from "react";
@@ -21,8 +22,13 @@ import {
   mapRfpRow,
   profileToContractorUpdate,
 } from "@/lib/mappers";
+import {
+  captureEvent,
+  identifySessionUser,
+  resetPosthog,
+} from "@/lib/analytics";
 
-type RfpFilter = {
+export type RfpFilter = {
   tag?: string;
   dateFrom?: string;
   dateTo?: string;
@@ -62,8 +68,18 @@ type DashboardContextValue = {
   setProfile: (p: Partial<ContractorProfile>) => void;
   saveProfile: (p: ContractorProfile) => Promise<void>;
   tryLoadCachedSummary: (rfpId: string) => Promise<boolean>;
+  /** True when a compatibility score is being computed for this RFP. */
+  isScoring: (id: string) => boolean;
+  /** True when no cached score has been computed yet for this RFP. */
+  isUnscored: (id: string) => boolean;
+  /** Trigger scoring for one RFP (idempotent; no-op while in flight). */
+  ensureScored: (rfpId: string) => Promise<void>;
   profileOpen: boolean;
   setProfileOpen: (open: boolean) => void;
+  walkthroughActive: boolean;
+  setWalkthroughActive: (active: boolean) => void;
+  walkthroughStep: number;
+  setWalkthroughStep: (step: number) => void;
   toast: string | null;
   showToast: (message: string) => void;
   rfpFilter: RfpFilter;
@@ -84,9 +100,23 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     defaultContractorProfile,
   );
   const [profileOpen, setProfileOpen] = useState(false);
+  const [walkthroughActive, setWalkthroughActive] = useState(false);
+  const [walkthroughStep, setWalkthroughStep] = useState(0);
   const [rfpFilter, setRfpFilter] = useState<RfpFilter>({});
   const [toast, setToast] = useState<string | null>(null);
-  const [activeNav, setActiveNav] = useState<ActiveNav>("dashboard");
+  const [activeNav, setActiveNavState] = useState<ActiveNav>("dashboard");
+  const [scoringRfpIds, setScoringRfpIds] = useState<Set<string>>(
+    () => new Set(),
+  );
+  const [unscoredRfpIds, setUnscoredRfpIds] = useState<Set<string>>(
+    () => new Set(),
+  );
+  const inFlightScoresRef = useRef<Set<string>>(new Set());
+
+  const setActiveNav = useCallback((nav: ActiveNav) => {
+    captureEvent("main_nav_changed", { nav });
+    setActiveNavState(nav);
+  }, []);
 
   const showToast = useCallback((message: string) => {
     setToast(message);
@@ -172,6 +202,18 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
           rfpRows?.map((row) => mapRfpRow(row, cid, scoreRows ?? undefined)) ??
           [];
         setLoadedRfps(mapped);
+
+        const scoredRfpIds = new Set(
+          (scoreRows ?? []).map((s) => s.rfp_id),
+        );
+        const unscored = new Set(
+          (rfpRows ?? [])
+            .filter((r) => !scoredRfpIds.has(r.id))
+            .map((r) => r.id),
+        );
+        setUnscoredRfpIds(unscored);
+
+        identifySessionUser(userId, { contractor_id: cid });
       } catch (e) {
         const msg = e instanceof Error ? e.message : "Unexpected error";
         showToast(msg);
@@ -186,6 +228,9 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     setSavedRfpIds([]);
     setProfileState(defaultContractorProfile);
     setSelectedRfpId(null);
+    setUnscoredRfpIds(new Set());
+    setScoringRfpIds(new Set());
+    inFlightScoresRef.current.clear();
   }, []);
 
   useEffect(() => {
@@ -300,9 +345,75 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     return loadedRfps.find((r) => r.id === selectedRfpId) ?? null;
   }, [loadedRfps, selectedRfpId]);
 
-  const selectRfp = useCallback((id: string | null) => {
-    setSelectedRfpId(id);
-  }, []);
+  const isScoring = useCallback(
+    (id: string) => scoringRfpIds.has(id),
+    [scoringRfpIds],
+  );
+
+  const isUnscored = useCallback(
+    (id: string) => unscoredRfpIds.has(id),
+    [unscoredRfpIds],
+  );
+
+  const ensureScored = useCallback(
+    async (rfpId: string) => {
+      if (!contractorId) return;
+      if (inFlightScoresRef.current.has(rfpId)) return;
+      inFlightScoresRef.current.add(rfpId);
+      setScoringRfpIds((prev) => {
+        const next = new Set(prev);
+        next.add(rfpId);
+        return next;
+      });
+      try {
+        const res = await fetch("/api/score", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            contractor_id: contractorId,
+            rfp_id: rfpId,
+          }),
+        });
+        if (!res.ok) return;
+        const data = (await res.json()) as { score?: number };
+        const score = Number(data.score);
+        if (!Number.isFinite(score)) return;
+        setLoadedRfps((prev) =>
+          prev.map((r) => (r.id === rfpId ? { ...r, score } : r)),
+        );
+        setUnscoredRfpIds((prev) => {
+          if (!prev.has(rfpId)) return prev;
+          const next = new Set(prev);
+          next.delete(rfpId);
+          return next;
+        });
+      } catch {
+        // Silently leave at fallback; user can retry.
+      } finally {
+        inFlightScoresRef.current.delete(rfpId);
+        setScoringRfpIds((prev) => {
+          if (!prev.has(rfpId)) return prev;
+          const next = new Set(prev);
+          next.delete(rfpId);
+          return next;
+        });
+      }
+    },
+    [contractorId],
+  );
+
+  const selectRfp = useCallback(
+    (id: string | null) => {
+      if (id) {
+        captureEvent("rfp_selected", { rfp_id: id });
+        if (unscoredRfpIds.has(id)) {
+          void ensureScored(id);
+        }
+      }
+      setSelectedRfpId(id);
+    },
+    [unscoredRfpIds, ensureScored],
+  );
 
   const isSaved = useCallback(
     (id: string) => savedRfpIds.includes(id),
@@ -328,6 +439,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
           return;
         }
         setSavedRfpIds((prev) => prev.filter((x) => x !== id));
+        captureEvent("rfp_save_toggled", { rfp_id: id, now_saved: false });
       } else {
         const { error } = await supabase.from("saved_rfps").insert({
           contractor_id: contractorId,
@@ -338,6 +450,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
           return;
         }
         setSavedRfpIds((prev) => [...prev, id]);
+        captureEvent("rfp_save_toggled", { rfp_id: id, now_saved: true });
       }
     },
     [contractorId, savedRfpIds, showToast],
@@ -386,10 +499,58 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       }
 
       setProfileState(p);
+      // Profile changed → cached scores are now stale. Clear displayed scores
+      // and let the background batch effect re-score against the new profile.
+      setLoadedRfps((prev) => prev.map((r) => ({ ...r, score: 0 })));
+      setUnscoredRfpIds(new Set(loadedRfps.map((r) => r.id)));
       showToast("Profile saved.");
+      captureEvent("profile_saved", { contractor_id: contractorId });
     },
-    [contractorId, showToast],
+    [contractorId, loadedRfps, showToast],
   );
+
+  // Fire-and-forget background scoring with a small concurrency limit. Used to
+  // backfill scores for the top of the user's feed without blocking the UI.
+  const runScoreBatch = useCallback(
+    (rfpIds: string[]) => {
+      const CONCURRENCY = 2;
+      const queue = [...rfpIds];
+      const worker = async () => {
+        while (queue.length > 0) {
+          const next = queue.shift();
+          if (!next) return;
+          await ensureScored(next);
+        }
+      };
+      void Promise.all(
+        Array.from({ length: CONCURRENCY }, () => worker()),
+      );
+    },
+    [ensureScored],
+  );
+
+  // After RFPs load (or after profile save bumps staleness), backfill scores
+  // for the visible top of the feed. Only run when the profile has at least
+  // some signal to score against, to avoid wasted LLM spend.
+  useEffect(() => {
+    if (!contractorId) return;
+    if (unscoredRfpIds.size === 0) return;
+    const hasSignal =
+      profile.industries.trim() ||
+      profile.subIndustries.trim() ||
+      profile.goals.trim() ||
+      profile.pastExperience.trim();
+    if (!hasSignal) return;
+
+    const MAX_PER_BATCH = 20;
+    const ids = loadedRfps
+      .filter((r) => unscoredRfpIds.has(r.id))
+      .slice(0, MAX_PER_BATCH)
+      .map((r) => r.id);
+    if (ids.length > 0) runScoreBatch(ids);
+    // Only one pass per workspace load; subsequent saves will re-trigger.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [contractorId, loadedRfps.length]);
 
   const tryLoadCachedSummary = useCallback(
     async (rfpId: string): Promise<boolean> => {
@@ -420,6 +581,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const signOut = useCallback(async () => {
     const supabase = createClient();
     await supabase.auth.signOut();
+    resetPosthog();
     window.location.href = "/login";
   }, []);
 
@@ -443,8 +605,15 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       setProfile,
       saveProfile,
       tryLoadCachedSummary,
+      isScoring,
+      isUnscored,
+      ensureScored,
       profileOpen,
       setProfileOpen,
+      walkthroughActive,
+      setWalkthroughActive,
+      walkthroughStep,
+      setWalkthroughStep,
       toast,
       showToast,
       rfpFilter,
@@ -468,7 +637,12 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       setProfile,
       saveProfile,
       tryLoadCachedSummary,
+      isScoring,
+      isUnscored,
+      ensureScored,
       profileOpen,
+      walkthroughActive,
+      walkthroughStep,
       toast,
       showToast,
       rfpFilter,

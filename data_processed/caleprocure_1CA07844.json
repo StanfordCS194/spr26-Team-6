@@ -1,0 +1,51 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "1CA07844",
+  "title": "1CA07844 Computer Aided Dispatch (CAD) and Geographic Information System (GIS) Data Entry",
+  "name": "1CA07844 Computer Aided Dispatch and Geographic Information System",
+  "statement_of_work": "Contractor shall provide labor, program specific expertise and training, to perform the required functions at the facility listed below. Services are required for Santa Clara Unit (SCU) Headquarters Emergency Command Center (ECC). CAD and GIS data entry services are necessary to support operational needs and provide program-specific expertise to CAL FIRE SCU and ECC. These services ensure accurate and timely data management within dispatch and mapping systems, while also providing technical support and training to staff.",
+  "deliverables": [
+    "Contractor agrees to provide to the California Department of Forestry and Fire Protection (CAL FIRE) Computer-Aided Dispatch (CAD) and Geographic Information System (GIS) Data Entry Services, based on current CAL FIRE policy and/or business practices",
+    "Contractor shall provide labor, program specific expertise and training, to perform the required functions at the facility listed below"
+  ],
+  "location_level": "city",
+  "location": "Santa Clara",
+  "tags": [
+    "Fire Services",
+    "Forestry",
+    "GIS",
+    "Procurement",
+    "Santa Clara"
+  ],
+  "dept": "California Department of Forestry and Fire Protection (CAL FIRE)",
+  "description": "Contractor agrees to provide to the California Department of Forestry and Fire Protection (CAL FIRE) Computer-Aided Dispatch (CAD) and Geographic Information System (GIS) Data Entry Services, based on current CAL FIRE policy and/or business practices. Contractor shall provide labor, program specific expertise and training, to perform the required functions at the facility listed below. Services are required for Santa Clara Unit (SCU) Headquarters Emergency Command Center (ECC). CAD and GIS data entry services are necessary to support operational needs and provide program-specific expertise to CAL FIRE SCU and ECC. These services ensure accurate and timely data management within dispatch and mapping systems, while also providing technical support and training to staff.",
+  "published_date": "2026-05-01T08:00:00-07:00",
+  "due_date": "2026-05-19T17:00:00-07:00",
+  "contact_name": "Christopher Cabanes",
+  "contact_email": "christopher.cabanes@fire.ca.gov",
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-107844-73847d8c0da0",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "1CA07844_IFB_Solicitation.pdf",
+        "url": "https://drive.google.com/file/d/1-h9hbMJU8mkfHBS9eepQqc0FZM9OxwNe/view?usp=drivesdk",
+        "type": "primary_spec",
+        "attachment_description": ""
+      }
+    ],
+    "unspsc_codes": [
+      {
+        "code": "01012001",
+        "description": "/> <span data-if-container-label=\"conferenceRow\" data-if-source=\"[id^='ZZ_BID_CNF_VW_DUE_DT_TIME$']\" data-if-content=\"nu"
+      }
+    ]
+  }
+}

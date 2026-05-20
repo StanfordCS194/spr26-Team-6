@@ -1,0 +1,89 @@
+{
+  "source": "sam.gov",
+  "external_id": "b7ab103a8f7e40c693919f5fcbb1d925",
+  "title": "7A21--GAIT Analysis Machine (Medical Research) Intent to Sole Source",
+  "name": "GAIT Analysis Machine (Medical Research)",
+  "statement_of_work": "The Department of Veterans Affairs, VISN 12, Network Contracting Office (NCO) 12, intends to issue a sole source purchase order to Stoelting Co., the exclusive authorized U.S. distributor of the Ugo Basile G.A.I.T. (Gait Analysis and Imaging Tool) system. This acquisition is for a commercial, integrated gait analysis platform required by the William S. Middleton Memorial VA Medical Center, Madison, WI, for execution of a MERIT funded traumatic brain injury (TBI) research project. The G.A.I.T. system provides simultaneous ventral and lateral high resolution imaging, automated AI driven gait detection, and artifact correction essential for post TBI locomotion analysis in mice.",
+  "deliverables": [
+    "Provide simultaneous ventral and lateral high resolution imaging",
+    "Provide automated AI driven gait detection",
+    "Provide artifact correction essential for post TBI locomotion analysis in mice"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Medical Imaging",
+    "Research",
+    "Health Services",
+    "Software",
+    "California"
+  ],
+  "dept": "VETERANS AFFAIRS, DEPARTMENT OF.VETERANS AFFAIRS, DEPARTMENT OF.252-NETWORK CONTRACT OFFICE 12 (36C252)",
+  "description": "The Department of Veterans Affairs, VISN 12, Network Contracting Office (NCO) 12, intends to issue a sole source purchase order to Stoelting Co., the exclusive authorized U.S. distributor of the Ugo Basile G.A.I.T. (Gait Analysis and Imaging Tool) system. This acquisition is for a commercial, integrated gait analysis platform required by the William S. Middleton Memorial VA Medical Center, Madison, WI, for execution of a MERIT funded traumatic brain injury (TBI) research project. The G.A.I.T. system provides simultaneous ventral and lateral high resolution imaging, automated AI driven gait detection, and artifact correction essential for post TBI locomotion analysis in mice. Market research confirms that no other vendor can meet the required technical specifications, and no verified VOSB/SDVOSB or U.S. manufacturer provides an equivalent product.",
+  "published_date": "2026-05-07",
+  "due_date": "2026-05-14T17:00:00-04:00",
+  "contact_name": "Stacy Massey",
+  "contact_email": "Stacy.Massey@va.gov",
+  "contact_phone": "414-844-8400",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-b7ab103a8f7e40c693919f5fcbb1d925-ccd335bb4efa",
+  "metadata": {
+    "event_type": "Combined Synopsis/Solicitation",
+    "solicitation_number": "36C25226Q0425",
+    "ui_link": "https://sam.gov/workspace/contract/opp/b7ab103a8f7e40c693919f5fcbb1d925/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": "7A21",
+    "set_aside": null,
+    "set_aside_description": null,
+    "place_of_performance": {
+      "streetAddress": "Department of Veterans Affairs William S. Middleton Memorial VA Medical Center",
+      "streetAddress2": "  2500 Overlook Terrace",
+      "city": {
+        "code": "48000",
+        "name": "Madison"
+      },
+      "state": {
+        "code": "WI",
+        "name": "Wisconsin"
+      },
+      "zip": "53705-2254",
+      "country": {
+        "code": "USA",
+        "name": "UNITED STATES"
+      }
+    },
+    "office_address": {
+      "zipcode": "53214",
+      "city": "MILWAUKEE",
+      "countryCode": "USA",
+      "state": "WI"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "36C25226Q0425.docx",
+        "url": "https://docs.google.com/document/d/1pk6hLqQV0Qq6SmC89ff2H06kq_G0MvM3/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "primary_spec",
+        "original_extension": "docx",
+        "size_bytes": 25398,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/8bd48c05b110464a8af4be6c1c82b274/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "Stacy.Massey@va.gov",
+        "phone": "4148448400",
+        "title": "Contracting Officer",
+        "fullName": "Stacy Massey"
+      }
+    ]
+  }
+}

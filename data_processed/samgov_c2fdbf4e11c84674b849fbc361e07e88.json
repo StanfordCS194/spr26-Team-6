@@ -1,0 +1,100 @@
+{
+  "source": "sam.gov",
+  "external_id": "c2fdbf4e11c84674b849fbc361e07e88",
+  "title": "Airfield Automated System (AFAS) Technical Support Services",
+  "name": "Airfield Automated System (AFAS) Technical Support Services",
+  "statement_of_work": "Combined Synopsis/Solicitation In Accordance With (IAW) RFO 12.202(b) Solicitation Number: FA810026QB001 Airfield Automation System (AFAS) Technical Support Services The Air Force Sustainment Center’s Enterprise/Specialized Contracting Branch (AFSC/PZIEC, 7858 5th Street Building 3, Tinker AFB OK 73145-9125) intends to award a Firm Fixed Price (FFP) contract for the AFAS Technical Support Services. See Section 2- titled Supplies and Price – of the Quote Sheet for complete details. This acquisition is issued as an, Other Than Full and Open Competition. All responsible sources may submit a capability statement, proposal, or quotation, which shall be considered by the agency.",
+  "deliverables": [
+    "Support services The Air Force Sustainment Center’s Enterprise/Specialized Contracting Branch (AFSC/PZIEC",
+    "Support 7858 5th Street Building 3",
+    "Support tinker AFB OK 73145-9125) intends to award a Firm Fixed Price (FFP) contract for the AFAS Technical Support Services"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Procurement",
+    "Software",
+    "California"
+  ],
+  "dept": "DEPT OF DEFENSE.DEPT OF THE AIR FORCE.AIR FORCE MATERIEL COMMAND.AIR FORCE SUSTAINMENT CENTER.FA8100 AFSC PZIEC",
+  "description": "Combined Synopsis/Solicitation In Accordance With (IAW) RFO 12.202(b) Solicitation Number: FA810026QB001 Airfield Automation System (AFAS) Technical Support Services The Air Force Sustainment Center’s Enterprise/Specialized Contracting Branch (AFSC/PZIEC, 7858 5th Street Building 3, Tinker AFB OK 73145-9125) intends to award a Firm Fixed Price (FFP) contract for the AFAS Technical Support Services. See Section 2- titled Supplies and Price – of the Quote Sheet for complete details. This acquisition is issued as an, Other Than Full and Open Competition. All responsible sources may submit a capability statement, proposal, or quotation, which shall be considered by the agency. Terms, Conditions, Provisions, Clauses Period of Performance is anticipated to be from 23 May 2026 through 22 May 2031.",
+  "published_date": "2026-04-24",
+  "due_date": "2026-05-08T14:00:00-05:00",
+  "contact_name": "Chelsea Kuykendall",
+  "contact_email": "chelsea.kuykendall@us.af.mil",
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-c2fdbf4e11c84674b849fbc361e07e88-66d8d0b4fb8c",
+  "metadata": {
+    "event_type": "Combined Synopsis/Solicitation",
+    "solicitation_number": "FA810026QB001",
+    "ui_link": "https://sam.gov/workspace/contract/opp/c2fdbf4e11c84674b849fbc361e07e88/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": "DE01",
+    "set_aside": "NONE",
+    "set_aside_description": "No Set aside used",
+    "place_of_performance": {
+      "city": {
+        "code": "0",
+        "name": "S Coffeyville"
+      },
+      "state": {
+        "code": "OK",
+        "name": "Oklahoma"
+      },
+      "country": {
+        "code": "USA",
+        "name": "UNITED STATES"
+      }
+    },
+    "office_address": {
+      "zipcode": "73145-9125",
+      "city": "TINKER AFB",
+      "countryCode": "USA",
+      "state": "OK"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "Combined Synopsis Solicitation_FA810026QB001 (AFAS).pdf",
+        "url": "https://drive.google.com/file/d/1EONccJS4HHorepeOGSCKnkaf7y1wkxq4/view?usp=drivesdk",
+        "type": "primary_spec",
+        "original_extension": "pdf",
+        "size_bytes": 448720,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/8cda862fdb7743feb2d8915b42fef22f/download"
+      },
+      {
+        "label": "PWS AFAS Apr 2026 Rev. 01.pdf",
+        "url": "https://drive.google.com/file/d/1jYrK_qWda4bJx_BCAULyuNOU7nWfJ7ig/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 291753,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/8bb9fdaadbf24f79a42dbc0c8731aab4/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "chelsea.kuykendall@us.af.mil",
+        "phone": "",
+        "title": null,
+        "fullName": "Chelsea Kuykendall"
+      },
+      {
+        "fax": "",
+        "type": "secondary",
+        "email": "jeffrey.atterbury@us.af.mil",
+        "phone": "4052554974",
+        "title": null,
+        "fullName": "Jeffrey Atterbury"
+      }
+    ]
+  }
+}

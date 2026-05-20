@@ -1,0 +1,660 @@
+Secure Cloud Computing Architecture on AWS for the US Department of
+Copyright © 2025 Amazon Web Services, Inc. and/or its aﬃliates. All rights reserved. AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+AWS Prescriptive Guidance: Secure Cloud Computing Architecture on
+AWS for the US Department of Defense
+Copyright © 2025 Amazon Web Services, Inc. and/or its aﬃliates. All rights reserved. Amazon's trademarks and trade dress may not be used in connection with any product or service
+that is not Amazon's, in any manner that is likely to cause confusion among customers, or in any
+manner that disparages or discredits Amazon. All other trademarks not owned by Amazon are
+the property of their respective owners, who may or may not be aﬃliated with, connected to, or
+sponsored by Amazon. AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+Table of Contents
+iii
+AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+iv
+AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+Secure Cloud Computing Architecture on AWS for the US
+Department of Defense
+Rob Higareda and Rughved Gadgil, Amazon Web Services (AWS)
+March 2024 (document history)
+The US Department of Defense (DoD) segments cloud information into impact levels (ILs). The impact level is associated with the sensitivity of the information and the risk of losing the
+conﬁdentiality, integrity, or availability of that information. IL4 accommodates DoD Controlled
+Unclassiﬁed Information (CUI), and IL5 accommodates DoD CUI and National Security Systems
+(NSS) information. This guide is designed to help you build a landing zone that supports IL4 and
+IL5 information. In order to build an IL4-compliant or IL5-compliant cloud infrastructure, you must build
+speciﬁc components. The Defense Information Systems Agency (DISA) Secure Cloud Computing
+Architecture (SCCA) is a selection of cloud security and management services. It provides a
+standardized approach for creating a cloud boundary. The SCCA also includes application-level
+security components for IL4 and IL5 information hosted in the cloud. This guide helps you meet SCCA requirements by using the
+Landing Zone Accelerator (LZA) on
+AWS. The LZA solution deploys a foundational set of capabilities that is designed to align with
+AWS best practices and multiple global compliance frameworks. The LZA can help you create
+many of the components necessary to adhere to the DoD SCCA. This guide also recommends how
+you can add additional components for SCCA compliance and establish a secure foundation for
+your cloud environments on AWS. Although this guide doesn't include every potential situation,
+it provides guidance about how to get started and about which AWS services can help you meet
+SCCA requirements. Intended audience
+This guide is intended for individuals who need to comply with the DoD Secure Cloud Computing
+Architecture in order to help secure IL4 and IL5 information in the AWS Cloud. If you haven't done
+so already, review the
+DISA Cloud Computing Security Requirements Guide before reading this
+guide. Intended audience 1
+AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+Overview of the Landing Zone Accelerator
+In order to build a landing zone in AWS that conforms to the Defense Information Systems Agency
+(DISA) Secure Cloud Computing Architecture (SCCA), you must have certain elements in place to
+help you meet the minimum requirements. AWS has created the
+Landing Zone Accelerator (LZA)
+to help you deploy a landing zone that conforms to the necessary requirements. Using the LZA
+solution, you can deploy the environment by using a set of conﬁguration ﬁles. These conﬁguration
+ﬁles help you focus on the delivery of an environment instead of learning each individual AWS
+service and how to deploy it. The following image shows services involved in the LZA deployment. The numbers indicate the
+workﬂow, from modiﬁcation of the conﬁguration ﬁles to conﬁguration of AWS services in the
+workload accounts.
+2
+AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+This solution is architected to align with AWS best practices and conform to multiple global
+compliance frameworks. When used in coordination with services such as AWS Control Tower,
+this solution provides a comprehensive, low-code solution across more than 35 AWS services and
+features. Speciﬁcally, this solution helps you manage and govern a multi-account environment that
+is built to support highly-regulated workloads and complex compliance requirements. LZA helps
+you establish platform readiness with security, compliance, and operational capabilities. This guide
+includes speciﬁc notes regarding use of this solution to support alignment with
+United States (US)
+Federal and Department of Defense (DoD) guidance. AWS provides the LZA solution as an open source project that was built by using the AWS Cloud
+Development Kit (AWS CDK) . You can install it directly into your environment, giving you full access
+to the infrastructure as code (IaC) solution. Through a simpliﬁed set of conﬁguration ﬁles, you can:
+• Conﬁgure additional functionality, guardrails, and security services, such as
+AWS Conﬁg managed
+rules and AWS Security Hub.
+• Manage your foundational networking topology through services such as Amazon Virtual Private
+Cloud (Amazon VPC), AWS Transit Gateway, and AWS Network Firewall.
+• Generate additional workload accounts by using the AWS Control Tower Account Factory. There are no additional charges or upfront commitments required to use Landing Zone Accelerator
+on AWS. You pay only for the AWS services that you turn on to set up your platform and operate
+your guardrails. This solution can also support non-standard AWS partitions, including the AWS
+GovCloud (US), AWS Secret, and AWS Top Secret Regions. The LZA solution does not, by itself, make you compliant. It provides the foundational
+infrastructure from which you can integrate additional complementary solutions. The
+information contained in the
+LZA implementation guide is not exhaustive. You must review,
+evaluate, assess, and approve the solution in compliance with your organization's particular
+security features, tools, and conﬁgurations. It is the sole responsibility of you and your
+organization to determine which regulatory requirements are applicable and to ensure that
+you comply with all requirements. Although this solution discusses both the technical and
+3
+AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+administrative requirements, this solution does not help you comply with the non-technical
+administrative requirements. Planning your LZA deployment on AWS
+AWS has created a detailed implementation guide for deploying the Landing Zone Accelerator
+(LZA) solution on AWS. For an architecture diagram and an overview of the deployment steps,
+see Architecture diagram in the Landing Zone Accelerator on AWS Implementation Guide. Your
+environment must meet prerequisites before deploying the solution. Using the requirements
+in the SCCA components and requirements chapter in this guide, you can choose between the
+deployment options that are described in the
+LZA implementation guide. Planning your LZA deployment on AWS 4
+AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+SCCA components and requirements
+The Defense Information Systems Agency (DISA) Secure Cloud Computing Architecture (SCCA),
+adopted by the US Department of Defense (DoD), is intended to be a scalable, cost-eﬀective
+approach for securing cloud-based applications under a common security architecture. It provides
+a standard approach for securing IL4 and IL5 data in cloud environments. As described in the
+SCCA fact sheet, the overarching components of the SCCA include:
+• Cloud Access Point (CAP) – Provides access to the cloud, and protects DoD networks from the
+cloud. Streamlined protections focused on protecting the network boundary.
+• Virtual Data Center Security Stack (VDSS) – Virtual network enclave security to protect
+applications and data in commercial cloud oﬀerings.
+• Virtual Data Center Managed Services (VDMS)
+– Application host security for privileged user
+access in commercial environments.
+• Trusted Cloud Credential Manager (TCCM) – Cloud credential manager to enforce role-based
+access control (RBAC) and least-privileged access. The following image shows these components of the SCCA.
+5
+AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+This section discusses each component in detail and the corresponding components in the LZA that
+can help you adhere to the Defense Information Systems Agency (DISA) standard. The following
+image shows the LZA multi-account structure that builds the components of the SCCA within the
+AWS Cloud. This LZA multi-account structure is a foundation that helps you achieve an architecture
+that is fully compliant with DISA SCCA requirements. For an example of an architecture that helps
+you fully meet compliance requirements, see the
+SCCA on AWS GovCloud architecture diagram.
+6
+AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+The Boundary Cloud Access Point (BCAP) or Cloud Access Point (CAP) is predetermined by your
+organization. Therefore, it is not in the scope of this guide. The CAP provides access to commercial
+cloud environments from the Defense Information Systems Network (DISN). The CAP also provides
+boundary protection of DISN from the cloud. At the DISN boundary, it includes cyber-defense
+capabilities, such as ﬁrewall, intrusion detection systems (IDS), and intrusion prevention systems
+Cloud Access Point 7
+AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+(IPS). It's common for organizations to use the DoD Cloud Native Access Point Reference Design for
+accessing AWS. Virtual Data Center Security Stack
+The purpose of the Virtual Data Center Security Stack (VDSS) is to protect DOD mission-owner
+applications that are hosted in AWS. The VDSS provides an enclave for security services. The VDSS
+performs the bulk of the security operations in the SCCA. This component contains security and
+network services, such as inbound connectivity access controls and perimeter protections services,
+including web application ﬁrewalls, DDOS protection, load balancers, and networking routing
+resources. The VDSS can reside in the cloud infrastructure or on premises, in your data center. AWS or third-party vendors can provide VDSS capabilities through infrastructure as a service
+(IaaS), or AWS can oﬀer these capabilities through software as a service (SaaS) solutions. For more
+information about the VDSS, see the
+DoD Cloud Computing Security Requirements Guide. The following table contains the minimum requirements for the VDSS. It explains whether the LZA
+addresses each requirement and which AWS services you can use to meet these requirements. ID VDSS security
+requirement
+AWS technolog
+ies
+resources
+Covered by LZA
+2.1.2.1 The VDSS shall
+maintain virtual
+separation of all
+management,
+user, and data
+traﬃc. Network access
+control list (ACL)
+Security groups
+for elastic
+network
+interfaces
+2.1.2.2 The VDSS shall
+allow the use of
+encryption for
+segmentation
+(Encrypt traﬃc
+between
+instances)
+Encryption best
+practices for
+Virtual Data Center Security Stack 8
+AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+ID VDSS security
+requirement
+AWS technolog
+ies
+resources
+Covered by LZA
+of management
+traﬃc.
+2.1.2.3 The VDSS
+shall provide a
+reverse proxy
+capability to
+handle access
+requests from
+client systems. N/A Serving content
+using a fully
+managed
+reverse proxy
+Not covered
+2.1.2.4 The VDSS
+shall provide
+a capability to
+inspect and
+ﬁlter application
+layer conversat
+ions based on
+a predeﬁne
+d set of rules
+(including HTTP)
+to identify and
+block malicious
+content. Web request
+body inspection
+TLS traﬃc
+inspection with
+Partially covered
+2.1.2.5 The VDSS
+shall provide a
+capability that
+can distingui
+sh and block
+unauthorized
+application layer
+traﬃc. AWS WAF How to use
+GuardDuty and
+AWS WAF to
+automatically
+block suspicious
+hosts
+Not covered
+Virtual Data Center Security Stack 9
+AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+ID VDSS security
+requirement
+AWS technolog
+ies
+resources
+Covered by LZA
+2.1.2.6 The VDSS
+shall provide
+a capability
+that monitors
+network and
+system activitie
+s to detect and
+report malicious
+activities for
+traﬃc entering
+and exiting
+virtual private
+networks/
+enclaves.
+workshop
+Partially covered
+2.1.2.7 The VDSS
+shall provide
+a capability
+that monitors
+network and
+system activitie
+s to stop or
+block detected
+malicious
+activity. N/A Partially covered
+Virtual Data Center Security Stack 10
+AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+ID VDSS security
+requirement
+AWS technolog
+ies
+resources
+Covered by LZA
+2.1.2.8 The VDSS shall
+inspect and ﬁlter
+traﬃc traversin
+g between
+mission owner
+virtual private
+networks/
+enclaves. Network Firewall Deploy centraliz
+ed traﬃc
+ﬁltering
+2.1.2.9 The VDSS shall
+perform break
+and inspectio
+n of SSL/TLS
+communication
+traﬃc supportin
+g single and
+dual authentic
+ation for traﬃc
+destined to
+systems hosted
+within the CSE.
+t models for
+Virtual Data Center Security Stack 11
+AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+ID VDSS security
+requirement
+AWS technolog
+ies
+resources
+Covered by LZA
+2.1.2.10 The VDSS
+shall provide
+an interface
+to conduct
+ports, protocols
+, and service
+management
+(PPSM) activitie
+s in order
+to provide
+control for MCD
+operators.
+t models for
+2.1.2.11 The VDSS
+shall provide
+a monitoring
+capability that
+captures log ﬁles
+and event data
+for cybersecurity
+analysis. Logging for
+security incident
+response
+Virtual Data Center Security Stack 12
+AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+ID VDSS security
+requirement
+AWS technolog
+ies
+resources
+Covered by LZA
+2.1.2.12 The VDSS shall
+provide or
+feed security
+information and
+event data to
+an allocated
+archiving system
+for common
+collection,
+storage, and
+access to
+event logs by
+privileged users
+performing
+Boundary and
+activities. Security in
+Virtual Data Center Security Stack 13
+AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+ID VDSS security
+requirement
+AWS technolog
+ies
+resources
+Covered by LZA
+2.1.2.13 The VDSS
+shall provide
+a FIPS-140-
+2 compliant
+encryption key
+managemen
+t system for
+storage of DoD
+generated
+and assigned
+server private
+encryption key
+credentials for
+access and use
+by the Web
+Firewall (WAF) in
+the execution of
+SSL/TLS break
+and inspectio
+n of encrypted
+communication
+sessions. Service(AWS
+KMS)
+origin security
+with AWS WAF
+and Secrets
+AWS KMS key
+management
+with FIPS 140-2
+Not covered
+2.1.2.14 The VDSS shall
+provide the
+capability to
+detect and
+identify applicati
+on session
+hijacking. N/A N/A Not covered
+Virtual Data Center Security Stack 14
+AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+ID VDSS security
+requirement
+AWS technolog
+ies
+resources
+Covered by LZA
+2.1.2.15 The VDSS shall
+provide a DoD
+to support to
+support Internet
+ons (IFAs). N/A N/A Not covered
+2.1.2.16 The VDSS
+shall provide
+full packet
+capture (FPC)
+or cloud service
+equivalent
+FPC capabilit
+y for recording
+and interpret
+ing traversing
+communications. N/A Covered
+2.1.2.17 The VDSS shall
+provide network
+packet ﬂow
+metrics and
+statistics for
+all traversing
+communications. CloudWatch Monitor network
+throughput of
+interface VPC
+endpoints using
+Virtual Data Center Security Stack 15
+AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+ID VDSS security
+requirement
+AWS technolog
+ies
+resources
+Covered by LZA
+2.1.2.18 The VDSS shall
+provide for the
+inspection of
+traﬃc entering
+and exiting each
+mission owner
+virtual private
+network. Network Firewall Deploy centraliz
+ed traﬃc
+ﬁltering
+There are components of the CAP that you deﬁne and that are not covered in this guide because
+each agency has their own CAP connection to AWS. You can supplement the components of the
+VDSS with the LZA in order to help inspect the traﬃc coming into AWS. The services used in the
+LZA provide boundary and internal traﬃc scanning to help secure your environment. In order
+to continue building a VDSS, there are some additional infrastructure components that are not
+included in the LZA. By using virtual private cloud (VPCs), you can establish boundaries in each AWS account to help
+adhere to the SCCA standards. This isn't conﬁgured as part of the LZA because VPCs, IP addressing,
+and routing are components that you must set up as needed for your infrastructure. You can
+implement components such as Domain Name System Security Extensions (DNSSEC) in
+Route 53. You can also add AWS WAF or third-party, commercial WAFs to help you achieve
+necessary standards. Additionally, to support requirement 2.1.2.7in the DISA SCCA, you can use GuardDuty and Network
+Firewall to help secure and monitor the environment for malicious traﬃc. Virtual Data Center Managed Services
+The purpose of Virtual Data Center Managed Services (VDMS) is to provide host security and
+shared data center services. The functions of VDMS can either run in the hub of your SCCA, or
+the mission owner can deploy parts of it in their own AWS accounts. This component can be
+provided within your AWS environment. For more information about the VDMS, see the
+Computing Security Requirements Guide. Virtual Data Center Managed Services 16
+AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+The following table contains the minimum requirements for the VDMS. It explains whether the LZA
+addresses each requirement and which AWS services you can use to meet these requirements. ID VDMS security
+requirement
+AWS technolog
+ies
+resources
+Covered by LZA
+2.1.3.1 The VDMS shall
+provide Assured
+Solution (ACAS),
+or approved
+equivalent,
+to conduct
+continuous
+monitoring for
+all enclaves
+within the CSE. AWS Conﬁg
+lity scanning
+with Amazon
+Partially covered
+2.1.3.2 The VDMS shall
+provide Host
+System (HBSS),
+or approved
+equivalent,
+to manage
+endpoint
+security for all
+enclaves within
+the CSE. N/A N/A Not covered
+2.1.3.3 The VDMS
+shall provide
+identity services
+to include
+an Online
+Certiﬁcate
+Multi-factor
+authentication
+(MFA) available
+through:
+Conﬁgure a CAC
+card for Amazon
+Partially covered
+Virtual Data Center Managed Services 17
+AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+ID VDMS security
+requirement
+AWS technolog
+ies
+resources
+Covered by LZA
+(OCloud
+Security)
+responder for
+remote system
+(CAC) two-facto
+r authentic
+ation of DoD
+privileged users
+to systems
+instantiated
+within the CSE.
+and Access
+(IAM)
+Service for
+Certiﬁcate
+2.1.3.4 The VDMS
+shall provide a
+conﬁguration
+and update
+management
+system to serve
+systems and
+applications
+for all enclaves
+within the CSE. AWS Conﬁg
+g patch
+managemen
+t with AWS
+(YouTube video)
+Partially covered
+Virtual Data Center Managed Services 18
+AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+ID VDMS security
+requirement
+AWS technolog
+ies
+resources
+Covered by LZA
+2.1.3.5 The VDMS
+shall provide
+logical domain
+services to
+include directory
+access, directory
+federation,
+Conﬁguration
+Protocol (DHCP),
+and Domain
+(DNS) for all
+enclaves within
+the CSE.
+(Amazon VPC)
+Route 53
+Conﬁgure DNS
+attributes for
+your VPC
+Partially covered
+2.1.3.6 The VDMS
+shall provide
+a network
+for managing
+systems and
+applications
+within the CSE
+that is logically
+separate from
+the user and
+data networks.
+subnets
+N/A Covered
+Virtual Data Center Managed Services 19
+AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+ID VDMS security
+requirement
+AWS technolog
+ies
+resources
+Covered by LZA
+2.1.3.7 The VDMS
+shall provide a
+system, security,
+application, and
+user activity
+event logging
+and archiving
+system for
+common
+collection,
+storage, and
+access to
+event logs by
+privileged users
+performing
+BCP and MCP
+activities.
+(Amazon S3)
+Logging with
+Virtual Data Center Managed Services 20
+AWS Prescriptive Guidance Secure Cloud Computing Architecture on AWS for the US Department
+of Defense
+ID VDMS security
+requirement
+AWS technolog
+ies
+resources
+Covered by LZA
+2.1.3.8 The VDMS shall
+provide for the
+exchange of
+DoD privileged
+user authentic
+ation and
+authoriza
+tion attribute
+s with the
+CSP's Identity
+and access
+managemen
+t system to
+enable cloud
+system provision
+ing, deploymen
+t, and conﬁgura
+tion. Enhance your
+AD security
+conﬁguration
+Not covered
+2.1.3.9 The VDMS shall
+implement
+the technical
+capabilities
+necessary to
+execute the
+mission and
+objectives of the
+TCCM role. N/A Partially covered

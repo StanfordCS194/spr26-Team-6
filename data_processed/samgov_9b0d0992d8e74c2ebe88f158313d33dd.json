@@ -1,0 +1,192 @@
+{
+  "source": "sam.gov",
+  "external_id": "9b0d0992d8e74c2ebe88f158313d33dd",
+  "title": "Request For Proposals: HAF/A2 Publicly Available Information (PAI) Alerting Services for Department of War (DoW) Enterprise Licensing",
+  "name": "HAF/A2 Publicly Available Information Alerting Services for Department",
+  "statement_of_work": "This Statement of Objectives sets forth the objectives for Department of War (DoW)-wide access to a commercially available enterprise license (up to 3.5M users) subscription to a PAI-based alerting solution that has the attributes as described in section V. The commercially-available license subscription should leverage a variety of publicly available information sources, evaluate content to detect emerging events as they are developing, and push alerts to users based on user-defined areas and topics of interest. The solution must be capable of distributing alerts in near real-time via email, application programming interface (API), web-based application, and mobile platforms. The solution must be available commercially in the marketplace, and able to scale to a DoW enterprise capability, and keep pace with developments and standards within the commercial industry sector.",
+  "deliverables": [
+    "The solution must be capable of distributing alerts in near real-time via email, application programming interface (API), web-based application, and mobile platforms",
+    "The solution must be available commercially in the marketplace, and able to scale to a DoW enterprise capability, and keep pace with developments and standards within the commercial industry sector"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Procurement",
+    "Software",
+    "California"
+  ],
+  "dept": "DEPT OF DEFENSE.DEPT OF THE AIR FORCE.AIR FORCE DISTRICT OF WASHINGTON.FA7014 AFDW PK",
+  "description": "This Statement of Objectives sets forth the objectives for Department of War (DoW)-wide access to a commercially available enterprise license (up to 3.5M users) subscription to a PAI-based alerting solution that has the attributes as described in section V. The commercially-available license subscription should leverage a variety of publicly available information sources, evaluate content to detect emerging events as they are developing, and push alerts to users based on user-defined areas and topics of interest. The solution must be capable of distributing alerts in near real-time via email, application programming interface (API), web-based application, and mobile platforms. The solution must be available commercially in the marketplace, and able to scale to a DoW enterprise capability, and keep pace with developments and standards within the commercial industry sector. Period and place of performance.",
+  "published_date": "2026-04-30",
+  "due_date": "2026-05-04T10:00:00-04:00",
+  "contact_name": "Capt Richard Snyder",
+  "contact_email": "richard.snyder.12@us.af.mil",
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-9b0d0992d8e74c2ebe88f158313d33dd-d684ed2b1a42",
+  "metadata": {
+    "event_type": "Combined Synopsis/Solicitation",
+    "solicitation_number": "FA701426R0008",
+    "ui_link": "https://sam.gov/workspace/contract/opp/9b0d0992d8e74c2ebe88f158313d33dd/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": "7A21",
+    "set_aside": "NONE",
+    "set_aside_description": "No Set aside used",
+    "place_of_performance": {
+      "state": {
+        "code": "DC",
+        "name": "District of Columbia"
+      },
+      "zip": "20301",
+      "country": {
+        "code": "USA",
+        "name": "UNITED STATES"
+      }
+    },
+    "office_address": {
+      "zipcode": "20762-6604",
+      "city": "ANDREWS AFB",
+      "countryCode": "USA",
+      "state": "MD"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "Atch 1 SOO 20 April 26.pdf",
+        "url": "https://drive.google.com/file/d/1xW43wH9Ok4TSXAPupz5Dpvr0vOcO0s8M/view?usp=drivesdk",
+        "type": "primary_spec",
+        "original_extension": "pdf",
+        "size_bytes": 169575,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/bcd78ae386e84c169feb130acfb1a6b9/download"
+      },
+      {
+        "label": "Atch 2 PAI Alerting ITO and Eval Criteria 30 Apr 26.pdf",
+        "url": "https://drive.google.com/file/d/1OdM5DQKvXcLjVHbdnq0paLg55nOOH0vn/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 320955,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/99b86632194b4c9f8520a1b7f5b150bc/download"
+      },
+      {
+        "label": "Atch 3 PWS PAI Template v2.docx",
+        "url": "https://docs.google.com/document/d/1t8jh2w0FVmPwgKMPzc1zOQz219MKbvCZ/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 66305,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/c04628c4044a4f62988c5be301de0484/download"
+      },
+      {
+        "label": "Atch 4 Price Proposal Template v2.xlsx",
+        "url": "https://docs.google.com/spreadsheets/d/1x8A_e-5YqLkHo5eESTJBHwWUBN-THv7t/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "xlsx",
+        "size_bytes": 68228,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/bc4f3e357f5e4976b12d27285f1b5933/download"
+      },
+      {
+        "label": "Atch 5_Additional Clauses 14 April 26.pdf",
+        "url": "https://drive.google.com/file/d/1OC0uc6nfj9s28_aqZ-FS0MlQvNRR_rwx/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 487448,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/45a4c1d8fef943bd885f27b8e4c89ae5/download"
+      },
+      {
+        "label": "Questions and Answers 24 Apr 26.xlsx",
+        "url": "https://docs.google.com/spreadsheets/d/1hblZdHpt09tDJF74IZGc9LxI9HL79EU7/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "xlsx",
+        "size_bytes": 56702,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/f810dcc8416d4474833b0922bb577751/download"
+      },
+      {
+        "label": "Solicitation - FA701426R0008.pdf",
+        "url": "https://drive.google.com/file/d/1okX-3gh-FULSuZFvybyOvC7eXzAuse_A/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 331144,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/239d924edd0f48d891b36a1f35fdef0a/download"
+      },
+      {
+        "label": "Solicitation Amendment FA701426R00080001 SF 30 (1).pdf",
+        "url": "https://drive.google.com/file/d/1Yyi6D8Bl2_Wm8TVZqxft18mweRhISmp4/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 88078,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/6e29433d732345e2a2eb136bd58405ca/download"
+      },
+      {
+        "label": "Solicitation Amendment FA701426R00080002 SF 30.pdf",
+        "url": "https://drive.google.com/file/d/17ElIzlkR-V1ZpHgf4uqXyOhscy4Y42ET/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 93193,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/ea803e9c158f4a94b3861792d1310b81/download"
+      },
+      {
+        "label": "Solicitation Amendment FA701426R00080003 SF 30 (1).pdf",
+        "url": "https://drive.google.com/file/d/1W5WJ1lB-Mwlt3vC_qr7WWIEklsmzduva/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 390026,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/d67c126cedc04ca5bbe7db6b18cb4df6/download"
+      },
+      {
+        "label": "Solicitation Amendment FA701426R00080004 SF 30.pdf",
+        "url": "https://drive.google.com/file/d/1RkOT1oxdK85ccNNGlofU4jFJ95uiCwWO/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 406398,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/7aaa9a8889cd4aa18f87401464a53d79/download"
+      },
+      {
+        "label": "Solicitation Amendment FA701426R00080005 SF 30 (1).pdf",
+        "url": "https://drive.google.com/file/d/1SLpgKHa5ydH55cv079AcCqVi5oiu5o8g/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 394343,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/ac7b86b349d940e1aa22cb7eaaf2edbd/download"
+      },
+      {
+        "label": "Solicitation Amendment FA701426R00080006 SF 30 (1).pdf",
+        "url": "https://drive.google.com/file/d/1F5fFpKN4gdh6XmBCKB-Lup1J_T5q_WAp/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 399928,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/a8c50e664b224fdebfe2b837a8e52a3b/download"
+      },
+      {
+        "label": "Solicitation Amendment FA701426R00080007 SF 30 (1).pdf",
+        "url": "https://drive.google.com/file/d/1-1F778PYF8QpuQkzAHnCtLe2QW33Obqu/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 393585,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/d8ca50d707f54a83a5e3e93061a127fe/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "richard.snyder.12@us.af.mil",
+        "phone": "",
+        "title": null,
+        "fullName": "Capt Richard Snyder"
+      },
+      {
+        "fax": "",
+        "type": "secondary",
+        "email": "kevin.harrington.3@us.af.mil",
+        "phone": "",
+        "title": null,
+        "fullName": "Kevin Harrington"
+      }
+    ]
+  }
+}

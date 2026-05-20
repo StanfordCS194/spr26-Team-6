@@ -1,0 +1,100 @@
+{
+  "source": "sam.gov",
+  "external_id": "e7a920bd2605471eb7baee35859b655d",
+  "title": "REQUEST FOR INFORMATION - Next Generation Command and Control (NGC2) Software Application Storefront, Pipeline and Tailorable Warfighting Applications",
+  "name": "Next Generation Command and Control Software Application Storefront,",
+  "statement_of_work": "Topic: Business Models & Processes Row #1: Similar to NGC2 efforts, PM C2 Apps is considering a “teaming” arrangement for the entire portfolio on the assumption that a singular team lead could develop and/or partner with others to provide a pipeline and application storefront, while working with the Government in an Agile and DevSecOps environment to provide applications to the Warfighter. These applications would be based on approval from the Government and be brought on to existing efforts as a combination of Government, Commercial, and Tactical solutions. Please describe if you believe this approach seems feasible and/or would your solution support this concept? Response: Row #1a: Please identify which of the following solutions you already have available; software application storefront platform, pipeline and/or tailorable warfighting application and are they commercial?",
+  "deliverables": [
+    "Address requirements in 'Attachment 1 Response Form 1'",
+    "Address requirements in 'THE FULL RFI TEXT AND ADDITIONAL SECTIONS'"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Infrastructure",
+    "Software",
+    "California"
+  ],
+  "dept": "DEPT OF DEFENSE.DEPT OF THE ARMY.AMC.ACC.ACC-CTRS.ACC-APG.W6QK ACC-APG",
+  "description": "Topic: Business Models & Processes Row #1: Similar to NGC2 efforts, PM C2 Apps is considering a “teaming” arrangement for the entire portfolio on the assumption that a singular team lead could develop and/or partner with others to provide a pipeline and application storefront, while working with the Government in an Agile and DevSecOps environment to provide applications to the Warfighter. These applications would be based on approval from the Government and be brought on to existing efforts as a combination of Government, Commercial, and Tactical solutions. Please describe if you believe this approach seems feasible and/or would your solution support this concept? Response: Row #1a: Please identify which of the following solutions you already have available; software application storefront platform, pipeline and/or tailorable warfighting application and are they commercial? Response: Row # 1b: For available solutions, please describe your integration process and include a timeline for implementation.",
+  "published_date": "2026-04-28",
+  "due_date": "2026-05-27T12:00:00-04:00",
+  "contact_name": "Jon Bauman",
+  "contact_email": "jonathan.m.bauman2.civ@army.mil",
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-e7a920bd2605471eb7baee35859b655d-781df644d0e3",
+  "metadata": {
+    "event_type": "Special Notice",
+    "solicitation_number": "C2APPSRFI-1",
+    "ui_link": "https://sam.gov/workspace/contract/opp/e7a920bd2605471eb7baee35859b655d/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": "AC13",
+    "set_aside": "NONE",
+    "set_aside_description": "No Set aside used",
+    "place_of_performance": {
+      "city": {
+        "code": "175",
+        "name": "Aberdeen Proving Ground"
+      },
+      "state": {
+        "code": "MD",
+        "name": "Maryland"
+      },
+      "zip": "21005",
+      "country": {
+        "code": "USA",
+        "name": "UNITED STATES"
+      }
+    },
+    "office_address": {
+      "zipcode": "21005-1846",
+      "city": "ABERDEEN PROVING GROU",
+      "countryCode": "USA",
+      "state": "MD"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "Attachment 1_Response Form 1-.docx",
+        "url": "https://docs.google.com/document/d/1ZBVw5RicbcU1IQk0DyyUdF2cAsDK3Ge4/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "primary_spec",
+        "original_extension": "docx",
+        "size_bytes": 124831,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/8ecf90cd7ff34343b60943a7f8bf6664/download"
+      },
+      {
+        "label": "THE FULL RFI TEXT AND ADDITIONAL SECTIONS.pdf",
+        "url": "https://drive.google.com/file/d/1Q4fvaI4lKbnVAyAN-2Pbd_catPn9LYbW/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 163768,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/6c28667130454ec5bb570886de291b05/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "jonathan.m.bauman2.civ@army.mil",
+        "phone": "",
+        "title": null,
+        "fullName": "Jon Bauman"
+      },
+      {
+        "fax": "",
+        "type": "secondary",
+        "email": "Lee.Alexis.civ@army.mil",
+        "phone": "",
+        "title": null,
+        "fullName": "Lee ALEXIS"
+      }
+    ]
+  }
+}

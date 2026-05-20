@@ -1,0 +1,79 @@
+{
+  "source": "SAM.gov",
+  "external_id": "967466a370b447e9aca38a7de7954e6a",
+  "title": "Supervisory Control and Data Acquisition (SCADA) System",
+  "dept": "DEPT OF DEFENSE.DEPT OF THE AIR FORCE.AIR FORCE GLOBAL STRIKE COMMAND.FA4625  509 CONS CC",
+  "description": "",
+  "published_date": "2026-05-01",
+  "due_date": "2026-05-08T14:00:00-05:00",
+  "contact_name": "Cris Hernandez",
+  "contact_email": "cris.hernandez@us.af.mil",
+  "contact_phone": "6606871311",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-967466a370b447e9aca38a7de7954e6a-29a15e71ac3f",
+  "metadata": {
+    "event_type": "Presolicitation",
+    "solicitation_number": "FA462526Q1017",
+    "ui_link": "https://sam.gov/workspace/contract/opp/967466a370b447e9aca38a7de7954e6a/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": "DA10",
+    "set_aside": "SBA",
+    "set_aside_description": "Total Small Business Set-Aside (FAR 19.5)",
+    "place_of_performance": {
+      "city": {
+        "code": "79432",
+        "name": "Whiteman Air Force Base"
+      },
+      "state": {
+        "code": "MO",
+        "name": "Missouri"
+      },
+      "zip": "65305",
+      "country": {
+        "code": "USA",
+        "name": "UNITED STATES"
+      }
+    },
+    "office_address": {
+      "zipcode": "65305-5344",
+      "city": "WHITEMAN AFB",
+      "countryCode": "USA",
+      "state": "MO"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "26Q1017 Sole Source Justification_SCADA Mx_17Mar26.pdf",
+        "url": "https://drive.google.com/file/d/1t-PNlzL27glyByNzZjcOUGI4LtlloLDd/view?usp=drivesdk",
+        "type": "primary_spec",
+        "original_extension": "pdf",
+        "size_bytes": 2541329,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/8d79f3b602b44725a299767aa4961fc6/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "cris.hernandez@us.af.mil",
+        "phone": "6606871311",
+        "title": null,
+        "fullName": "Cris Hernandez"
+      },
+      {
+        "fax": "",
+        "type": "secondary",
+        "email": "amanda.fragoso@us.af.mil",
+        "phone": "6606873668",
+        "title": null,
+        "fullName": "Amanda Fragoso"
+      }
+    ]
+  }
+}

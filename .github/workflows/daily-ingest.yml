@@ -1,0 +1,52 @@
+name: Daily RFP ingest
+
+on:
+  schedule:
+    # 14:00 UTC daily (~6am PT during PDT)
+    - cron: "0 14 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: daily-ingest
+  cancel-in-progress: false
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    env:
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      SAM_GOV_API_KEY: ${{ secrets.SAM_GOV_API_KEY }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Install Playwright Chromium
+        run: python -m playwright install chromium
+
+      - name: Run daily ingest
+        run: bash scripts/daily_ingest.sh
+
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: daily-ingest-failure-logs
+          path: |
+            data_raw/
+            data_processed/
+          if-no-files-found: ignore
+          retention-days: 7

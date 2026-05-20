@@ -4,9 +4,13 @@ import dynamic from "next/dynamic";
 import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import ReactMarkdown from "react-markdown";
 import { useDashboard } from "@/context/DashboardContext";
+import { captureEvent } from "@/lib/analytics";
 import { isPdfUrl } from "@/lib/pdf";
 import type { Rfp } from "@/lib/types";
 import { SourceDocumentEmbed } from "./SourceDocumentEmbed";
+import { TagBubble } from "./RfpCard";
+import { trackABTestEvent } from "@/app/posthog-provider";
+import { shortenAgencyName } from "@/lib/formatAgency";
 
 const RfpPdfViewer = dynamic(
   () => import("./RfpPdfViewer").then((m) => m.RfpPdfViewer),
@@ -19,6 +23,45 @@ const RfpPdfViewer = dynamic(
     ),
   },
 );
+
+function DeadlineCountdown({ dueDate }: { dueDate: string }) {
+  const [daysLeft, setDaysLeft] = useState(0);
+  const [hoursLeft, setHoursLeft] = useState(0);
+
+  useEffect(() => {
+    const updateCountdown = () => {
+      const deadline = new Date(`${dueDate}T23:59:59`);
+      const now = new Date();
+      const diff = deadline.getTime() - now.getTime();
+      
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      
+      setDaysLeft(Math.max(0, days));
+      setHoursLeft(Math.max(0, hours));
+    };
+
+    updateCountdown();
+    const timer = setInterval(updateCountdown, 3600000); // Update every hour
+    return () => clearInterval(timer);
+  }, [dueDate]);
+
+  const getColor = () => {
+    if (daysLeft <= 0) return "bg-red-50 border-red-200 text-red-700";
+    if (daysLeft <= 3) return "bg-red-50 border-red-200 text-red-700";
+    if (daysLeft <= 7) return "bg-yellow-50 border-yellow-200 text-yellow-700";
+    return "bg-blue-50 border-blue-200 text-blue-700";
+  };
+
+  return (
+    <div className={`rounded-lg border p-3 ${getColor()}`}>
+      <p className="text-xs font-semibold uppercase tracking-wide">Deadline countdown</p>
+      <p className="mt-1 text-lg font-bold">
+        {daysLeft}d {hoursLeft}h remaining
+      </p>
+    </div>
+  );
+}
 
 export function DetailPanel() {
   const { selectedRfp } = useDashboard();
@@ -125,6 +168,12 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
 
   useEffect(() => {
     setActivePdfIndex(0);
+    // Track variant view
+    trackABTestEvent("ab_test_variant_viewed", {
+      component: "detail_panel",
+      variant: "A",
+      rfp_id: rfp.id,
+    });
   }, [rfp.id]);
 
   const saved = isSaved(rfp.id);
@@ -132,6 +181,11 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
   const handleSave = async () => {
     const wasSaved = saved;
     await toggleSaveRfp(rfp.id);
+    trackABTestEvent("rfp_action", {
+      action: wasSaved ? "unsave" : "save",
+      variant: "A",
+      rfp_id: rfp.id,
+    });
     if (wasSaved) {
       showToast("Removed from saved opportunities.");
     } else {
@@ -140,19 +194,32 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
   };
 
   const handleSummary = async () => {
+    captureEvent("rag_summary_requested", { rfp_id: rfp.id });
     const found = await tryLoadCachedSummary(rfp.id);
+    trackABTestEvent("rfp_action", {
+      action: "generate_summary",
+      variant: "A",
+      rfp_id: rfp.id,
+      cached: found,
+    });
     if (found) {
       showToast("Loaded cached summary from the database.");
+      captureEvent("rag_summary_cached_hit", { rfp_id: rfp.id });
       return;
     }
     showToast(
-      "No cached summary yet. Generating new summaries requires a server-side pipeline (service role) — not available from the browser.",
+      "No cached summary yet. Generating new summaries requires a server-side pipeline (service role) - not available from the browser.",
     );
   };
 
   const handleProposal = () => {
+    trackABTestEvent("rfp_action", {
+      action: "draft_proposal",
+      variant: "A",
+      rfp_id: rfp.id,
+    });
     showToast(
-      "Draft proposal (stretch) — would use past performance + template generation.",
+      "Draft proposal (stretch) - would use past performance + template generation.",
     );
   };
 
@@ -163,14 +230,18 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
   ];
 
   return (
-    <section className="flex min-h-0 flex-1 flex-col bg-govbid-surface">
+    <section id="detail-panel" className="flex min-h-0 flex-1 flex-col bg-govbid-surface">
       <div className="flex shrink-0 gap-8 border-b border-govbid-border px-4 pt-3 lg:px-5">
         {tabs.map(({ id, label }) => (
           <button
             key={id}
             type="button"
-            onClick={() => setTab(id)}
-            className={`relative pb-2.5 text-sm font-semibold transition ${
+            onClick={() => {
+              setTab(id);
+              captureEvent("detail_tab_changed", { tab: id, rfp_id: rfp.id });
+            }}
+            data-walkthrough-tab={id}
+            className={`pdf-viewer-button relative pb-2.5 text-sm font-semibold transition ${
               tab === id
                 ? "text-govbid-text"
                 : "text-govbid-text-muted hover:text-govbid-text"
@@ -188,14 +259,14 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
         <button
           type="button"
           onClick={handleSave}
-          className="rounded-lg border border-govbid-border bg-govbid-surface px-3 py-2 text-sm font-medium text-govbid-text transition hover:bg-govbid-primary-muted/40"
+          className="save-rfp-button rounded-lg border border-govbid-border bg-govbid-surface px-3 py-2 text-sm font-medium text-govbid-text transition hover:bg-govbid-primary-muted/40"
         >
           {saved ? "Unsave" : "Save to profile"}
         </button>
         <button
           type="button"
           onClick={handleSummary}
-          className="govbid-btn-primary rounded-lg px-3 py-2 text-sm"
+          className="generate-summary-button govbid-btn-primary rounded-lg px-3 py-2 text-sm"
         >
           Generate summary
         </button>
@@ -215,19 +286,27 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
 
       <div className="min-h-0 flex-1 overflow-y-auto p-4 lg:p-5">
         {tab === "overview" && (
-          <div className="mx-auto max-w-2xl space-y-4">
-            <div>
-              <p className="text-xs font-medium uppercase tracking-wide text-govbid-text-muted">
-                {rfp.agency}
-              </p>
-              <h2 className="mt-1 text-lg font-bold leading-snug text-govbid-text lg:text-xl">
+          <div className="mx-auto w-full max-w-5xl space-y-5">
+            <div className="space-y-3">
+              <h2 className="rfp-title text-xl font-bold leading-snug text-govbid-text lg:text-2xl">
                 {rfp.title}
               </h2>
-              <p className="mt-2 text-sm leading-relaxed text-govbid-text-muted">
-                {rfp.description}
+              <p
+                className="text-xs font-medium uppercase tracking-wide text-govbid-text-muted line-clamp-2"
+                title={rfp.agency}
+              >
+                {shortenAgencyName(rfp.agency, 96)}
               </p>
+              <div className="rounded-xl border border-govbid-border/80 bg-govbid-elevated/60 p-4 lg:p-5">
+                <p className="text-xs font-semibold uppercase tracking-wide text-govbid-text-muted">
+                  Overview
+                </p>
+                <p className="rfp-overview mt-2 text-base leading-relaxed text-govbid-text lg:text-[1.05rem] lg:leading-7">
+                  {rfp.description}
+                </p>
+              </div>
             </div>
-            <dl className="grid grid-cols-2 gap-3 text-sm">
+            <dl className="rfp-location-date grid grid-cols-2 gap-3 text-sm">
               <div>
                 <dt className="text-govbid-text-muted">Location</dt>
                 <dd className="font-semibold text-govbid-text">{rfp.location}</dd>
@@ -237,13 +316,69 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
                 <dd className="font-semibold text-govbid-text">{rfp.dueDate}</dd>
               </div>
             </dl>
-            <div className="rounded-xl border border-govbid-border bg-govbid-surface p-4">
-              <h3 className="text-sm font-semibold text-govbid-text">
-                Statement of work (markdown stub)
-              </h3>
-              <div className="prose prose-sm prose-slate mt-3 max-w-none text-govbid-text">
-                <ReactMarkdown>{rfp.sowMarkdown}</ReactMarkdown>
+            
+            {/* Deadline Countdown Badge */}
+            <DeadlineCountdown dueDate={rfp.dueDate} />
+            
+            {/* Tags */}
+            {rfp.tags?.length > 0 && (
+              <div className="mt-2 flex flex-wrap gap-1">
+                {rfp.tags.map((tag) => (
+                  <TagBubble key={tag} tag={tag} />
+                ))}
               </div>
+            )}
+            
+            {/* Eligibility Requirements */}
+            <div className="rounded-xl border border-govbid-border bg-govbid-elevated p-4">
+              <h3 className="text-sm font-semibold text-govbid-text">
+                Eligibility Requirements
+              </h3>
+              <ul className="mt-3 space-y-2 text-sm text-govbid-text">
+                <li className="flex gap-2">
+                  <span className="shrink-0 text-govbid-primary">✓</span>
+                  <span>Valid SAM registration required</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="shrink-0 text-govbid-primary">✓</span>
+                  <span>Contractor with relevant experience preferred</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="shrink-0 text-govbid-primary">✓</span>
+                  <span>Certified small business status (if applicable)</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div className="rfp-sow rounded-xl border border-govbid-border bg-govbid-surface p-4">
+              <h3 className="text-sm font-semibold text-govbid-text">
+                Statement of Work
+              </h3>
+              {rfp.statementOfWork ? (
+                <p className="mt-3 whitespace-pre-line text-sm leading-relaxed text-govbid-text">
+                  {rfp.statementOfWork}
+                </p>
+              ) : (
+                <p className="mt-3 text-sm italic text-govbid-text-muted">
+                  No statement of work available for this RFP.
+                </p>
+              )}
+            </div>
+            <div className="rfp-deliverables rounded-xl border border-govbid-border bg-govbid-surface p-4">
+              <h3 className="text-sm font-semibold text-govbid-text">
+                Deliverables
+              </h3>
+              {rfp.deliverables.length > 0 ? (
+                <ul className="mt-3 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-govbid-text">
+                  {rfp.deliverables.map((d, i) => (
+                    <li key={i}>{d}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="mt-3 text-sm italic text-govbid-text-muted">
+                  No deliverables listed for this RFP.
+                </p>
+              )}
             </div>
           </div>
         )}
@@ -257,7 +392,7 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
         )}
 
         {tab === "ai" && (
-          <div className="prose prose-sm prose-slate mx-auto max-w-2xl text-govbid-text">
+          <div className="prose prose-sm prose-slate mx-auto max-w-5xl text-govbid-text">
             <ReactMarkdown>{rfp.aiAnalysisMarkdown}</ReactMarkdown>
           </div>
         )}

@@ -1,0 +1,34 @@
+A. The Contractor shall provide all software licenses, interfaces, services, training, and
+support necessary to connect the Hemochron Signature Elites analyzers to the existing
+RALS system and ensure compliant data management.
+
+B. Brand Name or Equal: When the government lists a specific brand‑name product in a
+solicitation, vendors are not required to offer that exact brand. They may offer a different
+product as long as it meets all the important features and performance requirements
+listed in the solicitation. These required features are called salient characteristics.
+
+• Clearly identify what product they are offering
+• Show how it meets the required characteristics
+• Provide supporting information (like brochures, spec sheets, or drawings)
+• Describe any changes they would make to meet the requirements
+
+The government will evaluate “equal” products based only on the information the vendor
+provides or references. If a vendor doesn’t say they are offering an “equal” product, the
+government will assume they are offering the exact brand-name item.
+
+(3) Provide service, support, updates, and hardware maintenance for the technology
+license during the contract period.
+
+(4) Provide free upgrades as they become commercially available and at the same time
+as commercial customers, including system upgrades that enhance the interface and
+support data integrity.
+
+(1) Ensure the RALS software is compatible with Hemochron Signature Elites analyzers
+and the VA LIS and electronic patient record system (VistA/CPRS).
+
+(4) Provide and install any third-party software required to support the system
+specifications.
+
+(1) Furnish all supplies, equipment, facilities, and services required for delivery,
+verification of operation, and installation of the software needed for connectivity
+between the equipment and the VA’s LIS.

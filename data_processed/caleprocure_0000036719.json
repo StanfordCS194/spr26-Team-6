@@ -1,0 +1,105 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "0000036719",
+  "title": "CalHEERS SDMO RFP #73040873",
+  "name": "CalHEERS SDMO Project",
+  "statement_of_work": "The State of California, Office of Technology and Solutions Integration (OTSI), is releasing a Request for Proposal (RFP) #73040873 for System Development, Maintenance & Operations (SDMO) for the California Healthcare Eligibility, Enrollment and Retention System (CalHEERS). The CalHEERS Project supports the enhancement, maintenance and operations, and on-going business of both Covered California and the Department of Health Care Services (DHCS). CalHEERS supports account creation, consumer application, eligibility rules, and health plan selection for insurance affordability programs, streamlining Californian's ability to research, compare, check their eligibility for, and purchase health coverage.",
+  "deliverables": [
+    "Support consumer application",
+    "Support health plan selection for insurance affordability programs",
+    "Support streamlining Californian's ability to research"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Operations",
+    "System Development",
+    "Health Services",
+    "California"
+  ],
+  "dept": "Office of Technology and Solutions Integration (OTSI)",
+  "description": "The State of California, Office of Technology and Solutions Integration (OTSI), is releasing a Request for Proposal (RFP) #73040873 for System Development, Maintenance & Operations (SDMO) for the California Healthcare Eligibility, Enrollment and Retention System (CalHEERS). The CalHEERS Project supports the enhancement, maintenance and operations, and on-going business of both Covered California and the Department of Health Care Services (DHCS). CalHEERS supports account creation, consumer application, eligibility rules, and health plan selection for insurance affordability programs, streamlining Californian's ability to research, compare, check their eligibility for, and purchase health coverage. CalHEERS interfaces with the Statewide Automated Welfare Systems (SAWS) for Modified Adjusted Gross Income (MAGI) Medi-Cal eligibility, enrollment and reporting, and provides data for potential eligibility to other programs such as, non-MAGI Medi-Cal, CalFresh, and California Work Opportunities and Responsibility for Kids (CalWORKS).",
+  "published_date": "2025-09-17T17:00:00-07:00",
+  "due_date": "2026-10-31T17:00:00-07:00",
+  "contact_name": "Alina Corpus",
+  "contact_email": "CalHEERSProcurement@otsi.ca.gov",
+  "contact_phone": "916-634-2905",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-0000036719-54d030ff6ee3",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "Bidders_Conference_Attendance_List_10.15.25.pdf",
+        "url": "https://drive.google.com/file/d/1CPzZJlwS51ipgExIXc9sxR12_Rz6QKhm/view?usp=drivesdk",
+        "type": "primary_spec",
+        "attachment_description": ""
+      },
+      {
+        "label": "Bidders_Conference_Presentation_10.15.25.pdf",
+        "url": "https://drive.google.com/file/d/1sKHBpm8Nl7DO9Zx9dZ9TqU6C8H5xnQ2l/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "CalHEERS_SDMO_RFP_73040873.pdf",
+        "url": "https://drive.google.com/file/d/1-SfZiBUhMw3ROArjJHMjvg6nHLlbjd3c/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "CalHEERS_SDMO_RFP_73040873_Addendum_01.pdf",
+        "url": "https://drive.google.com/file/d/1bC1VYSCM5FCQpHN9jx8Elg74xXWmlLmP/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "Responses_Rel_01_20251031_RFP_73040873.pdf",
+        "url": "https://drive.google.com/file/d/1TIsTzM1Ks5pHIZJhl8r155_L-r83WtYG/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "Responses_Rel_02_20251113_RFP_73040873.pdf",
+        "url": "https://drive.google.com/file/d/1-k_ZD9oBOMiDMNeVXRd8w74mxpXkfQZd/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "Responses_Rel_03_20251121_RFP_73040873.pdf",
+        "url": "https://drive.google.com/file/d/1LMHe6jsq2pWVROtl9NoSawRtQiiKbk3-/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "Responses_Rel_04_20251126_RFP_73040873.pdf",
+        "url": "https://drive.google.com/file/d/1Wk4P2RhRMddhwg6U-I_AkO6UCfgFz7Ke/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "Responses_Rel_05_20251204_RFP_73040873.pdf",
+        "url": "https://drive.google.com/file/d/11wz_q8OWPnuQSVUm83MWC1zMBsbWW1l5/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "Responses_Rel_06_20251211_RFP_73040873.pdf",
+        "url": "https://drive.google.com/file/d/1beOfnoK-AhqbwyykOrlt_GTfsUyvMO7s/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      }
+    ],
+    "unspsc_codes": [
+      {
+        "code": "01012001",
+        "description": "/> <span data-if-container-label=\"conferenceRow\" data-if-source=\"[id^='ZZ_BID_CNF_VW_DUE_DT_TIME$']\" data-if-content=\"nu"
+      }
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "0000038882",
+  "title": "S25073069 - Device42 On-Prem Software Licensing Agreement",
+  "name": "Device42 On-Prem Software Licensing Agreement",
+  "statement_of_work": "California State Parks seeks to procure Device42 software licenses.",
+  "deliverables": [
+    "Execute scope of work described in the Device42 On-Prem Software Licensing Agreement solicitation",
+    "Deliver milestones, status reporting, and acceptance documentation",
+    "Provide final handoff and post-deployment support per RFP terms"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Procurement",
+    "Software",
+    "California"
+  ],
+  "dept": "California Department of Parks and Recreation",
+  "description": "California State Parks seeks to procure Device42 software licenses.",
+  "published_date": "2026-04-16T13:01:00-07:00",
+  "due_date": "2026-05-15T17:00:00-07:00",
+  "contact_name": "Paul Furry",
+  "contact_email": "paul.furry@parks.ca.gov",
+  "contact_phone": "916-653-8468",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-0000038882-ab782792c941",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": ".RFQ___SOW_S25073069.pdf",
+        "url": "https://drive.google.com/file/d/1GRk9yvuaxJqPlzuLTB5SLbpYGqVEELac/view?usp=drivesdk",
+        "type": "primary_spec",
+        "attachment_description": ""
+      }
+    ],
+    "unspsc_codes": [
+      {
+        "code": "01012001",
+        "description": "/> <span data-if-container-label=\"conferenceRow\" data-if-source=\"[id^='ZZ_BID_CNF_VW_DUE_DT_TIME$']\" data-if-content=\"nu"
+      }
+    ]
+  }
+}

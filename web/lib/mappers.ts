@@ -30,9 +30,6 @@ export function collectPdfUrlsFromRfpRow(row: RfpRow): string[] {
   return out;
 }
 
-function buildSowMarkdown(description: string): string {
-  return `## Statement of work\n\n${description}\n\n### Deliverables\n\n- Kickoff and discovery within 30 days of award.\n- Monthly status reporting through the performance period.\n- Final acceptance testing and handoff documentation.\n\n### Period of performance\n\nWork is expected to complete within **12 months** of contract start.\n`;
-}
 
 function buildAiAnalysisMarkdown(score: number, location: string): string {
   const geoNote = location.includes("CA")
@@ -89,8 +86,12 @@ export function mapRfpRow(
     contractorId,
   );
   const location = row.location ?? "—";
+  const deliverables = row.deliverables?.length ? [...row.deliverables] : [];
   return {
     id: row.id,
+    // Prefer the curated short name from rfps.name; fall back to title when
+    // a row predates the name-extraction pipeline.
+    name: (row.name ?? "").trim() || row.title,
     title: row.title,
     agency: row.department ?? row.state ?? "—",
     dueDate: row.due_date ? row.due_date.slice(0, 10) : "—",
@@ -102,8 +103,9 @@ export function mapRfpRow(
       row.contract_amount_max,
     ),
     description,
+    statementOfWork: (row.statement_of_work ?? "").trim(),
+    deliverables,
     pdfUrls: collectPdfUrlsFromRfpRow(row),
-    sowMarkdown: buildSowMarkdown(description),
     aiAnalysisMarkdown:
       aiOverride ?? buildAiAnalysisMarkdown(score ?? 0, location),
   };
@@ -134,7 +136,39 @@ export function contractorRowToProfile(
     subIndustries: row.sub_industries.join(", "),
     goals: row.goals ?? "",
     pastExperience,
+    preferredLocations: row.preferred_locations.join(", "),
+    preferredContractMin:
+      row.preferred_contract_min != null
+        ? String(row.preferred_contract_min)
+        : "",
+    preferredContractMax:
+      row.preferred_contract_max != null
+        ? String(row.preferred_contract_max)
+        : "",
+    preferredResponseWindowDays:
+      row.preferred_response_window_days != null
+        ? String(row.preferred_response_window_days)
+        : "",
+    certifications: [...row.certifications],
+    setAsideEligibility: [...row.set_aside_eligibility],
+    naicsCodes: row.naics_codes.join(", "),
+    exclusions: row.exclusions.join(", "),
   };
+}
+
+function parseOptionalNumber(s: string): number | null {
+  const t = s.trim();
+  if (!t) return null;
+  const n = Number(t);
+  return Number.isFinite(n) ? n : null;
+}
+
+function parseOptionalInt(s: string): number | null {
+  const t = s.trim();
+  if (!t) return null;
+  const n = Number(t);
+  if (!Number.isFinite(n)) return null;
+  return Math.trunc(n);
 }
 
 export function profileToContractorUpdate(
@@ -144,6 +178,16 @@ export function profileToContractorUpdate(
     industries: splitList(p.industries),
     sub_industries: splitList(p.subIndustries),
     goals: p.goals || null,
+    preferred_locations: splitList(p.preferredLocations),
+    preferred_contract_min: parseOptionalNumber(p.preferredContractMin),
+    preferred_contract_max: parseOptionalNumber(p.preferredContractMax),
+    preferred_response_window_days: parseOptionalInt(
+      p.preferredResponseWindowDays,
+    ),
+    certifications: [...p.certifications],
+    set_aside_eligibility: [...p.setAsideEligibility],
+    naics_codes: splitList(p.naicsCodes),
+    exclusions: splitList(p.exclusions),
     updated_at: new Date().toISOString(),
   };
 }

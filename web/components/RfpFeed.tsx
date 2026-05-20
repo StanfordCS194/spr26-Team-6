@@ -1,5 +1,6 @@
 "use client";
 
+import { getListCardLayout } from "@/lib/analytics";
 import { useDashboard } from "@/context/DashboardContext";
 import { RfpCard } from "./RfpCard";
 
@@ -24,6 +25,7 @@ function filtersActive(
 }
 
 export function RfpFeed() {
+  const listLayout = getListCardLayout();
   const {
     feedRfps,
     selectedRfpId,
@@ -33,7 +35,13 @@ export function RfpFeed() {
     filteredRfps,
     searchQuery,
     rfpFilter,
+    isSaved,
+    toggleSaveRfp,
   } = useDashboard();
+
+  const handleFavoriteToggle = (id: string) => {
+    void toggleSaveRfp(id);
+  };
 
   if (activeNav === "history") {
     return (
@@ -47,13 +55,16 @@ export function RfpFeed() {
   }
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto bg-govbid-surface p-4 lg:gap-4 lg:p-5">
+    <div id="rfp-feed" className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto bg-govbid-surface p-4 lg:gap-4 lg:p-5">
       {feedRfps.map((rfp) => (
         <RfpCard
           key={rfp.id}
           rfp={rfp}
+          layout={listLayout}
           active={selectedRfpId === rfp.id}
           onSelect={() => selectRfp(rfp.id)}
+          isFavorited={isSaved(rfp.id)}
+          onFavoriteToggle={handleFavoriteToggle}
         />
       ))}
       {feedRfps.length === 0 && (

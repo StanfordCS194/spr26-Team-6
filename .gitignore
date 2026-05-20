@@ -2,3 +2,23 @@ credentials.json
 token.json
 __pycache__/
 .vscode
+scraper/pdfs_for_upload/*
+.DS_Store
+
+
+.env
+venv/
+
+# agents
+.cursor/
+
+# pnpm store when store-dir lives inside the repo (do not commit)
+.pnpm-store/
+
+# Vercel CLI (project link, local build output)
+.vercel/
+
+# Claude Code — ignore local state under .claude; keep `.claude/skills/` versioned
+.claude/**
+!.claude/skills/
+!.claude/skills/**

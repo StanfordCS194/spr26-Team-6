@@ -1,0 +1,63 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "0000039160",
+  "title": "NATIONAL CHANGE OF ADDRESS",
+  "name": "NATIONAL CHANGE OF ADDRESS",
+  "statement_of_work": "The Contractor will provide file-based National Change of Address (NCOA) services, including all the task required to update CA DMV Records received with address changes from the United States Postal Service NCOA database, address standardization, zip + 4 codes, and delivery point barcodes, via electronic delivery as described in RFO Section III, Statement of Work. Changes are shown in red. All other terms and conditions remain the same.",
+  "deliverables": [
+    "Provide file-based National Change of Address (NCOA) services",
+    "Provide address standardization",
+    "Provide delivery point barcodes",
+    "Provide via electronic delivery as described in RFO Section III"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Data",
+    "Software",
+    "California"
+  ],
+  "dept": "California Department of Motor Vehicles",
+  "description": "The Contractor will provide file-based National Change of Address (NCOA) services, including all the task required to update CA DMV Records received with address changes from the United States Postal Service NCOA database, address standardization, zip + 4 codes, and delivery point barcodes, via electronic delivery as described in RFO Section III, Statement of Work. Changes are shown in red. All other terms and conditions remain the same.",
+  "published_date": "2026-05-05T09:00:00-07:00",
+  "due_date": "2026-05-19T10:00:00-07:00",
+  "contact_name": "Rafael Gonzalez",
+  "contact_email": "rafael.gonzalez@dmv.ca.gov",
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-0000039160-1bdf33bd85b9",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "DMV_RFQ__ISD25-4404_-_SECTION_III.pdf",
+        "url": "https://drive.google.com/file/d/18eTcBbKrASMMTF4VKOa-5LErWdXNad9F/view?usp=drivesdk",
+        "type": "primary_spec",
+        "attachment_description": ""
+      },
+      {
+        "label": "DMV_RFQ__ISD25-4404_-_SECTION_I,_II,_IV.pdf",
+        "url": "https://drive.google.com/file/d/1i0sby4b9wlIg8nh635tUo1pMN0AcImAH/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "DMV_RFQ__ISD25-4404_-_SECTION_I,_II,_IV_-_AMENDMENT__1.pdf",
+        "url": "https://drive.google.com/file/d/13G9NEFSwcze656zFvTClw6H0G_dMvKG4/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      }
+    ],
+    "unspsc_codes": [
+      {
+        "code": "01012001",
+        "description": "/> <span data-if-container-label=\"conferenceRow\" data-if-source=\"[id^='ZZ_BID_CNF_VW_DUE_DT_TIME$']\" data-if-content=\"nu"
+      }
+    ]
+  }
+}

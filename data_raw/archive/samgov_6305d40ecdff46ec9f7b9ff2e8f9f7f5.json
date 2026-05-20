@@ -1,0 +1,70 @@
+{
+  "source": "SAM.gov",
+  "external_id": "6305d40ecdff46ec9f7b9ff2e8f9f7f5",
+  "title": "J065--RADFORMATION Software subscription BASE PLUS 4",
+  "dept": "VETERANS AFFAIRS, DEPARTMENT OF.VETERANS AFFAIRS, DEPARTMENT OF.262-NETWORK CONTRACT OFFICE 22 (36C262)",
+  "description": "This Source Sought notice is issued for market information and planning for future acquisition in accordance with (IAW) Federal Acquisition Regulation (FAR) 15.201(e). Responses to sources sought notice 36C26226Q0752 will improve the understanding of the Government s requirement and industry capabilities. It will enhance the Government s ability to obtain quality equipment and allow for potential offerors to judge whether or how they can satisfy the Government s requirement. This is not a solicitation announcement. Responses to this notice cannot be accepted by the Government to form a binding contract. Information received shall be safeguarded adequately from unauthorized disclosure. The Department of Veterans Affairs (VA), Network Contracting Office 22 (NCO 22) is seeking sources that can provide RADFORMATION SOFTWARE SUBSCRIPTION IAW Request for Information (RFI) 36C26226Q0752, and Salient Characteristics. Reference attached RFI 36C26226Q0752 and Salient Characteristics for more details. Inquiries shall be submitted via email to Anna.Cevallos@va.gov. Please Reference RFI 36C26226Q0752 in subject email.",
+  "published_date": "2026-05-08",
+  "due_date": "2026-05-15T10:00:00-07:00",
+  "contact_name": "Anna Cevallos",
+  "contact_email": "Anna.Cevallos@va.gov",
+  "contact_phone": "562-826-8000",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-6305d40ecdff46ec9f7b9ff2e8f9f7f5-8624e900c62d",
+  "metadata": {
+    "event_type": "Sources Sought",
+    "solicitation_number": "36C26226Q0752",
+    "ui_link": "https://sam.gov/workspace/contract/opp/6305d40ecdff46ec9f7b9ff2e8f9f7f5/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": "J065",
+    "set_aside": null,
+    "set_aside_description": null,
+    "place_of_performance": {
+      "streetAddress": "Long Beach VA Healthcare System Tibor Rubin VA Medical Center",
+      "streetAddress2": " 5901  E. 7th Street",
+      "city": {
+        "name": "Long Beach"
+      },
+      "state": {
+        "name": "California"
+      },
+      "zip": "90822",
+      "country": {
+        "name": ""
+      }
+    },
+    "office_address": {
+      "zipcode": "85297",
+      "city": "Gilbert",
+      "countryCode": "USA",
+      "state": "AZ"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "36C26226Q0752_1.docx",
+        "url": "https://docs.google.com/document/d/1B24PI-RTv0AmPOqU_m3-N-EDyIx-rjKu/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "primary_spec",
+        "original_extension": "docx",
+        "size_bytes": 25827,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/177e2840b6c64ec6b350649340ea6b5f/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "Anna.Cevallos@va.gov",
+        "phone": "562-826-8000",
+        "title": "Contracting Specialist",
+        "fullName": "Anna Cevallos"
+      }
+    ]
+  }
+}

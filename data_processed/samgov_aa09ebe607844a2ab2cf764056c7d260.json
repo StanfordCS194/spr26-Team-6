@@ -1,0 +1,125 @@
+{
+  "source": "sam.gov",
+  "external_id": "aa09ebe607844a2ab2cf764056c7d260",
+  "title": "RFI for Aeronautical Mobile Application (AMA)",
+  "name": "Aeronautical Mobile Application (AMA)",
+  "statement_of_work": "Request for Information (RFI) 03 April 2026 Table of Contents 1 (U) Introduction 4 2 (U) Background 4 3 (U) Scope 4 4 (U) General Requirements 5 5 (U) Transition Requirements 5 6 (U) Aeronautical Dataset Requirements 6 7 (U) Application Requirements 7 8 (U) Enhancement Requirements 8 9 (U) Dissemination & Support Requirements 8 10 (U) Cloud Storage 9 11 (U) Software Methodology and Delivery 9 12 (U) Software Security 10 13 (U) Program Management 11 14 (U) 508 Compliance 11 15 (U) Personnel Requirements 12 16 (U) Standards and Quality Management Process 12 16.1 (U) ISO Conformance 12 16.2 (U) Software Metrics 13 16.3 (U) Quality Control Plan 13 16.4 (U) Quality Assurance Acceptance Criteria 14 17 (U) List of Applicable Documents 15 18 (U) Unclassified Work Performance Security Requirement 16 18.1 (U) Uncleared Personnel Security Requirements 16 18.2 (U) Physical Security Requirements 17 1",
+  "deliverables": [
+    "Provide digital access to NGA's Flight Information Publications (FLIP) products",
+    "Provide electronic Instrument Procedure Library (E-IPL)",
+    "Provide worldwide datasets through a mobile platform",
+    "Provide advancing toward a paperless operating environment while offering enhanced capabilities over legacy paper products"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Software",
+    "Procurement",
+    "California"
+  ],
+  "dept": "DEPT OF DEFENSE.NATIONAL GEOSPATIAL-INTELLIGENCE AGENCY (NGA).NATL GEOSPATIAL-INTELLIGENCE AGENCY",
+  "description": "Request for Information (RFI) 03 April 2026 Table of Contents 1 (U) Introduction 4 2 (U) Background 4 3 (U) Scope 4 4 (U) General Requirements 5 5 (U) Transition Requirements 5 6 (U) Aeronautical Dataset Requirements 6 7 (U) Application Requirements 7 8 (U) Enhancement Requirements 8 9 (U) Dissemination & Support Requirements 8 10 (U) Cloud Storage 9 11 (U) Software Methodology and Delivery 9 12 (U) Software Security 10 13 (U) Program Management 11 14 (U) 508 Compliance 11 15 (U) Personnel Requirements 12 16 (U) Standards and Quality Management Process 12 16.1 (U) ISO Conformance 12 16.2 (U) Software Metrics 13 16.3 (U) Quality Control Plan 13 16.4 (U) Quality Assurance Acceptance Criteria 14 17 (U) List of Applicable Documents 15 18 (U) Unclassified Work Performance Security Requirement 16 18.1 (U) Uncleared Personnel Security Requirements 16 18.2 (U) Physical Security Requirements 17 18.3 (U) Information Security Requirements 17 18.4 (U) Cybersecurity Requirements 18 19 (U) Operational Security 23 19.1 (U) Information Handling 23 20 (U) Contract Deliverable Requirements List (CDRLs) 23 21 (U) Government Furnished Property and Information 25 22 (U) Data Rights 25 23 (U) Appendix A: Definition and Tasks for Software Maintenance 26 24 (U) Appendix B: Annual –NGA’s Aeronautical Cycle Data, Datasets, and Products 28 25 (U) Appendix C: Labor Categories Description 29 26 (U) Appendix D: Security References 32 27 (U) Appendix E: Acronym Listing 33 (U) Introduction (U) The National Geospatial-Intelligence Agency's (NGA) Aeronautical Navigation Office provides time-sensitive Safety of Navigation (SoN) Aeronautical data to support Department of War (DOW), Federal Aviation Agency (FAA) and foreign partners' operational needs. The Aeronautical Mobile Application (AMA) Program enables users to securely download validated aeronautical data and products for their missions. Established in 2011, AMA provides digital access to NGA's Flight Information Publications (FLIP) products, Electronic Instrument Procedure Library (E-IPL), and worldwide datasets through a mobile platform, advancing toward a paperless operating environment while offering enhanced capabilities over legacy paper products. (U) Background (U) The Aero App program began in 2010 to meet U.S. Army requirements for digital display of Instrument Approach Procedures (IAPs) and Airport Diagrams (APD) at paper-product size. Mobile tablets provide a cost-effective solution with enhanced readability.",
+  "published_date": "2026-04-20",
+  "due_date": "2026-05-18T17:00:00-04:00",
+  "contact_name": "Matthew A Hoffman",
+  "contact_email": "matthew.a.hoffman@nga.mil",
+  "contact_phone": "314-676-2081",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-aa09ebe607844a2ab2cf764056c7d260-b98c47d04552",
+  "metadata": {
+    "event_type": "Sources Sought",
+    "solicitation_number": "RFIAMA2027",
+    "ui_link": "https://sam.gov/workspace/contract/opp/aa09ebe607844a2ab2cf764056c7d260/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": "DA10",
+    "set_aside": "NONE",
+    "set_aside_description": "No Set aside used",
+    "place_of_performance": {
+      "city": {
+        "code": "65000",
+        "name": "Saint Louis"
+      },
+      "state": {
+        "code": "MO",
+        "name": "Missouri"
+      },
+      "country": {
+        "code": "USA",
+        "name": "UNITED STATES"
+      }
+    },
+    "office_address": {
+      "zipcode": "630106238",
+      "city": "ARNOLD",
+      "countryCode": "USA",
+      "state": "MO"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "20260403_AMA Questions and Answers.docx",
+        "url": "https://docs.google.com/document/d/1oO2GNvbU60Q29ow3nwN4k1m5bRkS9knI/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "primary_spec",
+        "original_extension": "docx",
+        "size_bytes": 46177,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/9a9629e68fa7466487fdcf91de283c80/download"
+      },
+      {
+        "label": "20260403_AMA_RFI_Instructions.docx",
+        "url": "https://docs.google.com/document/d/1QPXbnC3DB41A2-L9m7CboSzYFKOzbUjB/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 135823,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/ab1e34e4fdf94896b64ce1becce70063/download"
+      },
+      {
+        "label": "20260403_AMA_RFI_Questions_Template.xlsx",
+        "url": "https://docs.google.com/spreadsheets/d/11ox6cSeNClVUlYCq1vRYRa-h4tiZ7WVk/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "xlsx",
+        "size_bytes": 18443,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/d7fd486bb6294e3d99e47af39a576007/download"
+      },
+      {
+        "label": "20260403_AMA_SOW_RFI.docx",
+        "url": "https://docs.google.com/document/d/1HJPmG-8Y9Lk0iq_-t_lgk3J-eo981iN8/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "docx",
+        "size_bytes": 357672,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/f8949aef0e6b45ac8cfe7661234e9950/download"
+      },
+      {
+        "label": "AppendixA-NGA_Data_Strategy.pdf",
+        "url": "https://drive.google.com/file/d/1oQ5zmnFS4qQCcJxpgmw3H4QiRUvKUHl9/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 7148643,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/f33f69613d1144ccb4e9560da1baa6ac/download"
+      },
+      {
+        "label": "AppendixB-NGA_Software_Way.pdf",
+        "url": "https://drive.google.com/file/d/1Ybts8DucBzqBllH4AkPgPjYPKZ9qWJjS/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 726733,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/aa12ec384fb041e98f55e1a61b130f4f/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "matthew.a.hoffman@nga.mil",
+        "phone": "3146762081",
+        "title": null,
+        "fullName": "Matthew A Hoffman"
+      }
+    ]
+  }
+}
