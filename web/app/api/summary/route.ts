@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
   }
 
   const client = new OpenAI({ apiKey });
-  const model = "gpt-5";
+  const model = "gpt-4.1-mini";
 
   const userContent = [
     rfpTitle ? `RFP Title: ${rfpTitle}` : null,
