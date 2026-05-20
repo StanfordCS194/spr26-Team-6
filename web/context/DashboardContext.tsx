@@ -13,6 +13,7 @@ import {
 } from "react";
 import {
   defaultContractorProfile,
+  type CompatibilityScore,
   type ContractorProfile,
   type Rfp,
 } from "@/lib/types";
@@ -84,6 +85,8 @@ type DashboardContextValue = {
   isUnscored: (id: string) => boolean;
   /** Trigger scoring for one RFP (idempotent; no-op while in flight). */
   ensureScored: (rfpId: string) => Promise<void>;
+  /** Structured factor breakdown for a (contractor, RFP) pair, if available. */
+  getMatchFactors: (rfpId: string) => CompatibilityScore | null;
   profileOpen: boolean;
   setProfileOpen: (open: boolean) => void;
   walkthroughActive: boolean;
@@ -121,6 +124,9 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [unscoredRfpIds, setUnscoredRfpIds] = useState<Set<string>>(
     () => new Set(),
   );
+  const [matchFactorsById, setMatchFactorsById] = useState<
+    Map<string, CompatibilityScore>
+  >(() => new Map());
   const inFlightScoresRef = useRef<Set<string>>(new Set());
   const inFlightSummariesRef = useRef<Set<string>>(new Set());
   const [summariesInFlight, setSummariesInFlight] = useState<Set<string>>(
@@ -224,6 +230,20 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
         const scoredRfpIds = new Set(
           (scoreRows ?? []).map((s) => s.rfp_id),
         );
+        const factorsMap = new Map<string, CompatibilityScore>();
+        for (const s of scoreRows ?? []) {
+          if (
+            s.factors &&
+            typeof s.factors === "object" &&
+            !Array.isArray(s.factors)
+          ) {
+            factorsMap.set(
+              s.rfp_id,
+              s.factors as unknown as CompatibilityScore,
+            );
+          }
+        }
+        setMatchFactorsById(factorsMap);
         const unscored = new Set(
           (rfpRows ?? [])
             .filter((r) => !scoredRfpIds.has(r.id))
@@ -249,6 +269,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     setSelectedRfpId(null);
     setUnscoredRfpIds(new Set());
     setScoringRfpIds(new Set());
+    setMatchFactorsById(new Map());
     inFlightScoresRef.current.clear();
   }, []);
 
@@ -374,6 +395,11 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     [unscoredRfpIds],
   );
 
+  const getMatchFactors = useCallback(
+    (id: string) => matchFactorsById.get(id) ?? null,
+    [matchFactorsById],
+  );
+
   const ensureScored = useCallback(
     async (rfpId: string) => {
       if (!contractorId) return;
@@ -394,7 +420,10 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
           }),
         });
         if (!res.ok) return;
-        const data = (await res.json()) as { score?: number };
+        const data = (await res.json()) as {
+          score?: number;
+          factors?: CompatibilityScore;
+        };
         const score = Number(data.score);
         if (!Number.isFinite(score)) return;
         setLoadedRfps((prev) =>
@@ -406,6 +435,13 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
           next.delete(rfpId);
           return next;
         });
+        if (data.factors) {
+          setMatchFactorsById((prev) => {
+            const next = new Map(prev);
+            next.set(rfpId, data.factors as CompatibilityScore);
+            return next;
+          });
+        }
       } catch {
         // Silently leave at fallback; user can retry.
       } finally {
@@ -522,6 +558,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       // and let the background batch effect re-score against the new profile.
       setLoadedRfps((prev) => prev.map((r) => ({ ...r, score: 0 })));
       setUnscoredRfpIds(new Set(loadedRfps.map((r) => r.id)));
+      setMatchFactorsById(new Map());
       showToast("Profile saved.");
       captureEvent("profile_saved", { contractor_id: contractorId });
     },
@@ -561,7 +598,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       profile.pastExperience.trim();
     if (!hasSignal) return;
 
-    const MAX_PER_BATCH = 20;
+    const MAX_PER_BATCH = 100;
     const ids = loadedRfps
       .filter((r) => unscoredRfpIds.has(r.id))
       .slice(0, MAX_PER_BATCH)
@@ -700,6 +737,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       isScoring,
       isUnscored,
       ensureScored,
+      getMatchFactors,
       profileOpen,
       setProfileOpen,
       walkthroughActive,
@@ -733,6 +771,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       isScoring,
       isUnscored,
       ensureScored,
+      getMatchFactors,
       profileOpen,
       walkthroughActive,
       walkthroughStep,
