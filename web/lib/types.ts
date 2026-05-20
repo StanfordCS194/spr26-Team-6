@@ -19,6 +19,12 @@ export type Rfp = {
   pdfUrls: string[];
   /** Placeholder gap analysis for the AI tab */
   aiAnalysisMarkdown: string;
+  /**
+   * LLM-generated structured summary (scope of work, deadlines, eval
+   * criteria), formatted as markdown. Null until the user clicks
+   * "Generate summary" or a cached row in `rfp_summaries` is loaded.
+   */
+  summaryMarkdown: string | null;
 };
 
 export type ContractorProfile = {

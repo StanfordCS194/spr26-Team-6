@@ -70,7 +70,7 @@ export function DetailPanelVariantB() {
   return <DetailPanelBodyB key={selectedRfp.id} rfp={selectedRfp} />;
 }
 
-type DetailTab = "overview" | "document" | "ai";
+type DetailTab = "overview" | "document" | "ai" | "summary";
 
 function DocumentTabContentB({
   rfp,
@@ -156,9 +156,16 @@ function DocumentTabContentB({
 }
 
 function DetailPanelBodyB({ rfp }: { rfp: Rfp }) {
-  const { toggleSaveRfp, isSaved, showToast, tryLoadCachedSummary } = useDashboard();
+  const {
+    toggleSaveRfp,
+    isSaved,
+    showToast,
+    loadOrGenerateSummary,
+    isGeneratingSummary,
+  } = useDashboard();
   const [tab, setTab] = useState<DetailTab>("overview");
   const [activePdfIndex, setActivePdfIndex] = useState(0);
+  const generating = isGeneratingSummary(rfp.id);
 
   useEffect(() => {
     setActivePdfIndex(0);
@@ -188,20 +195,24 @@ function DetailPanelBodyB({ rfp }: { rfp: Rfp }) {
   };
 
   const handleSummary = async () => {
-    const found = await tryLoadCachedSummary(rfp.id);
+    if (generating) return;
+    showToast("Generating summary");
+    const result = await loadOrGenerateSummary(rfp.id);
     trackABTestEvent("rfp_action", {
       action: "generate_summary",
       variant: "B",
       rfp_id: rfp.id,
-      cached: found,
+      cached: result === "cached",
     });
-    if (found) {
-      showToast("Loaded cached summary from the database.");
+    if (result === "cached") {
+      showToast("Loaded cached summary. See the Summary tab.");
+      setTab("summary");
       return;
     }
-    showToast(
-      "No cached summary yet. Generating new summaries requires a server-side pipeline."
-    );
+    if (result === "generated") {
+      showToast("Summary generated. See the Summary tab.");
+      setTab("summary");
+    }
   };
 
   const handleProposal = () => {
@@ -232,6 +243,15 @@ function DetailPanelBodyB({ rfp }: { rfp: Rfp }) {
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
           <polyline points="14,2 14,8 20,8" />
+        </svg>
+      ),
+    },
+    {
+      id: "summary",
+      label: "Summary",
+      icon: (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
         </svg>
       ),
     },
@@ -295,7 +315,8 @@ function DetailPanelBodyB({ rfp }: { rfp: Rfp }) {
             <button
               type="button"
               onClick={handleSummary}
-              className="flex h-8 items-center gap-1.5 rounded-lg bg-govbid-primary px-3 text-xs font-semibold text-white transition hover:bg-govbid-primary-hover"
+              disabled={generating}
+              className="flex h-8 items-center gap-1.5 rounded-lg bg-govbid-primary px-3 text-xs font-semibold text-white transition hover:bg-govbid-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
               title="Generate AI summary"
             >
               <svg
@@ -310,7 +331,7 @@ function DetailPanelBodyB({ rfp }: { rfp: Rfp }) {
               >
                 <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
               </svg>
-              Summary
+              {generating ? "Generating…" : "Summary"}
             </button>
             <button
               type="button"
@@ -455,6 +476,22 @@ function DetailPanelBodyB({ rfp }: { rfp: Rfp }) {
           <div className="rounded-xl border border-govbid-border bg-govbid-surface p-4">
             <div className="prose prose-sm prose-slate max-w-none text-govbid-text">
               <ReactMarkdown>{rfp.aiAnalysisMarkdown}</ReactMarkdown>
+            </div>
+          </div>
+        )}
+
+        {tab === "summary" && (
+          <div className="rounded-xl border border-govbid-border bg-govbid-surface p-4">
+            <div className="prose prose-sm prose-slate max-w-none text-govbid-text">
+              {rfp.summaryMarkdown ? (
+                <ReactMarkdown>{rfp.summaryMarkdown}</ReactMarkdown>
+              ) : (
+                <p className="text-sm italic text-govbid-text-muted">
+                  {generating
+                    ? "Generating summary…"
+                    : "No summary yet. Click the Summary action above to extract scope of work, deadlines, and evaluation criteria from the RFP text."}
+                </p>
+              )}
             </div>
           </div>
         )}

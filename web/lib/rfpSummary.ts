@@ -72,3 +72,47 @@ export const SummaryRequestSchema = z.object({
 });
 
 export type SummaryRequest = z.infer<typeof SummaryRequestSchema>;
+
+export function formatRfpSummaryMarkdown(summary: RfpSummary): string {
+  const blocks: string[] = [];
+
+  blocks.push("### Scope of Work");
+  blocks.push(summary.scope_of_work || "_Not stated in the RFP._");
+  if (summary.scope_of_work_citations.length > 0) {
+    blocks.push(
+      summary.scope_of_work_citations
+        .map((c) => `> ${c.quote}`)
+        .join("\n>\n"),
+    );
+  }
+
+  blocks.push("### Critical Deadlines");
+  if (summary.critical_deadlines.length === 0) {
+    blocks.push("_No deadlines stated in the RFP._");
+  } else {
+    blocks.push(
+      summary.critical_deadlines
+        .map(
+          (d) => `- **${d.label}** — ${d.date}\n  > ${d.citation.quote}`,
+        )
+        .join("\n"),
+    );
+  }
+
+  blocks.push("### Evaluation Criteria");
+  if (summary.evaluation_criteria.length === 0) {
+    blocks.push("_No evaluation criteria stated in the RFP._");
+  } else {
+    blocks.push(
+      summary.evaluation_criteria
+        .map((c) => {
+          const weight =
+            typeof c.weight_pct === "number" ? ` (${c.weight_pct}%)` : "";
+          return `- **${c.name}**${weight} — ${c.description}\n  > ${c.citation.quote}`;
+        })
+        .join("\n"),
+    );
+  }
+
+  return blocks.join("\n\n");
+}

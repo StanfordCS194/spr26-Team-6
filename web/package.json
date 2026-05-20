@@ -14,15 +14,16 @@
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.89.0",
     "@tailwindcss/typography": "^0.5.19",
-    "next": "^16.2.4",
     "ai": "^6.0.177",
+    "next": "^16.2.4",
+    "openai": "^6.38.0",
+    "pdfjs-dist": "^5.4.624",
     "posthog-js": "^1.373.4",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
     "react-markdown": "^10.1.0",
     "react-pdf": "^10.4.1",
-    "zod": "^4.4.3",
-    "pdfjs-dist": "^5.4.624",
-    "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

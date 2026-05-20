@@ -108,6 +108,7 @@ export function mapRfpRow(
     pdfUrls: collectPdfUrlsFromRfpRow(row),
     aiAnalysisMarkdown:
       aiOverride ?? buildAiAnalysisMarkdown(score ?? 0, location),
+    summaryMarkdown: null,
   };
 }
 
@@ -131,12 +132,15 @@ export function contractorRowToProfile(
     .filter(Boolean)
     .join("\n\n");
 
+  const asArr = <T,>(value: T[] | null | undefined): T[] =>
+    Array.isArray(value) ? value : [];
+
   return {
-    industries: row.industries.join(", "),
-    subIndustries: row.sub_industries.join(", "),
+    industries: asArr(row.industries).join(", "),
+    subIndustries: asArr(row.sub_industries).join(", "),
     goals: row.goals ?? "",
     pastExperience,
-    preferredLocations: row.preferred_locations.join(", "),
+    preferredLocations: asArr(row.preferred_locations).join(", "),
     preferredContractMin:
       row.preferred_contract_min != null
         ? String(row.preferred_contract_min)
@@ -149,10 +153,10 @@ export function contractorRowToProfile(
       row.preferred_response_window_days != null
         ? String(row.preferred_response_window_days)
         : "",
-    certifications: [...row.certifications],
-    setAsideEligibility: [...row.set_aside_eligibility],
-    naicsCodes: row.naics_codes.join(", "),
-    exclusions: row.exclusions.join(", "),
+    certifications: asArr(row.certifications),
+    setAsideEligibility: asArr(row.set_aside_eligibility),
+    naicsCodes: asArr(row.naics_codes).join(", "),
+    exclusions: asArr(row.exclusions).join(", "),
   };
 }
 
