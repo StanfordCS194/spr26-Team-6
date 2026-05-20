@@ -6,7 +6,8 @@ import ReactMarkdown from "react-markdown";
 import { useDashboard } from "@/context/DashboardContext";
 import { captureEvent } from "@/lib/analytics";
 import { isPdfUrl } from "@/lib/pdf";
-import type { Rfp } from "@/lib/types";
+import type { CompatibilityFactors, Rfp } from "@/lib/types";
+import { RadarChart } from "./RadarChart";
 import { SourceDocumentEmbed } from "./SourceDocumentEmbed";
 import { TagBubble } from "./RfpCard";
 import { trackABTestEvent } from "@/app/posthog-provider";
@@ -79,7 +80,18 @@ export function DetailPanel() {
   return <DetailPanelBody key={selectedRfp.id} rfp={selectedRfp} />;
 }
 
-type DetailTab = "overview" | "document" | "ai" | "summary";
+type DetailTab = "overview" | "document" | "ai" | "summary" | "match";
+
+const FACTOR_DISPLAY: { key: keyof CompatibilityFactors; label: string; max: number }[] = [
+  { key: "timing", label: "Timing", max: 1 },
+  { key: "experience", label: "Experience", max: 100 },
+  { key: "goals", label: "Goals", max: 100 },
+  { key: "award", label: "Award", max: 1 },
+  { key: "prereqs", label: "Pre-reqs", max: 100 },
+  { key: "geography", label: "Geography", max: 100 },
+  { key: "agency", label: "Agency", max: 100 },
+  { key: "keywords", label: "Keywords", max: 100 },
+];
 
 function DocumentTabContent({
   rfp,
@@ -167,10 +179,23 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
     showToast,
     loadOrGenerateSummary,
     isGeneratingSummary,
+    getMatchFactors,
+    isScoring,
+    ensureScored,
   } = useDashboard();
   const [tab, setTab] = useState<DetailTab>("overview");
   const [activePdfIndex, setActivePdfIndex] = useState(0);
   const generating = isGeneratingSummary(rfp.id);
+  const matchFactors = getMatchFactors(rfp.id);
+  const matchScoring = isScoring(rfp.id);
+
+  // When the Match Details tab is opened and there is no cached breakdown,
+  // kick off scoring so the radar can populate.
+  useEffect(() => {
+    if (tab !== "match") return;
+    if (matchFactors || matchScoring) return;
+    void ensureScored(rfp.id);
+  }, [tab, matchFactors, matchScoring, ensureScored, rfp.id]);
 
   useEffect(() => {
     setActivePdfIndex(0);
@@ -240,6 +265,7 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
     { id: "document", label: "Source PDF" },
     { id: "summary", label: "Summary" },
     { id: "ai", label: "AI analysis" },
+    { id: "match", label: "Match Details" },
   ];
 
   return (
@@ -424,7 +450,100 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
             )}
           </div>
         )}
+
+        {tab === "match" && (
+          <MatchDetailsTab
+            rfp={rfp}
+            factors={matchFactors}
+            scoring={matchScoring}
+          />
+        )}
       </div>
     </section>
+  );
+}
+
+function MatchDetailsTab({
+  rfp,
+  factors,
+  scoring,
+}: {
+  rfp: Rfp;
+  factors: { factors: CompatibilityFactors; total: number } | null;
+  scoring: boolean;
+}) {
+  if (!factors) {
+    return (
+      <div className="mx-auto max-w-3xl py-12 text-center">
+        <p className="text-sm text-govbid-text-muted">
+          {scoring
+            ? "Computing your compatibility breakdown…"
+            : "No match breakdown yet. Open this RFP or wait for the background scorer to finish."}
+        </p>
+      </div>
+    );
+  }
+
+  const radarData = FACTOR_DISPLAY.map(({ key, label, max }) => ({
+    label,
+    value: Number(factors.factors[key]?.score ?? 0),
+    max,
+  }));
+
+  return (
+    <div className="mx-auto max-w-5xl space-y-6">
+      <div className="flex flex-wrap items-baseline justify-between gap-3">
+        <h2 className="text-xl font-bold text-govbid-text">
+          Match breakdown
+        </h2>
+        <p className="text-sm text-govbid-text-muted">
+          Overall:{" "}
+          <span className="font-semibold text-govbid-text">
+            {Math.round(factors.total)}/100
+          </span>
+        </p>
+      </div>
+
+      <div className="rounded-xl border border-govbid-border bg-govbid-surface p-4">
+        <RadarChart data={radarData} size={420} />
+      </div>
+
+      <div className="grid gap-3 sm:grid-cols-2">
+        {FACTOR_DISPLAY.map(({ key, label, max }) => {
+          const f = factors.factors[key];
+          if (!f) return null;
+          const ratio =
+            max > 0 ? Math.min(1, Math.max(0, f.score / max)) : 0;
+          return (
+            <div
+              key={key}
+              className="rounded-lg border border-govbid-border bg-govbid-elevated p-3"
+            >
+              <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-wide text-govbid-text-muted">
+                <span>{label}</span>
+                <span>
+                  {max <= 1
+                    ? f.score.toFixed(1).replace(/\.0$/, "")
+                    : Math.round(f.score)}
+                  {" / "}
+                  {max <= 1 ? max : max}
+                </span>
+              </div>
+              <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-govbid-border">
+                <div
+                  className="h-full rounded-full bg-govbid-primary"
+                  style={{ width: `${(ratio * 100).toFixed(0)}%` }}
+                />
+              </div>
+              <p className="mt-2 text-xs leading-relaxed text-govbid-text">
+                {f.reason}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+      {/* Track id so unused parameter warnings stay quiet */}
+      <span className="sr-only">RFP {rfp.id}</span>
+    </div>
   );
 }
