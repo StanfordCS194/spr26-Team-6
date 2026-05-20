@@ -1,0 +1,100 @@
+{
+  "source": "sam.gov",
+  "external_id": "dcadae38065a42718e576dfc1d680f57",
+  "title": "DA10--Medicopia Software and Medical Supplies (VA-26-00045732)",
+  "name": "DA10--Medicopia Software and Medical Supplies (VA-26-00045732)",
+  "statement_of_work": "DA10--Medicopia Software and Medical Supplies (VA-26-00045732) is published as a Sources Sought under solicitation 36C10B26Q0381 for VETERANS AFFAIRS, DEPARTMENT OF.VETERANS AFFAIRS, DEPARTMENT OF.TECHNOLOGY ACQUISITION CENTER NJ (36C10B).",
+  "deliverables": [
+    "Execute scope of work described in the DA10--Medicopia Software and Medical Supplies (VA-26-00045732) solicitation",
+    "Deliver milestones, status reporting, and acceptance documentation",
+    "Provide final handoff and post-deployment support per RFP terms"
+  ],
+  "location_level": "city",
+  "location": "Eatontown, NJ",
+  "tags": [
+    "Software",
+    "Procurement",
+    "Eatontown, NJ"
+  ],
+  "dept": "VETERANS AFFAIRS, DEPARTMENT OF.VETERANS AFFAIRS, DEPARTMENT OF.TECHNOLOGY ACQUISITION CENTER NJ (36C10B)",
+  "description": "DA10--Medicopia Software and Medical Supplies (VA-26-00045732) is published as a Sources Sought under solicitation 36C10B26Q0381 for VETERANS AFFAIRS, DEPARTMENT OF.VETERANS AFFAIRS, DEPARTMENT OF.TECHNOLOGY ACQUISITION CENTER NJ (36C10B).\n\nKey procurement context: NAICS 541511; classification DA10; place of performance: EATONTOWN, NJ.\n\nSource package includes 3 attached document(s): 36C10B26Q0381.docx; P09 PD - Medicopia Software - Zebra Printers Final.pdf; RFI - Medicopia Final.pdf.",
+  "published_date": "2026-04-24",
+  "due_date": "2026-05-04T13:00:00-04:00",
+  "contact_name": "Leanne  Kjesbu",
+  "contact_email": "Leanne.Kjesbu@va.gov",
+  "contact_phone": "848-377-5118",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-dcadae38065a42718e576dfc1d680f57-9f77cc4e2451",
+  "metadata": {
+    "event_type": "Sources Sought",
+    "solicitation_number": "36C10B26Q0381",
+    "ui_link": "https://sam.gov/workspace/contract/opp/dcadae38065a42718e576dfc1d680f57/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": "DA10",
+    "set_aside": null,
+    "set_aside_description": null,
+    "place_of_performance": {
+      "streetAddress": "",
+      "streetAddress2": "",
+      "city": {
+        "name": ""
+      },
+      "state": {
+        "name": ""
+      },
+      "zip": "",
+      "country": {
+        "name": ""
+      }
+    },
+    "office_address": {
+      "zipcode": "07724",
+      "city": "EATONTOWN",
+      "countryCode": "USA",
+      "state": "NJ"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "36C10B26Q0381.docx",
+        "url": "https://docs.google.com/document/d/1qqk0mWAe9RuiW4ocpHb8dYOxhyKrxh9L/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "primary_spec",
+        "original_extension": "docx",
+        "size_bytes": 14289,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/408417e5869149d2973bcd37373240ee/download"
+      },
+      {
+        "label": "P09 PD - Medicopia Software - Zebra Printers Final.pdf",
+        "url": "https://drive.google.com/file/d/1YRv07z2ZZK1LBoFj_2Zg2eovLeKxjrq2/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 462896,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/e6ec0d852605416dbfa273923b8c3be8/download"
+      },
+      {
+        "label": "RFI - Medicopia Final.pdf",
+        "url": "https://drive.google.com/file/d/1Bkju0yIcwm869236LsDKH7PJPHGB9q4M/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 136529,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/c0ec7f503df6407e85bade69bedde260/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "Leanne.Kjesbu@va.gov",
+        "phone": "848-377-5118",
+        "title": "Cherry.Ugerio@va.gov",
+        "fullName": "Leanne  Kjesbu"
+      }
+    ]
+  }
+}

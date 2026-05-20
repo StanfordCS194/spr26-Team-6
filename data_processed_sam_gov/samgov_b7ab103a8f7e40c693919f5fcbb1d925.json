@@ -1,0 +1,90 @@
+{
+  "source": "sam.gov",
+  "external_id": "b7ab103a8f7e40c693919f5fcbb1d925",
+  "title": "7A21--GAIT Analysis Machine (Medical Research) Intent to Sole Source",
+  "name": "7A21--GAIT Analysis Machine (Medical Research) Intent to Sole Source",
+  "statement_of_work": "Combined Synopsis/Solicitation Notice\n(IAW FAR 12.603 and FAR 5.203)\n1. Solicitation Number:\n36C25226Q0425\n2. Notice Type:\nCombined Synopsis/Solicitation for Commercial Items\nIntent to Sole Source\n3. Classification Code:\nPSC: 7A21   IT and Telecom   Business Application Software\nNAICS: 541511   Custom Computer Programming Services\nSize Standard: $34.0M\n4. Description\nThe Department of Veterans Affairs, VISN 12, Network Contracting Office (NCO) 12, intends to issue a sole source purchase order to Stoelting Co., the exclusive authorized U.S. distributor of the Ugo Basile G.A.I.T. (Gait Analysis ",
+  "deliverables": [
+    "Solicitation Number:",
+    "Classification Code:",
+    "Sole Source Justification",
+    "Intended Source"
+  ],
+  "location_level": "city",
+  "location": "Madison, Wisconsin",
+  "tags": [
+    "Research",
+    "Medical Imaging",
+    "Health Services",
+    "Procurement",
+    "Madison, Wisconsin"
+  ],
+  "dept": "VETERANS AFFAIRS, DEPARTMENT OF.VETERANS AFFAIRS, DEPARTMENT OF.252-NETWORK CONTRACT OFFICE 12 (36C252)",
+  "description": "Combined Synopsis/Solicitation Notice\n(IAW FAR 12.603 and FAR 5.203)\n1. Solicitation Number:\n36C25226Q0425\n2. Notice Type:\nCombined Synopsis/Solicitation for Commercial Items\nIntent to Sole Source\n3. Classification Code:\nPSC: 7A21   IT and Telecom   Business Application Software\nNAICS: 541511   Custom Computer Programming Services\nSize Standard: $34.0M\n4. Description\nThe Department of Veterans Affairs, VISN 12, Network Contracting Office (NCO) 12, intends to issue a sole source purchase order to Stoelting Co., the exclusive authorized U.S. distributor of the Ugo Basile G.A.I.T. (Gait Analysis and Imaging Tool) system. This acquisition is for a commercial, integrated gait analysis platform required by the William S. Middleton Memorial VA Medical Center, Madison, WI, for execution of a MERIT funded traumatic brain injury (TBI) research project.\nThe G.A.I.T. system provides simultaneous ventral and lateral high resolution imaging, automated AI driven gait detection, and artifact correction essential for post TBI locomotion analysis in mice. Market research confirms that no other vendor can meet the required technical specifications, and no verified VOSB/SDVOSB or U.S. manufacturer provides an equivalent product. As the system qualifies as an IT commercial product, the IT exception to the Buy American statute applies.\n5. Sole Source Justification\nStoelting Co. is the only authorized U.S. distributor of the Ugo Basile G.A.I.T. system. No alternative system offers the required dual view imaging and AI based artifact correction capabilities necessary for accurate motor function evaluation in TBI mouse models. Other available systems rely on single view imaging or threshold based detection and cannot meet research requirements. The VA Rule of Two cannot be met, as no VOSB/SDVOSB sources provide or distribute this product. Additionally, the Nonmanufacturer Rule cannot be satisfied for a set aside. Therefore, an unrestricted, sole source award is required.\n\n6. Intended Source\nStoelting Co.\n620 Wheat Lane\nWood Dale, IL 60191\nPhone: (630) 860 9700\n7. Anticipated Contract Type\nFirm Fixed Price (FFP)\nCommercial Item Purchase\nOne time delivery\n8. Delivery Location\nWilliam S. Middleton Memorial Veterans Hospital\n2500 Overlook Terrace\nMadison, WI 53705 2254\n9. Responses\nThis is not a request for competitive quotes. However, parties who believe they are capable of supplying an item that meets all required specifications may submit a capability statement no later than 5:00 PM, May 14, 2026.\nResponses must be emailed to:\nContracting Officer: Stacy Massey\nEmail: Stacy.Massey@va.gov\nNo telephone inquiries will be accepted.\n10. Disclaimer\nA determination not to compete this requirement based on responses to this notice is solely within the Government s discretion. This notice does not constitute a solicitation and does not commit the Government to award a contract.",
+  "published_date": "2026-05-07",
+  "due_date": "2026-05-14T17:00:00-04:00",
+  "contact_name": "Stacy Massey",
+  "contact_email": "Stacy.Massey@va.gov",
+  "contact_phone": "414-844-8400",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-b7ab103a8f7e40c693919f5fcbb1d925-ccd335bb4efa",
+  "metadata": {
+    "event_type": "Combined Synopsis/Solicitation",
+    "solicitation_number": "36C25226Q0425",
+    "ui_link": "https://sam.gov/workspace/contract/opp/b7ab103a8f7e40c693919f5fcbb1d925/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": "7A21",
+    "set_aside": null,
+    "set_aside_description": null,
+    "place_of_performance": {
+      "streetAddress": "Department of Veterans Affairs William S. Middleton Memorial VA Medical Center",
+      "streetAddress2": "  2500 Overlook Terrace",
+      "city": {
+        "code": "48000",
+        "name": "Madison"
+      },
+      "state": {
+        "code": "WI",
+        "name": "Wisconsin"
+      },
+      "zip": "53705-2254",
+      "country": {
+        "code": "USA",
+        "name": "UNITED STATES"
+      }
+    },
+    "office_address": {
+      "zipcode": "53214",
+      "city": "MILWAUKEE",
+      "countryCode": "USA",
+      "state": "WI"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "36C25226Q0425.docx",
+        "url": "https://docs.google.com/document/d/1pk6hLqQV0Qq6SmC89ff2H06kq_G0MvM3/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "primary_spec",
+        "original_extension": "docx",
+        "size_bytes": 25398,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/8bd48c05b110464a8af4be6c1c82b274/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "Stacy.Massey@va.gov",
+        "phone": "4148448400",
+        "title": "Contracting Officer",
+        "fullName": "Stacy Massey"
+      }
+    ]
+  }
+}

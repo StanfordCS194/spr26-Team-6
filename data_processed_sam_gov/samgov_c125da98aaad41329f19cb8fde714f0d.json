@@ -1,0 +1,117 @@
+{
+  "source": "sam.gov",
+  "external_id": "c125da98aaad41329f19cb8fde714f0d",
+  "title": "Request for Information (RFI)/Sources Sought (SS) Program and Budget Enterprise System (PBES)_2026",
+  "name": "Request for Information (RFI)/Sources Sought (SS) Program and Budget Enterprise System (PBES)_2026",
+  "statement_of_work": "Request for Information (RFI)/Sources Sought (SS) Program and Budget Enterprise System (PBES)_2026 is published as a Sources Sought under solicitation FA8770-26-PBES_SS_RFI for DEPT OF DEFENSE.DEPT OF THE AIR FORCE.AIR FORCE MATERIEL COMMAND.AIR FORCE LIFE CYCLE MANAGEMENT CENTER.BUSINESS AND ENTERPRISE SYSTEMS.FA8770 AFLCMC GBK.",
+  "deliverables": [
+    "Execute scope of work described in the Request for Information (RFI)/Sources Sought (SS) Program and Budget Enterprise System (PBES)_2026 solicitation",
+    "Deliver milestones, status reporting, and acceptance documentation",
+    "Provide final handoff and post-deployment support per RFP terms"
+  ],
+  "location_level": "city",
+  "location": "Wright Patterson Afb, Ohio",
+  "tags": [
+    "Procurement",
+    "Software",
+    "Wright Patterson Afb, Ohio"
+  ],
+  "dept": "DEPT OF DEFENSE.DEPT OF THE AIR FORCE.AIR FORCE MATERIEL COMMAND.AIR FORCE LIFE CYCLE MANAGEMENT CENTER.BUSINESS AND ENTERPRISE SYSTEMS.FA8770 AFLCMC GBK",
+  "description": "Request for Information (RFI)/Sources Sought (SS) Program and Budget Enterprise System (PBES)_2026 is published as a Sources Sought under solicitation FA8770-26-PBES_SS_RFI for DEPT OF DEFENSE.DEPT OF THE AIR FORCE.AIR FORCE MATERIEL COMMAND.AIR FORCE LIFE CYCLE MANAGEMENT CENTER.BUSINESS AND ENTERPRISE SYSTEMS.FA8770 AFLCMC GBK.\n\nKey procurement context: NAICS 541511; classification DA01; place of performance: Wright Patterson AFB, Ohio.\n\nSource package includes 4 attached document(s): PBES RFI QAs 2026.pdf; PBES RFI Questions Final.xlsx; PBES RFI 2026 Final.pdf; PBES RFI 2026 Final Amend1.pdf.",
+  "published_date": "2026-04-30",
+  "due_date": "2026-05-13T15:00:00-04:00",
+  "contact_name": "Amanda Stull",
+  "contact_email": "amanda.stull@us.af.mil",
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-c125da98aaad41329f19cb8fde714f0d-0f51d39df40b",
+  "metadata": {
+    "event_type": "Sources Sought",
+    "solicitation_number": "FA8770-26-PBES_SS_RFI",
+    "ui_link": "https://sam.gov/workspace/contract/opp/c125da98aaad41329f19cb8fde714f0d/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": "DA01",
+    "set_aside": null,
+    "set_aside_description": null,
+    "place_of_performance": {
+      "city": {
+        "code": "OH-05",
+        "name": "Wright Patterson AFB"
+      },
+      "state": {
+        "code": "OH",
+        "name": "Ohio"
+      },
+      "zip": "45433",
+      "country": {
+        "code": "USA",
+        "name": "UNITED STATES"
+      }
+    },
+    "office_address": {
+      "zipcode": "45433-5769",
+      "city": "WRIGHT PATTERSON AFB",
+      "countryCode": "USA",
+      "state": "OH"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "PBES RFI QAs_2026.pdf",
+        "url": "https://drive.google.com/file/d/15HG-C6sKw6MVxomo9WgVwxzDjO7W3Jw4/view?usp=drivesdk",
+        "type": "primary_spec",
+        "original_extension": "pdf",
+        "size_bytes": 618307,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/cff728948d87494e9fda963a6b4456b9/download"
+      },
+      {
+        "label": "PBES RFI Questions_Final.xlsx",
+        "url": "https://docs.google.com/spreadsheets/d/1deJp5S6NRW_BHz36xNx9KENAS-3YFSU0/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "xlsx",
+        "size_bytes": 16355,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/04b551e132394f9695dd3a6d151e013b/download"
+      },
+      {
+        "label": "PBES RFI_2026_Final.pdf",
+        "url": "https://drive.google.com/file/d/1L5pjyEgGQLTgdve1wlcmPe8F5fzCPcOE/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 173397,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/04dc58192b8f411d9cfaf97921693f9c/download"
+      },
+      {
+        "label": "PBES RFI_2026_Final_Amend1.pdf",
+        "url": "https://drive.google.com/file/d/1ZbI1MCwsO3AmmvBww6ckJBJ3JhaU-vmn/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 270917,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/3b3c888ebda74590bb7d0c8f211b4bac/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "amanda.stull@us.af.mil",
+        "phone": "",
+        "title": null,
+        "fullName": "Amanda Stull"
+      },
+      {
+        "fax": "",
+        "type": "secondary",
+        "email": "angela.ashmore@us.af.mil",
+        "phone": "",
+        "title": null,
+        "fullName": "Angela Ashmore"
+      }
+    ]
+  }
+}

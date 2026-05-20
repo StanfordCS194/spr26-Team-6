@@ -1,0 +1,131 @@
+{
+  "source": "sam.gov",
+  "external_id": "75aee514afbc4508a047ca152af8da35",
+  "title": "D--LABVIEW SOFTWARE BRAND NAME OR EQUAL DEVELOPMENT/T",
+  "name": "D--LABVIEW SOFTWARE BRAND NAME OR EQUAL DEVELOPMENT/T",
+  "statement_of_work": "D--LABVIEW SOFTWARE BRAND NAME OR EQUAL DEVELOPMENT/T is published as a Solicitation under solicitation 140G0226Q0038 for INTERIOR, DEPARTMENT OF THE.US GEOLOGICAL SURVEY.OFC OF ACQUISITION  GRANTS-DENVER.",
+  "deliverables": [
+    "Execute scope of work described in the D--LABVIEW SOFTWARE BRAND NAME OR EQUAL DEVELOPMENT/T solicitation",
+    "Deliver milestones, status reporting, and acceptance documentation",
+    "Provide final handoff and post-deployment support per RFP terms"
+  ],
+  "location_level": "city",
+  "location": "Denver, CO",
+  "tags": [
+    "Software",
+    "Procurement",
+    "Denver, CO"
+  ],
+  "dept": "INTERIOR, DEPARTMENT OF THE.US GEOLOGICAL SURVEY.OFC OF ACQUISITION GRANTS-DENVER",
+  "description": "D--LABVIEW SOFTWARE BRAND NAME OR EQUAL DEVELOPMENT/T is published as a Solicitation under solicitation 140G0226Q0038 for INTERIOR, DEPARTMENT OF THE.US GEOLOGICAL SURVEY.OFC OF ACQUISITION  GRANTS-DENVER.\n\nKey procurement context: NAICS 541511; classification DD01; set-aside: Total Small Business Set-Aside (FAR 19.5); place of performance: DENVER, CO.\n\nSource package includes 8 attached document(s): Attachment 1 - DOL Wage Determination 2015-5419.pdf; Attachment A1 - Additional Questions and Answers-RFQ 140G0226Q0038 0002.pdf; Attachment A2 - Additional and Final Questions and Answers-RFQ 140G0226Q0038 0003.pdf; Attachment A - Questions and Answers-RFQ 140G0226Q0038 0001.pdf; Sol 140G0226Q0038.pdf; Sol 140G0226Q0038 Amd 0001.pdf and 2 more.",
+  "published_date": "2026-05-04",
+  "due_date": "2026-05-11T14:30:00-06:00",
+  "contact_name": "Williams, Lisa",
+  "contact_email": "lisa_williams@ios.doi.gov",
+  "contact_phone": "303-236-9327",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-75aee514afbc4508a047ca152af8da35-9c17e5d6b0ac",
+  "metadata": {
+    "event_type": "Solicitation",
+    "solicitation_number": "140G0226Q0038",
+    "ui_link": "https://sam.gov/workspace/contract/opp/75aee514afbc4508a047ca152af8da35/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": "DD01",
+    "set_aside": "SBA",
+    "set_aside_description": "Total Small Business Set-Aside (FAR 19.5)",
+    "place_of_performance": {
+      "city": {},
+      "state": {},
+      "country": {}
+    },
+    "office_address": {
+      "zipcode": "80225",
+      "city": "DENVER",
+      "countryCode": "USA",
+      "state": "CO"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "Attachment_1_-_DOL_Wage_Determination_2015-5419.pdf",
+        "url": "https://drive.google.com/file/d/1vnvQd0lD8nIG1CVTu59Xh7evSGYu5AZ5/view?usp=drivesdk",
+        "type": "primary_spec",
+        "original_extension": "pdf",
+        "size_bytes": 47525,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/947534f970c64b369075ff1e05ab9375/download"
+      },
+      {
+        "label": "Attachment_A1_-_Additional_Questions_and_Answers-RFQ_140G0226Q0038_0002.pdf",
+        "url": "https://drive.google.com/file/d/1jNmq1HDQxgTrVGcGxLXD-Lw6nqhp_MdN/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 117218,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/68c59f09fb38422fae221b21bddb0360/download"
+      },
+      {
+        "label": "Attachment_A2_-_Additional_and_Final_Questions_and_Answers-RFQ_140G0226Q0038_0003.pdf",
+        "url": "https://drive.google.com/file/d/1iVI2Lq2TbyK2FDyimqb__5Mvttqco7Or/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 93899,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/ce03b6e81a4740cf85fb81404b8ad8c5/download"
+      },
+      {
+        "label": "Attachment_A_-_Questions_and_Answers-RFQ_140G0226Q0038_0001.pdf",
+        "url": "https://drive.google.com/file/d/1K4rBIMNFX5fGOsYhUaVTlaNvXysS8oai/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 111324,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/99d7d6e3fed94344b3bda2e32e424c5d/download"
+      },
+      {
+        "label": "Sol_140G0226Q0038.pdf",
+        "url": "https://drive.google.com/file/d/1kyvl2G8xWpnPRkGKOW61WShauYyYtcpd/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 752592,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/be279dbd4614430ab1c52d32c17b2615/download"
+      },
+      {
+        "label": "Sol_140G0226Q0038_Amd_0001.pdf",
+        "url": "https://drive.google.com/file/d/1pp3mEMSgArN5ofUTI0rd75oNZ54FUK1s/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 214773,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/64bb3b2e9ac84f81acf8dd0f43dfc8cb/download"
+      },
+      {
+        "label": "Sol_140G0226Q0038_Amd_0002.pdf",
+        "url": "https://drive.google.com/file/d/1rTtIRszZzGcNwSIxWUcvXQ4E61lxzgVR/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 206023,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/84f4f51d885c4a3b80c461bd25499f7c/download"
+      },
+      {
+        "label": "Sol_140G0226Q0038_Amd_0003.pdf",
+        "url": "https://drive.google.com/file/d/1H85dW-lUI0rkObw1d0fWFrfnkiTm0xQQ/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 207478,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/ff7cbaccbc2b494e87578640e92d461d/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": "303-236-5859",
+        "type": "primary",
+        "email": "lisa_williams@ios.doi.gov",
+        "phone": "303-236-9327",
+        "title": null,
+        "fullName": "Williams, Lisa"
+      }
+    ]
+  }
+}
