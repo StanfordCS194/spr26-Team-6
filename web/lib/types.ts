@@ -32,6 +32,12 @@ export type ContractorProfile = {
   subIndustries: string;
   goals: string;
   pastExperience: string;
+  /**
+   * Comma-separated agency / client names the contractor has worked with.
+   * Fed into the agency-familiarity factor of the compatibility score and
+   * matched against the requesting department on each RFP.
+   */
+  pastClients: string;
   /** Comma-separated free text, e.g. "California, Federal". */
   preferredLocations: string;
   /** Free-text number; empty string means unspecified. */
@@ -53,6 +59,7 @@ export const defaultContractorProfile: ContractorProfile = {
   subIndustries: "",
   goals: "",
   pastExperience: "",
+  pastClients: "",
   preferredLocations: "",
   preferredContractMin: "",
   preferredContractMax: "",
@@ -64,9 +71,8 @@ export const defaultContractorProfile: ContractorProfile = {
 };
 
 /**
- * Curated options for the certifications / set-aside-eligibility multi-selects.
- * Same list serves both: contractor's held certifications largely overlap with
- * the set-asides they're eligible to bid on.
+ * Curated options for the set-aside-eligibility multi-select. Strictly SBA
+ * set-aside designations a contractor can bid against.
  */
 export const SBA_CERTIFICATION_OPTIONS: readonly string[] = [
   "Small Business",
@@ -77,6 +83,16 @@ export const SBA_CERTIFICATION_OPTIONS: readonly string[] = [
   "SDVOSB",
   "VOSB",
   "SDB",
+];
+
+/**
+ * Curated options for the contractor's "Certifications" multi-select.
+ * Superset of SBA set-asides plus federal registrations (SAM.gov) that are
+ * commonly required as eligibility pre-reqs but aren't themselves set-asides.
+ */
+export const CERTIFICATION_OPTIONS: readonly string[] = [
+  ...SBA_CERTIFICATION_OPTIONS,
+  "Valid SAM Registration",
 ];
 
 /**

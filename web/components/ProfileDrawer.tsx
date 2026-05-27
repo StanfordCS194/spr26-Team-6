@@ -2,7 +2,7 @@
 
 import { startTransition, useEffect, useState } from "react";
 import { useDashboard } from "@/context/DashboardContext";
-import { SBA_CERTIFICATION_OPTIONS } from "@/lib/types";
+import { CERTIFICATION_OPTIONS, SBA_CERTIFICATION_OPTIONS } from "@/lib/types";
 
 type ProfileTab = "overview" | "contacts" | "documents";
 
@@ -205,6 +205,28 @@ export function ProfileDrawer() {
                 />
               </div>
 
+              <div>
+                <label className="block text-xs font-semibold text-govbid-text-muted">
+                  Past clients
+                </label>
+                <input
+                  className={fieldClass}
+                  placeholder="e.g., Department of Veterans Affairs, City of San Jose"
+                  value={draftProfile.pastClients}
+                  onChange={(e) =>
+                    setDraftProfile((prev) => ({
+                      ...prev,
+                      pastClients: e.target.value,
+                    }))
+                  }
+                />
+                <p className="mt-1 text-xs text-govbid-text-muted">
+                  Comma-separated list of agencies you&apos;ve worked with.
+                  Matched against each RFP&apos;s requesting department for
+                  the agency-familiarity factor of the compatibility score.
+                </p>
+              </div>
+
               <div className="border-t border-govbid-border pt-4">
                 <p className="text-xs font-semibold uppercase tracking-wide text-govbid-text-muted">
                   Eligibility &amp; preferences
@@ -299,7 +321,7 @@ export function ProfileDrawer() {
                   Select all that you hold.
                 </p>
                 <div className="mt-2 flex flex-wrap gap-2">
-                  {SBA_CERTIFICATION_OPTIONS.map((opt) => {
+                  {CERTIFICATION_OPTIONS.map((opt) => {
                     const active = draftProfile.certifications.includes(opt);
                     return (
                       <button
