@@ -45,6 +45,7 @@ Create a `.env` file at the repo root (loaded automatically by `run_pipeline.py`
 | `SAM_GOV_MAX_RETRY_WAIT_SEC` | SAM.gov scrape | Max seconds to wait on 429 before failing (default `120`; daily quota resets use `Retry-After`) |
 | `GOOGLE_DRIVE_CREDENTIALS_PATH` | SAM.gov + Drive | Optional; omit when using `--no-drive` |
 | `GOOGLE_DRIVE_TOKEN_PATH` | SAM.gov + Drive | Optional OAuth token path |
+| `OPENAI_API_KEY` | Process | LLM key for description + SOW generation; if missing, pipeline falls back to deterministic heuristic summaries |
 
 ### GitHub Actions (scheduled daily ingest)
 

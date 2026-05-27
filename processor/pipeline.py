@@ -13,9 +13,10 @@ from typing import Any, Optional
 
 from processor.classifier import Classifier, load_or_train
 from processor.enrich import EnrichmentCallback, enrich
+from processor.llm_summarize import summarize_with_llm
 from processor.location import detect_location
 from processor.normalize import normalize_record
-from processor.pdf_extract import maybe_backfill_description
+from processor.pdf_extract import extract_text_for_record, maybe_backfill_description
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_INPUT_DIR = PROJECT_ROOT / "data_raw"
@@ -65,11 +66,23 @@ def process_one(
     *,
     llm_callback: Optional[EnrichmentCallback] = None,
     classifier: Classifier | None = None,
+    use_llm_summary: bool = True,
 ) -> dict[str, Any]:
     """Apply normalization + enrichment to a single raw RFP record."""
     # Backfill description from attached PDFs when the scraper recorded
     # an empty description (typical for SAM.gov RFIs / Special Notices).
     maybe_backfill_description(raw)
+
+    # Pull PDF / DOCX scope text up front so we can pass it to the LLM as
+    # additional context, regardless of whether the inline description was
+    # empty. ``extract_text_for_record`` is cached on disk, so this is cheap
+    # on re-runs.
+    pdf_text = ""
+    if use_llm_summary:
+        try:
+            pdf_text = extract_text_for_record(raw) or ""
+        except Exception:
+            pdf_text = ""
 
     normalized = normalize_record(raw)
     location, level = detect_location(normalized)
@@ -81,6 +94,19 @@ def process_one(
         classifier=classifier,
     )
     merged = {**normalized, **enriched}
+
+    # Override the deterministic description + statement_of_work with the
+    # LLM-generated versions when available. Falls back silently to the
+    # heuristic outputs if no API key / call fails.
+    if use_llm_summary:
+        summary = summarize_with_llm(
+            raw,
+            cleaned_description=(merged.get("description") or ""),
+            pdf_text=pdf_text,
+        )
+        if summary:
+            merged["description"] = summary["description"]
+            merged["statement_of_work"] = summary["statement_of_work"]
 
     # Last-resort: if the description is still form-field junk (SF-1449 form
     # PDF with no narrative), replace it with the synthesized SOW so the
@@ -101,6 +127,7 @@ def process_directory(
     llm_callback: Optional[EnrichmentCallback] = None,
     classifier: Classifier | None = None,
     filename_prefix: Optional[str] = None,
+    use_llm_summary: bool = True,
 ) -> list[Path]:
     """Process every `*.json` in `input_dir` into `output_dir`.
 
@@ -126,7 +153,12 @@ def process_directory(
     for src in sorted(in_path.glob(glob_pattern)):
         with src.open("r", encoding="utf-8") as fh:
             raw = json.load(fh)
-        processed = process_one(raw, llm_callback=llm_callback, classifier=classifier)
+        processed = process_one(
+            raw,
+            llm_callback=llm_callback,
+            classifier=classifier,
+            use_llm_summary=use_llm_summary,
+        )
         dst = out_path / src.name
         with dst.open("w", encoding="utf-8") as fh:
             json.dump(processed, fh, indent=2, ensure_ascii=False)

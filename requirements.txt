@@ -24,6 +24,9 @@ pandas>=2.0
 pypdf>=4.0
 python-docx>=1.0
 
+# LLM-driven description + statement-of-work summarization (processor/llm_summarize.py)
+openai>=1.30
+
 # Supabase upload stage (processor/ingest_supabase.py)
 supabase>=2.0
 
