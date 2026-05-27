@@ -26,13 +26,17 @@ Score on the contractor's stated goals only — do not use their past experience
 
 const PREREQS_FALLBACK_SYSTEM = `You are evaluating contractor eligibility against an RFP's textual requirements.
 
-Given a list of requirements extracted from the RFP and a contractor's profile (industries, past projects, tags), determine which requirements the contractor plausibly meets and which they do not.
+Given a list of requirements extracted from the RFP and a contractor's profile (held certifications, set-aside eligibility, industries, past-experience write-up, and past project records), determine which requirements the contractor plausibly meets and which they do not.
+
+Treat the contractor's certifications list as authoritative for items like "Valid SAM Registration", "FedRAMP", or named SBA certs. Treat the past-experience write-up (often stored as a project named "Experience profile") as legitimate evidence of past performance — give it the same weight as a structured past-project record.
 
 Be strict: only count a requirement as "met" if there is concrete evidence in the contractor data. Vague keyword matches are not enough.`;
 
 const REQUIREMENTS_EXTRACTION_SYSTEM = `You extract eligibility / pre-qualification requirements from a government RFP.
 
-Output a list of concrete requirements a bidder must satisfy (e.g., "Holds active FedRAMP Moderate authorization", "Registered SAM.gov vendor", "Past performance in healthcare IT"). Skip generic boilerplate. Keep each requirement to one sentence.`;
+Output a list of concrete requirements a bidder must satisfy (e.g., "Holds active FedRAMP Moderate authorization", "Active SAM.gov registration", "Past performance in healthcare IT"). Skip generic boilerplate.
+
+Do NOT include NAICS-code or SBA set-aside requirements — those are checked separately against structured contractor fields. Focus on certifications, registrations, past-performance, and capability requirements. Keep each requirement to one sentence.`;
 
 const REASONING_SYSTEM = `You are summarizing a compatibility analysis between a contractor and an RFP.
 
@@ -86,6 +90,8 @@ export function buildRequirementsExtractionPrompt(args: {
 export function buildPrereqsFallbackPrompt(args: {
   rfpTitle: string;
   requirements: string[];
+  certifications: string[];
+  setAsideEligibility: string[];
   industries: string[];
   subIndustries: string[];
   pastProjects: { name: string; description: string | null; tags: string[] }[];
@@ -102,8 +108,12 @@ export function buildPrereqsFallbackPrompt(args: {
   return (
     `RFP: ${args.rfpTitle}\n\n` +
     `## Requirements to evaluate\n${reqs}\n\n` +
-    `## Contractor profile\nIndustries: ${args.industries.join(", ") || "(none)"}\nSub-industries: ${args.subIndustries.join(", ") || "(none)"}\n\n` +
-    `## Past projects\n${past}`
+    `## Contractor profile\n` +
+    `Certifications held: ${args.certifications.join(", ") || "(none)"}\n` +
+    `Set-aside eligibility: ${args.setAsideEligibility.join(", ") || "(none)"}\n` +
+    `Industries: ${args.industries.join(", ") || "(none)"}\n` +
+    `Sub-industries: ${args.subIndustries.join(", ") || "(none)"}\n\n` +
+    `## Past projects (the entry named "Experience profile" is the contractor's free-text past-experience write-up)\n${past}`
   );
 }
 

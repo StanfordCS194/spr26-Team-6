@@ -123,14 +123,33 @@ export function contractorRowToProfile(
   row: ContractorRow,
   pastProjects: PastProjectRow[],
 ): ContractorProfile {
+  // Past-experience textbox is stored as the row(s) with no `client` set.
+  // Past-client agency tags are stored as rows where `client` is non-empty;
+  // those are surfaced as a separate comma-separated field for the agency
+  // factor of the compatibility score.
   const pastExperience = pastProjects
+    .filter((p) => !(p.client ?? "").trim())
     .map((p) => {
-      const head = p.project_name ? `**${p.project_name}**\n` : "";
+      const head =
+        p.project_name && p.project_name !== "Experience profile"
+          ? `**${p.project_name}**\n`
+          : "";
       const body = p.description ?? "";
       return `${head}${body}`.trim();
     })
     .filter(Boolean)
     .join("\n\n");
+
+  const seenClients = new Set<string>();
+  const pastClientsList: string[] = [];
+  for (const p of pastProjects) {
+    const c = (p.client ?? "").trim();
+    if (!c) continue;
+    const key = c.toLowerCase();
+    if (seenClients.has(key)) continue;
+    seenClients.add(key);
+    pastClientsList.push(c);
+  }
 
   const asArr = <T,>(value: T[] | null | undefined): T[] =>
     Array.isArray(value) ? value : [];
@@ -140,6 +159,7 @@ export function contractorRowToProfile(
     subIndustries: asArr(row.sub_industries).join(", "),
     goals: row.goals ?? "",
     pastExperience,
+    pastClients: pastClientsList.join(", "),
     preferredLocations: asArr(row.preferred_locations).join(", "),
     preferredContractMin:
       row.preferred_contract_min != null

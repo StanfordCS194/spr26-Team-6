@@ -201,30 +201,65 @@ export async function scorePrereqs({
     }
   }
 
-  // If we got at least one structured signal, return based on that
-  if (structuredCount > 0) {
-    const score = Math.round((met.length / structuredCount) * 100);
-    return {
-      isNull: false,
-      factor: {
-        score,
-        reason: reasons.join(" "),
-        met,
-        unmet,
-        total: structuredCount,
-      },
-    };
-  }
-
-  // Fallback: extract requirements from the RFP description via LLM
+  // Always also extract textual requirements from the description and judge
+  // them against the contractor's certifications + past experience. This
+  // catches eligibility items the structured NAICS / set-aside check can't
+  // see ("Active SAM.gov registration required", "5+ years of past
+  // performance in healthcare IT", etc.). Structured matches are merged in
+  // afterwards so the score reflects every requirement we evaluated.
   const description = (rfp.description ?? "").trim();
-  if (!description) {
+  let llmMet: string[] = [];
+  let llmUnmet: string[] = [];
+  let llmReason = "";
+  let llmTotal = 0;
+
+  if (description) {
+    const { object: req } = await generateObject({
+      model: openai("gpt-4o-mini"),
+      schema: requirementsSchema,
+      schemaName: "ExtractedRequirements",
+      system: SCORING_PROMPTS.requirementsExtractionSystem,
+      prompt: buildRequirementsExtractionPrompt({
+        rfpTitle: rfp.title,
+        description,
+      }),
+    });
+
+    if (req.requirements.length > 0) {
+      const { object: judged } = await generateObject({
+        model: openai("gpt-4o-mini"),
+        schema: fallbackSchema,
+        schemaName: "PrereqsJudgement",
+        system: SCORING_PROMPTS.prereqsFallbackSystem,
+        prompt: buildPrereqsFallbackPrompt({
+          rfpTitle: rfp.title,
+          requirements: req.requirements,
+          certifications: contractor.certifications,
+          setAsideEligibility: contractor.set_aside_eligibility,
+          industries: contractor.industries,
+          subIndustries: contractor.sub_industries,
+          pastProjects: pastProjects.map((p) => ({
+            name: p.project_name,
+            description: p.description,
+            tags: p.tags,
+          })),
+        }),
+      });
+      llmMet = judged.met;
+      llmUnmet = judged.unmet;
+      llmReason = judged.reason;
+      llmTotal = req.requirements.length;
+    }
+  }
+
+  const total = structuredCount + llmTotal;
+  if (total === 0) {
     return {
       isNull: true,
       factor: {
         score: 0,
         reason:
-          "Skipped: RFP has no structured eligibility metadata and no description for the fallback LLM extractor.",
+          "Skipped: RFP has no structured eligibility metadata and no extractable textual requirements.",
         met: [],
         unmet: [],
         total: 0,
@@ -232,60 +267,22 @@ export async function scorePrereqs({
     };
   }
 
-  const { object: req } = await generateObject({
-    model: openai("gpt-4o-mini"),
-    schema: requirementsSchema,
-    schemaName: "ExtractedRequirements",
-    system: SCORING_PROMPTS.requirementsExtractionSystem,
-    prompt: buildRequirementsExtractionPrompt({
-      rfpTitle: rfp.title,
-      description,
-    }),
-  });
-
-  if (req.requirements.length === 0) {
-    return {
-      isNull: true,
-      factor: {
-        score: 0,
-        reason:
-          "Skipped: no concrete eligibility requirements extractable from the RFP text.",
-        met: [],
-        unmet: [],
-        total: 0,
-      },
-    };
-  }
-
-  const { object: judged } = await generateObject({
-    model: openai("gpt-4o-mini"),
-    schema: fallbackSchema,
-    schemaName: "PrereqsJudgement",
-    system: SCORING_PROMPTS.prereqsFallbackSystem,
-    prompt: buildPrereqsFallbackPrompt({
-      rfpTitle: rfp.title,
-      requirements: req.requirements,
-      industries: contractor.industries,
-      subIndustries: contractor.sub_industries,
-      pastProjects: pastProjects.map((p) => ({
-        name: p.project_name,
-        description: p.description,
-        tags: p.tags,
-      })),
-    }),
-  });
-
-  const total = req.requirements.length;
-  const metCount = Math.min(judged.met.length, total);
+  const mergedMet = [...met, ...llmMet];
+  const mergedUnmet = [...unmet, ...llmUnmet];
+  const mergedReason = [reasons.join(" "), llmReason]
+    .map((r) => r.trim())
+    .filter(Boolean)
+    .join(" ");
+  const metCount = Math.min(mergedMet.length, total);
   const score = Math.round((metCount / total) * 100);
 
   return {
     isNull: false,
     factor: {
       score,
-      reason: judged.reason,
-      met: judged.met,
-      unmet: judged.unmet,
+      reason: mergedReason,
+      met: mergedMet,
+      unmet: mergedUnmet,
       total,
     },
   };

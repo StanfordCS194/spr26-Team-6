@@ -401,7 +401,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   );
 
   const ensureScored = useCallback(
-    async (rfpId: string) => {
+    async (rfpId: string, options: { force?: boolean } = {}) => {
       if (!contractorId) return;
       if (inFlightScoresRef.current.has(rfpId)) return;
       inFlightScoresRef.current.add(rfpId);
@@ -417,6 +417,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
           body: JSON.stringify({
             contractor_id: contractorId,
             rfp_id: rfpId,
+            ...(options.force ? { force: true } : {}),
           }),
         });
         if (!res.ok) return;
@@ -461,13 +462,15 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     (id: string | null) => {
       if (id) {
         captureEvent("rfp_selected", { rfp_id: id });
-        if (unscoredRfpIds.has(id)) {
-          void ensureScored(id);
-        }
+        // Always re-score on click: forces a fresh computation against the
+        // current contractor profile so the displayed factor breakdown is
+        // current even if the underlying RFP or profile state has shifted
+        // since the last cached score.
+        void ensureScored(id, { force: true });
       }
       setSelectedRfpId(id);
     },
-    [unscoredRfpIds, ensureScored],
+    [ensureScored],
   );
 
   const isSaved = useCallback(
@@ -538,15 +541,52 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       }
 
       const blob = p.pastExperience.trim();
+      const clientNames = Array.from(
+        new Set(
+          p.pastClients
+            .split(/[,;\n]+/)
+            .map((c) => c.trim())
+            .filter(Boolean)
+            .map((c) => [c.toLowerCase(), c] as const)
+            .reduce<Map<string, string>>((acc, [key, original]) => {
+              if (!acc.has(key)) acc.set(key, original);
+              return acc;
+            }, new Map())
+            .values(),
+        ),
+      );
+
+      const rowsToInsert: {
+        contractor_id: string;
+        project_name: string;
+        description: string | null;
+        client: string | null;
+        tags: string[];
+      }[] = [];
+
       if (blob) {
+        rowsToInsert.push({
+          contractor_id: contractorId,
+          project_name: "Experience profile",
+          description: blob,
+          client: null,
+          tags: [],
+        });
+      }
+      for (const client of clientNames) {
+        rowsToInsert.push({
+          contractor_id: contractorId,
+          project_name: client,
+          description: null,
+          client,
+          tags: [],
+        });
+      }
+
+      if (rowsToInsert.length > 0) {
         const { error: insErr } = await supabase
           .from("contractor_past_projects")
-          .insert({
-            contractor_id: contractorId,
-            project_name: "Experience profile",
-            description: blob,
-            tags: [],
-          });
+          .insert(rowsToInsert);
         if (insErr) {
           showToast(insErr.message);
           return;
@@ -595,7 +635,8 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       profile.industries.trim() ||
       profile.subIndustries.trim() ||
       profile.goals.trim() ||
-      profile.pastExperience.trim();
+      profile.pastExperience.trim() ||
+      profile.pastClients.trim();
     if (!hasSignal) return;
 
     const MAX_PER_BATCH = 100;

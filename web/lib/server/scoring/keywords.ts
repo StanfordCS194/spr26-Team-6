@@ -17,10 +17,16 @@ export type KeywordsResult = {
 /**
  * Cat 8 — Specific tech / keyword overlap.
  *
- * Lexical signal (not embeddings). For each contractor-side term (past-project
- * tags, industries, sub-industries) check whether the term appears as a whole-
- * word match in the RFP tags, title, or description. The score is the fraction
- * of contractor terms matched, capped at 100, with the matched terms returned.
+ * Lexical signal (not embeddings). Scoped to a single (contractor, RFP) pair:
+ * inputs come from one RFP's title / description / tags and one contractor's
+ * industries / sub-industries / past-project tags. The function is called
+ * once per RFP in `scoreContractorAgainstRfp`, so each RFP is scanned
+ * individually against the calling contractor's profile.
+ *
+ * For each contractor-side term (past-project tags, industries,
+ * sub-industries) check whether the term appears as a whole-word match in
+ * the RFP tags, title, or description. The score is the fraction of
+ * contractor terms matched, capped at 100, with the matched terms returned.
  *
  *   - Whole-word, case-insensitive
  *   - Stopwords / very short tokens are skipped on both sides
