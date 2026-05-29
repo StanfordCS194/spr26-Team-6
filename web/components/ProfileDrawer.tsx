@@ -1,7 +1,12 @@
 "use client";
 
-import { startTransition, useEffect, useState } from "react";
+import { startTransition, useEffect, useMemo, useState } from "react";
 import { useDashboard } from "@/context/DashboardContext";
+import { SavedRfpsList } from "@/components/SavedRfpsList";
+import {
+  readSavedRfpSortMode,
+  type SavedRfpSortMode,
+} from "@/lib/savedRfpSort";
 import { CERTIFICATION_OPTIONS, SBA_CERTIFICATION_OPTIONS } from "@/lib/types";
 
 type ProfileTab = "overview" | "contacts" | "documents";
@@ -15,7 +20,8 @@ export function ProfileDrawer() {
     profileOpen,
     setProfileOpen,
     profile,
-    savedRfpIds,
+    savedRfpRecords,
+    reorderSavedRfps,
     selectRfp,
     saveProfile,
     loadedRfps,
@@ -24,6 +30,13 @@ export function ProfileDrawer() {
   } = useDashboard();
   const [draftProfile, setDraftProfile] = useState(profile);
   const [activeTab, setActiveTab] = useState<ProfileTab>("overview");
+  const [savedSortMode, setSavedSortMode] =
+    useState<SavedRfpSortMode>("savedAtDesc");
+
+  useEffect(() => {
+    if (!profileOpen) return;
+    setSavedSortMode(readSavedRfpSortMode());
+  }, [profileOpen]);
 
   useEffect(() => {
     if (!profileOpen) return;
@@ -37,9 +50,13 @@ export function ProfileDrawer() {
     return () => window.removeEventListener("keydown", onKey);
   }, [profileOpen, profile, setProfileOpen]);
 
-  const savedRfps = savedRfpIds
-    .map((id) => loadedRfps.find((r) => r.id === id))
-    .filter((r): r is NonNullable<typeof r> => r != null);
+  const savedRfps = useMemo(
+    () =>
+      savedRfpRecords
+        .map((rec) => loadedRfps.find((r) => r.id === rec.rfpId))
+        .filter((r): r is NonNullable<typeof r> => r != null),
+    [savedRfpRecords, loadedRfps],
+  );
 
   if (!profileOpen) return null;
 
@@ -483,35 +500,17 @@ export function ProfileDrawer() {
                 </p>
               </div>
 
-              {savedRfps.length === 0 ? (
-                <div className="rounded-lg border border-dashed border-govbid-border bg-govbid-elevated/50 p-6 text-center">
-                  <p className="text-sm text-govbid-text-muted">
-                    No saved opportunities yet
-                  </p>
-                </div>
-              ) : (
-                <ul className="grid gap-2">
-                  {savedRfps.map((rfp) => (
-                    <li key={rfp.id}>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          selectRfp(rfp.id);
-                          setProfileOpen(false);
-                        }}
-                        className="saved-rfp-item w-full rounded-lg border border-govbid-border bg-govbid-elevated p-3 text-left text-sm transition hover:border-govbid-primary/40 hover:bg-govbid-primary-muted/30"
-                      >
-                        <span className="line-clamp-2 font-semibold text-govbid-text">
-                          {rfp.title}
-                        </span>
-                        <span className="mt-1 block text-xs text-govbid-text-muted">
-                          {rfp.agency}
-                        </span>
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
+              <SavedRfpsList
+                savedRfps={savedRfps}
+                savedRfpRecords={savedRfpRecords}
+                sortMode={savedSortMode}
+                onSortModeChange={setSavedSortMode}
+                onSelectRfp={(id) => {
+                  selectRfp(id);
+                  setProfileOpen(false);
+                }}
+                onReorder={reorderSavedRfps}
+              />
             </section>
           )}
         </div>

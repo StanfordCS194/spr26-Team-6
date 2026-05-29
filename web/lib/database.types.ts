@@ -256,12 +256,14 @@ export interface Database {
           rfp_id: string
           notes: string | null
           saved_at: string
+          sort_position: number | null
         }
         Insert: {
           contractor_id: string
           rfp_id: string
           notes?: string | null
           saved_at?: string
+          sort_position?: number | null
         }
         Update: Partial<Database['public']['Tables']['saved_rfps']['Insert']>
         Relationships: []

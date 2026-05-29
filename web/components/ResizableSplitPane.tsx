@@ -54,15 +54,20 @@ export function ResizableSplitPane({
   className = "",
 }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [leadingRatio, setLeadingRatio] = useState(() =>
-    readStoredRatio(
-      storageKey,
-      defaultLeadingRatio,
-      minLeadingRatio,
-      maxLeadingRatio,
-    ),
-  );
+  // Default on server + first client paint so SSR HTML matches hydration.
+  const [leadingRatio, setLeadingRatio] = useState(defaultLeadingRatio);
   const draggingRef = useRef(false);
+
+  useEffect(() => {
+    setLeadingRatio(
+      readStoredRatio(
+        storageKey,
+        defaultLeadingRatio,
+        minLeadingRatio,
+        maxLeadingRatio,
+      ),
+    );
+  }, [storageKey, defaultLeadingRatio, minLeadingRatio, maxLeadingRatio]);
 
   const persistRatio = useCallback(
     (ratio: number) => {
