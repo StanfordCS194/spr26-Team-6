@@ -99,7 +99,6 @@ export function RfpSidebar() {
     sortBy,
     setSortBy,
     loadedRfps,
-    loadedRfps,
     filtersPanelVisible,
     toggleFiltersPanel,
   } = useDashboard();
