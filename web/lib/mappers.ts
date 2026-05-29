@@ -35,7 +35,7 @@ function buildAiAnalysisMarkdown(score: number, location: string): string {
   const geoNote = location.includes("CA")
     ? "Verify CA small business and in-state preferences where applicable."
     : "Check local subcontracting and geographic set-asides.";
-  return `### Compatibility summary\n\nYour profile aligns at **${score}/100** with this opportunity based on cached or heuristic scoring.\n\n### Gap analysis\n\n- **Security / compliance:** Confirm required certifications (e.g. FedRAMP, StateRAMP) against your past performance.\n- **Staffing:** Validate key personnel clauses vs. bench depth for similar programs.\n- **Geography:** ${geoNote}\n\n### Score breakdown\n\n| Factor | Weight | Notes |\n| --- | --- | --- |\n| Past performance match | 35% | From embeddings + RAG when pipeline is connected |\n| Technical keywords | 25% | From RFP tags vs. profile |\n| Geography | 20% | Location overlap |\n| Contract size fit | 20% | vs. preferred contract range |\n`;
+  return `### Compatibility summary\n\nYour profile aligns at **${score}/100** with this opportunity based on cached or heuristic scoring.\n\n### Gap analysis\n\n- **Security / compliance:** Confirm required certifications (e.g. FedRAMP, StateRAMP) against your past performance.\n- **Staffing:** Validate key personnel clauses vs. bench depth for similar programs.\n- **Geography:** ${geoNote}\n\n### Score breakdown\n\n| Factor | Weight | Notes |\n| --- | --- | --- |\n| Past performance match | 35% | From embeddings + RAG when pipeline is connected |\n| Technical keywords | 25% | From RFP tags vs. profile |\n| Geography | 20% | Location overlap |\n`;
 }
 
 export function formatContractAmount(

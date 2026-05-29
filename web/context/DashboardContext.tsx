@@ -180,6 +180,9 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [unscoredRfpIds, setUnscoredRfpIds] = useState<Set<string>>(
     () => new Set(),
   );
+  // Bumped whenever cached scores are invalidated (e.g. profile save) so the
+  // background scoring batch re-runs against the fresh profile.
+  const [rescoreNonce, setRescoreNonce] = useState(0);
   const [matchFactorsById, setMatchFactorsById] = useState<
     Map<string, CompatibilityScore>
   >(() => new Map());
@@ -568,20 +571,15 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     [contractorId],
   );
 
-  const selectRfp = useCallback(
-    (id: string | null) => {
-      if (id) {
-        captureEvent("rfp_selected", { rfp_id: id });
-        // Always re-score on click: forces a fresh computation against the
-        // current contractor profile so the displayed factor breakdown is
-        // current even if the underlying RFP or profile state has shifted
-        // since the last cached score.
-        void ensureScored(id, { force: true });
-      }
-      setSelectedRfpId(id);
-    },
-    [ensureScored],
-  );
+  const selectRfp = useCallback((id: string | null) => {
+    if (id) {
+      captureEvent("rfp_selected", { rfp_id: id });
+    }
+    // No scoring on selection: scores are computed once on page load and
+    // refreshed whenever the contractor profile is saved. Clicking an RFP
+    // just reads the cached breakdown.
+    setSelectedRfpId(id);
+  }, []);
 
   const isSaved = useCallback(
     (id: string) => savedRfpIds.includes(id),
@@ -752,11 +750,13 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       }
 
       setProfileState(p);
-      // Profile changed → cached scores are now stale. Clear displayed scores
-      // and let the background batch effect re-score against the new profile.
+      // Profile changed → cached scores are now stale. Clear displayed scores,
+      // mark every RFP unscored, and bump the rescore nonce so the background
+      // batch effect re-runs and re-scores the feed against the new profile.
       setLoadedRfps((prev) => prev.map((r) => ({ ...r, score: 0 })));
       setUnscoredRfpIds(new Set(loadedRfps.map((r) => r.id)));
       setMatchFactorsById(new Map());
+      setRescoreNonce((n) => n + 1);
       showToast("Profile saved.");
       captureEvent("profile_saved", { contractor_id: contractorId });
     },
@@ -803,9 +803,10 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       .slice(0, MAX_PER_BATCH)
       .map((r) => r.id);
     if (ids.length > 0) runScoreBatch(ids);
-    // Only one pass per workspace load; subsequent saves will re-trigger.
+    // Runs once per workspace load and again each time `rescoreNonce` is bumped
+    // (a profile save), which is the only thing that invalidates cached scores.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contractorId, loadedRfps.length]);
+  }, [contractorId, loadedRfps.length, rescoreNonce]);
 
   const isGeneratingSummary = useCallback(
     (rfpId: string) => summariesInFlight.has(rfpId),

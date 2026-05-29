@@ -140,7 +140,7 @@ export function RfpSidebar() {
   }
 
   return (
-    <aside className="flex w-full shrink-0 flex-col gap-4 border-b border-govbid-border/60 bg-govbid-surface p-4 lg:w-[280px] lg:border-b-0 lg:border-r lg:border-govbid-border/60 lg:p-5">
+    <aside className="flex w-full shrink-0 flex-col gap-4 border-b border-govbid-border/60 bg-govbid-surface p-4 lg:min-h-0 lg:w-[280px] lg:border-b-0 lg:border-r lg:border-govbid-border/60 lg:p-5">
       <details className="group rounded-xl lg:hidden" open>
         <summary className="cursor-pointer list-none rounded-lg border border-govbid-border bg-govbid-surface px-3 py-2 text-sm font-semibold text-govbid-text [&::-webkit-details-marker]:hidden">
           <span className="flex items-center justify-between gap-2">
@@ -186,7 +186,7 @@ export function RfpSidebar() {
 
       <div
         id="rfp-filters-panel"
-        className="hidden rounded-xl border border-govbid-border bg-govbid-surface p-4 lg:block"
+        className="hidden rounded-xl border border-govbid-border bg-govbid-surface p-4 lg:flex lg:min-h-0 lg:flex-1 lg:flex-col"
       >
         <div className="mb-4 flex items-center gap-2 text-sm font-semibold text-govbid-text">
           <FunnelIcon />
@@ -203,19 +203,21 @@ export function RfpSidebar() {
             className="ml-auto"
           />
         </div>
-        <SearchCardBody
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          rfpFilter={rfpFilter}
-          allTags={allTags}
-          sortBy={sortBy}
-          setSortBy={setSortBy}
-          mergeRfpFilter={mergeRfpFilter}
-          clearFilter={clearFilter}
-          removeFilter={removeFilter}
-          activeFilterCount={activeFilterCount}
-          inputClass={inputClass}
-        />
+        <div className="min-h-0 flex-1 overflow-y-auto">
+          <SearchCardBody
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            rfpFilter={rfpFilter}
+            allTags={allTags}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+            mergeRfpFilter={mergeRfpFilter}
+            clearFilter={clearFilter}
+            removeFilter={removeFilter}
+            activeFilterCount={activeFilterCount}
+            inputClass={inputClass}
+          />
+        </div>
       </div>
     </aside>
   );

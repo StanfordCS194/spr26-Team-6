@@ -12,7 +12,6 @@ import {
   ensureRfpChunksEmbedded,
 } from "@/lib/server/ragPipeline";
 import { scoreAgency } from "./agency";
-import { scoreAward } from "./award";
 import { checkExclusions } from "./exclusions";
 import { scoreExperience } from "./experience";
 import { scoreGeography } from "./geography";
@@ -90,13 +89,6 @@ export async function scoreContractorAgainstRfp(
     preferredResponseWindowDays: contractor.preferred_response_window_days,
   });
 
-  const award = scoreAward({
-    contractorMin: contractor.preferred_contract_min,
-    contractorMax: contractor.preferred_contract_max,
-    rfpMin: rfp.contract_amount_min,
-    rfpMax: rfp.contract_amount_max,
-  });
-
   const geography = scoreGeography({
     preferredLocations: contractor.preferred_locations,
     rfpState: rfp.state,
@@ -143,7 +135,6 @@ export async function scoreContractorAgainstRfp(
 
   const nullFactors: ScoreFactorName[] = [];
   if (timing.isNull) nullFactors.push("timing");
-  if (award.isNull) nullFactors.push("award");
   if (experience.isNull) nullFactors.push("experience");
   if (goals.isNull) nullFactors.push("goals");
   if (prereqs.isNull) nullFactors.push("prereqs");
@@ -156,7 +147,6 @@ export async function scoreContractorAgainstRfp(
   // Normalize each factor's score onto 0–1 for the weighted sum.
   const normalized: Record<ScoreFactorName, number> = {
     timing: timing.factor.score, // already 0 or 1
-    award: award.factor.score, // 0 / 0.5 / 1
     experience: experience.factor.score / 100,
     goals: goals.factor.score / 100,
     prereqs: prereqs.factor.score / 100,
@@ -172,7 +162,6 @@ export async function scoreContractorAgainstRfp(
     timing: timing.factor,
     experience: experience.factor,
     goals: goals.factor,
-    award: award.factor,
     prereqs: prereqs.factor,
     geography: geography.factor,
     agency: agency.factor,

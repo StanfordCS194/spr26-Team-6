@@ -103,7 +103,6 @@ export type ScoreFactorName =
   | "timing"
   | "experience"
   | "goals"
-  | "award"
   | "prereqs"
   | "geography"
   | "agency"
@@ -117,7 +116,6 @@ export type CompatibilityFactors = {
     matched_past_projects: string[];
   };
   goals: { score: number; reason: string };
-  award: { score: 0 | 0.5 | 1; reason: string };
   prereqs: {
     score: number;
     reason: string;
