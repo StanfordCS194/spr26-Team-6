@@ -32,6 +32,64 @@ function XIcon() {
   );
 }
 
+function ChevronIcon({ direction }: { direction: "left" | "right" }) {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      aria-hidden
+    >
+      {direction === "left" ? (
+        <path d="M15 18l-6-6 6-6" />
+      ) : (
+        <path d="M9 18l6-6-6-6" />
+      )}
+    </svg>
+  );
+}
+
+function FiltersPanelToggle({
+  expanded,
+  onClick,
+  activeFilterCount,
+  className = "",
+}: {
+  expanded: boolean;
+  onClick: () => void;
+  activeFilterCount: number;
+  className?: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-expanded={expanded}
+      aria-controls="rfp-filters-panel"
+      title={expanded ? "Hide search and filters" : "Show search and filters"}
+      className={`inline-flex items-center gap-1.5 rounded-lg border border-govbid-border bg-govbid-surface px-2 py-1.5 text-xs font-semibold text-govbid-text transition hover:bg-govbid-primary-muted/40 ${className}`}
+    >
+      {!expanded && <FunnelIcon />}
+      <span className="whitespace-nowrap">
+        {expanded ? "Hide" : "Filters"}
+      </span>
+      {!expanded && activeFilterCount > 0 && (
+        <span className="flex size-5 items-center justify-center rounded-full bg-govbid-primary text-[10px] font-bold text-white">
+          {activeFilterCount}
+        </span>
+      )}
+      {expanded ? (
+        <ChevronIcon direction="left" />
+      ) : (
+        <ChevronIcon direction="right" />
+      )}
+    </button>
+  );
+}
+
 export function RfpSidebar() {
   const {
     searchQuery,
@@ -41,6 +99,9 @@ export function RfpSidebar() {
     sortBy,
     setSortBy,
     loadedRfps,
+    loadedRfps,
+    filtersPanelVisible,
+    toggleFiltersPanel,
   } = useDashboard();
 
   const activeFilterCount = Object.values(rfpFilter).filter(
@@ -66,8 +127,21 @@ export function RfpSidebar() {
   const inputClass =
     "mt-1.5 w-full rounded-lg border border-govbid-border bg-govbid-surface px-3 py-2 text-sm text-govbid-text outline-none transition placeholder:text-govbid-text-muted focus:border-govbid-primary focus:outline focus:outline-2 focus:outline-offset-0 focus:outline-govbid-primary";
 
+  if (!filtersPanelVisible) {
+    return (
+      <aside className="flex w-full shrink-0 flex-col border-b border-govbid-border/60 bg-govbid-surface p-3 lg:w-auto lg:border-b-0 lg:border-r lg:px-2 lg:py-4">
+        <FiltersPanelToggle
+          expanded={false}
+          onClick={toggleFiltersPanel}
+          activeFilterCount={activeFilterCount}
+          className="w-full justify-center lg:w-auto lg:flex-col lg:px-2 lg:py-3"
+        />
+      </aside>
+    );
+  }
+
   return (
-    <aside className="flex w-full shrink-0 flex-col gap-4 border-b border-govbid-border/60 bg-govbid-surface p-4 lg:w-[280px] lg:border-b-0 lg:p-5">
+    <aside className="flex w-full shrink-0 flex-col gap-4 border-b border-govbid-border/60 bg-govbid-surface p-4 lg:w-[280px] lg:border-b-0 lg:border-r lg:border-govbid-border/60 lg:p-5">
       <details className="group rounded-xl lg:hidden" open>
         <summary className="cursor-pointer list-none rounded-lg border border-govbid-border bg-govbid-surface px-3 py-2 text-sm font-semibold text-govbid-text [&::-webkit-details-marker]:hidden">
           <span className="flex items-center justify-between gap-2">
@@ -80,10 +154,21 @@ export function RfpSidebar() {
                 </span>
               )}
             </span>
-            <span className="text-govbid-text-muted group-open:rotate-180">▼</span>
+            <span
+              className="flex items-center gap-2"
+              onClick={(e) => e.stopPropagation()}
+              onKeyDown={(e) => e.stopPropagation()}
+            >
+              <FiltersPanelToggle
+                expanded
+                onClick={toggleFiltersPanel}
+                activeFilterCount={activeFilterCount}
+              />
+              <span className="text-govbid-text-muted group-open:rotate-180">▼</span>
+            </span>
           </span>
         </summary>
-        <div className="mt-3 space-y-4">
+        <div id="rfp-filters-panel" className="mt-3 space-y-4">
           <SearchCardBody
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
@@ -100,15 +185,24 @@ export function RfpSidebar() {
         </div>
       </details>
 
-      <div className="hidden rounded-xl border border-govbid-border bg-govbid-surface p-4 lg:block">
+      <div
+        id="rfp-filters-panel"
+        className="hidden rounded-xl border border-govbid-border bg-govbid-surface p-4 lg:block"
+      >
         <div className="mb-4 flex items-center gap-2 text-sm font-semibold text-govbid-text">
           <FunnelIcon />
-          Search &amp; filters
+          <span>Search &amp; filters</span>
           {activeFilterCount > 0 && (
-            <span className="ml-auto flex size-5 items-center justify-center rounded-full bg-govbid-primary text-xs font-bold text-white">
+            <span className="flex size-5 items-center justify-center rounded-full bg-govbid-primary text-xs font-bold text-white">
               {activeFilterCount}
             </span>
           )}
+          <FiltersPanelToggle
+            expanded
+            onClick={toggleFiltersPanel}
+            activeFilterCount={activeFilterCount}
+            className="ml-auto"
+          />
         </div>
         <SearchCardBody
           searchQuery={searchQuery}
