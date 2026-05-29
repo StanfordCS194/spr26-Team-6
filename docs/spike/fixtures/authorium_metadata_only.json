@@ -1,0 +1,25 @@
+{
+  "_comment": "Representative of public sb.cityinnovate.com challenge landing — FAILS record_has_pdf_url() ingest gate.",
+  "source": "Authorium",
+  "external_id": "dhcs:14773",
+  "title": "Application for HR+ Modernization",
+  "dept": "California Department of Health Care Services (DHCS)",
+  "description": "Vendor application submission for HR+ Modernization. Full RFP materials not exposed on public Authorium landing page.",
+  "published_date": null,
+  "due_date": null,
+  "contact_name": null,
+  "contact_email": null,
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-dhcs:14773-spike0001",
+  "metadata": {
+    "authorium": {
+      "team_slug": "dhcs",
+      "challenge_id": "14773",
+      "submission_url": "https://sb.cityinnovate.com/teams/dhcs?challenge_id=14773",
+      "public_preview_available": true
+    },
+    "documents": []
+  }
+}

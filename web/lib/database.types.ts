@@ -21,7 +21,23 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export type RfpSource = 'sam.gov' | 'Cal eProcure' | 'PlanetBids' | 'other'
+export type RfpSource =
+  | 'sam.gov'
+  | 'Cal eProcure'
+  | 'PlanetBids'
+  | 'Authorium'
+  | 'Public Purchase'
+  | 'other'
+
+/** Values accepted by rfps_source_check — use for filter dropdowns. */
+export const RFP_SOURCE_OPTIONS: readonly RfpSource[] = [
+  'Cal eProcure',
+  'sam.gov',
+  'PlanetBids',
+  'Authorium',
+  'Public Purchase',
+  'other',
+] as const
 
 export type RfpStatus =
   | 'active'

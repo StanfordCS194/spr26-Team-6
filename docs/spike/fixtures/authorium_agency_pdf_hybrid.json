@@ -1,0 +1,39 @@
+{
+  "_comment": "Target shape if RFP PDFs are scraped from agency site and Authorium URL stored as submission link — PASSES ingest gate.",
+  "source": "Authorium",
+  "external_id": "calrecycle:DRR24043",
+  "title": "DRR24043 Statement of Qualifications — CalRecycle",
+  "dept": "Department of Resources Recycling and Recovery (CalRecycle)",
+  "description": "SOQ solicitation administered via Authorium vendor portal; RFP and Q&A PDFs published on calrecycle.ca.gov.",
+  "published_date": "2026-03-01T09:00:00-08:00",
+  "due_date": "2026-04-15T14:00:00-07:00",
+  "contact_name": "CalRecycle Contracts Unit",
+  "contact_email": "contracts@calrecycle.ca.gov",
+  "contact_phone": "916-341-6544",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-calrecycle:DRR24043-spike0002",
+  "metadata": {
+    "authorium": {
+      "team_slug": "calrecycle",
+      "challenge_id": "24043",
+      "submission_url": "https://sb.cityinnovate.com/teams/calrecycle?challenge_id=24043"
+    },
+    "solicitation_number": "DRR24043",
+    "agency_announcement_url": "https://www2.calrecycle.ca.gov/Contracts/",
+    "documents": [
+      {
+        "label": "DRR24043_RFP_Package.pdf",
+        "url": "https://drive.google.com/file/d/EXAMPLE_CALRECYCLE_RFP/view?usp=drivesdk",
+        "type": "primary_spec",
+        "attachment_description": "Downloaded from agency contracts page, re-hosted to Drive"
+      },
+      {
+        "label": "DRR24043_QA_Addendum.pdf",
+        "url": "https://drive.google.com/file/d/EXAMPLE_CALRECYCLE_QA/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": "Agency-published Q&A referencing Authorium submission rules"
+      }
+    ]
+  }
+}

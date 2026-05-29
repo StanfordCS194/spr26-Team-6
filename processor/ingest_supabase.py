@@ -90,6 +90,11 @@ def _extract_pdf_urls(processed: dict[str, Any]) -> dict[str, str | None]:
     return out
 
 
+def record_has_pdf_url(processed: dict[str, Any]) -> bool:
+    """True when at least one document URL maps into pdf_url_1..pdf_url_10."""
+    return any(_extract_pdf_urls(processed).get(f"pdf_url_{i}") for i in range(1, _PDF_URL_SLOTS + 1))
+
+
 def to_rfp_row(processed: dict[str, Any]) -> dict[str, Any]:
     """Translate a processed JSON record into a row for `public.rfps`.
 
@@ -160,9 +165,17 @@ def upsert_record(client, processed: dict[str, Any]) -> dict[str, Any]:
     return response.data[0] if getattr(response, "data", None) else {}
 
 
-def ingest_records(client, records: Iterable[dict[str, Any]]) -> IngestResult:
+def ingest_records(
+    client,
+    records: Iterable[dict[str, Any]],
+    *,
+    require_pdf_url: bool = True,
+) -> IngestResult:
     result = IngestResult()
     for processed in records:
+        if require_pdf_url and not record_has_pdf_url(processed):
+            result.skipped += 1
+            continue
         try:
             upsert_record(client, processed)
             result.upserted += 1
@@ -178,6 +191,7 @@ def ingest_directory(
     *,
     client: Any | None = None,
     filename_prefix: str | None = None,
+    require_pdf_url: bool = True,
 ) -> IngestResult:
     """Read every processed JSON in `input_dir` and upsert it into Supabase.
 
@@ -205,6 +219,9 @@ def ingest_directory(
             result.errors.append(f"{src.name}: failed to read ({exc})")
             continue
         if not processed.get("source") or not processed.get("external_id"):
+            result.skipped += 1
+            continue
+        if require_pdf_url and not record_has_pdf_url(processed):
             result.skipped += 1
             continue
         try:

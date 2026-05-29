@@ -17,10 +17,12 @@ import {
   type ContractorProfile,
   type Rfp,
 } from "@/lib/types";
+import type { RfpSource } from "@/lib/database.types";
 import { createClient } from "@/lib/supabase/client";
 import {
   contractorRowToProfile,
   mapRfpRow,
+  procurementCodeMatchesPrefix,
   profileToContractorUpdate,
 } from "@/lib/mappers";
 import {
@@ -41,6 +43,10 @@ export type RfpFilter = {
   dateTo?: string;
   priceMin?: number;
   priceMax?: number;
+  /** Canonical `rfps.source` value. */
+  source?: RfpSource;
+  /** NAICS or UNSPSC prefix, e.g. `541512` or `43`. */
+  codePrefix?: string;
 };
 
 export type RfpSortBy = "date" | "score";
@@ -433,6 +439,17 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
 
       if (typeof rfpFilter.priceMax === "number") {
         if (amount > rfpFilter.priceMax) return false;
+      }
+
+      if (rfpFilter.source && r.source !== rfpFilter.source) {
+        return false;
+      }
+
+      const codePrefix = rfpFilter.codePrefix?.trim();
+      if (codePrefix) {
+        if (!procurementCodeMatchesPrefix(r.procurementCodes, codePrefix)) {
+          return false;
+        }
       }
 
       return true;

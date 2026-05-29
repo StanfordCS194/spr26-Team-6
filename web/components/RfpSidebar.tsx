@@ -5,6 +5,8 @@ import {
   type RfpFilter,
   type RfpSortBy,
 } from "@/context/DashboardContext";
+import { RFP_SOURCE_OPTIONS } from "@/lib/database.types";
+import type { Rfp } from "@/lib/types";
 
 function FunnelIcon() {
   return (
@@ -99,14 +101,23 @@ export function RfpSidebar() {
     sortBy,
     setSortBy,
     loadedRfps,
-    loadedRfps,
     filtersPanelVisible,
     toggleFiltersPanel,
   } = useDashboard();
 
-  const activeFilterCount = Object.values(rfpFilter).filter(
-    (v) => v !== undefined && v !== "",
-  ).length;
+  const activeFilterCount = [
+    rfpFilter.tag,
+    rfpFilter.dateFrom,
+    rfpFilter.dateTo,
+    rfpFilter.priceMin,
+    rfpFilter.priceMax,
+    rfpFilter.source,
+    rfpFilter.codePrefix?.trim(),
+  ].filter((v) => v !== undefined && v !== "").length;
+
+  const availableSources = Array.from(
+    new Set(loadedRfps.map((rfp) => rfp.source)),
+  ).sort();
 
   const allTags = Array.from(
     new Set(loadedRfps.flatMap((rfp) => rfp.tags)),
@@ -174,6 +185,7 @@ export function RfpSidebar() {
             setSearchQuery={setSearchQuery}
             rfpFilter={rfpFilter}
             allTags={allTags}
+            availableSources={availableSources}
             sortBy={sortBy}
             setSortBy={setSortBy}
             mergeRfpFilter={mergeRfpFilter}
@@ -209,6 +221,7 @@ export function RfpSidebar() {
           setSearchQuery={setSearchQuery}
           rfpFilter={rfpFilter}
           allTags={allTags}
+          availableSources={availableSources}
           sortBy={sortBy}
           setSortBy={setSortBy}
           mergeRfpFilter={mergeRfpFilter}
@@ -227,6 +240,7 @@ function SearchCardBody({
   setSearchQuery,
   rfpFilter,
   allTags,
+  availableSources,
   sortBy,
   setSortBy,
   mergeRfpFilter,
@@ -239,6 +253,7 @@ function SearchCardBody({
   setSearchQuery: (q: string) => void;
   rfpFilter: RfpFilter;
   allTags: string[];
+  availableSources: Rfp["source"][];
   sortBy: RfpSortBy;
   setSortBy: (sort: RfpSortBy) => void;
   mergeRfpFilter: (patch: Partial<RfpFilter>) => void;
@@ -362,6 +377,34 @@ function SearchCardBody({
                 </button>
               </div>
             )}
+            {rfpFilter.source && (
+              <div className="inline-flex items-center gap-2 rounded-full bg-govbid-primary-muted px-3 py-1 text-sm">
+                <span className="text-govbid-text">{rfpFilter.source}</span>
+                <button
+                  type="button"
+                  onClick={() => removeFilter("source")}
+                  className="text-govbid-text-muted hover:text-govbid-text"
+                  aria-label="Remove source filter"
+                >
+                  <XIcon />
+                </button>
+              </div>
+            )}
+            {rfpFilter.codePrefix?.trim() && (
+              <div className="inline-flex items-center gap-2 rounded-full bg-govbid-primary-muted px-3 py-1 text-sm">
+                <span className="text-govbid-text">
+                  Code {rfpFilter.codePrefix.trim()}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => removeFilter("codePrefix")}
+                  className="text-govbid-text-muted hover:text-govbid-text"
+                  aria-label="Remove procurement code filter"
+                >
+                  <XIcon />
+                </button>
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -369,6 +412,48 @@ function SearchCardBody({
       {/* Filter Section */}
       <div className="space-y-3 border-t border-govbid-border pt-3">
         <p className="text-xs font-medium text-govbid-text-muted">Filter by</p>
+
+        {/* Source */}
+        <label className="block text-xs font-medium text-govbid-text-muted">
+          Source
+          <select
+            value={rfpFilter.source ?? ""}
+            onChange={(event) => {
+              const value = event.target.value;
+              mergeRfpFilter({
+                source: value ? (value as (typeof RFP_SOURCE_OPTIONS)[number]) : undefined,
+              });
+            }}
+            className={inputClass}
+          >
+            <option value="">Any source</option>
+            {(availableSources.length > 0
+              ? availableSources
+              : [...RFP_SOURCE_OPTIONS]
+            ).map((source) => (
+              <option key={source} value={source}>
+                {source}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        {/* NAICS / UNSPSC prefix */}
+        <label className="block text-xs font-medium text-govbid-text-muted">
+          NAICS / UNSPSC code
+          <input
+            type="text"
+            inputMode="numeric"
+            value={rfpFilter.codePrefix ?? ""}
+            onChange={(event) =>
+              mergeRfpFilter({
+                codePrefix: event.target.value.trim() || undefined,
+              })
+            }
+            placeholder="e.g. 541512 or 43"
+            className={inputClass}
+          />
+        </label>
 
         {/* Topic Tag */}
         <label className="block text-xs font-medium text-govbid-text-muted">

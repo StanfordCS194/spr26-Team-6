@@ -1,4 +1,4 @@
-import type { Database } from "@/lib/database.types";
+import type { Database, Json } from "@/lib/database.types";
 import type { ContractorProfile, Rfp } from "@/lib/types";
 
 type ContractorRow = Database["public"]["Tables"]["contractors"]["Row"];
@@ -18,6 +18,48 @@ const PDF_URL_KEYS = [
   "pdf_url_9",
   "pdf_url_10",
 ] as const satisfies readonly (keyof RfpRow)[];
+
+/** Normalize NAICS/UNSPSC codes from rfps.metadata for client-side filtering. */
+export function extractProcurementCodes(metadata: Json): string[] {
+  if (!metadata || typeof metadata !== "object" || Array.isArray(metadata)) {
+    return [];
+  }
+  const m = metadata as Record<string, Json | undefined>;
+  const out: string[] = [];
+
+  if (Array.isArray(m.naics_codes)) {
+    for (const item of m.naics_codes) {
+      if (typeof item === "string") {
+        const digits = item.replace(/\D/g, "");
+        if (digits) out.push(digits);
+      }
+    }
+  }
+
+  if (Array.isArray(m.unspsc_codes)) {
+    for (const item of m.unspsc_codes) {
+      if (item && typeof item === "object" && !Array.isArray(item)) {
+        const code = (item as { code?: unknown }).code;
+        if (typeof code === "string") {
+          const digits = code.replace(/\D/g, "");
+          if (digits) out.push(digits);
+        }
+      }
+    }
+  }
+
+  return [...new Set(out)];
+}
+
+/** True when any RFP code matches the user-entered prefix (NAICS or UNSPSC). */
+export function procurementCodeMatchesPrefix(
+  codes: string[],
+  prefix: string,
+): boolean {
+  const p = prefix.replace(/\D/g, "");
+  if (!p) return true;
+  return codes.some((code) => code.startsWith(p) || p.startsWith(code));
+}
 
 export function collectPdfUrlsFromRfpRow(row: RfpRow): string[] {
   const out: string[] = [];
@@ -89,6 +131,8 @@ export function mapRfpRow(
   const deliverables = row.deliverables?.length ? [...row.deliverables] : [];
   return {
     id: row.id,
+    source: row.source,
+    procurementCodes: extractProcurementCodes(row.metadata),
     // Prefer the curated short name from rfps.name; fall back to title when
     // a row predates the name-extraction pipeline.
     name: (row.name ?? "").trim() || row.title,

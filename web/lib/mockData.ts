@@ -12,6 +12,8 @@ type RfpSeed = Omit<
   | "deliverables"
   | "statementOfWork"
   | "name"
+  | "source"
+  | "procurementCodes"
 >;
 
 const MOCK_DELIVERABLES = [
@@ -156,6 +158,8 @@ const raw: RfpSeed[] = [
 
 export const MOCK_RFPS: Rfp[] = raw.map((r, i) => ({
   ...r,
+  source: i % 2 === 0 ? "Cal eProcure" : "sam.gov",
+  procurementCodes: i === 0 ? ["541512", "541519", "43211503"] : ["541512"],
   // Strip trailing solicitation numbers / "Request for ..." chunks for the
   // mock short name so cards/detail panels see a tidy label.
   name: r.title.replace(/\s+(RFP|RFQ|RFI)[^\s]*$/i, "").trim() || r.title,

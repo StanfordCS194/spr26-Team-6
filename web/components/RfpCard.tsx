@@ -157,6 +157,7 @@ function HeadlineFirstCard({
             {shortenAgencyName(rfp.agency, 48)}
           </p>
         ) : null}
+        <p className="mt-0.5 text-[10px] font-medium text-govbid-text-muted">{rfp.source}</p>
         <div className="mt-2 flex flex-wrap gap-1">
           {rfp.tags?.map((tag) => (
             <TagBubble key={tag} tag={tag} />
@@ -248,6 +249,7 @@ function ScoreFirstCard({
         <p className="mt-1 line-clamp-1 text-xs font-medium text-govbid-text" title={rfp.agency}>
           {shortenAgencyName(rfp.agency, 52)}
         </p>
+        <p className="text-[10px] font-medium text-govbid-text-muted">{rfp.source}</p>
         <p className="mt-1 text-xs font-semibold text-govbid-primary">{rfp.contract}</p>
         <div className="mt-2 flex flex-wrap gap-1">
           {rfp.tags.slice(0, 3).map((t) => (

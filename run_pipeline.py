@@ -5,8 +5,9 @@ source's scraper, processes only that source's raw files, and uploads only
 those records to Supabase.
 
 Usage:
-    python run_pipeline.py sam          # SAM.gov pipeline only
-    python run_pipeline.py eProcure     # Cal eProcure pipeline only
+    python run_pipeline.py sam              # SAM.gov pipeline only
+    python run_pipeline.py eProcure         # Cal eProcure pipeline only
+    python run_pipeline.py publicPurchase   # Public Purchase pipeline only
 
 Stage 1: scrape <source>           -> data_raw/<prefix>_<id>.json
 Stage 2: normalize + tag           -> data_processed/<prefix>_<id>.json
@@ -14,7 +15,8 @@ Stage 3: upsert into Supabase      -> public.rfps
 
 Source flag mapping:
     sam       -> SAM.gov scraper        + data_raw/samgov_*.json
-    eProcure  -> Cal eProcure scraper   + data_raw/caleprocure_*.json
+    eProcure        -> Cal eProcure scraper        + data_raw/caleprocure_*.json
+    publicPurchase  -> Public Purchase scraper     + data_raw/publicpurchase_*.json
 
 Dedup guarantees:
   * Each scraper skips opportunities/events whose raw JSON already exists in
@@ -52,6 +54,11 @@ SOURCES: dict[str, dict[str, str]] = {
         "scraper": "scraper.caleprocure_interface",
         "prefix": "caleprocure_",
         "label": "Cal eProcure",
+    },
+    "publicPurchase": {
+        "scraper": "scraper.publicpurchase_interface",
+        "prefix": "publicpurchase_",
+        "label": "Public Purchase",
     },
 }
 
@@ -107,6 +114,18 @@ def _scrape_caleprocure(rescrape: bool, extra: List[str]) -> None:
         raise RuntimeError(f"caleprocure_interface.main returned {rc}")
 
 
+def _scrape_publicpurchase(rescrape: bool, extra: List[str]) -> None:
+    from scraper import publicpurchase_interface
+
+    argv: List[str] = []
+    if rescrape:
+        argv.append("--no-skip-existing")
+    argv.extend(extra)
+    rc = publicpurchase_interface.main(argv)
+    if rc != 0:
+        raise RuntimeError(f"publicpurchase_interface.main returned {rc}")
+
+
 def _process_raw(prefix: str) -> None:
     from processor.pipeline import (
         DEFAULT_INPUT_DIR,
@@ -152,7 +171,7 @@ def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "source",
         choices=sorted(SOURCES.keys()),
-        help="Which source to run the pipeline for ('sam' or 'eProcure').",
+        help="Which source to run the pipeline for ('sam', 'eProcure', or 'publicPurchase').",
     )
     parser.add_argument(
         "--skip-scrape", action="store_true",
@@ -198,10 +217,15 @@ def main(argv: List[str] | None = None) -> int:
                 f"Stage 1/3 — {label} scrape",
                 lambda: _scrape_samgov(args.rescrape, args.no_drive, args.scraper_arg),
             )
-        else:  # eProcure
+        elif source == "eProcure":
             ok = _run_stage(
                 f"Stage 1/3 — {label} scrape",
                 lambda: _scrape_caleprocure(args.rescrape, args.scraper_arg),
+            )
+        else:  # publicPurchase
+            ok = _run_stage(
+                f"Stage 1/3 — {label} scrape",
+                lambda: _scrape_publicpurchase(args.rescrape, args.scraper_arg),
             )
         if not ok:
             failures.append("scrape")

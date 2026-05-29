@@ -1,0 +1,28 @@
+{
+  "_comment": "HYPOTHETICAL — not scraped. Illustrates target shape if Anvaya confirms a real bid aggregator at a Supply.io-class URL. Would require source literal migration before ingest.",
+  "source": "Supply.io",
+  "external_id": "example-agency:IT-2026-0142",
+  "title": "Cybersecurity Operations Center (SOC) Managed Services",
+  "dept": "California Department of Technology",
+  "description": "Managed detection and response services for state agency security operations.",
+  "published_date": "2026-05-01T09:00:00-07:00",
+  "due_date": "2026-06-15T17:00:00-07:00",
+  "contact_name": "Procurement Officer",
+  "contact_email": "procurement@example.ca.gov",
+  "contact_phone": "916-555-0100",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-example-agency:IT-2026-0142-a1b2c3d4e5f6",
+  "metadata": {
+    "listing_url": "https://example-bid-aggregator.example/opportunity/IT-2026-0142",
+    "naics_codes": ["541512", "541519"],
+    "documents": [
+      {
+        "label": "RFP_IT-2026-0142.pdf",
+        "url": "https://drive.google.com/file/d/EXAMPLE/view?usp=drivesdk",
+        "type": "primary_spec",
+        "attachment_description": ""
+      }
+    ]
+  }
+}

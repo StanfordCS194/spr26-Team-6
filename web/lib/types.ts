@@ -1,5 +1,11 @@
+import type { RfpSource } from "@/lib/database.types";
+
 export type Rfp = {
   id: string;
+  /** Canonical ingest source (`rfps.source`). */
+  source: RfpSource;
+  /** NAICS + UNSPSC codes from `rfps.metadata` for sidebar filtering. */
+  procurementCodes: string[];
   /** Short curated project name from `rfps.name` (e.g. "CalHEERS SDMO Project"). */
   name: string;
   /** Full formal RFP title from `rfps.title` (e.g. "CalHEERS SDMO RFP #73040873"). */
