@@ -29,6 +29,11 @@ import {
   resetPosthog,
 } from "@/lib/analytics";
 import { formatRfpSummaryMarkdown, RfpSummarySchema } from "@/lib/rfpSummary";
+import {
+  buildSavedRfpRecordsInOrder,
+  nextSortPosition,
+  type SavedRfpRecord,
+} from "@/lib/savedRfpSort";
 
 export type RfpFilter = {
   tag?: string;
@@ -64,8 +69,11 @@ type DashboardContextValue = {
   selectRfp: (id: string | null) => void;
   selectedRfp: Rfp | null;
   savedRfpIds: string[];
+  savedRfpRecords: SavedRfpRecord[];
   isSaved: (id: string) => boolean;
   toggleSaveRfp: (id: string) => Promise<void>;
+  /** Persist custom drag order (profile sort = custom). */
+  reorderSavedRfps: (orderedIds: string[]) => Promise<void>;
   profile: ContractorProfile;
   setProfile: (p: Partial<ContractorProfile>) => void;
   saveProfile: (p: ContractorProfile) => Promise<void>;
@@ -97,8 +105,25 @@ type DashboardContextValue = {
   showToast: (message: string) => void;
   rfpFilter: RfpFilter;
   setRfpFilter: (filter: RfpFilter) => void;
+  filtersPanelVisible: boolean;
+  setFiltersPanelVisible: (visible: boolean) => void;
+  toggleFiltersPanel: () => void;
   signOut: () => Promise<void>;
 };
+
+const FILTERS_PANEL_VISIBLE_KEY = "govbid-filters-panel-visible";
+
+function readFiltersPanelVisible(): boolean {
+  if (typeof window === "undefined") return true;
+  try {
+    const stored = localStorage.getItem(FILTERS_PANEL_VISIBLE_KEY);
+    if (stored === "false") return false;
+    if (stored === "true") return true;
+  } catch {
+    /* ignore */
+  }
+  return true;
+}
 
 const DashboardContext = createContext<DashboardContextValue | null>(null);
 
@@ -106,7 +131,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [authReady, setAuthReady] = useState(false);
   const [contractorId, setContractorId] = useState<string | null>(null);
   const [loadedRfps, setLoadedRfps] = useState<Rfp[]>([]);
-  const [savedRfpIds, setSavedRfpIds] = useState<string[]>([]);
+  const [savedRfpRecords, setSavedRfpRecords] = useState<SavedRfpRecord[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRfpId, setSelectedRfpId] = useState<string | null>(null);
   const [profile, setProfileState] = useState<ContractorProfile>(
@@ -116,8 +141,34 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [walkthroughActive, setWalkthroughActive] = useState(false);
   const [walkthroughStep, setWalkthroughStep] = useState(0);
   const [rfpFilter, setRfpFilter] = useState<RfpFilter>({});
+  const [filtersPanelVisible, setFiltersPanelVisibleState] = useState(true);
   const [toast, setToast] = useState<string | null>(null);
   const [activeNav, setActiveNavState] = useState<ActiveNav>("dashboard");
+
+  useEffect(() => {
+    setFiltersPanelVisibleState(readFiltersPanelVisible());
+  }, []);
+
+  const setFiltersPanelVisible = useCallback((visible: boolean) => {
+    setFiltersPanelVisibleState(visible);
+    try {
+      localStorage.setItem(FILTERS_PANEL_VISIBLE_KEY, String(visible));
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const toggleFiltersPanel = useCallback(() => {
+    setFiltersPanelVisibleState((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem(FILTERS_PANEL_VISIBLE_KEY, String(next));
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
+  }, []);
   const [scoringRfpIds, setScoringRfpIds] = useState<Set<string>>(
     () => new Set(),
   );
@@ -178,7 +229,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
             showToast(msg);
             setContractorId(null);
             setLoadedRfps([]);
-            setSavedRfpIds([]);
+            setSavedRfpRecords([]);
             setProfileState(defaultContractorProfile);
             return;
           }
@@ -199,10 +250,17 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
 
         const { data: savedRows } = await supabase
           .from("saved_rfps")
-          .select("rfp_id")
-          .eq("contractor_id", cid);
-        const savedList = savedRows?.map((r) => r.rfp_id) ?? [];
-        setSavedRfpIds(savedList);
+          .select("rfp_id, saved_at, sort_position")
+          .eq("contractor_id", cid)
+          .order("sort_position", { ascending: true, nullsFirst: false })
+          .order("saved_at", { ascending: true });
+        setSavedRfpRecords(
+          (savedRows ?? []).map((r) => ({
+            rfpId: r.rfp_id,
+            savedAt: r.saved_at,
+            sortPosition: r.sort_position,
+          })),
+        );
 
         const { data: scoreRows } = await supabase
           .from("scores")
@@ -264,7 +322,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const clearWorkspace = useCallback(() => {
     setContractorId(null);
     setLoadedRfps([]);
-    setSavedRfpIds([]);
+    setSavedRfpRecords([]);
     setProfileState(defaultContractorProfile);
     setSelectedRfpId(null);
     setUnscoredRfpIds(new Set());
@@ -310,6 +368,11 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
 
     return () => subscription.unsubscribe();
   }, [loadWorkspace, clearWorkspace]);
+
+  const savedRfpIds = useMemo(
+    () => savedRfpRecords.map((r) => r.rfpId),
+    [savedRfpRecords],
+  );
 
   const filteredRfps = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
@@ -496,22 +559,70 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
           showToast(error.message);
           return;
         }
-        setSavedRfpIds((prev) => prev.filter((x) => x !== id));
+        setSavedRfpRecords((prev) => prev.filter((r) => r.rfpId !== id));
         captureEvent("rfp_save_toggled", { rfp_id: id, now_saved: false });
       } else {
-        const { error } = await supabase.from("saved_rfps").insert({
-          contractor_id: contractorId,
-          rfp_id: id,
-        });
+        const sortPosition = nextSortPosition(savedRfpRecords);
+        const { data: inserted, error } = await supabase
+          .from("saved_rfps")
+          .insert({
+            contractor_id: contractorId,
+            rfp_id: id,
+            sort_position: sortPosition,
+          })
+          .select("rfp_id, saved_at, sort_position")
+          .single();
         if (error) {
           showToast(error.message);
           return;
         }
-        setSavedRfpIds((prev) => [...prev, id]);
+        if (inserted) {
+          setSavedRfpRecords((prev) => [
+            ...prev,
+            {
+              rfpId: inserted.rfp_id,
+              savedAt: inserted.saved_at,
+              sortPosition: inserted.sort_position,
+            },
+          ]);
+        }
         captureEvent("rfp_save_toggled", { rfp_id: id, now_saved: true });
       }
     },
-    [contractorId, savedRfpIds, showToast],
+    [contractorId, savedRfpIds, savedRfpRecords, showToast],
+  );
+
+  const reorderSavedRfps = useCallback(
+    async (orderedIds: string[]) => {
+      if (!contractorId) {
+        showToast("Profile not ready yet.");
+        throw new Error("Profile not ready");
+      }
+
+      let rollback: SavedRfpRecord[] = [];
+      setSavedRfpRecords((prev) => {
+        rollback = prev;
+        return buildSavedRfpRecordsInOrder(prev, orderedIds);
+      });
+
+      const supabase = createClient();
+      const results = await Promise.all(
+        orderedIds.map((rfpId, index) =>
+          supabase
+            .from("saved_rfps")
+            .update({ sort_position: index })
+            .eq("contractor_id", contractorId)
+            .eq("rfp_id", rfpId),
+        ),
+      );
+      const failed = results.find((r) => r.error);
+      if (failed?.error) {
+        setSavedRfpRecords(rollback);
+        showToast(failed.error.message);
+        throw failed.error;
+      }
+    },
+    [contractorId, showToast],
   );
 
   const saveProfile = useCallback(
@@ -768,8 +879,10 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       selectRfp,
       selectedRfp,
       savedRfpIds,
+      savedRfpRecords,
       isSaved,
       toggleSaveRfp,
+      reorderSavedRfps,
       profile,
       setProfile,
       saveProfile,
@@ -789,6 +902,9 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       showToast,
       rfpFilter,
       setRfpFilter,
+      filtersPanelVisible,
+      setFiltersPanelVisible,
+      toggleFiltersPanel,
       signOut,
     }),
     [
@@ -802,8 +918,10 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       selectRfp,
       selectedRfp,
       savedRfpIds,
+      savedRfpRecords,
       isSaved,
       toggleSaveRfp,
+      reorderSavedRfps,
       profile,
       setProfile,
       saveProfile,
@@ -819,6 +937,9 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       toast,
       showToast,
       rfpFilter,
+      filtersPanelVisible,
+      setFiltersPanelVisible,
+      toggleFiltersPanel,
       signOut,
     ],
   );
