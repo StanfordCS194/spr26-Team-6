@@ -8,6 +8,7 @@ import { DetailPanelVariantB } from "./DetailPanelVariantB";
 import { DashboardVariantB } from "./DashboardVariantB";
 import { GlobalHeader } from "./GlobalHeader";
 import { ProfileDrawer } from "./ProfileDrawer";
+import { ResizableSplitPane } from "./ResizableSplitPane";
 import { RfpFeed } from "./RfpFeed";
 import { RfpSidebar } from "./RfpSidebar";
 import { Walkthrough } from "./Walkthrough/Walkthrough";
@@ -43,16 +44,25 @@ export function Dashboard() {
         <div className="grid min-h-0 min-w-0 flex-1 grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)]">
           <RfpSidebar />
 
-          {/* Slightly wider detail column (user testing: more room for overview copy) */}
-          <div className="grid min-h-0 min-w-0 grid-cols-1 lg:grid-cols-[minmax(0,0.88fr)_minmax(0,1.12fr)]">
-            <div className="flex min-h-0 min-w-0 flex-col">
-              <RfpFeed />
-            </div>
-
-            <div className="flex min-h-[min(50vh,420px)] min-w-0 flex-col lg:min-h-0">
-              {detailPanelVariant === "B" ? <DetailPanelVariantB /> : <DetailPanel />}
-            </div>
-          </div>
+          <ResizableSplitPane
+            className="min-h-0 min-w-0"
+            defaultLeadingRatio={0.44}
+            storageKey="govbid-dashboard-split-a"
+            leading={
+              <div className="flex min-h-0 min-w-0 flex-col">
+                <RfpFeed />
+              </div>
+            }
+            trailing={
+              <div className="flex min-h-[min(50vh,420px)] min-w-0 flex-col lg:min-h-0">
+                {detailPanelVariant === "B" ? (
+                  <DetailPanelVariantB />
+                ) : (
+                  <DetailPanel />
+                )}
+              </div>
+            }
+          />
         </div>
       </div>
 

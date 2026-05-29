@@ -6,6 +6,7 @@ import { DetailPanel } from "./DetailPanel";
 import { DetailPanelVariantB } from "./DetailPanelVariantB";
 import { GlobalHeader } from "./GlobalHeader";
 import { ProfileDrawer } from "./ProfileDrawer";
+import { ResizableSplitPane } from "./ResizableSplitPane";
 import { RfpFeed } from "./RfpFeed";
 import { RfpSidebar } from "./RfpSidebar";
 import { Walkthrough } from "./Walkthrough/Walkthrough";
@@ -38,18 +39,25 @@ export function DashboardVariantB() {
         <div className="grid min-h-0 min-w-0 flex-1 grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)]">
           <RfpSidebar />
 
-          {/* Variant B: Reversed layout - DetailPanel on left, RfpFeed on right */}
-          <div className="grid min-h-0 min-w-0 grid-cols-1 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
-            {/* Detail Panel - Now on the left and wider */}
-            <div className="order-2 flex min-h-[min(50vh,420px)] min-w-0 flex-col border-r border-govbid-border lg:order-1 lg:min-h-0">
-              {detailPanelVariant === "B" ? <DetailPanelVariantB /> : <DetailPanel />}
-            </div>
-
-            {/* RFP Feed - Now on the right and narrower */}
-            <div className="order-1 flex min-h-0 min-w-0 flex-col lg:order-2">
-              <RfpFeed />
-            </div>
-          </div>
+          <ResizableSplitPane
+            className="min-h-0 min-w-0"
+            defaultLeadingRatio={0.6}
+            storageKey="govbid-dashboard-split-b"
+            leading={
+              <div className="order-2 flex min-h-[min(50vh,420px)] min-w-0 flex-col lg:order-none lg:min-h-0">
+                {detailPanelVariant === "B" ? (
+                  <DetailPanelVariantB />
+                ) : (
+                  <DetailPanel />
+                )}
+              </div>
+            }
+            trailing={
+              <div className="order-1 flex min-h-0 min-w-0 flex-col lg:order-none">
+                <RfpFeed />
+              </div>
+            }
+          />
         </div>
       </div>
 
