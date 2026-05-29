@@ -215,15 +215,6 @@ function DetailPanelBodyB({ rfp }: { rfp: Rfp }) {
     }
   };
 
-  const handleProposal = () => {
-    trackABTestEvent("rfp_action", {
-      action: "draft_proposal",
-      variant: "B",
-      rfp_id: rfp.id,
-    });
-    showToast("Draft proposal feature coming soon.");
-  };
-
   const tabs: { id: DetailTab; label: string; icon: React.ReactNode }[] = [
     {
       id: "overview",
@@ -332,27 +323,6 @@ function DetailPanelBodyB({ rfp }: { rfp: Rfp }) {
                 <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
               </svg>
               {generating ? "Generating…" : "Summary"}
-            </button>
-            <button
-              type="button"
-              onClick={handleProposal}
-              className="flex h-8 items-center gap-1.5 rounded-lg border border-govbid-primary bg-govbid-primary-muted px-3 text-xs font-semibold text-govbid-primary transition hover:bg-govbid-primary-soft"
-              title="Draft proposal"
-            >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-              </svg>
-              Draft
             </button>
           </div>
         </div>

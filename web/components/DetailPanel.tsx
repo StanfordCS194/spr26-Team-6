@@ -86,7 +86,6 @@ const FACTOR_DISPLAY: { key: keyof CompatibilityFactors; label: string; max: num
   { key: "timing", label: "Timing", max: 1 },
   { key: "experience", label: "Experience", max: 100 },
   { key: "goals", label: "Goals", max: 100 },
-  { key: "award", label: "Award", max: 1 },
   { key: "prereqs", label: "Pre-reqs", max: 100 },
   { key: "geography", label: "Geography", max: 100 },
   { key: "agency", label: "Agency", max: 100 },
@@ -249,17 +248,6 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
     }
   };
 
-  const handleProposal = () => {
-    trackABTestEvent("rfp_action", {
-      action: "draft_proposal",
-      variant: "A",
-      rfp_id: rfp.id,
-    });
-    showToast(
-      "Draft proposal (stretch) - would use past performance + template generation.",
-    );
-  };
-
   const tabs: { id: DetailTab; label: string }[] = [
     { id: "overview", label: "Overview" },
     { id: "document", label: "Source PDF" },
@@ -309,13 +297,6 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
           className="generate-summary-button govbid-btn-primary rounded-lg px-3 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-60"
         >
           {generating ? "Generating…" : "Generate summary"}
-        </button>
-        <button
-          type="button"
-          onClick={handleProposal}
-          className="rounded-lg border border-govbid-border bg-govbid-primary-muted px-3 py-2 text-sm font-semibold text-govbid-primary transition hover:bg-govbid-primary-soft"
-        >
-          Draft proposal
         </button>
         {saved && (
           <span className="ml-auto inline-flex items-center gap-1 rounded-full border border-govbid-border bg-govbid-primary-muted px-3 py-1 text-xs font-semibold text-govbid-primary">
