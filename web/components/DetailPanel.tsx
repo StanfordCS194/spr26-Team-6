@@ -284,10 +284,13 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
   ];
 
   return (
-    <section id="detail-panel" className="flex min-h-0 flex-1 flex-col bg-govbid-surface">
+    <section
+      id="detail-panel"
+      className="flex min-h-0 flex-1 flex-col overflow-hidden bg-govbid-surface"
+    >
       <div
         id="walkthrough-detail-sidebar"
-        className="flex h-full min-h-0 min-w-0 flex-1 flex-col"
+        className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden"
       >
         <div className="flex shrink-0 gap-8 border-b border-govbid-border px-4 pt-3 lg:px-5">
         {tabs.map(({ id, label }) => (
@@ -343,7 +346,7 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
         )}
         </div>
 
-        <div className="min-h-0 flex-1 overflow-y-auto p-4 lg:p-5">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-y-contain p-4 lg:p-5">
         {tab === "overview" && (
           <div className="mx-auto w-full max-w-5xl space-y-5">
             <div className="space-y-3">

@@ -229,12 +229,12 @@ function measureDetailSidebarRect(
   const anchorRect = anchor.getBoundingClientRect();
   if (anchorRect.width <= 0 || anchorRect.height <= 0) return null;
 
-  const height = Math.max(
+  return new DOMRect(
+    anchorRect.left,
+    anchorRect.top,
+    anchorRect.width,
     anchorRect.height,
-    window.innerHeight - anchorRect.top,
   );
-
-  return new DOMRect(anchorRect.left, anchorRect.top, anchorRect.width, height);
 }
 
 function resolveWalkthroughTargets(selectors: string[]): HTMLElement[] {

@@ -19,7 +19,7 @@ export function Dashboard() {
 
   if (!authReady) {
     return (
-      <div className="flex min-h-dvh flex-1 items-center justify-center bg-govbid-surface px-6">
+      <div className="flex h-full flex-1 items-center justify-center bg-govbid-surface px-6">
         <p className="text-sm font-medium text-govbid-text-muted">Loading...</p>
       </div>
     );
@@ -37,7 +37,7 @@ export function Dashboard() {
 
   // Default: Dashboard Variant A
   return (
-    <div className="flex min-h-dvh w-full min-w-0 flex-1 flex-col">
+    <div className="flex h-dvh max-h-dvh w-full min-w-0 flex-col overflow-hidden">
       <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col overflow-hidden bg-govbid-surface">
         <GlobalHeader />
 
@@ -52,7 +52,7 @@ export function Dashboard() {
               </div>
             }
             trailing={
-              <div className="flex min-h-[min(50vh,420px)] min-w-0 flex-1 flex-col lg:h-full lg:min-h-0">
+              <div className="flex min-h-[min(50vh,420px)] min-w-0 flex-1 flex-col overflow-hidden lg:h-full lg:min-h-0">
                 {detailPanelVariant === "B" ? (
                   <DetailPanelVariantB />
                 ) : (

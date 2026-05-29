@@ -25,14 +25,14 @@ export function DashboardVariantB() {
 
   if (!authReady) {
     return (
-      <div className="flex min-h-dvh flex-1 items-center justify-center bg-govbid-surface px-6">
+      <div className="flex h-full flex-1 items-center justify-center bg-govbid-surface px-6">
         <p className="text-sm font-medium text-govbid-text-muted">Loading...</p>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-dvh w-full min-w-0 flex-1 flex-col">
+    <div className="flex h-dvh max-h-dvh w-full min-w-0 flex-col overflow-hidden">
       <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col overflow-hidden bg-govbid-surface">
         <GlobalHeader />
 
@@ -51,7 +51,7 @@ export function DashboardVariantB() {
               </div>
             }
             trailing={
-              <div className="order-1 flex h-full min-h-0 min-w-0 flex-1 flex-col lg:order-none">
+              <div className="order-1 flex h-full min-h-0 min-w-0 flex-1 flex-col overflow-hidden lg:order-none">
                 <RfpFeed />
               </div>
             }

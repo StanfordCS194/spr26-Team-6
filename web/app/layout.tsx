@@ -28,9 +28,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${plusJakarta.variable} ${geistMono.variable} flex h-full min-h-dvh w-full flex-col antialiased`}
+      className={`${plusJakarta.variable} ${geistMono.variable} flex h-dvh w-full flex-col overflow-hidden antialiased`}
     >
-      <body className="flex min-h-dvh w-full flex-1 flex-col font-sans text-govbid-text">
+      <body className="flex h-dvh min-h-0 w-full flex-col overflow-hidden font-sans text-govbid-text">
         <Providers>{children}</Providers>
       </body>
     </html>
