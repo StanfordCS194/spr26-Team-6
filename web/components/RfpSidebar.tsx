@@ -1,6 +1,10 @@
 "use client";
 
-import { useDashboard, type RfpFilter } from "@/context/DashboardContext";
+import {
+  useDashboard,
+  type RfpFilter,
+  type RfpSortBy,
+} from "@/context/DashboardContext";
 
 function FunnelIcon() {
   return (
@@ -92,6 +96,9 @@ export function RfpSidebar() {
     setSearchQuery,
     rfpFilter,
     setRfpFilter,
+    sortBy,
+    setSortBy,
+    loadedRfps,
     loadedRfps,
     filtersPanelVisible,
     toggleFiltersPanel,
@@ -167,6 +174,8 @@ export function RfpSidebar() {
             setSearchQuery={setSearchQuery}
             rfpFilter={rfpFilter}
             allTags={allTags}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
             mergeRfpFilter={mergeRfpFilter}
             clearFilter={clearFilter}
             removeFilter={removeFilter}
@@ -200,6 +209,8 @@ export function RfpSidebar() {
           setSearchQuery={setSearchQuery}
           rfpFilter={rfpFilter}
           allTags={allTags}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
           mergeRfpFilter={mergeRfpFilter}
           clearFilter={clearFilter}
           removeFilter={removeFilter}
@@ -216,6 +227,8 @@ function SearchCardBody({
   setSearchQuery,
   rfpFilter,
   allTags,
+  sortBy,
+  setSortBy,
   mergeRfpFilter,
   clearFilter,
   removeFilter,
@@ -226,12 +239,18 @@ function SearchCardBody({
   setSearchQuery: (q: string) => void;
   rfpFilter: RfpFilter;
   allTags: string[];
+  sortBy: RfpSortBy;
+  setSortBy: (sort: RfpSortBy) => void;
   mergeRfpFilter: (patch: Partial<RfpFilter>) => void;
   clearFilter: () => void;
   removeFilter: (key: keyof RfpFilter) => void;
   activeFilterCount: number;
   inputClass: string;
 }) {
+  const sortButtonClass = (active: boolean) =>
+    active
+      ? "flex-1 rounded-lg border border-govbid-primary bg-govbid-primary px-3 py-2 text-xs font-semibold text-white transition"
+      : "flex-1 rounded-lg border border-govbid-border bg-govbid-surface px-3 py-2 text-xs font-semibold text-govbid-text-muted transition hover:border-govbid-primary/40 hover:text-govbid-text";
   return (
     <div className="space-y-4">
       {/* Search */}
@@ -249,6 +268,29 @@ function SearchCardBody({
           className={inputClass}
         />
       </label>
+
+      {/* Sort controls */}
+      <div className="space-y-2">
+        <p className="text-xs font-medium text-govbid-text-muted">Sort</p>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            aria-pressed={sortBy === "score"}
+            onClick={() => setSortBy("score")}
+            className={sortButtonClass(sortBy === "score")}
+          >
+            Sort by Score
+          </button>
+          <button
+            type="button"
+            aria-pressed={sortBy === "date"}
+            onClick={() => setSortBy("date")}
+            className={sortButtonClass(sortBy === "date")}
+          >
+            Sort by Date
+          </button>
+        </div>
+      </div>
 
       {/* Active Filters Display */}
       {activeFilterCount > 0 && (

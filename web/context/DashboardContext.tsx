@@ -43,6 +43,8 @@ export type RfpFilter = {
   priceMax?: number;
 };
 
+export type RfpSortBy = "date" | "score";
+
 export type ActiveNav = "dashboard" | "saved" | "history";
 
 function parseContractValue(value: string) {
@@ -105,6 +107,8 @@ type DashboardContextValue = {
   showToast: (message: string) => void;
   rfpFilter: RfpFilter;
   setRfpFilter: (filter: RfpFilter) => void;
+  sortBy: RfpSortBy;
+  setSortBy: (sort: RfpSortBy) => void;
   filtersPanelVisible: boolean;
   setFiltersPanelVisible: (visible: boolean) => void;
   toggleFiltersPanel: () => void;
@@ -141,6 +145,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [walkthroughActive, setWalkthroughActive] = useState(false);
   const [walkthroughStep, setWalkthroughStep] = useState(0);
   const [rfpFilter, setRfpFilter] = useState<RfpFilter>({});
+  const [sortBy, setSortBy] = useState<RfpSortBy>("date");
   const [filtersPanelVisible, setFiltersPanelVisibleState] = useState(true);
   const [toast, setToast] = useState<string | null>(null);
   const [activeNav, setActiveNavState] = useState<ActiveNav>("dashboard");
@@ -376,8 +381,19 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
 
   const filteredRfps = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
+    // Drop expired RFPs from the client view. Anchor at the start of today
+    // (local time) so an RFP due today still appears. Rows with a missing /
+    // unparseable due date are kept — we can't know they're expired.
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+    const todayMs = todayStart.getTime();
 
-    return loadedRfps.filter((r) => {
+    const matching = loadedRfps.filter((r) => {
+      const dueMs = Number(new Date(r.dueDate));
+      if (Number.isFinite(dueMs) && dueMs < todayMs) {
+        return false;
+      }
+
       if (q) {
         const hay = [r.title, r.agency, r.location, r.description, ...r.tags]
           .join(" ")
@@ -421,7 +437,38 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
 
       return true;
     });
-  }, [loadedRfps, searchQuery, rfpFilter]);
+
+    const sorted = [...matching];
+    if (sortBy === "score") {
+      // Highest score first; ties broken by earliest due date so the list
+      // remains stable for unscored / equally-scored RFPs.
+      sorted.sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        const ad = Number(new Date(a.dueDate));
+        const bd = Number(new Date(b.dueDate));
+        const aValid = Number.isFinite(ad);
+        const bValid = Number.isFinite(bd);
+        if (aValid && bValid) return ad - bd;
+        if (aValid) return -1;
+        if (bValid) return 1;
+        return 0;
+      });
+    } else {
+      // Date sort: shortest deadlines first; rows with no parseable due date
+      // sink to the bottom.
+      sorted.sort((a, b) => {
+        const ad = Number(new Date(a.dueDate));
+        const bd = Number(new Date(b.dueDate));
+        const aValid = Number.isFinite(ad);
+        const bValid = Number.isFinite(bd);
+        if (aValid && bValid) return ad - bd;
+        if (aValid) return -1;
+        if (bValid) return 1;
+        return 0;
+      });
+    }
+    return sorted;
+  }, [loadedRfps, searchQuery, rfpFilter, sortBy]);
 
   const feedRfps = useMemo(() => {
     if (activeNav === "dashboard") {
@@ -902,6 +949,8 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       showToast,
       rfpFilter,
       setRfpFilter,
+      sortBy,
+      setSortBy,
       filtersPanelVisible,
       setFiltersPanelVisible,
       toggleFiltersPanel,
@@ -937,6 +986,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       toast,
       showToast,
       rfpFilter,
+      sortBy,
       filtersPanelVisible,
       setFiltersPanelVisible,
       toggleFiltersPanel,
