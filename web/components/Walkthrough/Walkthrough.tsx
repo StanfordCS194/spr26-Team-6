@@ -329,14 +329,9 @@ export function Walkthrough() {
       setFiltersPanelVisible(true);
       setExplorePhase("filters");
     } else if (stepChanged && currentStepId === "view-opportunities") {
-      const cameFromExplore =
-        STEP_ORDER[prevWalkthroughStep.current] === "explore-dashboard";
       setProfileOpen(false);
       setActiveNav("dashboard");
       setViewOpportunitiesPhase("card");
-      if (cameFromExplore) {
-        setCardClickedInStep3(false);
-      }
       const pickId = pickWalkthroughTourRfpId(feedRfps);
       setTourTargetRfpId(pickId);
       selectRfp(null);
@@ -606,6 +601,7 @@ export function Walkthrough() {
     if (currentStepId === "view-opportunities") {
       if (viewOpportunitiesPhase === "card") {
         if (!cardClickedInStep3) return;
+        setCardClickedInStep3(true);
         if (tourTargetRfpId) {
           selectRfp(tourTargetRfpId);
         }
@@ -633,6 +629,7 @@ export function Walkthrough() {
     }
     if (currentStepId === "view-opportunities") {
       if (viewOpportunitiesPhase === "overview") {
+        setCardClickedInStep3(true);
         setViewOpportunitiesPhase("card");
         selectRfp(null);
         if (tourTargetRfpId) {
@@ -839,8 +836,10 @@ export function Walkthrough() {
               ? "Loading highlight…"
               : currentStepId === "view-opportunities" && !viewHighlightReady
                 ? "Loading highlight…"
-              : currentStepId === "explore-dashboard" ||
-                  currentStepId === "view-opportunities"
+              : (currentStepId === "explore-dashboard" &&
+                    explorePhase === "filters") ||
+                  (currentStepId === "view-opportunities" &&
+                    viewOpportunitiesPhase === "card")
                 ? "Press Next to see the next area."
                 : undefined
         }
