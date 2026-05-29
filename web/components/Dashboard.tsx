@@ -9,8 +9,8 @@ import { DashboardVariantB } from "./DashboardVariantB";
 import { GlobalHeader } from "./GlobalHeader";
 import { ProfileDrawer } from "./ProfileDrawer";
 import { ResizableSplitPane } from "./ResizableSplitPane";
+import { DashboardMainGrid } from "./DashboardMainGrid";
 import { RfpFeed } from "./RfpFeed";
-import { RfpSidebar } from "./RfpSidebar";
 import { Walkthrough } from "./Walkthrough/Walkthrough";
 
 export function Dashboard() {
@@ -41,9 +41,7 @@ export function Dashboard() {
       <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col overflow-hidden bg-govbid-surface">
         <GlobalHeader />
 
-        <div className="grid min-h-0 min-w-0 flex-1 grid-cols-1 lg:grid-cols-[280px_minmax(0,1fr)]">
-          <RfpSidebar />
-
+        <DashboardMainGrid>
           <ResizableSplitPane
             className="min-h-0 min-w-0"
             defaultLeadingRatio={0.44}
@@ -63,7 +61,7 @@ export function Dashboard() {
               </div>
             }
           />
-        </div>
+        </DashboardMainGrid>
       </div>
 
       <ProfileDrawer />

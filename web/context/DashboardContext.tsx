@@ -97,8 +97,25 @@ type DashboardContextValue = {
   showToast: (message: string) => void;
   rfpFilter: RfpFilter;
   setRfpFilter: (filter: RfpFilter) => void;
+  filtersPanelVisible: boolean;
+  setFiltersPanelVisible: (visible: boolean) => void;
+  toggleFiltersPanel: () => void;
   signOut: () => Promise<void>;
 };
+
+const FILTERS_PANEL_VISIBLE_KEY = "govbid-filters-panel-visible";
+
+function readFiltersPanelVisible(): boolean {
+  if (typeof window === "undefined") return true;
+  try {
+    const stored = localStorage.getItem(FILTERS_PANEL_VISIBLE_KEY);
+    if (stored === "false") return false;
+    if (stored === "true") return true;
+  } catch {
+    /* ignore */
+  }
+  return true;
+}
 
 const DashboardContext = createContext<DashboardContextValue | null>(null);
 
@@ -116,8 +133,34 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [walkthroughActive, setWalkthroughActive] = useState(false);
   const [walkthroughStep, setWalkthroughStep] = useState(0);
   const [rfpFilter, setRfpFilter] = useState<RfpFilter>({});
+  const [filtersPanelVisible, setFiltersPanelVisibleState] = useState(true);
   const [toast, setToast] = useState<string | null>(null);
   const [activeNav, setActiveNavState] = useState<ActiveNav>("dashboard");
+
+  useEffect(() => {
+    setFiltersPanelVisibleState(readFiltersPanelVisible());
+  }, []);
+
+  const setFiltersPanelVisible = useCallback((visible: boolean) => {
+    setFiltersPanelVisibleState(visible);
+    try {
+      localStorage.setItem(FILTERS_PANEL_VISIBLE_KEY, String(visible));
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const toggleFiltersPanel = useCallback(() => {
+    setFiltersPanelVisibleState((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem(FILTERS_PANEL_VISIBLE_KEY, String(next));
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
+  }, []);
   const [scoringRfpIds, setScoringRfpIds] = useState<Set<string>>(
     () => new Set(),
   );
@@ -789,6 +832,9 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       showToast,
       rfpFilter,
       setRfpFilter,
+      filtersPanelVisible,
+      setFiltersPanelVisible,
+      toggleFiltersPanel,
       signOut,
     }),
     [
@@ -819,6 +865,9 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       toast,
       showToast,
       rfpFilter,
+      filtersPanelVisible,
+      setFiltersPanelVisible,
+      toggleFiltersPanel,
       signOut,
     ],
   );
