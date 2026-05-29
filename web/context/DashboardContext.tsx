@@ -71,6 +71,7 @@ type DashboardContextValue = {
   selectRfp: (id: string | null) => void;
   selectedRfp: Rfp | null;
   savedRfpIds: string[];
+  recentlyViewedIds: string[];
   savedRfpRecords: SavedRfpRecord[];
   isSaved: (id: string) => boolean;
   toggleSaveRfp: (id: string) => Promise<void>;
@@ -149,6 +150,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [filtersPanelVisible, setFiltersPanelVisibleState] = useState(true);
   const [toast, setToast] = useState<string | null>(null);
   const [activeNav, setActiveNavState] = useState<ActiveNav>("dashboard");
+  const [recentlyViewedIds, setRecentlyViewedIds] = useState<string[]>([]);
 
   useEffect(() => {
     setFiltersPanelVisibleState(readFiltersPanelVisible());
@@ -267,6 +269,14 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
           })),
         );
 
+        const { data: viewedRows } = await supabase
+          .from("viewed_rfps")
+          .select("rfp_id")
+          .eq("contractor_id", cid)
+          .order("viewed_at", { ascending: false })
+          .limit(50);
+        setRecentlyViewedIds(viewedRows?.map((r) => r.rfp_id) ?? []);
+
         const { data: scoreRows } = await supabase
           .from("scores")
           .select("*")
@@ -328,6 +338,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     setContractorId(null);
     setLoadedRfps([]);
     setSavedRfpRecords([]);
+    setRecentlyViewedIds([]);
     setProfileState(defaultContractorProfile);
     setSelectedRfpId(null);
     setUnscoredRfpIds(new Set());
@@ -478,8 +489,13 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       const saved = new Set(savedRfpIds);
       return filteredRfps.filter((r) => saved.has(r.id));
     }
-    return [] as Rfp[];
-  }, [activeNav, filteredRfps, savedRfpIds]);
+    // history: show in most-recently-viewed order, unfiltered
+    const rfpMap = new Map(loadedRfps.map((r) => [r.id, r]));
+    return recentlyViewedIds.flatMap((id) => {
+      const rfp = rfpMap.get(id);
+      return rfp ? [rfp] : [];
+    });
+  }, [activeNav, filteredRfps, savedRfpIds, loadedRfps, recentlyViewedIds]);
 
   useEffect(() => {
     if (selectedRfpId == null) return;
@@ -572,6 +588,14 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     (id: string | null) => {
       if (id) {
         captureEvent("rfp_selected", { rfp_id: id });
+        setRecentlyViewedIds((prev) => [id, ...prev.filter((x) => x !== id)].slice(0, 50));
+        if (contractorId) {
+          const supabase = createClient();
+          void supabase.from("viewed_rfps").upsert(
+            { contractor_id: contractorId, rfp_id: id, viewed_at: new Date().toISOString() },
+            { onConflict: "contractor_id,rfp_id" },
+          );
+        }
         // Always re-score on click: forces a fresh computation against the
         // current contractor profile so the displayed factor breakdown is
         // current even if the underlying RFP or profile state has shifted
@@ -580,7 +604,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       }
       setSelectedRfpId(id);
     },
-    [ensureScored],
+    [ensureScored, contractorId],
   );
 
   const isSaved = useCallback(
@@ -926,6 +950,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       selectRfp,
       selectedRfp,
       savedRfpIds,
+      recentlyViewedIds,
       savedRfpRecords,
       isSaved,
       toggleSaveRfp,
@@ -967,6 +992,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       selectRfp,
       selectedRfp,
       savedRfpIds,
+      recentlyViewedIds,
       savedRfpRecords,
       isSaved,
       toggleSaveRfp,

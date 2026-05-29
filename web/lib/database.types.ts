@@ -250,6 +250,23 @@ export interface Database {
         Relationships: []
       }
 
+      viewed_rfps: {
+        Row: {
+          id: string
+          contractor_id: string
+          rfp_id: string
+          viewed_at: string
+        }
+        Insert: {
+          id?: string
+          contractor_id: string
+          rfp_id: string
+          viewed_at?: string
+        }
+        Update: Partial<Database['public']['Tables']['viewed_rfps']['Insert']>
+        Relationships: []
+      }
+
       saved_rfps: {
         Row: {
           contractor_id: string
