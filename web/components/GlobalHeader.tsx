@@ -104,7 +104,20 @@ function NavButtons({ className }: { className?: string }) {
 }
 
 export function GlobalHeader() {
-  const { setProfileOpen, profileOpen, showToast, signOut } = useDashboard();
+  const {
+    setProfileOpen,
+    profileOpen,
+    showToast,
+    signOut,
+    setWalkthroughActive,
+    setWalkthroughStep,
+  } = useDashboard();
+
+  const launchWalkthrough = () => {
+    setWalkthroughStep(0);
+    setWalkthroughActive(true);
+    setProfileOpen(false);
+  };
 
   return (
     <header className="flex shrink-0 flex-col gap-2 border-b border-govbid-border bg-govbid-surface px-3 py-2 md:gap-3 md:px-6 md:py-3">
@@ -142,10 +155,33 @@ export function GlobalHeader() {
           >
             +
           </button>
+          <div className="group relative">
+            <button
+              type="button"
+              onClick={launchWalkthrough}
+              className="flex size-9 items-center justify-center rounded-full border border-govbid-border bg-govbid-surface text-base font-bold leading-none text-govbid-text-muted transition hover:border-govbid-border-strong hover:bg-govbid-primary-muted/60 hover:text-govbid-primary md:size-10"
+              aria-describedby="walkthrough-help-tooltip"
+              aria-label="Launch walkthrough tutorial"
+            >
+              <span aria-hidden className="select-none">
+                ?
+              </span>
+            </button>
+            <span
+              id="walkthrough-help-tooltip"
+              role="tooltip"
+              className="pointer-events-none absolute left-1/2 top-full z-50 hidden -translate-x-1/2 pt-1.5 group-hover:block group-focus-within:block"
+            >
+              <span className="block whitespace-nowrap rounded-md bg-govbid-text px-2.5 py-1.5 text-xs font-medium text-govbid-surface shadow-[var(--govbid-shadow)]">
+                Launch walkthrough tutorial
+              </span>
+            </span>
+          </div>
           <div className="relative">
             <NotificationPanel />
           </div>
           <button
+            id="walkthrough-profile-me-button"
             type="button"
             onClick={() => setProfileOpen(!profileOpen)}
             aria-expanded={profileOpen}

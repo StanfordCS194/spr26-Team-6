@@ -64,7 +64,7 @@ function FiltersPanelToggle({
       type="button"
       onClick={onClick}
       aria-expanded={expanded}
-      aria-controls="rfp-filters-panel"
+      aria-controls="walkthrough-rfp-filters-panel"
       title={expanded ? "Hide search and filters" : "Show search and filters"}
       className={`inline-flex items-center gap-1.5 rounded-lg border border-govbid-border bg-govbid-surface px-2 py-1.5 text-xs font-semibold text-govbid-text transition hover:bg-govbid-primary-muted/40 ${className}`}
     >
@@ -122,7 +122,10 @@ export function RfpSidebar() {
 
   if (!filtersPanelVisible) {
     return (
-      <aside className="flex w-full shrink-0 flex-col border-b border-govbid-border/60 bg-govbid-surface p-3 lg:w-auto lg:border-b-0 lg:border-r lg:px-2 lg:py-4">
+      <aside
+        id="walkthrough-rfp-filters"
+        className="flex w-full shrink-0 flex-col border-b border-govbid-border/60 bg-govbid-surface p-3 lg:w-auto lg:border-b-0 lg:border-r lg:px-2 lg:py-4"
+      >
         <FiltersPanelToggle
           expanded={false}
           onClick={toggleFiltersPanel}
@@ -134,7 +137,10 @@ export function RfpSidebar() {
   }
 
   return (
-    <aside className="flex w-full shrink-0 flex-col gap-4 border-b border-govbid-border/60 bg-govbid-surface p-4 lg:w-[280px] lg:border-b-0 lg:border-r lg:border-govbid-border/60 lg:p-5">
+    <aside
+      id="walkthrough-rfp-filters"
+      className="flex w-full shrink-0 flex-col gap-4 border-b border-govbid-border/60 bg-govbid-surface p-4 lg:w-[280px] lg:border-b-0 lg:border-r lg:border-govbid-border/60 lg:p-5"
+    >
       <details className="group rounded-xl lg:hidden" open>
         <summary className="cursor-pointer list-none rounded-lg border border-govbid-border bg-govbid-surface px-3 py-2 text-sm font-semibold text-govbid-text [&::-webkit-details-marker]:hidden">
           <span className="flex items-center justify-between gap-2">
@@ -161,7 +167,7 @@ export function RfpSidebar() {
             </span>
           </span>
         </summary>
-        <div id="rfp-filters-panel" className="mt-3 space-y-4">
+        <div id="walkthrough-rfp-filters-panel" className="mt-3 space-y-4 lg:hidden">
           <SearchCardBody
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
@@ -177,7 +183,7 @@ export function RfpSidebar() {
       </details>
 
       <div
-        id="rfp-filters-panel"
+        id="walkthrough-rfp-filters-panel-desktop"
         className="hidden rounded-xl border border-govbid-border bg-govbid-surface p-4 lg:block"
       >
         <div className="mb-4 flex items-center gap-2 text-sm font-semibold text-govbid-text">

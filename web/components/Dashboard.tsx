@@ -47,12 +47,12 @@ export function Dashboard() {
             defaultLeadingRatio={0.44}
             storageKey="govbid-dashboard-split-a"
             leading={
-              <div className="flex min-h-0 min-w-0 flex-col">
+              <div className="flex h-full min-h-0 min-w-0 flex-1 flex-col">
                 <RfpFeed />
               </div>
             }
             trailing={
-              <div className="flex min-h-[min(50vh,420px)] min-w-0 flex-col lg:min-h-0">
+              <div className="flex min-h-[min(50vh,420px)] min-w-0 flex-1 flex-col lg:h-full lg:min-h-0">
                 {detailPanelVariant === "B" ? (
                   <DetailPanelVariantB />
                 ) : (

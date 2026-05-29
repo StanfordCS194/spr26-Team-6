@@ -3,6 +3,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { getListCardLayout } from "@/lib/analytics";
 import { useDashboard } from "@/context/DashboardContext";
+import {
+  WALKTHROUGH_CLEAR_RFP_FOCUS_EVENT,
+  WALKTHROUGH_FOCUS_RFP_EVENT,
+} from "@/lib/walkthroughEvents";
 import { RfpCard } from "./RfpCard";
 
 const PAGE_SIZE_OPTIONS = [10, 20, 50] as const;
@@ -49,10 +53,30 @@ export function RfpFeed() {
 
   const [pageSize, setPageSize] = useState<PageSize>(20);
   const [page, setPage] = useState(1);
+  const [tourTargetRfpId, setTourTargetRfpId] = useState<string | null>(null);
 
   useEffect(() => {
     setPage(1);
   }, [activeNav, searchQuery, rfpFilter, pageSize, feedRfps.length]);
+
+  useEffect(() => {
+    const onFocusRfp = (event: Event) => {
+      const { rfpId } = (event as CustomEvent<{ rfpId: string }>).detail;
+      setTourTargetRfpId(rfpId);
+      const index = feedRfps.findIndex((r) => r.id === rfpId);
+      if (index >= 0) {
+        setPage(Math.floor(index / pageSize) + 1);
+      }
+    };
+    const onClearFocus = () => setTourTargetRfpId(null);
+
+    window.addEventListener(WALKTHROUGH_FOCUS_RFP_EVENT, onFocusRfp);
+    window.addEventListener(WALKTHROUGH_CLEAR_RFP_FOCUS_EVENT, onClearFocus);
+    return () => {
+      window.removeEventListener(WALKTHROUGH_FOCUS_RFP_EVENT, onFocusRfp);
+      window.removeEventListener(WALKTHROUGH_CLEAR_RFP_FOCUS_EVENT, onClearFocus);
+    };
+  }, [feedRfps, pageSize]);
 
   const totalPages = Math.max(1, Math.ceil(feedRfps.length / pageSize));
   const currentPage = Math.min(page, totalPages);
@@ -61,6 +85,16 @@ export function RfpFeed() {
     const start = (currentPage - 1) * pageSize;
     return feedRfps.slice(start, start + pageSize);
   }, [feedRfps, currentPage, pageSize]);
+
+  useEffect(() => {
+    if (!tourTargetRfpId) return;
+    const frame = window.requestAnimationFrame(() => {
+      document
+        .getElementById("walkthrough-rfp-card-target")
+        ?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [tourTargetRfpId, currentPage, paginatedRfps]);
 
   if (activeNav === "history") {
     return (
@@ -78,17 +112,28 @@ export function RfpFeed() {
       id="rfp-feed"
       className="flex min-h-0 flex-1 flex-col bg-govbid-surface"
     >
-      <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto p-4 lg:gap-4 lg:p-5">
+      <div
+        id="walkthrough-rfp-feed-list"
+        className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto p-4 lg:gap-4 lg:p-5"
+      >
         {paginatedRfps.map((rfp) => (
-          <RfpCard
+          <div
             key={rfp.id}
-            rfp={rfp}
-            layout={listLayout}
-            active={selectedRfpId === rfp.id}
-            onSelect={() => selectRfp(rfp.id)}
-            isFavorited={isSaved(rfp.id)}
-            onFavoriteToggle={handleFavoriteToggle}
-          />
+            id={
+              rfp.id === tourTargetRfpId
+                ? "walkthrough-rfp-card-target"
+                : undefined
+            }
+          >
+            <RfpCard
+              rfp={rfp}
+              layout={listLayout}
+              active={selectedRfpId === rfp.id}
+              onSelect={() => selectRfp(rfp.id)}
+              isFavorited={isSaved(rfp.id)}
+              onFavoriteToggle={handleFavoriteToggle}
+            />
+          </div>
         ))}
         {feedRfps.length === 0 && (
           <p className="rounded-xl border border-dashed border-govbid-border bg-govbid-surface/80 px-4 py-10 text-center text-sm leading-relaxed text-govbid-text-muted">

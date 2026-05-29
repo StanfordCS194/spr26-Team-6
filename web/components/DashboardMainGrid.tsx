@@ -16,7 +16,12 @@ export function DashboardMainGrid({ children }: { children: ReactNode }) {
       }`}
     >
       <RfpSidebar />
-      {children}
+      <div
+        id="walkthrough-dashboard-scroll-area"
+        className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden"
+      >
+        {children}
+      </div>
     </div>
   );
 }
