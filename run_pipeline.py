@@ -53,6 +53,11 @@ SOURCES: dict[str, dict[str, str]] = {
         "prefix": "caleprocure_",
         "label": "Cal eProcure",
     },
+    "bidnet": {
+        "scraper": "scraper.bidnet_interface",
+        "prefix": "bidnet_",
+        "label": "BidNet Direct",
+    },
 }
 
 
@@ -107,6 +112,20 @@ def _scrape_caleprocure(rescrape: bool, extra: List[str]) -> None:
         raise RuntimeError(f"caleprocure_interface.main returned {rc}")
 
 
+def _scrape_bidnet(rescrape: bool, no_drive: bool, extra: List[str]) -> None:
+    from scraper import bidnet_interface
+
+    argv: List[str] = []
+    if rescrape:
+        argv.append("--no-skip-existing")
+    if no_drive:
+        argv.append("--no-drive")
+    argv.extend(extra)
+    rc = bidnet_interface.main(argv)
+    if rc != 0:
+        raise RuntimeError(f"bidnet_interface.main returned {rc}")
+
+
 def _process_raw(prefix: str) -> None:
     from processor.pipeline import (
         DEFAULT_INPUT_DIR,
@@ -152,7 +171,7 @@ def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "source",
         choices=sorted(SOURCES.keys()),
-        help="Which source to run the pipeline for ('sam' or 'eProcure').",
+        help="Which source to run the pipeline for ('sam', 'eProcure', or 'bidnet').",
     )
     parser.add_argument(
         "--skip-scrape", action="store_true",
@@ -172,7 +191,7 @@ def parse_args(argv: List[str] | None = None) -> argparse.Namespace:
     )
     parser.add_argument(
         "--no-drive", action="store_true",
-        help="SAM.gov only: record original SAM.gov resource URLs instead of "
+        help="SAM.gov / BidNet: record original resource URLs instead of "
              "uploading attachments to Google Drive.",
     )
     parser.add_argument(
@@ -198,10 +217,15 @@ def main(argv: List[str] | None = None) -> int:
                 f"Stage 1/3 — {label} scrape",
                 lambda: _scrape_samgov(args.rescrape, args.no_drive, args.scraper_arg),
             )
-        else:  # eProcure
+        elif source == "eProcure":
             ok = _run_stage(
                 f"Stage 1/3 — {label} scrape",
                 lambda: _scrape_caleprocure(args.rescrape, args.scraper_arg),
+            )
+        else:  # bidnet
+            ok = _run_stage(
+                f"Stage 1/3 — {label} scrape",
+                lambda: _scrape_bidnet(args.rescrape, args.no_drive, args.scraper_arg),
             )
         if not ok:
             failures.append("scrape")

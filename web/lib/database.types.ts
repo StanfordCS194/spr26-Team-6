@@ -21,7 +21,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export type RfpSource = 'sam.gov' | 'Cal eProcure' | 'PlanetBids' | 'other'
+export type RfpSource = 'sam.gov' | 'Cal eProcure' | 'PlanetBids' | 'BidNet Direct' | 'other'
 
 export type RfpStatus =
   | 'active'
