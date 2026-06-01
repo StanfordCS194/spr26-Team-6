@@ -26,6 +26,8 @@ _SOURCE_CANON: dict[str, str] = {
     "calprocure": "Cal eProcure",
     "planetbids": "PlanetBids",
     "planet bids": "PlanetBids",
+    "bidnet direct": "BidNet Direct",
+    "bidnet": "BidNet Direct",
 }
 
 _ALLOWED_STATUSES = {"active", "closed", "cancelled", "awarded", "amended"}
