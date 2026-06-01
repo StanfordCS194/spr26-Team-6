@@ -19,6 +19,7 @@ import {
 } from "@/lib/types";
 import { createClient } from "@/lib/supabase/client";
 import {
+  RFP_DASHBOARD_SELECT,
   contractorRowToProfile,
   mapRfpRow,
   profileToContractorUpdate,
@@ -28,7 +29,11 @@ import {
   identifySessionUser,
   resetPosthog,
 } from "@/lib/analytics";
-import { formatRfpSummaryMarkdown, RfpSummarySchema } from "@/lib/rfpSummary";
+import {
+  DETAILED_SUMMARY_PROMPT_VERSION,
+  GENERAL_SUMMARY_TYPE,
+  RfpSummarySchema,
+} from "@/lib/rfpSummary";
 import {
   buildSavedRfpRecordsInOrder,
   nextSortPosition,
@@ -81,13 +86,12 @@ type DashboardContextValue = {
   setProfile: (p: Partial<ContractorProfile>) => void;
   saveProfile: (p: ContractorProfile) => Promise<void>;
   /**
-   * Show the structured summary for an RFP in the AI tab. Returns "cached"
-   * if a row was found in `rfp_summaries`, "generated" if the LLM produced
-   * a fresh summary via /api/summary, or "failed" otherwise.
+   * Regenerate the structured summary for an RFP and persist it in
+   * `rfp_summaries`. Stored summaries are loaded during workspace load.
    */
   loadOrGenerateSummary: (
     rfpId: string,
-  ) => Promise<"cached" | "generated" | "failed">;
+  ) => Promise<"generated" | "failed">;
   /** True while /api/summary is in flight for this RFP. */
   isGeneratingSummary: (rfpId: string) => boolean;
   /** True when a compatibility score is being computed for this RFP. */
@@ -287,7 +291,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
 
         const { data: rfpRows, error: rfpErr } = await supabase
           .from("rfps")
-          .select("*")
+          .select(RFP_DASHBOARD_SELECT)
           .eq("status", "active")
           .eq("is_relevant", true)
           .order("due_date", { ascending: true, nullsFirst: false });
@@ -298,9 +302,31 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
           return;
         }
 
+        const rfpIds = (rfpRows ?? []).map((row) => row.id);
+        const { data: summaryRows, error: summaryErr } = rfpIds.length
+          ? await supabase
+              .from("rfp_summaries")
+              .select("rfp_id, summary")
+              .in("rfp_id", rfpIds)
+              .eq("summary_type", GENERAL_SUMMARY_TYPE)
+              .eq("prompt_version", DETAILED_SUMMARY_PROMPT_VERSION)
+              .order("generated_at", { ascending: false })
+          : { data: null, error: null };
+        if (summaryErr) {
+          console.warn("[summary] stored summary fetch failed:", summaryErr);
+        }
+        const summaryByRfpId = new Map<string, string>();
+        for (const row of summaryRows ?? []) {
+          if (!summaryByRfpId.has(row.rfp_id)) {
+            summaryByRfpId.set(row.rfp_id, row.summary);
+          }
+        }
+
         const mapped =
-          rfpRows?.map((row) => mapRfpRow(row, cid, scoreRows ?? undefined)) ??
-          [];
+          rfpRows?.map((row) => ({
+            ...mapRfpRow(row, cid, scoreRows ?? undefined),
+            summaryMarkdown: summaryByRfpId.get(row.id) ?? null,
+          })) ?? [];
         setLoadedRfps(mapped);
 
         const scoredRfpIds = new Set(
@@ -832,45 +858,10 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const loadOrGenerateSummary = useCallback(
     async (
       rfpId: string,
-    ): Promise<"cached" | "generated" | "failed"> => {
-      const supabase = createClient();
-      const { data, error } = await supabase
-        .from("rfp_summaries")
-        .select("summary")
-        .eq("rfp_id", rfpId)
-        .eq("summary_type", "general")
-        .order("generated_at", { ascending: false })
-        .limit(1)
-        .maybeSingle();
-      if (!error && data?.summary) {
-        setLoadedRfps((prev) =>
-          prev.map((r) =>
-            r.id === rfpId ? { ...r, summaryMarkdown: data.summary } : r,
-          ),
-        );
-        return "cached";
-      }
-
+    ): Promise<"generated" | "failed"> => {
       if (inFlightSummariesRef.current.has(rfpId)) {
         return "failed";
       }
-
-      const rfp = loadedRfpsRef.current.find((r) => r.id === rfpId);
-      if (!rfp) return "failed";
-
-      const rfpText = [
-        rfp.description,
-        rfp.statementOfWork
-          ? `Statement of Work:\n${rfp.statementOfWork}`
-          : "",
-        rfp.deliverables.length
-          ? `Deliverables:\n- ${rfp.deliverables.join("\n- ")}`
-          : "",
-      ]
-        .filter(Boolean)
-        .join("\n\n")
-        .trim();
-      if (!rfpText) return "failed";
 
       inFlightSummariesRef.current.add(rfpId);
       setSummariesInFlight((prev) => {
@@ -883,7 +874,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
         const res = await fetch("/api/summary", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ rfpText, rfpTitle: rfp.title }),
+          body: JSON.stringify({ rfpId }),
         });
         if (!res.ok) {
           const errBody = (await res.json().catch(() => null)) as {
@@ -899,10 +890,10 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
           showToast("Summary response was not in the expected shape.");
           return "failed";
         }
-        const markdown = formatRfpSummaryMarkdown(parsed.data);
+        const summaryJson = JSON.stringify(parsed.data);
         setLoadedRfps((prev) =>
           prev.map((r) =>
-            r.id === rfpId ? { ...r, summaryMarkdown: markdown } : r,
+            r.id === rfpId ? { ...r, summaryMarkdown: summaryJson } : r,
           ),
         );
         return "generated";

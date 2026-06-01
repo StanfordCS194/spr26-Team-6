@@ -19,6 +19,7 @@ Strategy:
 from __future__ import annotations
 
 import io
+import json
 import os
 import re
 from pathlib import Path
@@ -26,6 +27,7 @@ from typing import Any, Iterable, Optional
 
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
 _DEFAULT_CACHE_DIR = _PROJECT_ROOT / "scraper" / "cache" / "samgov" / "pdf_text"
+_MAX_EXTRACTED_DOC_CHARS = 80_000
 
 # Attachment labels that aren't the actual spec.
 _DOC_LABEL_BLOCKLIST = (
@@ -81,9 +83,20 @@ def _doc_kind(label: str, url: str) -> Optional[str]:
     return "pdf"
 
 
-def _rank_documents(documents: list[dict[str, Any]]) -> list[tuple[str, dict[str, Any]]]:
+def _rank_documents(
+    documents: list[dict[str, Any]],
+    *,
+    include_addenda: bool = False,
+) -> list[tuple[str, dict[str, Any]]]:
     """Return ``(kind, doc)`` tuples in best-spec-first order, dropping
     obviously admin attachments and unreadable formats."""
+    blocklist = _DOC_LABEL_BLOCKLIST
+    if include_addenda:
+        blocklist = tuple(
+            item for item in _DOC_LABEL_BLOCKLIST
+            if item not in {"addendum", "amendment"}
+        )
+
     candidates: list[tuple[int, str, dict[str, Any]]] = []
     for doc in documents or []:
         if not isinstance(doc, dict):
@@ -96,7 +109,7 @@ def _rank_documents(documents: list[dict[str, Any]]) -> list[tuple[str, dict[str
         if not kind:
             continue
         low = label.lower()
-        if any(bad in low for bad in _DOC_LABEL_BLOCKLIST):
+        if any(bad in low for bad in blocklist):
             continue
         score = 0
         if doc.get("type") == "primary_spec":
@@ -485,6 +498,82 @@ def extract_text_for_record(
     cache_path.parent.mkdir(parents=True, exist_ok=True)
     cache_path.write_text(text or "", encoding="utf-8")
     return text or ""
+
+
+def extract_document_texts_for_record(
+    raw: dict[str, Any],
+    *,
+    cache_dir: os.PathLike[str] | str = _DEFAULT_CACHE_DIR,
+    max_docs: int = 5,
+    max_pages: int = 30,
+    refresh: bool = False,
+) -> list[dict[str, str]]:
+    """Return extracted text for the best readable RFP attachments.
+
+    The legacy :func:`extract_text_for_record` returns one text blob for the
+    highest-ranked spec document. Summary generation benefits from more context:
+    main specs, exhibits, and addenda can each contain dates or evaluation
+    language. This helper extracts several ranked readable documents and caches
+    the structured result next to the legacy text cache.
+    """
+    external_id = (raw.get("external_id") or "").strip()
+    cache_path = Path(cache_dir) / f"{_safe_cache_key(external_id)}.documents.json"
+    if not refresh and cache_path.is_file():
+        try:
+            cached = json.loads(cache_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            cached = None
+        if isinstance(cached, list):
+            out: list[dict[str, str]] = []
+            for item in cached:
+                if not isinstance(item, dict):
+                    continue
+                text = item.get("text")
+                if isinstance(text, str) and text.strip():
+                    out.append({
+                        "label": str(item.get("label") or "Attached document"),
+                        "type": str(item.get("type") or ""),
+                        "url": str(item.get("url") or ""),
+                        "source_url": str(item.get("source_url") or ""),
+                        "text": text,
+                    })
+            return out
+
+    documents = ((raw.get("metadata") or {}).get("documents")) or []
+    ranked = _rank_documents(documents, include_addenda=True)
+    extracted: list[dict[str, str]] = []
+
+    for kind, doc in ranked:
+        if len(extracted) >= max_docs:
+            break
+        url = doc.get("source_url") or doc.get("url")
+        if not url:
+            continue
+        data = _download_bytes(url)
+        if not data:
+            continue
+        if kind == "pdf":
+            text = _extract_text_from_pdf_bytes(data, max_pages=max_pages)
+        elif kind == "docx":
+            text = _extract_text_from_docx_bytes(data)
+        else:
+            text = ""
+        if not text or len(text) < 200:
+            continue
+        extracted.append({
+            "label": str(doc.get("label") or "Attached document"),
+            "type": str(doc.get("type") or kind),
+            "url": str(doc.get("url") or ""),
+            "source_url": str(doc.get("source_url") or ""),
+            "text": text[:_MAX_EXTRACTED_DOC_CHARS],
+        })
+
+    cache_path.parent.mkdir(parents=True, exist_ok=True)
+    cache_path.write_text(
+        json.dumps(extracted, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+    return extracted
 
 
 def maybe_backfill_description(raw: dict[str, Any], **kwargs: Any) -> bool:

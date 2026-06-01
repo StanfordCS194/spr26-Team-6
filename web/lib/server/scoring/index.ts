@@ -81,6 +81,10 @@ export async function scoreContractorAgainstRfp(
     id: rfp.id,
     title: rfp.title,
     description: rfp.description,
+    statement_of_work: rfp.statement_of_work,
+    deliverables: rfp.deliverables,
+    metadata: rfp.metadata,
+    raw_data: rfp.raw_data,
   });
   await ensurePastProjectsEmbedded(admin, contractorId);
 

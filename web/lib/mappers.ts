@@ -6,6 +6,36 @@ type PastProjectRow = Database["public"]["Tables"]["contractor_past_projects"]["
 type RfpRow = Database["public"]["Tables"]["rfps"]["Row"];
 type ScoreRow = Database["public"]["Tables"]["scores"]["Row"];
 
+export const RFP_DASHBOARD_SELECT =
+  "id,title,name,description,statement_of_work,deliverables,location,state,department,due_date,contract_amount_min,contract_amount_max,tags,pdf_url_1,pdf_url_2,pdf_url_3,pdf_url_4,pdf_url_5,pdf_url_6,pdf_url_7,pdf_url_8,pdf_url_9,pdf_url_10" as const;
+
+type RfpMapperRow = Pick<
+  RfpRow,
+  | "id"
+  | "title"
+  | "name"
+  | "description"
+  | "statement_of_work"
+  | "deliverables"
+  | "location"
+  | "state"
+  | "department"
+  | "due_date"
+  | "contract_amount_min"
+  | "contract_amount_max"
+  | "tags"
+  | "pdf_url_1"
+  | "pdf_url_2"
+  | "pdf_url_3"
+  | "pdf_url_4"
+  | "pdf_url_5"
+  | "pdf_url_6"
+  | "pdf_url_7"
+  | "pdf_url_8"
+  | "pdf_url_9"
+  | "pdf_url_10"
+>;
+
 const PDF_URL_KEYS = [
   "pdf_url_1",
   "pdf_url_2",
@@ -19,7 +49,7 @@ const PDF_URL_KEYS = [
   "pdf_url_10",
 ] as const satisfies readonly (keyof RfpRow)[];
 
-export function collectPdfUrlsFromRfpRow(row: RfpRow): string[] {
+export function collectPdfUrlsFromRfpRow(row: RfpMapperRow): string[] {
   const out: string[] = [];
   for (const key of PDF_URL_KEYS) {
     const v = row[key];
@@ -74,7 +104,7 @@ export function pickLatestScoreForRfp(
 }
 
 export function mapRfpRow(
-  row: RfpRow,
+  row: RfpMapperRow,
   contractorId: string,
   scoresForContractor: ScoreRow[] | null | undefined,
   aiOverride?: string,

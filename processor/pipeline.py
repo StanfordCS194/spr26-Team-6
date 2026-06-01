@@ -16,7 +16,10 @@ from processor.enrich import EnrichmentCallback, enrich
 from processor.llm_summarize import summarize_with_llm
 from processor.location import detect_location
 from processor.normalize import normalize_record
-from processor.pdf_extract import extract_text_for_record, maybe_backfill_description
+from processor.pdf_extract import (
+    extract_document_texts_for_record,
+    maybe_backfill_description,
+)
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_INPUT_DIR = PROJECT_ROOT / "data_raw"
@@ -75,13 +78,19 @@ def process_one(
 
     # Pull PDF / DOCX scope text up front so we can pass it to the LLM as
     # additional context, regardless of whether the inline description was
-    # empty. ``extract_text_for_record`` is cached on disk, so this is cheap
-    # on re-runs.
+    # empty. Extraction is cached on disk, so this is cheap on re-runs.
+    document_texts: list[dict[str, str]] = []
     pdf_text = ""
     if use_llm_summary:
         try:
-            pdf_text = extract_text_for_record(raw) or ""
+            document_texts = extract_document_texts_for_record(raw)
+            pdf_text = "\n\n".join(
+                f"{entry.get('label') or 'Attached document'}\n{entry.get('text') or ''}"
+                for entry in document_texts
+                if entry.get("text")
+            )
         except Exception:
+            document_texts = []
             pdf_text = ""
 
     normalized = normalize_record(raw)
@@ -94,6 +103,11 @@ def process_one(
         classifier=classifier,
     )
     merged = {**normalized, **enriched}
+    if document_texts:
+        metadata = dict(merged.get("metadata") or {})
+        metadata["extracted_document_texts"] = document_texts
+        metadata["extracted_document_text"] = pdf_text
+        merged["metadata"] = metadata
 
     # Override the deterministic description + statement_of_work with the
     # LLM-generated versions when available. Falls back silently to the

@@ -9,6 +9,7 @@ import { isPdfUrl } from "@/lib/pdf";
 import type { CompatibilityFactors, Rfp } from "@/lib/types";
 import { RadarChart } from "./RadarChart";
 import { SourceDocumentEmbed } from "./SourceDocumentEmbed";
+import { SummaryBrief } from "./SummaryBrief";
 import { TagBubble } from "./RfpCard";
 import { trackABTestEvent } from "@/app/posthog-provider";
 import { shortenAgencyName } from "@/lib/formatAgency";
@@ -232,16 +233,10 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
       action: "generate_summary",
       variant: "A",
       rfp_id: rfp.id,
-      cached: result === "cached",
+      cached: false,
     });
-    if (result === "cached") {
-      showToast("Loaded cached summary. See the Summary tab.");
-      captureEvent("rag_summary_cached_hit", { rfp_id: rfp.id });
-      setTab("summary");
-      return;
-    }
     if (result === "generated") {
-      showToast("Summary generated. See the Summary tab.");
+      showToast("Summary regenerated and saved. See the Summary tab.");
       captureEvent("rag_summary_generated", { rfp_id: rfp.id });
       setTab("summary");
       return;
@@ -419,17 +414,11 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
         )}
 
         {tab === "summary" && (
-          <div className="prose prose-sm prose-slate mx-auto max-w-5xl text-govbid-text">
-            {rfp.summaryMarkdown ? (
-              <ReactMarkdown>{rfp.summaryMarkdown}</ReactMarkdown>
-            ) : (
-              <p className="text-sm italic text-govbid-text-muted">
-                {generating
-                  ? "Generating summary…"
-                  : "No summary yet. Click \"Generate summary\" above to extract scope of work, deadlines, and evaluation criteria from the RFP text."}
-              </p>
-            )}
-          </div>
+          <SummaryBrief
+            content={rfp.summaryMarkdown}
+            generating={generating}
+            emptyMessage='No stored summary yet. Click "Generate summary" above to create and save a detailed bidder brief.'
+          />
         )}
 
         {tab === "match" && (

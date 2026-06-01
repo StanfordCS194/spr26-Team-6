@@ -7,6 +7,7 @@ import { useDashboard } from "@/context/DashboardContext";
 import { isPdfUrl } from "@/lib/pdf";
 import type { Rfp } from "@/lib/types";
 import { SourceDocumentEmbed } from "./SourceDocumentEmbed";
+import { SummaryBrief } from "./SummaryBrief";
 import { TagBubble } from "./RfpCard";
 import { trackABTestEvent } from "@/app/posthog-provider";
 import { shortenAgencyName } from "@/lib/formatAgency";
@@ -202,15 +203,10 @@ function DetailPanelBodyB({ rfp }: { rfp: Rfp }) {
       action: "generate_summary",
       variant: "B",
       rfp_id: rfp.id,
-      cached: result === "cached",
+      cached: false,
     });
-    if (result === "cached") {
-      showToast("Loaded cached summary. See the Summary tab.");
-      setTab("summary");
-      return;
-    }
     if (result === "generated") {
-      showToast("Summary generated. See the Summary tab.");
+      showToast("Summary regenerated and saved. See the Summary tab.");
       setTab("summary");
     }
   };
@@ -451,19 +447,11 @@ function DetailPanelBodyB({ rfp }: { rfp: Rfp }) {
         )}
 
         {tab === "summary" && (
-          <div className="rounded-xl border border-govbid-border bg-govbid-surface p-4">
-            <div className="prose prose-sm prose-slate max-w-none text-govbid-text">
-              {rfp.summaryMarkdown ? (
-                <ReactMarkdown>{rfp.summaryMarkdown}</ReactMarkdown>
-              ) : (
-                <p className="text-sm italic text-govbid-text-muted">
-                  {generating
-                    ? "Generating summary…"
-                    : "No summary yet. Click the Summary action above to extract scope of work, deadlines, and evaluation criteria from the RFP text."}
-                </p>
-              )}
-            </div>
-          </div>
+          <SummaryBrief
+            content={rfp.summaryMarkdown}
+            generating={generating}
+            emptyMessage="No stored summary yet. Click the Summary action above to create and save a detailed bidder brief."
+          />
         )}
       </div>
     </section>
