@@ -128,19 +128,22 @@ export function RfpSidebar() {
 
   if (!filtersPanelVisible) {
     return (
-      <aside className="flex w-full shrink-0 flex-col border-b border-govbid-border/60 bg-govbid-surface p-3 lg:w-auto lg:border-b-0 lg:border-r lg:px-2 lg:py-4">
+      <aside className="flex w-full shrink-0 flex-col border-b border-govbid-border/60 bg-govbid-elevated p-3 lg:w-auto lg:min-w-[52px] lg:border-b-0 lg:border-r lg:border-govbid-border-strong lg:bg-govbid-elevated lg:px-2 lg:py-4">
         <FiltersPanelToggle
           expanded={false}
           onClick={toggleFiltersPanel}
           activeFilterCount={activeFilterCount}
-          className="w-full justify-center lg:w-auto lg:flex-col lg:px-2 lg:py-3"
+          className="w-full justify-center lg:w-auto lg:flex-col lg:gap-2 lg:px-2 lg:py-4"
         />
+        <p className="hidden text-[10px] font-semibold uppercase tracking-wider text-govbid-text-muted lg:block lg:[writing-mode:vertical-rl] lg:rotate-180">
+          Filters
+        </p>
       </aside>
     );
   }
 
   return (
-    <aside className="flex w-full shrink-0 flex-col gap-4 border-b border-govbid-border/60 bg-govbid-surface p-4 lg:min-h-0 lg:w-[280px] lg:border-b-0 lg:border-r lg:border-govbid-border/60 lg:p-5">
+    <aside className="flex w-full shrink-0 flex-col gap-4 border-b border-govbid-border/60 bg-govbid-surface p-4 lg:min-h-0 lg:w-[280px] lg:border-b-0 lg:border-r lg:border-govbid-border-strong lg:p-5">
       <details className="group rounded-xl lg:hidden" open>
         <summary className="cursor-pointer list-none rounded-lg border border-govbid-border bg-govbid-surface px-3 py-2 text-sm font-semibold text-govbid-text [&::-webkit-details-marker]:hidden">
           <span className="flex items-center justify-between gap-2">

@@ -85,15 +85,6 @@ function PinIcon() {
   );
 }
 
-function ClockIcon() {
-  return (
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-      <circle cx="12" cy="12" r="9" />
-      <path d="M12 7v6l3 2" />
-    </svg>
-  );
-}
-
 function StarIcon({ filled }: { filled?: boolean }) {
   if (filled) {
     return (
@@ -125,13 +116,19 @@ function HeadlineFirstCard({
     <button
       type="button"
       onClick={onSelect}
-      className={`flex w-full gap-4 rounded-xl border bg-govbid-surface p-4 text-left shadow-[var(--govbid-shadow)] transition md:gap-5 md:p-5 ${
+      className={`relative flex w-full shrink-0 gap-4 rounded-xl border bg-govbid-surface p-4 text-left shadow-[var(--govbid-shadow)] transition md:gap-5 md:p-5 ${
         active
-          ? "border-govbid-primary/45 bg-govbid-primary-soft/60 shadow-[0_1px_3px_rgb(79_70_229/0.12)]"
+          ? "border-govbid-primary/45 bg-govbid-primary-soft/60 shadow-[0_1px_3px_rgb(79_70_229/0.12)] ring-1 ring-govbid-primary/15"
           : "border-govbid-border hover:border-govbid-border-strong"
       }`}
     >
-      <div className="flex shrink-0 flex-col items-center border-r border-govbid-border/80 pr-4 text-center md:pr-5">
+      {active && (
+        <span
+          className="absolute inset-y-3 left-0 w-1 rounded-full bg-govbid-primary"
+          aria-hidden
+        />
+      )}
+      <div className="flex shrink-0 flex-col items-center border-r border-govbid-border/80 pl-1 pr-4 text-center md:pr-5">
         <span className="text-2xl font-bold leading-none text-govbid-text md:text-3xl">{day}</span>
         <span className="mt-1 text-xs font-medium text-govbid-text-muted">{month}</span>
         <span className={`mt-2 inline-block rounded-md border px-2 py-1 text-xs font-semibold ${deadlineStatus.bgColor} ${deadlineStatus.color}`}>
@@ -162,15 +159,9 @@ function HeadlineFirstCard({
             <TagBubble key={tag} tag={tag} />
           ))}
         </div>
-        <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-govbid-text-muted">
-          <span className="inline-flex items-center gap-1">
-            <PinIcon />
-            {rfp.location}
-          </span>
-          <span className="inline-flex items-center gap-1">
-            <ClockIcon />
-            Due {rfp.dueDate}
-          </span>
+        <div className="mt-2 flex items-center gap-1 text-xs text-govbid-text-muted">
+          <PinIcon />
+          <span className="truncate">{rfp.location}</span>
         </div>
       </div>
 
@@ -223,12 +214,18 @@ function ScoreFirstCard({
     <button
       type="button"
       onClick={onSelect}
-      className={`flex w-full gap-3 rounded-xl border bg-govbid-surface p-4 text-left shadow-[var(--govbid-shadow)] transition md:gap-4 md:p-5 ${
+      className={`relative flex w-full shrink-0 gap-3 rounded-xl border bg-govbid-surface p-4 text-left shadow-[var(--govbid-shadow)] transition md:gap-4 md:p-5 ${
         active
-          ? "border-govbid-primary/45 bg-govbid-primary-soft/60 shadow-[0_1px_3px_rgb(79_70_229/0.12)]"
+          ? "border-govbid-primary/45 bg-govbid-primary-soft/60 shadow-[0_1px_3px_rgb(79_70_229/0.12)] ring-1 ring-govbid-primary/15"
           : "border-govbid-border hover:border-govbid-border-strong"
       }`}
     >
+      {active && (
+        <span
+          className="absolute inset-y-3 left-0 w-1 rounded-full bg-govbid-primary"
+          aria-hidden
+        />
+      )}
       <div className="flex shrink-0 flex-col items-center gap-1">
         <span className="text-[10px] font-bold uppercase tracking-wide text-govbid-primary">
           Fit
@@ -256,10 +253,10 @@ function ScoreFirstCard({
         </div>
       </div>
 
-      <div className="flex shrink-0 flex-col items-center justify-center border-l border-govbid-border/80 pl-3 text-center md:pl-4">
-        <span className="text-xl font-bold leading-none text-govbid-text md:text-2xl">{day}</span>
-        <span className="mt-0.5 text-[10px] font-medium text-govbid-text-muted">{month}</span>
-        <span className={`mt-2 inline-block rounded-md border px-1.5 py-0.5 text-[10px] font-semibold ${deadlineStatus.bgColor} ${deadlineStatus.color}`}>
+      <div className="flex shrink-0 flex-col items-center justify-center border-l border-govbid-border/80 pl-4 text-center md:pl-5">
+        <span className="text-2xl font-bold leading-none text-govbid-text md:text-3xl">{day}</span>
+        <span className="mt-1 text-xs font-medium text-govbid-text-muted">{month}</span>
+        <span className={`mt-2 inline-block rounded-md border px-2 py-1 text-xs font-semibold ${deadlineStatus.bgColor} ${deadlineStatus.color}`}>
           {deadlineStatus.text}
         </span>
       </div>

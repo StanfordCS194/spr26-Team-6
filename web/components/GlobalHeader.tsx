@@ -136,7 +136,7 @@ export function GlobalHeader() {
             onClick={() => {
               showToast("Create flow — connect to SAM.gov ingest later.");
             }}
-            className="govbid-btn-primary flex size-9 items-center justify-center rounded-lg text-lg font-light md:size-10"
+            className="flex size-9 items-center justify-center rounded-lg border border-govbid-border bg-govbid-surface text-lg font-light text-govbid-text-muted transition hover:border-govbid-border-strong hover:bg-govbid-primary-muted/40 hover:text-govbid-text md:size-10"
             title="New opportunity"
             aria-label="New opportunity"
           >

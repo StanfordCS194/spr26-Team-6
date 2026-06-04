@@ -9,7 +9,7 @@ import {
   type ReactNode,
 } from "react";
 
-const DIVIDER_WIDTH_PX = 6;
+const DIVIDER_WIDTH_PX = 8;
 
 function clamp(value: number, min: number, max: number) {
   return Math.min(max, Math.max(min, value));
@@ -194,12 +194,12 @@ export function ResizableSplitPane({
           onPointerDown={onDividerPointerDown}
           onPointerUp={onDividerPointerUp}
           onKeyDown={onDividerKeyDown}
-          className="group relative z-10 shrink-0 cursor-col-resize touch-none focus:outline-none"
+          className="group relative z-10 shrink-0 cursor-col-resize touch-none bg-govbid-border/40 focus:outline-none hover:bg-govbid-primary-muted/50"
           style={{ width: DIVIDER_WIDTH_PX }}
         >
-          <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-govbid-border transition-colors group-hover:bg-govbid-primary/70 group-active:bg-govbid-primary group-focus-visible:bg-govbid-primary" />
+          <div className="absolute inset-y-3 left-1/2 w-px -translate-x-1/2 bg-govbid-border-strong transition-colors group-hover:bg-govbid-primary/70 group-active:bg-govbid-primary group-focus-visible:bg-govbid-primary" />
           <div
-            className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col gap-1 rounded-full border border-govbid-border bg-govbid-surface px-0.5 py-2 shadow-sm transition-colors group-hover:border-govbid-primary/50 group-focus-visible:border-govbid-primary"
+            className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col gap-1 rounded-full border border-govbid-border-strong bg-govbid-surface px-1 py-2.5 shadow-sm transition-colors group-hover:border-govbid-primary/50 group-focus-visible:border-govbid-primary"
             aria-hidden
           >
             <span className="block h-0.5 w-0.5 rounded-full bg-govbid-text-muted group-hover:bg-govbid-primary" />

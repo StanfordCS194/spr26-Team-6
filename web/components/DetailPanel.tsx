@@ -28,8 +28,15 @@ const RfpPdfViewer = dynamic(
 function DeadlineCountdown({ dueDate }: { dueDate: string }) {
   const [daysLeft, setDaysLeft] = useState(0);
   const [hoursLeft, setHoursLeft] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
     const updateCountdown = () => {
       const deadline = new Date(`${dueDate}T23:59:59`);
       const now = new Date();
@@ -45,7 +52,7 @@ function DeadlineCountdown({ dueDate }: { dueDate: string }) {
     updateCountdown();
     const timer = setInterval(updateCountdown, 3600000); // Update every hour
     return () => clearInterval(timer);
-  }, [dueDate]);
+  }, [dueDate, mounted]);
 
   const getColor = () => {
     if (daysLeft <= 0) return "bg-red-50 border-red-200 text-red-700";
@@ -55,10 +62,16 @@ function DeadlineCountdown({ dueDate }: { dueDate: string }) {
   };
 
   return (
-    <div className={`rounded-lg border p-3 ${getColor()}`}>
-      <p className="text-xs font-semibold uppercase tracking-wide">Deadline countdown</p>
-      <p className="mt-1 text-lg font-bold">
-        {daysLeft}d {hoursLeft}h remaining
+    <div
+      className={`flex h-full flex-col justify-center rounded-xl border px-4 py-3 ${
+        mounted ? getColor() : "border-govbid-border bg-govbid-surface"
+      }`}
+    >
+      <p className="text-xs font-semibold uppercase tracking-wide opacity-80">
+        Time remaining
+      </p>
+      <p className="mt-0.5 text-base font-bold tabular-nums" suppressHydrationWarning>
+        {mounted ? `${daysLeft}d ${hoursLeft}h` : "—"}
       </p>
     </div>
   );
@@ -69,10 +82,32 @@ export function DetailPanel() {
 
   if (!selectedRfp) {
     return (
-      <section className="flex min-h-[220px] flex-1 flex-col items-center justify-center bg-govbid-surface px-6 py-10 lg:min-h-0">
-        <p className="max-w-[240px] text-center text-sm text-govbid-text-muted">
-          Select an opportunity from the list to view details, run summary stubs, and save to your profile.
-        </p>
+      <section className="flex min-h-[220px] flex-1 flex-col items-center justify-center border-l border-govbid-border/80 bg-govbid-elevated px-6 py-10 lg:min-h-0">
+        <div className="flex flex-col items-center gap-3">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-govbid-primary-muted">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-govbid-primary"
+              aria-hidden
+            >
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14,2 14,8 20,8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+            </svg>
+          </div>
+          <p className="max-w-[260px] text-center text-sm leading-relaxed text-govbid-text-muted">
+            Select an opportunity from the list to view details, run summary stubs, and save to your profile.
+          </p>
+        </div>
       </section>
     );
   }
@@ -258,66 +293,74 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
 
   return (
     <section id="detail-panel" className="flex min-h-0 flex-1 flex-col bg-govbid-surface">
-      <div className="flex shrink-0 gap-8 border-b border-govbid-border px-4 pt-3 lg:px-5">
-        {tabs.map(({ id, label }) => (
-          <button
-            key={id}
-            type="button"
-            onClick={() => {
-              setTab(id);
-              captureEvent("detail_tab_changed", { tab: id, rfp_id: rfp.id });
-            }}
-            data-walkthrough-tab={id}
-            className={`pdf-viewer-button relative pb-2.5 text-sm font-semibold transition ${
-              tab === id
-                ? "text-govbid-text"
-                : "text-govbid-text-muted hover:text-govbid-text"
-            }`}
-          >
-            {label}
-            {tab === id && (
-              <span className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-govbid-primary" />
+      <div className="shrink-0 border-b border-govbid-border bg-govbid-elevated/50 px-4 py-3 lg:px-5">
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="min-w-0 flex-1">
+            <h2 className="rfp-title line-clamp-2 text-base font-bold leading-snug text-govbid-text lg:text-lg">
+              {rfp.title}
+            </h2>
+            <p
+              className="mt-0.5 line-clamp-1 text-xs font-medium text-govbid-text-muted"
+              title={rfp.agency}
+            >
+              {shortenAgencyName(rfp.agency, 96)}
+            </p>
+          </div>
+          <div className="flex shrink-0 flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={handleSave}
+              className="save-rfp-button rounded-lg border border-govbid-border bg-govbid-surface px-3 py-1.5 text-sm font-medium text-govbid-text transition hover:bg-govbid-primary-muted/40"
+            >
+              {saved ? "Unsave" : "Save to profile"}
+            </button>
+            <button
+              type="button"
+              onClick={handleSummary}
+              disabled={generating}
+              className="generate-summary-button govbid-btn-primary rounded-lg px-3 py-1.5 text-sm disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {generating ? "Generating…" : "Generate summary"}
+            </button>
+            {saved && (
+              <span className="inline-flex items-center gap-1 rounded-full border border-govbid-border bg-govbid-primary-muted px-2.5 py-1 text-xs font-semibold text-govbid-primary">
+                <span aria-hidden>✓</span> Saved
+              </span>
             )}
-          </button>
-        ))}
+          </div>
+        </div>
       </div>
 
-      <div className="flex shrink-0 flex-wrap gap-2 border-b border-govbid-border bg-govbid-elevated px-4 py-3 lg:px-5">
-        <button
-          type="button"
-          onClick={handleSave}
-          className="save-rfp-button rounded-lg border border-govbid-border bg-govbid-surface px-3 py-2 text-sm font-medium text-govbid-text transition hover:bg-govbid-primary-muted/40"
-        >
-          {saved ? "Unsave" : "Save to profile"}
-        </button>
-        <button
-          type="button"
-          onClick={handleSummary}
-          disabled={generating}
-          className="generate-summary-button govbid-btn-primary rounded-lg px-3 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          {generating ? "Generating…" : "Generate summary"}
-        </button>
-        {saved && (
-          <span className="ml-auto inline-flex items-center gap-1 rounded-full border border-govbid-border bg-govbid-primary-muted px-3 py-1 text-xs font-semibold text-govbid-primary">
-            <span aria-hidden>✓</span> Saved
-          </span>
-        )}
+      <div className="shrink-0 overflow-x-auto border-b border-govbid-border">
+        <div className="flex min-w-max gap-5 px-4 pt-2.5 lg:gap-6 lg:px-5">
+          {tabs.map(({ id, label }) => (
+            <button
+              key={id}
+              type="button"
+              onClick={() => {
+                setTab(id);
+                captureEvent("detail_tab_changed", { tab: id, rfp_id: rfp.id });
+              }}
+              data-walkthrough-tab={id}
+              className={`pdf-viewer-button relative shrink-0 pb-2.5 text-sm font-semibold transition ${
+                tab === id
+                  ? "text-govbid-text"
+                  : "text-govbid-text-muted hover:text-govbid-text"
+              }`}
+            >
+              {label}
+              {tab === id && (
+                <span className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full bg-govbid-primary" />
+              )}
+            </button>
+          ))}
+        </div>
       </div>
 
       <div className="min-h-0 flex-1 overflow-y-auto p-4 lg:p-5">
         {tab === "overview" && (
           <div className="mx-auto w-full max-w-5xl space-y-5">
             <div className="space-y-3">
-              <h2 className="rfp-title text-xl font-bold leading-snug text-govbid-text lg:text-2xl">
-                {rfp.title}
-              </h2>
-              <p
-                className="text-xs font-medium uppercase tracking-wide text-govbid-text-muted line-clamp-2"
-                title={rfp.agency}
-              >
-                {shortenAgencyName(rfp.agency, 96)}
-              </p>
               <div className="rounded-xl border border-govbid-border/80 bg-govbid-elevated/60 p-4 lg:p-5">
                 <p className="text-xs font-semibold uppercase tracking-wide text-govbid-text-muted">
                   Overview
@@ -327,26 +370,38 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
                 </p>
               </div>
             </div>
-            <dl className="rfp-location-date grid grid-cols-2 gap-3 text-sm">
-              <div>
-                <dt className="text-govbid-text-muted">Location</dt>
-                <dd className="font-semibold text-govbid-text">{rfp.location}</dd>
+
+            <div className="space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-wide text-govbid-text-muted">
+                Key details
+              </p>
+              <div className="grid gap-3 sm:grid-cols-3">
+                <div className="rounded-xl border border-govbid-border bg-govbid-surface px-4 py-3">
+                  <p className="text-xs font-medium text-govbid-text-muted">Location</p>
+                  <p className="rfp-location mt-0.5 text-sm font-semibold text-govbid-text">
+                    {rfp.location}
+                  </p>
+                </div>
+                <div className="rounded-xl border border-govbid-border bg-govbid-surface px-4 py-3">
+                  <p className="text-xs font-medium text-govbid-text-muted">Due date</p>
+                  <p className="rfp-due-date mt-0.5 text-sm font-semibold text-govbid-text">
+                    {rfp.dueDate}
+                  </p>
+                </div>
+                <DeadlineCountdown dueDate={rfp.dueDate} />
               </div>
-              <div>
-                <dt className="text-govbid-text-muted">Due date</dt>
-                <dd className="font-semibold text-govbid-text">{rfp.dueDate}</dd>
-              </div>
-            </dl>
-            
-            {/* Deadline Countdown Badge */}
-            <DeadlineCountdown dueDate={rfp.dueDate} />
-            
-            {/* Tags */}
+            </div>
+
             {rfp.tags?.length > 0 && (
-              <div className="mt-2 flex flex-wrap gap-1">
-                {rfp.tags.map((tag) => (
-                  <TagBubble key={tag} tag={tag} />
-                ))}
+              <div>
+                <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-govbid-text-muted">
+                  Tags
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {rfp.tags.map((tag) => (
+                    <TagBubble key={tag} tag={tag} />
+                  ))}
+                </div>
               </div>
             )}
             

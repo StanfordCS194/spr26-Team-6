@@ -62,22 +62,50 @@ export function RfpFeed() {
     return feedRfps.slice(start, start + pageSize);
   }, [feedRfps, currentPage, pageSize]);
 
+  const feedTitle =
+    activeNav === "saved"
+      ? "Saved opportunities"
+      : activeNav === "history"
+        ? "Recently viewed"
+        : "Opportunities";
+
+  const hasActiveFilters = filtersActive(searchQuery, rfpFilter);
+
   return (
     <div
       id="rfp-feed"
-      className="flex min-h-0 flex-1 flex-col bg-govbid-surface"
+      className="flex min-h-0 flex-1 flex-col bg-govbid-canvas lg:border-r lg:border-govbid-border/80"
     >
+      <header className="flex shrink-0 flex-wrap items-end justify-between gap-2 border-b border-govbid-border/70 bg-govbid-surface px-4 py-3 lg:px-5">
+        <div className="min-w-0">
+          <h2 className="text-sm font-bold tracking-tight text-govbid-text md:text-base">
+            {feedTitle}
+          </h2>
+          <p className="mt-0.5 text-xs text-govbid-text-muted">
+            {feedRfps.length} result{feedRfps.length === 1 ? "" : "s"}
+            {hasActiveFilters && loadedRfps.length > feedRfps.length
+              ? ` · filtered from ${loadedRfps.length}`
+              : ""}
+          </p>
+        </div>
+        {hasActiveFilters && (
+          <span className="rounded-full border border-govbid-primary/25 bg-govbid-primary-muted/60 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-govbid-primary">
+            Filters active
+          </span>
+        )}
+      </header>
       <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto p-4 lg:gap-4 lg:p-5">
         {paginatedRfps.map((rfp) => (
-          <RfpCard
-            key={rfp.id}
-            rfp={rfp}
-            layout={listLayout}
-            active={selectedRfpId === rfp.id}
-            onSelect={() => selectRfp(rfp.id)}
-            isFavorited={isSaved(rfp.id)}
-            onFavoriteToggle={handleFavoriteToggle}
-          />
+          <div key={rfp.id} className="shrink-0">
+            <RfpCard
+              rfp={rfp}
+              layout={listLayout}
+              active={selectedRfpId === rfp.id}
+              onSelect={() => selectRfp(rfp.id)}
+              isFavorited={isSaved(rfp.id)}
+              onFavoriteToggle={handleFavoriteToggle}
+            />
+          </div>
         ))}
         {feedRfps.length === 0 && (
           <p className="rounded-xl border border-dashed border-govbid-border bg-govbid-surface/80 px-4 py-10 text-center text-sm leading-relaxed text-govbid-text-muted">

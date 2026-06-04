@@ -4,6 +4,7 @@
 :root {
   --govbid-surface: #ffffff;
   --govbid-shell: #ffffff;
+  --govbid-canvas: #f4f3f8;
   --govbid-elevated: #fafafc;
   --govbid-border: #f0eef6;
   --govbid-border-strong: #e6e2ef;
@@ -22,6 +23,7 @@
 @theme inline {
   --color-govbid-surface: var(--govbid-surface);
   --color-govbid-shell: var(--govbid-shell);
+  --color-govbid-canvas: var(--govbid-canvas);
   --color-govbid-elevated: var(--govbid-elevated);
   --color-govbid-border: var(--govbid-border);
   --color-govbid-border-strong: var(--govbid-border-strong);
