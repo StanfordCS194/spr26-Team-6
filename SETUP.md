@@ -68,7 +68,15 @@ One source at a time (scrape → normalize/tag → Supabase upsert):
 ```bash
 python run_pipeline.py sam        # SAM.gov
 python run_pipeline.py eProcure   # Cal eProcure
+python run_pipeline.py bidnet     # BidNet Direct (California) — needs BIDNET_USERNAME/PASSWORD
 ```
+
+`bidnet` scrapes the California Purchasing Group for tech/IT/telecom solicitations. The
+issuing organization, description, and category codes are gated behind a **free** BidNet
+vendor account, so set `BIDNET_USERNAME` / `BIDNET_PASSWORD` in `.env` first
+(register at https://www.bidnetdirect.com/california). Pass scraper options through with
+`--scraper-arg`, e.g. `python run_pipeline.py bidnet --scraper-arg=--headed
+--scraper-arg=--max-pages --scraper-arg=2`.
 
 Both sources (same as the daily job):
 

@@ -1,6 +1,10 @@
 "use client";
 
-import { useDashboard, type RfpFilter } from "@/context/DashboardContext";
+import {
+  useDashboard,
+  type RfpFilter,
+  type RfpSortBy,
+} from "@/context/DashboardContext";
 
 function FunnelIcon() {
   return (
@@ -92,6 +96,8 @@ export function RfpSidebar() {
     setSearchQuery,
     rfpFilter,
     setRfpFilter,
+    sortBy,
+    setSortBy,
     loadedRfps,
     filtersPanelVisible,
     toggleFiltersPanel,
@@ -139,7 +145,7 @@ export function RfpSidebar() {
   return (
     <aside
       id="walkthrough-rfp-filters"
-      className="flex w-full shrink-0 flex-col gap-4 border-b border-govbid-border/60 bg-govbid-surface p-4 lg:w-[280px] lg:border-b-0 lg:border-r lg:border-govbid-border/60 lg:p-5"
+      className="flex w-full shrink-0 flex-col gap-4 border-b border-govbid-border/60 bg-govbid-surface p-4 lg:min-h-0 lg:w-[280px] lg:border-b-0 lg:border-r lg:border-govbid-border/60 lg:p-5"
     >
       <details className="group rounded-xl lg:hidden" open>
         <summary className="cursor-pointer list-none rounded-lg border border-govbid-border bg-govbid-surface px-3 py-2 text-sm font-semibold text-govbid-text [&::-webkit-details-marker]:hidden">
@@ -173,6 +179,8 @@ export function RfpSidebar() {
             setSearchQuery={setSearchQuery}
             rfpFilter={rfpFilter}
             allTags={allTags}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
             mergeRfpFilter={mergeRfpFilter}
             clearFilter={clearFilter}
             removeFilter={removeFilter}
@@ -184,7 +192,7 @@ export function RfpSidebar() {
 
       <div
         id="walkthrough-rfp-filters-panel-desktop"
-        className="hidden rounded-xl border border-govbid-border bg-govbid-surface p-4 lg:block"
+className="hidden rounded-xl border border-govbid-border bg-govbid-surface p-4 lg:flex lg:min-h-0 lg:flex-1 lg:flex-col"
       >
         <div className="mb-4 flex items-center gap-2 text-sm font-semibold text-govbid-text">
           <FunnelIcon />
@@ -201,17 +209,21 @@ export function RfpSidebar() {
             className="ml-auto"
           />
         </div>
-        <SearchCardBody
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          rfpFilter={rfpFilter}
-          allTags={allTags}
-          mergeRfpFilter={mergeRfpFilter}
-          clearFilter={clearFilter}
-          removeFilter={removeFilter}
-          activeFilterCount={activeFilterCount}
-          inputClass={inputClass}
-        />
+        <div className="min-h-0 flex-1 overflow-y-auto">
+          <SearchCardBody
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            rfpFilter={rfpFilter}
+            allTags={allTags}
+            sortBy={sortBy}
+            setSortBy={setSortBy}
+            mergeRfpFilter={mergeRfpFilter}
+            clearFilter={clearFilter}
+            removeFilter={removeFilter}
+            activeFilterCount={activeFilterCount}
+            inputClass={inputClass}
+          />
+        </div>
       </div>
     </aside>
   );
@@ -222,6 +234,8 @@ function SearchCardBody({
   setSearchQuery,
   rfpFilter,
   allTags,
+  sortBy,
+  setSortBy,
   mergeRfpFilter,
   clearFilter,
   removeFilter,
@@ -232,12 +246,18 @@ function SearchCardBody({
   setSearchQuery: (q: string) => void;
   rfpFilter: RfpFilter;
   allTags: string[];
+  sortBy: RfpSortBy;
+  setSortBy: (sort: RfpSortBy) => void;
   mergeRfpFilter: (patch: Partial<RfpFilter>) => void;
   clearFilter: () => void;
   removeFilter: (key: keyof RfpFilter) => void;
   activeFilterCount: number;
   inputClass: string;
 }) {
+  const sortButtonClass = (active: boolean) =>
+    active
+      ? "flex-1 rounded-lg border border-govbid-primary bg-govbid-primary px-3 py-2 text-xs font-semibold text-white transition"
+      : "flex-1 rounded-lg border border-govbid-border bg-govbid-surface px-3 py-2 text-xs font-semibold text-govbid-text-muted transition hover:border-govbid-primary/40 hover:text-govbid-text";
   return (
     <div className="space-y-4">
       {/* Search */}
@@ -255,6 +275,29 @@ function SearchCardBody({
           className={inputClass}
         />
       </label>
+
+      {/* Sort controls */}
+      <div className="space-y-2">
+        <p className="text-xs font-medium text-govbid-text-muted">Sort</p>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            aria-pressed={sortBy === "score"}
+            onClick={() => setSortBy("score")}
+            className={sortButtonClass(sortBy === "score")}
+          >
+            Sort by Score
+          </button>
+          <button
+            type="button"
+            aria-pressed={sortBy === "date"}
+            onClick={() => setSortBy("date")}
+            className={sortButtonClass(sortBy === "date")}
+          >
+            Sort by Date
+          </button>
+        </div>
+      </div>
 
       {/* Active Filters Display */}
       {activeFilterCount > 0 && (

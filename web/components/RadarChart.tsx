@@ -190,7 +190,7 @@ export function RadarChart({ data, size = 360, rings = 4 }: Props) {
 }
 
 function formatValue(v: number, max: number): string {
-  // For fractional-max factors (binary timing, 0/0.5/1 award) show one decimal.
+  // For fractional-max factors (binary timing) show one decimal.
   if (max <= 1) return v.toFixed(1).replace(/\.0$/, "");
   return String(Math.round(v));
 }
