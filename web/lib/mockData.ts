@@ -1,4 +1,5 @@
 import type { Rfp } from "./types";
+import type { RfpSource } from "./rfpSource";
 
 /** Public sample PDF for local mock testing of the viewer */
 const SAMPLE_PUBLIC_PDF =
@@ -6,6 +7,7 @@ const SAMPLE_PUBLIC_PDF =
 
 type RfpSeed = Omit<
   Rfp,
+  | "source"
   | "aiAnalysisMarkdown"
   | "summaryMarkdown"
   | "pdfUrls"
@@ -154,8 +156,16 @@ const raw: RfpSeed[] = [
   },
 ];
 
+const MOCK_SOURCES: RfpSource[] = [
+  "Cal eProcure",
+  "BidNet Direct",
+  "PlanetBids",
+  "sam.gov",
+];
+
 export const MOCK_RFPS: Rfp[] = raw.map((r, i) => ({
   ...r,
+  source: MOCK_SOURCES[i % MOCK_SOURCES.length],
   // Strip trailing solicitation numbers / "Request for ..." chunks for the
   // mock short name so cards/detail panels see a tidy label.
   name: r.title.replace(/\s+(RFP|RFQ|RFI)[^\s]*$/i, "").trim() || r.title,

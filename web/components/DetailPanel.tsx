@@ -9,6 +9,7 @@ import { isPdfUrl } from "@/lib/pdf";
 import type { CompatibilityFactors, Rfp } from "@/lib/types";
 import { RadarChart } from "./RadarChart";
 import { SourceDocumentEmbed } from "./SourceDocumentEmbed";
+import { SourcePill } from "./SourcePill";
 import { TagBubble } from "./RfpCard";
 import { trackABTestEvent } from "@/app/posthog-provider";
 import { shortenAgencyName } from "@/lib/formatAgency";
@@ -105,7 +106,7 @@ export function DetailPanel() {
             </svg>
           </div>
           <p className="max-w-[260px] text-center text-sm leading-relaxed text-govbid-text-muted">
-            Select an opportunity from the list to view details, run summary stubs, and save to your profile.
+            Select an opportunity from the unified feed to view match scores, source PDFs, and AI summaries.
           </p>
         </div>
       </section>
@@ -216,6 +217,7 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
     getMatchFactors,
     isScoring,
     ensureScored,
+    demoMode,
   } = useDashboard();
   const [tab, setTab] = useState<DetailTab>("overview");
   const [activePdfIndex, setActivePdfIndex] = useState(0);
@@ -233,13 +235,14 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
 
   useEffect(() => {
     setActivePdfIndex(0);
+    setTab(demoMode ? "match" : "overview");
     // Track variant view
     trackABTestEvent("ab_test_variant_viewed", {
       component: "detail_panel",
       variant: "A",
       rfp_id: rfp.id,
     });
-  }, [rfp.id]);
+  }, [rfp.id, demoMode]);
 
   const saved = isSaved(rfp.id);
 
@@ -296,6 +299,9 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
       <div className="shrink-0 border-b border-govbid-border bg-govbid-elevated/50 px-4 py-3 lg:px-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
+            <div className="mb-1.5 flex flex-wrap items-center gap-2">
+              <SourcePill source={rfp.source} />
+            </div>
             <h2 className="rfp-title line-clamp-2 text-base font-bold leading-snug text-govbid-text lg:text-lg">
               {rfp.title}
             </h2>

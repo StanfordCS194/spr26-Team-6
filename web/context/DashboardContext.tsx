@@ -34,9 +34,11 @@ import {
   nextSortPosition,
   type SavedRfpRecord,
 } from "@/lib/savedRfpSort";
+import type { RfpSource } from "@/lib/rfpSource";
 
 export type RfpFilter = {
   tag?: string;
+  source?: RfpSource;
   dateFrom?: string;
   dateTo?: string;
   priceMin?: number;
@@ -113,6 +115,9 @@ type DashboardContextValue = {
   filtersPanelVisible: boolean;
   setFiltersPanelVisible: (visible: boolean) => void;
   toggleFiltersPanel: () => void;
+  /** Demo theater mode — sync banner, demo walkthrough, Match tab default. */
+  demoMode: boolean;
+  setDemoMode: (active: boolean) => void;
   signOut: () => Promise<void>;
 };
 
@@ -146,11 +151,12 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [walkthroughActive, setWalkthroughActive] = useState(false);
   const [walkthroughStep, setWalkthroughStep] = useState(0);
   const [rfpFilter, setRfpFilter] = useState<RfpFilter>({});
-  const [sortBy, setSortBy] = useState<RfpSortBy>("date");
+  const [sortBy, setSortBy] = useState<RfpSortBy>("score");
   const [filtersPanelVisible, setFiltersPanelVisibleState] = useState(true);
   const [toast, setToast] = useState<string | null>(null);
   const [activeNav, setActiveNavState] = useState<ActiveNav>("dashboard");
   const [recentlyViewedIds, setRecentlyViewedIds] = useState<string[]>([]);
+  const [demoMode, setDemoMode] = useState(false);
 
   useEffect(() => {
     setFiltersPanelVisibleState(readFiltersPanelVisible());
@@ -290,6 +296,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
           .select("*")
           .eq("status", "active")
           .eq("is_relevant", true)
+          .not("pdf_url_1", "is", null)
           .order("due_date", { ascending: true, nullsFirst: false });
 
         if (rfpErr) {
@@ -423,6 +430,10 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
         ) {
           return false;
         }
+      }
+
+      if (rfpFilter.source && r.source !== rfpFilter.source) {
+        return false;
       }
 
       if (rfpFilter.dateFrom) {
@@ -972,6 +983,8 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       filtersPanelVisible,
       setFiltersPanelVisible,
       toggleFiltersPanel,
+      demoMode,
+      setDemoMode,
       signOut,
     }),
     [
@@ -1009,6 +1022,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       filtersPanelVisible,
       setFiltersPanelVisible,
       toggleFiltersPanel,
+      demoMode,
       signOut,
     ],
   );

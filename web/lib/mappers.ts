@@ -1,4 +1,5 @@
 import type { Database } from "@/lib/database.types";
+import type { RfpSource } from "@/lib/rfpSource";
 import type { ContractorProfile, Rfp } from "@/lib/types";
 
 type ContractorRow = Database["public"]["Tables"]["contractors"]["Row"];
@@ -89,6 +90,7 @@ export function mapRfpRow(
   const deliverables = row.deliverables?.length ? [...row.deliverables] : [];
   return {
     id: row.id,
+    source: (row.source ?? "other") as RfpSource,
     // Prefer the curated short name from rfps.name; fall back to title when
     // a row predates the name-extraction pipeline.
     name: (row.name ?? "").trim() || row.title,

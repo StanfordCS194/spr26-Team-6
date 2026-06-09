@@ -12,6 +12,8 @@ import { ResizableSplitPane } from "./ResizableSplitPane";
 import { DashboardMainGrid } from "./DashboardMainGrid";
 import { RfpFeed } from "./RfpFeed";
 import { Walkthrough } from "./Walkthrough/Walkthrough";
+import { DemoModeInit } from "./DemoModeInit";
+import { SyncStatusBanner } from "./SyncStatusBanner";
 
 export function Dashboard() {
   const { toast, authReady } = useDashboard();
@@ -38,8 +40,10 @@ export function Dashboard() {
   // Default: Dashboard Variant A
   return (
     <div className="flex min-h-dvh w-full min-w-0 flex-1 flex-col">
+      <DemoModeInit />
       <div className="flex min-h-0 w-full min-w-0 flex-1 flex-col overflow-hidden bg-govbid-surface">
         <GlobalHeader />
+        <SyncStatusBanner />
 
         <DashboardMainGrid>
           <ResizableSplitPane

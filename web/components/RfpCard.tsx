@@ -5,6 +5,7 @@ import type { ListCardLayout } from "@/lib/analytics";
 import { shortenAgencyName } from "@/lib/formatAgency";
 import type { Rfp } from "@/lib/types";
 import { ScoreRing } from "./ScoreRing";
+import { SourcePill } from "./SourcePill";
 
 // Simple color palette for tags
 const TAG_COLORS = [
@@ -137,7 +138,8 @@ function HeadlineFirstCard({
       </div>
 
       <div className="min-w-0 flex-1">
-        <p className="line-clamp-2 text-sm font-semibold leading-snug text-govbid-text md:text-base">
+        <SourcePill source={rfp.source} />
+        <p className="mt-1.5 line-clamp-2 text-sm font-semibold leading-snug text-govbid-text md:text-base">
           {rfp.name}
         </p>
         <p
@@ -239,7 +241,8 @@ function ScoreFirstCard({
       </div>
 
       <div className="min-w-0 flex-1">
-        <p className="line-clamp-2 text-sm font-semibold leading-snug text-govbid-text md:text-base">
+        <SourcePill source={rfp.source} />
+        <p className="mt-1.5 line-clamp-2 text-sm font-semibold leading-snug text-govbid-text md:text-base">
           {rfp.name}
         </p>
         <p className="mt-1 line-clamp-1 text-xs font-medium text-govbid-text" title={rfp.agency}>

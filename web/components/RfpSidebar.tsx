@@ -5,6 +5,11 @@ import {
   type RfpFilter,
   type RfpSortBy,
 } from "@/context/DashboardContext";
+import {
+  FILTERABLE_SOURCES,
+  SOURCE_DISPLAY,
+  SOURCE_STYLE,
+} from "@/lib/rfpSource";
 
 function FunnelIcon() {
   return (
@@ -103,9 +108,14 @@ export function RfpSidebar() {
     toggleFiltersPanel,
   } = useDashboard();
 
-  const activeFilterCount = Object.values(rfpFilter).filter(
-    (v) => v !== undefined && v !== "",
-  ).length;
+  const activeFilterCount = [
+    rfpFilter.tag,
+    rfpFilter.source,
+    rfpFilter.dateFrom,
+    rfpFilter.dateTo,
+    rfpFilter.priceMin,
+    rfpFilter.priceMax,
+  ].filter((v) => v !== undefined && v !== "").length;
 
   const allTags = Array.from(
     new Set(loadedRfps.flatMap((rfp) => rfp.tags)),
@@ -296,6 +306,48 @@ function SearchCardBody({
         </div>
       </div>
 
+      {/* Source portal filter */}
+      <div id="source-filter-chips" className="space-y-2">
+        <p className="text-xs font-medium text-govbid-text-muted">Source portal</p>
+        <div className="flex flex-wrap gap-1.5">
+          <button
+            type="button"
+            aria-pressed={!rfpFilter.source}
+            onClick={() => mergeRfpFilter({ source: undefined })}
+            className={
+              !rfpFilter.source
+                ? "rounded-lg border border-govbid-primary bg-govbid-primary px-2.5 py-1.5 text-[11px] font-semibold text-white"
+                : "rounded-lg border border-govbid-border bg-govbid-surface px-2.5 py-1.5 text-[11px] font-semibold text-govbid-text-muted hover:border-govbid-primary/40"
+            }
+          >
+            All sources
+          </button>
+          {FILTERABLE_SOURCES.map((source) => {
+            const active = rfpFilter.source === source;
+            const style = SOURCE_STYLE[source];
+            return (
+              <button
+                key={source}
+                type="button"
+                aria-pressed={active}
+                onClick={() =>
+                  mergeRfpFilter({
+                    source: active ? undefined : source,
+                  })
+                }
+                className={`rounded-lg border px-2.5 py-1.5 text-[11px] font-semibold transition ${
+                  active
+                    ? `${style.bg} ${style.text} ${style.border} ring-1 ring-govbid-primary/20`
+                    : "border-govbid-border bg-govbid-surface text-govbid-text-muted hover:border-govbid-primary/40"
+                }`}
+              >
+                {SOURCE_DISPLAY[source]}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Active Filters Display */}
       {activeFilterCount > 0 && (
         <div className="space-y-2 border-t border-govbid-border pt-3">
@@ -309,6 +361,21 @@ function SearchCardBody({
                   onClick={() => removeFilter("tag")}
                   className="text-govbid-text-muted hover:text-govbid-text"
                   aria-label={`Remove ${rfpFilter.tag} filter`}
+                >
+                  <XIcon />
+                </button>
+              </div>
+            )}
+            {rfpFilter.source && (
+              <div className="inline-flex items-center gap-2 rounded-full bg-govbid-primary-muted px-3 py-1 text-sm">
+                <span className="text-govbid-text">
+                  {SOURCE_DISPLAY[rfpFilter.source]}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => removeFilter("source")}
+                  className="text-govbid-text-muted hover:text-govbid-text"
+                  aria-label="Remove source filter"
                 >
                   <XIcon />
                 </button>

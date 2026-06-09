@@ -1,0 +1,7 @@
+{
+  "description": "Bookmark these RFP UUIDs for the CS194W demo. Replace with live IDs from your Supabase catalog after ingest.",
+  "calEProcureHighScore": "",
+  "bidNet": "",
+  "planetBids": "",
+  "notes": "Pick one high-score Cal eProcure RFP, one BidNet, one PlanetBids. Pre-open Match tab and pre-generate summary on the Cal eProcure pick."
+}

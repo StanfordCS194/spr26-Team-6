@@ -3,6 +3,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { getListCardLayout } from "@/lib/analytics";
 import { useDashboard } from "@/context/DashboardContext";
+import {
+  countBySource,
+  distinctSourceCount,
+  formatSourceBreakdown,
+} from "@/lib/rfpSource";
 import { RfpCard } from "./RfpCard";
 
 const PAGE_SIZE_OPTIONS = [10, 20, 50] as const;
@@ -12,6 +17,7 @@ function filtersActive(
   q: string,
   filter: {
     tag?: string;
+    source?: string;
     dateFrom?: string;
     dateTo?: string;
     priceMin?: number;
@@ -21,6 +27,7 @@ function filtersActive(
   return (
     q.trim() !== "" ||
     Boolean(filter.tag) ||
+    Boolean(filter.source) ||
     Boolean(filter.dateFrom) ||
     Boolean(filter.dateTo) ||
     typeof filter.priceMin === "number" ||
@@ -70,6 +77,10 @@ export function RfpFeed() {
         : "Opportunities";
 
   const hasActiveFilters = filtersActive(searchQuery, rfpFilter);
+  const sourceCounts = useMemo(() => countBySource(loadedRfps), [loadedRfps]);
+  const sourceN = distinctSourceCount(sourceCounts);
+  const showCatalogStats =
+    activeNav === "dashboard" && loadedRfps.length > 0 && !hasActiveFilters;
 
   return (
     <div
@@ -83,10 +94,23 @@ export function RfpFeed() {
           </h2>
           <p className="mt-0.5 text-xs text-govbid-text-muted">
             {feedRfps.length} result{feedRfps.length === 1 ? "" : "s"}
+            {showCatalogStats && (
+              <>
+                {" "}
+                · {loadedRfps.length} opportunit
+                {loadedRfps.length === 1 ? "y" : "ies"} · {sourceN} source
+                {sourceN === 1 ? "" : "s"}
+              </>
+            )}
             {hasActiveFilters && loadedRfps.length > feedRfps.length
               ? ` · filtered from ${loadedRfps.length}`
               : ""}
           </p>
+          {showCatalogStats && (
+            <p className="mt-0.5 text-[11px] text-govbid-text-muted/90">
+              {formatSourceBreakdown(sourceCounts)}
+            </p>
+          )}
         </div>
         {hasActiveFilters && (
           <span className="rounded-full border border-govbid-primary/25 bg-govbid-primary-muted/60 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-govbid-primary">

@@ -1,5 +1,9 @@
+import type { RfpSource } from "@/lib/rfpSource";
+
 export type Rfp = {
   id: string;
+  /** Procurement portal this RFP was ingested from (`rfps.source`). */
+  source: RfpSource;
   /** Short curated project name from `rfps.name` (e.g. "CalHEERS SDMO Project"). */
   name: string;
   /** Full formal RFP title from `rfps.title` (e.g. "CalHEERS SDMO RFP #73040873"). */

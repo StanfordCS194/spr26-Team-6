@@ -10,6 +10,7 @@ export type WalkthroughStep =
   | "intro"
   | "setup-profile"
   | "explore-dashboard"
+  | "filter-sources"
   | "view-opportunities"
   | "completion";
 
@@ -38,13 +39,19 @@ const WALKTHROUGH_STEPS: Record<WalkthroughStep, WalkthroughContent> = {
     description:
       "Your RFP feed shows curated opportunities based on your profile. Use filters to narrow results and search for specific projects. Each card shows the title, agency, and relevance score.",
   },
+  "filter-sources": {
+    selector: "#source-filter-chips",
+    title: "Filter by portal",
+    description:
+      "Every card is tagged with its source portal — Cal eProcure, BidNet, PlanetBids, or SAM.gov. Use these chips to slice the unified feed by where the RFP was published.",
+  },
   "view-opportunities": {
     selector: "#detail-panel",
     title: "Step 3: View & Save Opportunities",
     description:
       "Click any RFP to view full details including timeline, requirements, and documents. Use the save button to bookmark opportunities for later review.",
   },
-  "completion": {
+  completion: {
     selector: null,
     title: "You're Ready!",
     description:
@@ -52,7 +59,55 @@ const WALKTHROUGH_STEPS: Record<WalkthroughStep, WalkthroughContent> = {
   },
 };
 
+const DEMO_WALKTHROUGH_STEPS: Record<WalkthroughStep, WalkthroughContent> = {
+  intro: {
+    selector: null,
+    title: "One feed. Every portal.",
+    description:
+      "GovBid pulls live RFPs from Cal eProcure, BidNet, PlanetBids, and SAM.gov into a single searchable dashboard — no more tab-hopping across government sites.\n\nThis quick tour shows the demo flow.",
+  },
+  "setup-profile": {
+    selector: "#source-filter-chips",
+    title: "Step 1: Source filters",
+    description:
+      "Color-coded pills on each card show which portal an opportunity came from. Filter by source to prove we're aggregating real data from multiple procurement systems.",
+  },
+  "explore-dashboard": {
+    selector: "#rfp-feed",
+    title: "Step 2: Unified feed",
+    description:
+      "The header shows total opportunities and a per-source breakdown. Sort by match score to surface the best-fit bids for your contractor profile.",
+  },
+  "filter-sources": {
+    selector: "#source-filter-chips",
+    title: "Slice by portal",
+    description:
+      "Click Cal eProcure, BidNet, or PlanetBids to show only RFPs from that source — then clear back to All sources.",
+  },
+  "view-opportunities": {
+    selector: "#detail-panel",
+    title: "Step 3: Match + documents",
+    description:
+      "Select a high-score RFP to open Match Details (compatibility radar), the source PDF, and one-click AI summary generation — all without leaving GovBid.",
+  },
+  completion: {
+    selector: null,
+    title: "Democratizing gov contracting",
+    description:
+      "GovBid turns fragmented portal chaos into a single pipeline: ingest → score → summarize → bid.\n\nYou're ready to demo. Good luck tomorrow!",
+  },
+};
+
 const STEP_ORDER: WalkthroughStep[] = [
+  "intro",
+  "setup-profile",
+  "explore-dashboard",
+  "filter-sources",
+  "view-opportunities",
+  "completion",
+];
+
+const DEMO_STEP_ORDER: WalkthroughStep[] = [
   "intro",
   "setup-profile",
   "explore-dashboard",
@@ -68,10 +123,13 @@ export function Walkthrough() {
     setWalkthroughStep,
     profileOpen,
     setProfileOpen,
-    selectedRfpId,
     selectRfp,
     loadedRfps,
+    demoMode,
   } = useDashboard();
+
+  const stepOrder = demoMode ? DEMO_STEP_ORDER : STEP_ORDER;
+  const stepContentMap = demoMode ? DEMO_WALKTHROUGH_STEPS : WALKTHROUGH_STEPS;
 
   const [targetElement, setTargetElement] = useState<HTMLElement | null>(null);
   const [showCompletion, setShowCompletion] = useState(false);
@@ -79,40 +137,53 @@ export function Walkthrough() {
 
   useEffect(() => {
     if (walkthroughActive && !wasWalkthroughActive.current) {
-      captureEvent("walkthrough_started", { step_index: 0 });
+      captureEvent("walkthrough_started", { step_index: 0, demo_mode: demoMode });
     }
     wasWalkthroughActive.current = walkthroughActive;
-  }, [walkthroughActive]);
+  }, [walkthroughActive, demoMode]);
 
   // Update target element and handle step-specific logic
   useEffect(() => {
     if (!walkthroughActive) return;
 
-    const currentStepId = STEP_ORDER[walkthroughStep];
-    const stepContent = WALKTHROUGH_STEPS[currentStepId];
+    const currentStepId = stepOrder[walkthroughStep];
+    const stepContent = stepContentMap[currentStepId];
 
-    // Handle specific step transitions and side effects
-    if (currentStepId === "setup-profile") {
+    if (currentStepId === "setup-profile" && !demoMode) {
       setProfileOpen(true);
     } else if (currentStepId === "explore-dashboard") {
       setProfileOpen(false);
+    } else if (
+      demoMode &&
+      currentStepId === "view-opportunities" &&
+      loadedRfps.length > 0
+    ) {
+      const top = [...loadedRfps].sort((a, b) => b.score - a.score)[0];
+      if (top) selectRfp(top.id);
     } else if (currentStepId === "completion") {
       setShowCompletion(true);
     }
 
-    // Find and set target element
     if (stepContent.selector) {
       const timer = setTimeout(() => {
         const element = document.querySelector(
-          stepContent.selector as string
+          stepContent.selector as string,
         ) as HTMLElement | null;
         setTargetElement(element);
       }, 100);
       return () => clearTimeout(timer);
-    } else {
-      setTargetElement(null);
     }
-  }, [walkthroughActive, walkthroughStep, setProfileOpen]);
+    setTargetElement(null);
+  }, [
+    walkthroughActive,
+    walkthroughStep,
+    setProfileOpen,
+    demoMode,
+    loadedRfps,
+    selectRfp,
+    stepOrder,
+    stepContentMap,
+  ]);
 
   // Auto-scroll to keep highlighted element visible
   useEffect(() => {
@@ -139,7 +210,7 @@ export function Walkthrough() {
   }, [walkthroughActive, targetElement]);
 
   const handleNext = () => {
-    if (walkthroughStep < STEP_ORDER.length - 1) {
+    if (walkthroughStep < stepOrder.length - 1) {
       setWalkthroughStep(walkthroughStep + 1);
     } else if (showCompletion) {
       handleCompletionClick();
@@ -162,19 +233,23 @@ export function Walkthrough() {
     captureEvent("walkthrough_dismissed", {
       step_index: walkthroughStep,
       show_completion: showCompletion,
+      demo_mode: demoMode,
     });
     endWalkthroughUi();
   };
 
   const handleCompletionClick = () => {
-    captureEvent("walkthrough_completed", { step_index: walkthroughStep });
+    captureEvent("walkthrough_completed", {
+      step_index: walkthroughStep,
+      demo_mode: demoMode,
+    });
     endWalkthroughUi();
   };
 
   if (!walkthroughActive) return null;
 
-  const currentStepId = STEP_ORDER[walkthroughStep];
-  const stepContent = WALKTHROUGH_STEPS[currentStepId];
+  const currentStepId = stepOrder[walkthroughStep];
+  const stepContent = stepContentMap[currentStepId];
 
   if (showCompletion) {
     return (
@@ -190,7 +265,9 @@ export function Walkthrough() {
           <div className="max-w-md rounded-lg border border-govbid-border bg-govbid-surface p-8 text-center shadow-lg">
             <div className="text-4xl mb-4">✨</div>
             <h2 className="text-2xl font-bold text-govbid-text mb-4">
-              Thank you for completing the walkthrough!
+              {demoMode
+                ? "Demo tour complete"
+                : "Thank you for completing the walkthrough!"}
             </h2>
             <p className="text-sm text-govbid-text-muted mb-6 leading-relaxed">
               Click anywhere or press any key to exit the walkthrough.
@@ -215,7 +292,7 @@ export function Walkthrough() {
         description={stepContent.description}
         targetElement={targetElement}
         currentStep={walkthroughStep}
-        totalSteps={STEP_ORDER.length}
+        totalSteps={stepOrder.length}
         onNext={handleNext}
         onPrev={handlePrev}
         onClose={handleClose}
