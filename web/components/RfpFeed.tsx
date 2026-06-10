@@ -96,17 +96,6 @@ export function RfpFeed() {
     return () => window.cancelAnimationFrame(frame);
   }, [tourTargetRfpId, currentPage, paginatedRfps]);
 
-  if (activeNav === "history") {
-    return (
-      <div className="flex min-h-[200px] flex-1 flex-col items-center justify-center gap-2 bg-govbid-surface px-6 py-12 text-center">
-        <p className="max-w-sm text-sm font-medium text-govbid-text">History</p>
-        <p className="max-w-sm text-sm text-govbid-text-muted">
-          Recently viewed RFPs will appear here once session tracking is connected.
-        </p>
-      </div>
-    );
-  }
-
   return (
     <div
       id="rfp-feed"
@@ -137,14 +126,16 @@ export function RfpFeed() {
         ))}
         {feedRfps.length === 0 && (
           <p className="rounded-xl border border-dashed border-govbid-border bg-govbid-surface/80 px-4 py-10 text-center text-sm leading-relaxed text-govbid-text-muted">
-            {activeNav === "saved"
-              ? "No saved opportunities match these filters. Save RFPs from the detail view or clear filters."
-              : loadedRfps.length === 0
-                ? "Supabase returned no rows for this query (status = active and is_relevant = true). Add or update RFPs in the database, or set is_relevant / status so they match."
-                : filtersActive(searchQuery, rfpFilter) &&
-                    filteredRfps.length === 0
-                  ? `Your catalog has ${loadedRfps.length} RFP(s) from the database, but search and sidebar filters hide all of them. Clear filters or broaden your search.`
-                  : "No RFPs match your search. Try different keywords or filters."}
+            {activeNav === "history"
+              ? "No recently viewed RFPs yet. Open an RFP from the dashboard to start building your history."
+              : activeNav === "saved"
+                ? "No saved opportunities match these filters. Save RFPs from the detail view or clear filters."
+                : loadedRfps.length === 0
+                  ? "Supabase returned no rows for this query (status = active and is_relevant = true). Add or update RFPs in the database, or set is_relevant / status so they match."
+                  : filtersActive(searchQuery, rfpFilter) &&
+                      filteredRfps.length === 0
+                    ? `Your catalog has ${loadedRfps.length} RFP(s) from the database, but search and sidebar filters hide all of them. Clear filters or broaden your search.`
+                    : "No RFPs match your search. Try different keywords or filters."}
           </p>
         )}
       </div>

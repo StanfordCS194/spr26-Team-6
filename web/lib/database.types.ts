@@ -21,7 +21,7 @@ export type Json =
   | { [key: string]: Json | undefined }
   | Json[]
 
-export type RfpSource = 'sam.gov' | 'Cal eProcure' | 'PlanetBids' | 'other'
+export type RfpSource = 'sam.gov' | 'Cal eProcure' | 'PlanetBids' | 'BidNet Direct' | 'other'
 
 export type RfpStatus =
   | 'active'
@@ -247,6 +247,23 @@ export interface Database {
         Update: Partial<
           Database['public']['Tables']['rfp_amendments']['Insert']
         >
+        Relationships: []
+      }
+
+      viewed_rfps: {
+        Row: {
+          id: string
+          contractor_id: string
+          rfp_id: string
+          viewed_at: string
+        }
+        Insert: {
+          id?: string
+          contractor_id: string
+          rfp_id: string
+          viewed_at?: string
+        }
+        Update: Partial<Database['public']['Tables']['viewed_rfps']['Insert']>
         Relationships: []
       }
 

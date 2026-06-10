@@ -43,6 +43,8 @@ export type RfpFilter = {
   priceMax?: number;
 };
 
+export type RfpSortBy = "date" | "score";
+
 export type ActiveNav = "dashboard" | "saved" | "history";
 
 function parseContractValue(value: string) {
@@ -69,6 +71,7 @@ type DashboardContextValue = {
   selectRfp: (id: string | null) => void;
   selectedRfp: Rfp | null;
   savedRfpIds: string[];
+  recentlyViewedIds: string[];
   savedRfpRecords: SavedRfpRecord[];
   isSaved: (id: string) => boolean;
   toggleSaveRfp: (id: string) => Promise<void>;
@@ -105,6 +108,8 @@ type DashboardContextValue = {
   showToast: (message: string) => void;
   rfpFilter: RfpFilter;
   setRfpFilter: (filter: RfpFilter) => void;
+  sortBy: RfpSortBy;
+  setSortBy: (sort: RfpSortBy) => void;
   filtersPanelVisible: boolean;
   setFiltersPanelVisible: (visible: boolean) => void;
   toggleFiltersPanel: () => void;
@@ -141,9 +146,11 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [walkthroughActive, setWalkthroughActive] = useState(false);
   const [walkthroughStep, setWalkthroughStep] = useState(0);
   const [rfpFilter, setRfpFilter] = useState<RfpFilter>({});
+  const [sortBy, setSortBy] = useState<RfpSortBy>("date");
   const [filtersPanelVisible, setFiltersPanelVisibleState] = useState(true);
   const [toast, setToast] = useState<string | null>(null);
   const [activeNav, setActiveNavState] = useState<ActiveNav>("dashboard");
+  const [recentlyViewedIds, setRecentlyViewedIds] = useState<string[]>([]);
 
   useEffect(() => {
     setFiltersPanelVisibleState(readFiltersPanelVisible());
@@ -175,6 +182,9 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
   const [unscoredRfpIds, setUnscoredRfpIds] = useState<Set<string>>(
     () => new Set(),
   );
+  // Bumped whenever cached scores are invalidated (e.g. profile save) so the
+  // background scoring batch re-runs against the fresh profile.
+  const [rescoreNonce, setRescoreNonce] = useState(0);
   const [matchFactorsById, setMatchFactorsById] = useState<
     Map<string, CompatibilityScore>
   >(() => new Map());
@@ -262,6 +272,14 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
           })),
         );
 
+        const { data: viewedRows } = await supabase
+          .from("viewed_rfps")
+          .select("rfp_id")
+          .eq("contractor_id", cid)
+          .order("viewed_at", { ascending: false })
+          .limit(50);
+        setRecentlyViewedIds(viewedRows?.map((r) => r.rfp_id) ?? []);
+
         const { data: scoreRows } = await supabase
           .from("scores")
           .select("*")
@@ -323,6 +341,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     setContractorId(null);
     setLoadedRfps([]);
     setSavedRfpRecords([]);
+    setRecentlyViewedIds([]);
     setProfileState(defaultContractorProfile);
     setSelectedRfpId(null);
     setUnscoredRfpIds(new Set());
@@ -376,8 +395,19 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
 
   const filteredRfps = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
+    // Drop expired RFPs from the client view. Anchor at the start of today
+    // (local time) so an RFP due today still appears. Rows with a missing /
+    // unparseable due date are kept — we can't know they're expired.
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+    const todayMs = todayStart.getTime();
 
-    return loadedRfps.filter((r) => {
+    const matching = loadedRfps.filter((r) => {
+      const dueMs = Number(new Date(r.dueDate));
+      if (Number.isFinite(dueMs) && dueMs < todayMs) {
+        return false;
+      }
+
       if (q) {
         const hay = [r.title, r.agency, r.location, r.description, ...r.tags]
           .join(" ")
@@ -421,7 +451,38 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
 
       return true;
     });
-  }, [loadedRfps, searchQuery, rfpFilter]);
+
+    const sorted = [...matching];
+    if (sortBy === "score") {
+      // Highest score first; ties broken by earliest due date so the list
+      // remains stable for unscored / equally-scored RFPs.
+      sorted.sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        const ad = Number(new Date(a.dueDate));
+        const bd = Number(new Date(b.dueDate));
+        const aValid = Number.isFinite(ad);
+        const bValid = Number.isFinite(bd);
+        if (aValid && bValid) return ad - bd;
+        if (aValid) return -1;
+        if (bValid) return 1;
+        return 0;
+      });
+    } else {
+      // Date sort: shortest deadlines first; rows with no parseable due date
+      // sink to the bottom.
+      sorted.sort((a, b) => {
+        const ad = Number(new Date(a.dueDate));
+        const bd = Number(new Date(b.dueDate));
+        const aValid = Number.isFinite(ad);
+        const bValid = Number.isFinite(bd);
+        if (aValid && bValid) return ad - bd;
+        if (aValid) return -1;
+        if (bValid) return 1;
+        return 0;
+      });
+    }
+    return sorted;
+  }, [loadedRfps, searchQuery, rfpFilter, sortBy]);
 
   const feedRfps = useMemo(() => {
     if (activeNav === "dashboard") {
@@ -431,8 +492,13 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       const saved = new Set(savedRfpIds);
       return filteredRfps.filter((r) => saved.has(r.id));
     }
-    return [] as Rfp[];
-  }, [activeNav, filteredRfps, savedRfpIds]);
+    // history: show in most-recently-viewed order, unfiltered
+    const rfpMap = new Map(loadedRfps.map((r) => [r.id, r]));
+    return recentlyViewedIds.flatMap((id) => {
+      const rfp = rfpMap.get(id);
+      return rfp ? [rfp] : [];
+    });
+  }, [activeNav, filteredRfps, savedRfpIds, loadedRfps, recentlyViewedIds]);
 
   useEffect(() => {
     if (selectedRfpId == null) return;
@@ -521,20 +587,15 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     [contractorId],
   );
 
-  const selectRfp = useCallback(
-    (id: string | null) => {
-      if (id) {
-        captureEvent("rfp_selected", { rfp_id: id });
-        // Always re-score on click: forces a fresh computation against the
-        // current contractor profile so the displayed factor breakdown is
-        // current even if the underlying RFP or profile state has shifted
-        // since the last cached score.
-        void ensureScored(id, { force: true });
-      }
-      setSelectedRfpId(id);
-    },
-    [ensureScored],
-  );
+  const selectRfp = useCallback((id: string | null) => {
+    if (id) {
+      captureEvent("rfp_selected", { rfp_id: id });
+    }
+    // No scoring on selection: scores are computed once on page load and
+    // refreshed whenever the contractor profile is saved. Clicking an RFP
+    // just reads the cached breakdown.
+    setSelectedRfpId(id);
+  }, []);
 
   const isSaved = useCallback(
     (id: string) => savedRfpIds.includes(id),
@@ -705,11 +766,13 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       }
 
       setProfileState(p);
-      // Profile changed → cached scores are now stale. Clear displayed scores
-      // and let the background batch effect re-score against the new profile.
+      // Profile changed → cached scores are now stale. Clear displayed scores,
+      // mark every RFP unscored, and bump the rescore nonce so the background
+      // batch effect re-runs and re-scores the feed against the new profile.
       setLoadedRfps((prev) => prev.map((r) => ({ ...r, score: 0 })));
       setUnscoredRfpIds(new Set(loadedRfps.map((r) => r.id)));
       setMatchFactorsById(new Map());
+      setRescoreNonce((n) => n + 1);
       showToast("Profile saved.");
       captureEvent("profile_saved", { contractor_id: contractorId });
     },
@@ -756,9 +819,10 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       .slice(0, MAX_PER_BATCH)
       .map((r) => r.id);
     if (ids.length > 0) runScoreBatch(ids);
-    // Only one pass per workspace load; subsequent saves will re-trigger.
+    // Runs once per workspace load and again each time `rescoreNonce` is bumped
+    // (a profile save), which is the only thing that invalidates cached scores.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [contractorId, loadedRfps.length]);
+  }, [contractorId, loadedRfps.length, rescoreNonce]);
 
   const isGeneratingSummary = useCallback(
     (rfpId: string) => summariesInFlight.has(rfpId),
@@ -879,6 +943,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       selectRfp,
       selectedRfp,
       savedRfpIds,
+      recentlyViewedIds,
       savedRfpRecords,
       isSaved,
       toggleSaveRfp,
@@ -902,6 +967,8 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       showToast,
       rfpFilter,
       setRfpFilter,
+      sortBy,
+      setSortBy,
       filtersPanelVisible,
       setFiltersPanelVisible,
       toggleFiltersPanel,
@@ -918,6 +985,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       selectRfp,
       selectedRfp,
       savedRfpIds,
+      recentlyViewedIds,
       savedRfpRecords,
       isSaved,
       toggleSaveRfp,
@@ -937,6 +1005,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       toast,
       showToast,
       rfpFilter,
+      sortBy,
       filtersPanelVisible,
       setFiltersPanelVisible,
       toggleFiltersPanel,

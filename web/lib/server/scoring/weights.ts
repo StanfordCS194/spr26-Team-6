@@ -4,7 +4,6 @@ export const FACTOR_NAMES: ScoreFactorName[] = [
   "timing",
   "experience",
   "goals",
-  "award",
   "prereqs",
   "geography",
   "agency",
@@ -38,8 +37,8 @@ export function renormalizeWeights(
 }
 
 /**
- * Each factor sub-score is normalized to 0–1 before weighting (timing/award
- * are already in that range; experience/goals/prereqs come in as 0–100 and
+ * Each factor sub-score is normalized to 0–1 before weighting (timing is
+ * already in that range; experience/goals/prereqs come in as 0–100 and
  * are divided by 100 here).
  */
 export function weightedTotal(
