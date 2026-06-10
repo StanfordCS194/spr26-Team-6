@@ -12,6 +12,7 @@ import { TagBubble } from "./RfpCard";
 import { trackABTestEvent } from "@/app/posthog-provider";
 import { shortenAgencyName } from "@/lib/formatAgency";
 import { AddToCalendarButton } from "./AddToCalendarButton";
+import { SavedRfpNotes } from "./SavedRfpNotes";
 
 const RfpPdfViewer = dynamic(
   () => import("./RfpPdfViewer").then((m) => m.RfpPdfViewer),
@@ -72,7 +73,7 @@ export function DetailPanelVariantB() {
   return <DetailPanelBodyB key={selectedRfp.id} rfp={selectedRfp} />;
 }
 
-type DetailTab = "overview" | "document" | "ai" | "summary";
+type DetailTab = "overview" | "document" | "ai" | "summary" | "notes";
 
 function DocumentTabContentB({
   rfp,
@@ -254,6 +255,16 @@ function DetailPanelBodyB({ rfp }: { rfp: Rfp }) {
         </svg>
       ),
     },
+    {
+      id: "notes",
+      label: "Notes",
+      icon: (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M4 4h16v16H4z" />
+          <path d="M8 9h8M8 13h8M8 17h5" />
+        </svg>
+      ),
+    },
   ];
 
   return (
@@ -326,7 +337,7 @@ function DetailPanelBodyB({ rfp }: { rfp: Rfp }) {
         </div>
         
         {/* Pill Tabs */}
-        <div className="flex gap-1">
+        <div className="flex gap-1 overflow-x-auto">
           {tabs.map(({ id, label, icon }) => (
             <button
               key={id}
@@ -454,6 +465,10 @@ function DetailPanelBodyB({ rfp }: { rfp: Rfp }) {
             generating={generating}
             emptyMessage="No stored summary yet. Click the Summary action above to create and save a detailed bidder brief."
           />
+        )}
+
+        {tab === "notes" && (
+          <SavedRfpNotes key={rfp.id} rfpId={rfp.id} saved={saved} />
         )}
       </div>
     </section>

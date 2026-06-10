@@ -15,6 +15,7 @@ import { trackABTestEvent } from "@/app/posthog-provider";
 import { shortenAgencyName } from "@/lib/formatAgency";
 import { WALKTHROUGH_SHOW_DETAIL_OVERVIEW_EVENT } from "@/lib/walkthroughEvents";
 import { AddToCalendarButton } from "./AddToCalendarButton";
+import { SavedRfpNotes } from "./SavedRfpNotes";
 
 const RfpPdfViewer = dynamic(
   () => import("./RfpPdfViewer").then((m) => m.RfpPdfViewer),
@@ -83,7 +84,13 @@ export function DetailPanel() {
   return <DetailPanelBody key={selectedRfp.id} rfp={selectedRfp} />;
 }
 
-type DetailTab = "overview" | "document" | "ai" | "summary" | "match";
+type DetailTab =
+  | "overview"
+  | "document"
+  | "ai"
+  | "summary"
+  | "match"
+  | "notes";
 
 const FACTOR_DISPLAY: { key: keyof CompatibilityFactors; label: string; max: number }[] = [
   { key: "timing", label: "Timing", max: 1 },
@@ -265,6 +272,7 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
     { id: "summary", label: "Summary" },
     { id: "ai", label: "AI analysis" },
     { id: "match", label: "Match Details" },
+    { id: "notes", label: "Notes" },
   ];
 
   return (
@@ -276,7 +284,7 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
         id="walkthrough-detail-sidebar"
         className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden"
       >
-        <div className="flex shrink-0 gap-8 border-b border-govbid-border px-4 pt-3 lg:px-5">
+        <div className="flex shrink-0 gap-8 overflow-x-auto border-b border-govbid-border px-4 pt-3 lg:px-5">
         {tabs.map(({ id, label }) => (
           <button
             key={id}
@@ -368,7 +376,7 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
                 ))}
               </div>
             )}
-            
+
             {/* Eligibility Requirements */}
             <div className="rounded-xl border border-govbid-border bg-govbid-elevated p-4">
               <h3 className="text-sm font-semibold text-govbid-text">
@@ -451,6 +459,12 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
             factors={matchFactors}
             scoring={matchScoring}
           />
+        )}
+
+        {tab === "notes" && (
+          <div className="mx-auto w-full max-w-3xl">
+            <SavedRfpNotes key={rfp.id} rfpId={rfp.id} saved={saved} />
+          </div>
         )}
         </div>
       </div>
