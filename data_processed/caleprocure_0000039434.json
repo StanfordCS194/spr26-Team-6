@@ -1,0 +1,68 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "0000039434",
+  "title": "CHP CISS - Artificial Intelligence Solutions for Public Safety Communications",
+  "name": "CHP CISS - Artificial Intelligence Solutions for Public",
+  "statement_of_work": "This RFI will aid the CHP in identifying potential software solutions available to meet the objectives of CISS. Once RFI responses are received, they will be reviewed by the CHP. Invitations may be sent to respondents to participate in demonstrations and pilots and will be based on the completeness and relevance of the RFI response.",
+  "deliverables": [
+    "Address requirements in '1.RFI CHP CISS 25 001 Cover Letter'",
+    "Address requirements in '2.RFI CHP CISS 25 001'",
+    "Address requirements in '6.RFI CHP CISS 25 001 Attachment D SIMM 5305 F'"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Software",
+    "Procurement",
+    "California"
+  ],
+  "dept": "Department of the CA Highway Patrol",
+  "description": "This RFI will aid the CHP in identifying potential software solutions available to meet the objectives of CISS. Once RFI responses are received, they will be reviewed by the CHP. Invitations may be sent to respondents to participate in demonstrations and pilots and will be based on the completeness and relevance of the RFI response.",
+  "published_date": "2026-06-01T12:00:00-07:00",
+  "due_date": "2026-06-30T17:00:00-07:00",
+  "contact_name": "Jeriell Emuslan",
+  "contact_email": "jeriell.emuslan@chp.ca.gov",
+  "contact_phone": "916-843-3610",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-0000039434-e5870ff638dc",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "1.RFI_CHP_CISS-25-001_Cover_Letter.pdf",
+        "url": "https://drive.google.com/file/d/1xeJy_GwmDKTCsiwLKrcn3Y0apd5dWjL9/view?usp=drivesdk",
+        "type": "primary_spec",
+        "attachment_description": ""
+      },
+      {
+        "label": "2.RFI_CHP_CISS-25-001.pdf",
+        "url": "https://drive.google.com/file/d/1FgbGe1A5hdCNCRAIPsV1T8vZNb1XvFQ8/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "4.RFI_CHP_CISS-25-001_Attachment_B-Questionnaire.pdf",
+        "url": "https://drive.google.com/file/d/11fqca-POK89Xqxj8JlUBoecsbQR67GxD/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      },
+      {
+        "label": "6.RFI_CHP_CISS-25-001_Attachment_D-SIMM-5305-F.pdf",
+        "url": "https://drive.google.com/file/d/1pAzUl7UAXWTh8ibnvOdniB1gSfuZeGas/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      }
+    ],
+    "unspsc_codes": [
+      {
+        "code": "43232304",
+        "description": "Data management & query software - Data base management system software"
+      }
+    ]
+  }
+}

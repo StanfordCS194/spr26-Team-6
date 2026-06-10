@@ -1,0 +1,76 @@
+{
+  "source": "sam.gov",
+  "external_id": "9fcf9fc8a08d43f09d2a41d45190af5e",
+  "title": "Predicted Signal Phase and Timing for Blocked Crossing Mitigation Phase 1",
+  "name": "Predicted Signal Phase and Timing for Blocked Crossing",
+  "statement_of_work": "The Federal Railroad Administration (FRA) intends to award a sole‑source, firm‑fixed‑price contract to Railinc Corporation to perform Predicted Signal Phase and Timing for Blocked Crossing Mitigation Phase 1. FRA’s authority for this work is established under 49 USC §20108(a) and 49 CFR §§1.88(b) and 1.89(f). This project is to support technology transfer of the FRA-developed C-V2X Predicted Signal Phase and Timing (SPaT) application. This will be accomplished through development and testing in a field operational environment with a US Class 1 railroad.",
+  "deliverables": [
+    "Execute scope of work described in the Predicted Signal Phase and Timing for Blocked Crossing solicitation",
+    "Deliver milestones, status reporting, and acceptance documentation",
+    "Provide final handoff and post-deployment support per RFP terms"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Software",
+    "Health Services",
+    "California"
+  ],
+  "dept": "TRANSPORTATION, DEPARTMENT OF.FEDERAL RAILROAD ADMINISTRATION.693JJ6 FEDERAL RAILROAD ADMIN",
+  "description": "The Federal Railroad Administration (FRA) intends to award a sole‑source, firm‑fixed‑price contract to  Railinc Corporation to perform Predicted Signal Phase and Timing for Blocked Crossing Mitigation Phase 1. FRA’s authority for this work is established under 49 USC §20108(a) and 49 CFR §§1.88(b) and 1.89(f). This project is to support technology transfer of the FRA-developed C-V2X Predicted Signal Phase and Timing (SPaT) application. This will be accomplished through development and testing in a field operational environment with a US Class 1 railroad. Railroads are a vital component of the North American transportation network, yet at-grade crossings can present significant logistical challenges for local emergency services.",
+  "published_date": "2026-06-10",
+  "due_date": "2026-06-29T14:00:00-04:00",
+  "contact_name": "Akwasi Kankam",
+  "contact_email": "akwasi.kankam@dot.gov",
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-9fcf9fc8a08d43f09d2a41d45190af5e-ca6eb279acb4",
+  "metadata": {
+    "event_type": "Special Notice",
+    "solicitation_number": null,
+    "ui_link": "https://sam.gov/workspace/contract/opp/9fcf9fc8a08d43f09d2a41d45190af5e/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": "AS11",
+    "set_aside": "NONE",
+    "set_aside_description": "No Set aside used",
+    "place_of_performance": {
+      "city": {
+        "code": "10740",
+        "name": "Cary"
+      },
+      "state": {
+        "code": "NC",
+        "name": "North Carolina"
+      },
+      "zip": "27513",
+      "country": {
+        "code": "USA",
+        "name": "UNITED STATES"
+      }
+    },
+    "office_address": {
+      "zipcode": "20590",
+      "city": "WASHINGTON",
+      "countryCode": "USA",
+      "state": "DC"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "akwasi.kankam@dot.gov",
+        "phone": "",
+        "title": null,
+        "fullName": "Akwasi Kankam"
+      }
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "2610310",
+  "title": "Request For Information (RFI)- Chemical Management Software",
+  "name": "(RFI)- Chemical Management Software",
+  "statement_of_work": "The California Department of Public Health (CDPH) is issuing this Request for Information (RFI) togather valuable insights regarding the current market offerings for chemical managementsolutions. CDPH aims to evaluate how well available platforms address its defined operational,regulatory, and safety needs, particularly for the Richmond Laboratory Campus, whichaccommodates approximately 500¿600 staff members. Vendor responses are expected to provide CDPH with a clear understanding of the feasibility, functionality, scalability, and cost implications associated with implementing comprehensive chemical management software. The desired solution should enhance safety, promote accuracy, and improve operational effectiveness across campus operations.",
+  "deliverables": [
+    "Execute scope of work described in the (RFI)- Chemical Management Software solicitation",
+    "Deliver milestones, status reporting, and acceptance documentation",
+    "Provide final handoff and post-deployment support per RFP terms"
+  ],
+  "location_level": "city",
+  "location": "Richmond",
+  "tags": [
+    "Software",
+    "System Development",
+    "Richmond"
+  ],
+  "dept": "of Public Health",
+  "description": "The California Department of Public Health (CDPH) is issuing this Request for Information (RFI) togather valuable insights regarding the current market offerings for chemical managementsolutions. CDPH aims to evaluate how well available platforms address its defined operational,regulatory, and safety needs, particularly for the Richmond Laboratory Campus, whichaccommodates approximately 500¿600 staff members. Vendor responses are expected to provide CDPH with a clear understanding of the feasibility, functionality, scalability, and cost implications associated with implementing comprehensive chemical management software. The desired solution should enhance safety, promote accuracy, and improve operational effectiveness across campus operations. Additionally, CDPH is seeking detailed information on chemical management software options capable of supporting its unique requirements, including compliance with relevant regulations and robust safety measures.",
+  "published_date": "2026-06-01T09:00:00-07:00",
+  "due_date": "2026-06-26T15:00:00-07:00",
+  "contact_name": "David Silva",
+  "contact_email": "david.silva@cdph.ca.gov",
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-2610310-2e65803e65a2",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "RFI_26-10310_Chemical_Waste_Software.pdf",
+        "url": "https://drive.google.com/file/d/1nObdo7D4abOQurrNc67cMbmMI6p2spNb/view?usp=drivesdk",
+        "type": "primary_spec",
+        "attachment_description": ""
+      }
+    ],
+    "unspsc_codes": [
+      {
+        "code": "43232603",
+        "description": "Industry specific software - Facilities management software"
+      }
+    ]
+  }
+}
