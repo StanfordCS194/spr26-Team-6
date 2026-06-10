@@ -269,6 +269,7 @@ export interface Database {
 
       saved_rfps: {
         Row: {
+          bid_status: 'reviewing' | 'pursuing' | 'no_bid' | 'submitted'
           contractor_id: string
           rfp_id: string
           notes: string | null
@@ -276,6 +277,7 @@ export interface Database {
           sort_position: number | null
         }
         Insert: {
+          bid_status?: 'reviewing' | 'pursuing' | 'no_bid' | 'submitted'
           contractor_id: string
           rfp_id: string
           notes?: string | null
