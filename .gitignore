@@ -3,6 +3,8 @@ token.json
 __pycache__/
 .vscode
 scraper/pdfs_for_upload/*
+scraper/bidnet_files_for_upload/*
+scraper/samgov_files_for_upload/*
 .DS_Store
 
 

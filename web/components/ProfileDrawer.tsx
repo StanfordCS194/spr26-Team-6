@@ -8,6 +8,7 @@ import {
   type SavedRfpSortMode,
 } from "@/lib/savedRfpSort";
 import { CERTIFICATION_OPTIONS, SBA_CERTIFICATION_OPTIONS } from "@/lib/types";
+import { WALKTHROUGH_SETUP_PROFILE_STEP_INDEX } from "@/lib/walkthroughEvents";
 
 type ProfileTab = "overview" | "contacts" | "documents";
 
@@ -25,13 +26,19 @@ export function ProfileDrawer() {
     selectRfp,
     saveProfile,
     loadedRfps,
-    setWalkthroughActive,
-    setWalkthroughStep,
+    walkthroughActive,
+    walkthroughStep,
   } = useDashboard();
   const [draftProfile, setDraftProfile] = useState(profile);
   const [activeTab, setActiveTab] = useState<ProfileTab>("overview");
   const [savedSortMode, setSavedSortMode] =
     useState<SavedRfpSortMode>("savedAtDesc");
+
+  useEffect(() => {
+    if (!profileOpen || !walkthroughActive) return;
+    if (walkthroughStep !== WALKTHROUGH_SETUP_PROFILE_STEP_INDEX) return;
+    setActiveTab("overview");
+  }, [profileOpen, walkthroughActive, walkthroughStep]);
 
   useEffect(() => {
     if (!profileOpen) return;
@@ -76,42 +83,32 @@ export function ProfileDrawer() {
     }`;
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end">
-      <button
-        type="button"
-        className="absolute inset-0"
-        style={{ backgroundColor: "var(--govbid-overlay)" }}
-        aria-label="Close profile"
-        onClick={() => setProfileOpen(false)}
-      />
+    <div className="fixed inset-0 z-50 flex justify-end pointer-events-none">
+      {!walkthroughActive ? (
+        <button
+          type="button"
+          className="pointer-events-auto absolute inset-0"
+          style={{ backgroundColor: "var(--govbid-overlay)" }}
+          aria-label="Close profile"
+          onClick={() => setProfileOpen(false)}
+        />
+      ) : null}
       <aside
         id="profile-drawer"
-        className="relative flex h-full w-full max-w-md flex-col border-l border-govbid-border bg-govbid-surface shadow-[var(--govbid-shadow)]"
+        className={`pointer-events-auto relative flex h-full w-full max-w-md flex-col border-l border-govbid-border bg-govbid-surface shadow-[var(--govbid-shadow)] ${
+          walkthroughActive ? "border-govbid-primary/50" : ""
+        }`}
       >
         {/* Header */}
         <div className="flex items-center justify-between border-b border-govbid-border px-4 py-4">
           <h2 className="text-lg font-bold text-govbid-text">Company Profile</h2>
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={() => {
-                setWalkthroughStep(0);
-                setWalkthroughActive(true);
-                setProfileOpen(false);
-              }}
-              className="rounded-lg px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-govbid-text-muted transition hover:text-govbid-text"
-              title="Start a walkthrough of the application"
-            >
-              Help
-            </button>
-            <button
-              type="button"
-              onClick={() => setProfileOpen(false)}
-              className="rounded-lg px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-govbid-text-muted transition hover:text-govbid-text"
-            >
-              Close
-            </button>
-          </div>
+          <button
+            type="button"
+            onClick={() => setProfileOpen(false)}
+            className="rounded-lg px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-govbid-text-muted transition hover:text-govbid-text"
+          >
+            Close
+          </button>
         </div>
 
         {/* Tabs */}

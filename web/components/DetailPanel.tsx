@@ -13,6 +13,7 @@ import { SummaryBrief } from "./SummaryBrief";
 import { TagBubble } from "./RfpCard";
 import { trackABTestEvent } from "@/app/posthog-provider";
 import { shortenAgencyName } from "@/lib/formatAgency";
+import { WALKTHROUGH_SHOW_DETAIL_OVERVIEW_EVENT } from "@/lib/walkthroughEvents";
 
 const RfpPdfViewer = dynamic(
   () => import("./RfpPdfViewer").then((m) => m.RfpPdfViewer),
@@ -185,6 +186,20 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
   } = useDashboard();
   const [tab, setTab] = useState<DetailTab>("overview");
   const [activePdfIndex, setActivePdfIndex] = useState(0);
+
+  useEffect(() => {
+    const showOverview = () => setTab("overview");
+    window.addEventListener(
+      WALKTHROUGH_SHOW_DETAIL_OVERVIEW_EVENT,
+      showOverview,
+    );
+    return () =>
+      window.removeEventListener(
+        WALKTHROUGH_SHOW_DETAIL_OVERVIEW_EVENT,
+        showOverview,
+      );
+  }, []);
+
   const generating = isGeneratingSummary(rfp.id);
   const matchFactors = getMatchFactors(rfp.id);
   const matchScoring = isScoring(rfp.id);
@@ -252,8 +267,15 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
   ];
 
   return (
-    <section id="detail-panel" className="flex min-h-0 flex-1 flex-col bg-govbid-surface">
-      <div className="flex shrink-0 gap-8 border-b border-govbid-border px-4 pt-3 lg:px-5">
+    <section
+      id="detail-panel"
+      className="flex min-h-0 flex-1 flex-col overflow-hidden bg-govbid-surface"
+    >
+      <div
+        id="walkthrough-detail-sidebar"
+        className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden"
+      >
+        <div className="flex shrink-0 gap-8 border-b border-govbid-border px-4 pt-3 lg:px-5">
         {tabs.map(({ id, label }) => (
           <button
             key={id}
@@ -275,9 +297,9 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
             )}
           </button>
         ))}
-      </div>
+        </div>
 
-      <div className="flex shrink-0 flex-wrap gap-2 border-b border-govbid-border bg-govbid-elevated px-4 py-3 lg:px-5">
+        <div className="flex shrink-0 flex-wrap gap-2 border-b border-govbid-border bg-govbid-elevated px-4 py-3 lg:px-5">
         <button
           type="button"
           onClick={handleSave}
@@ -298,9 +320,9 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
             <span aria-hidden>✓</span> Saved
           </span>
         )}
-      </div>
+        </div>
 
-      <div className="min-h-0 flex-1 overflow-y-auto p-4 lg:p-5">
+        <div className="min-h-0 flex-1 overflow-y-auto overscroll-y-contain p-4 lg:p-5">
         {tab === "overview" && (
           <div className="mx-auto w-full max-w-5xl space-y-5">
             <div className="space-y-3">
@@ -428,6 +450,7 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
             scoring={matchScoring}
           />
         )}
+        </div>
       </div>
     </section>
   );

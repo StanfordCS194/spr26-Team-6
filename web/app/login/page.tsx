@@ -109,7 +109,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-dvh flex-col items-center justify-center bg-govbid-surface px-6 py-12">
+    <div className="flex min-h-0 flex-1 flex-col items-center justify-center overflow-y-auto bg-govbid-surface px-6 py-12">
       <div className="w-full max-w-sm rounded-2xl border border-govbid-border bg-govbid-elevated p-8 shadow-[var(--govbid-shadow)]">
         <h1 className="text-center text-xl font-bold text-govbid-text">
           {mode === "signin" ? "Sign in to GovBid" : "Create a GovBid account"}
