@@ -4,6 +4,7 @@ export type SavedRfpRecord = {
   rfpId: string;
   savedAt: string;
   sortPosition: number | null;
+  notes: string;
 };
 
 export type SavedRfpSortMode =

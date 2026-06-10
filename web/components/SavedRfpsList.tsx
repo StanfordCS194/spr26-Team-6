@@ -213,6 +213,9 @@ export function SavedRfpsList({
         {displayRfps.map((rfp) => {
           const isCustom = sortMode === "custom";
           const isDragging = draggingId === rfp.id;
+          const notes = savedRfpRecords
+            .find((record) => record.rfpId === rfp.id)
+            ?.notes.trim();
 
           return (
             <li
@@ -261,6 +264,11 @@ export function SavedRfpsList({
                 <span className="mt-1 block text-xs text-govbid-text-muted">
                   {rfp.agency}
                 </span>
+                {notes && (
+                  <span className="mt-2 block line-clamp-2 rounded-md bg-govbid-surface px-2 py-1.5 text-xs leading-relaxed text-govbid-text-muted">
+                    Note: {notes}
+                  </span>
+                )}
                 {showsDueDateSubtitle(sortMode) && (
                   <span className="mt-1 block text-xs text-govbid-text-muted">
                     Due {rfp.dueDate}

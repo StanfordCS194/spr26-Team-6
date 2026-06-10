@@ -80,6 +80,7 @@ type DashboardContextValue = {
   savedRfpRecords: SavedRfpRecord[];
   isSaved: (id: string) => boolean;
   toggleSaveRfp: (id: string) => Promise<void>;
+  updateSavedRfpNotes: (id: string, notes: string) => Promise<boolean>;
   /** Persist custom drag order (profile sort = custom). */
   reorderSavedRfps: (orderedIds: string[]) => Promise<void>;
   profile: ContractorProfile;
@@ -264,7 +265,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
 
         const { data: savedRows } = await supabase
           .from("saved_rfps")
-          .select("rfp_id, saved_at, sort_position")
+          .select("rfp_id, saved_at, sort_position, notes")
           .eq("contractor_id", cid)
           .order("sort_position", { ascending: true, nullsFirst: false })
           .order("saved_at", { ascending: true });
@@ -273,6 +274,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
             rfpId: r.rfp_id,
             savedAt: r.saved_at,
             sortPosition: r.sort_position,
+            notes: r.notes ?? "",
           })),
         );
 
@@ -657,7 +659,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
             rfp_id: id,
             sort_position: sortPosition,
           })
-          .select("rfp_id, saved_at, sort_position")
+          .select("rfp_id, saved_at, sort_position, notes")
           .single();
         if (error) {
           showToast(error.message);
@@ -670,6 +672,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
               rfpId: inserted.rfp_id,
               savedAt: inserted.saved_at,
               sortPosition: inserted.sort_position,
+              notes: inserted.notes ?? "",
             },
           ]);
         }
@@ -677,6 +680,53 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       }
     },
     [contractorId, savedRfpIds, savedRfpRecords, showToast],
+  );
+
+  const updateSavedRfpNotes = useCallback(
+    async (id: string, notes: string) => {
+      if (!contractorId) {
+        showToast("Profile not ready yet.");
+        return false;
+      }
+      if (!savedRfpIds.includes(id)) {
+        showToast("Save this opportunity before adding notes.");
+        return false;
+      }
+
+      const normalizedNotes = notes.trim();
+      const supabase = createClient();
+      const { data: updated, error } = await supabase
+        .from("saved_rfps")
+        .update({ notes: normalizedNotes || null })
+        .eq("contractor_id", contractorId)
+        .eq("rfp_id", id)
+        .select("rfp_id")
+        .maybeSingle();
+
+      if (error) {
+        showToast(error.message);
+        return false;
+      }
+      if (!updated) {
+        showToast("This opportunity is no longer saved.");
+        return false;
+      }
+
+      setSavedRfpRecords((prev) =>
+        prev.map((record) =>
+          record.rfpId === id
+            ? { ...record, notes: normalizedNotes }
+            : record,
+        ),
+      );
+      captureEvent("saved_rfp_notes_updated", {
+        rfp_id: id,
+        has_notes: normalizedNotes.length > 0,
+      });
+      showToast(normalizedNotes ? "Note saved." : "Note removed.");
+      return true;
+    },
+    [contractorId, savedRfpIds, showToast],
   );
 
   const reorderSavedRfps = useCallback(
@@ -938,6 +988,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       savedRfpRecords,
       isSaved,
       toggleSaveRfp,
+      updateSavedRfpNotes,
       reorderSavedRfps,
       profile,
       setProfile,
@@ -980,6 +1031,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       savedRfpRecords,
       isSaved,
       toggleSaveRfp,
+      updateSavedRfpNotes,
       reorderSavedRfps,
       profile,
       setProfile,
