@@ -137,9 +137,7 @@ export function RfpFeed() {
         ))}
         {feedRfps.length === 0 && (
           <p className="rounded-xl border border-dashed border-govbid-border bg-govbid-surface/80 px-4 py-10 text-center text-sm leading-relaxed text-govbid-text-muted">
-            {activeNav === "history"
-              ? "No recently viewed RFPs yet. Open an RFP from the dashboard to start building your history."
-              : activeNav === "saved"
+            {activeNav === "saved"
                 ? "No saved opportunities match these filters. Save RFPs from the detail view or clear filters."
                 : loadedRfps.length === 0
                   ? "Supabase returned no rows for this query (status = active and is_relevant = true). Add or update RFPs in the database, or set is_relevant / status so they match."
