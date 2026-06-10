@@ -1,0 +1,56 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "560889",
+  "title": "Retroreflectivity Data Collection",
+  "name": "Retroreflectivity Data Collection",
+  "statement_of_work": "Contractor shall provide all labor, tools, materials, supplies, vehicles, equipment, travel and incidentals necessary to collect, analyze and report of RetroReflectivity of Pavement Marking from the Caltrans Highway Network (On-system) as well as on the Non-Caltrans Highway Network (Off-system). DVBE Goals apply DVBE Incentive applies SB Incentive applies. Insurance Required: Commercial General Liability Certificate & Endorsement Automobile Liability Certificate & Endorsement Workers Compensation & Waiver of Subrogation Professional Liability.",
+  "deliverables": [
+    "Execute scope of work described in the Retroreflectivity Data Collection solicitation",
+    "Deliver milestones, status reporting, and acceptance documentation",
+    "Provide final handoff and post-deployment support per RFP terms"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Procurement",
+    "Software",
+    "California"
+  ],
+  "dept": "of Transportation",
+  "description": "Contractor shall provide all labor, tools, materials, supplies, vehicles, equipment, travel and incidentals necessary to collect, analyze and report of RetroReflectivity of Pavement Marking from the Caltrans Highway Network (On-system) as well as on the Non-Caltrans Highway Network (Off-system). DVBE Goals apply DVBE Incentive applies SB Incentive applies. Insurance Required: Commercial General Liability Certificate & Endorsement Automobile Liability Certificate & Endorsement Workers Compensation & Waiver of Subrogation Professional Liability.",
+  "published_date": "2026-06-10T13:06:00-07:00",
+  "due_date": "2026-07-08T13:00:00-07:00",
+  "contact_name": "Eric Knight",
+  "contact_email": "eric.knight@dot.ca.gov",
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-560889-9a391e6daa1c",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "Attachment_11_-_Proposed_Form_of_Agreement_56A0889.pdf",
+        "url": "https://drive.google.com/file/d/1wclwThPJEX8v9zr7ithsJtCAllZKbRL3/view?usp=drivesdk",
+        "type": "primary_spec",
+        "attachment_description": ""
+      },
+      {
+        "label": "E._Solicitation_Package_56A0889.pdf",
+        "url": "https://drive.google.com/file/d/18uyjOisOhL4iyVJddOjnaPA2n45KbrPx/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      }
+    ],
+    "unspsc_codes": [
+      {
+        "code": "43211718",
+        "description": "Computer data input devices - Camera based vision systems for automated data collection"
+      }
+    ]
+  }
+}

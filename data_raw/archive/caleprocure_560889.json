@@ -1,0 +1,42 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "560889",
+  "title": "Retroreflectivity Data Collection",
+  "dept": "of Transportation",
+  "description": "Event Details\nEvent : 56A0889\nRetroreflectivity Data Collection\nDetails\n\nEvent ID\n56A0889\n\nFormat/Type:\nSell Event / RFx\n\nPublished Date\n06/10/2026  1:06PM PDT\n\nDept:\nDepartment of Transportation\n\nEvent Version\n1\n\nEvent End Date:\n07/08/2026  1:00PM PDT\n\nDescription:\n\n\nContractor shall provide all labor, tools, materials, supplies, vehicles, equipment, travel and incidentals necessary to collect, analyze and report of RetroReflectivity of Pavement Marking from the Caltrans Highway Network (On-system) as well as on the Non-Caltrans Highway Network (Off-system).\n\nDVBE Goals apply\nDVBE Incentive applies\nSB Incentive applies\n\nInsurance Required:\nCommercial General Liability Certificate & Endorsement\nAutomobile Liability Certificate & Endorsement\nWorkers Compensation & Waiver of Subrogation\nProfessional Liability\nView Event Package\nView Vendor Ads\nContact Information\nEric Knight\nPhone:  \n\nEmail: eric.knight@dot.ca.gov\nPre Bid Conference(N/A)\nMandatory: Non Mandatory\nDate:  \nTime:  \nLocation:  \nComments:  \n\nUNSPSC Codes\nUNSPSC Classification\tUNSPSC Classification Description\n43211718\tComputer data input devices - Camera based vision systems for automated data collection\nContractor License Type \n(N/A)\nService Area \n(N/A)",
+  "published_date": "2026-06-10T13:06:00-07:00",
+  "due_date": "2026-07-08T13:00:00-07:00",
+  "contact_name": "Eric Knight",
+  "contact_email": "eric.knight@dot.ca.gov",
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-560889-9a391e6daa1c",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "Attachment_11_-_Proposed_Form_of_Agreement_56A0889.pdf",
+        "url": "https://drive.google.com/file/d/1wclwThPJEX8v9zr7ithsJtCAllZKbRL3/view?usp=drivesdk",
+        "type": "primary_spec",
+        "attachment_description": ""
+      },
+      {
+        "label": "E._Solicitation_Package_56A0889.pdf",
+        "url": "https://drive.google.com/file/d/18uyjOisOhL4iyVJddOjnaPA2n45KbrPx/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      }
+    ],
+    "unspsc_codes": [
+      {
+        "code": "43211718",
+        "description": "Computer data input devices - Camera based vision systems for automated data collection"
+      }
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "0000039318",
+  "title": "iCapture Software & IBML Hardware Maintenance & Support Renewal",
+  "dept": "Franchise Tax Board",
+  "description": "Event Details\nEvent : 0000039318\niCapture Software & IBML Hardware Maintenance & Support Renewal\nDetails\n\nEvent ID\n0000039318\n\nFormat/Type:\nSell Event / RFx\n\nPublished Date\n05/21/2026  3:30PM PDT\n\nDept:\nFranchise Tax Board\n\nEvent Version\n1\n\nEvent End Date:\n07/31/2026  5:00PM PDT\n\nDescription:\n\n\nThe California Franchise Tax Board (FTB), is seeking to contract with a vendor to renew iCapture and Tangent software and IBML Scanner hardware maintenance and support.\n\nLast Day to Submit Final Bids is June 5, 2026, by 5:00PM Pacific Time.\nView Event Package\nView Vendor Ads\nContact Information\nTommy Yu\nPhone: 916/845-7802\n\nEmail: tommy.yu@ftb.ca.gov\nPre Bid Conference(N/A)\nMandatory: Non Mandatory\nDate:  \nTime:  \nLocation:  \nComments:  \n\nUNSPSC Codes\nUNSPSC Classification\tUNSPSC Classification Description\n81112300\tComputer services - Computer hardware maintenance & support\nContractor License Type \n(N/A)\nService Area \n(N/A)",
+  "published_date": "2026-05-21T15:30:00-07:00",
+  "due_date": "2026-07-31T17:00:00-07:00",
+  "contact_name": "Tommy Yu",
+  "contact_email": "tommy.yu@ftb.ca.gov",
+  "contact_phone": "916/845-7802",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-0000039318-968067c83ec5",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [],
+    "unspsc_codes": [
+      {
+        "code": "81112300",
+        "description": "Computer services - Computer hardware maintenance & support"
+      }
+    ]
+  }
+}

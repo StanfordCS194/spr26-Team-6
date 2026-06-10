@@ -1,0 +1,62 @@
+{
+  "source": "SAM.gov",
+  "external_id": "9fcf9fc8a08d43f09d2a41d45190af5e",
+  "title": "Predicted Signal Phase and Timing for Blocked Crossing Mitigation Phase 1",
+  "dept": "TRANSPORTATION, DEPARTMENT OF.FEDERAL RAILROAD ADMINISTRATION.693JJ6 FEDERAL RAILROAD ADMIN",
+  "description": "THIS IS A NOTICE OF INTENT (NOI) TO AWARD A SOLE SOURCE CONTRACT AND IS NOT A REQUEST FOR COMPETITIVE PROPOSALS.\n\nThe Federal Railroad Administration (FRA) intends to award a sole‑source, firm‑fixed‑price contract to  Railinc Corporation to perform Predicted Signal Phase and Timing for Blocked Crossing Mitigation Phase 1. FRA’s authority for this work is established under 49 USC §20108(a) and 49 CFR §§1.88(b) and 1.89(f).\n\nThis project is to support technology transfer of the FRA-developed C-V2X Predicted Signal Phase and Timing (SPaT) application. This will be accomplished through development and testing in a field operational environment with a US Class 1 railroad.\n\nRailroads are a vital component of the North American transportation network, yet at-grade crossings can present significant logistical challenges for local emergency services. Emergency response vehicles sometimes experience delays when crossings are encumbered by train movements. Currently, manual mitigation efforts exist; for example, Union Pacific Railroad (UPRR) maintains an agreement with the Harris County emergency call and dispatch center in Houston, TX, to indicate which local crossings are currently encumbered by trains. This information is then relayed via voice from dispatchers to drivers during dispatch, providing some situational awareness for route planning.\n\nTo further reduce potential for vehicle delays, FRA R&D has developed a cloud-based application that can predict crossing encumbrances, including start times and durations. This centralized approach requires no additional wayside or roadside infrastructure and allows railroads to maintain strict control over data access. Making both current and predicted encumbrance data available will enable emergency responders to plan routes with less guesswork, leading to reduced response times and improved public safety.\n\nThe primary goals of this phase 1 effort are to design, develop, test, and evaluate a cloud-based system that provides emergency communications centers (ECCs) with timely, predictive insight into grade crossing encumbrances. The solution will use rail data assets, operational integrations, and enterprise cloud infrastructure to minimize technical risk, accelerate deployment, and establish a scalable foundation for future expansion.\n\nRailinc Corp. is the only entity equipped to receive and process business competition sensitive data from US freight railroads to perform software-as-service functions. Railinc has standing data handling agreements with railroads and that will be necessary to complete the project.\n\nAUTHORITY\n\nThis sole source action is conducted under the authority of FAR 6.302‑1, implemented by 41 U.S.C. § 3304(a)(1), Only One Responsible Source.” No solicitation or request for quote is available.\n\nPERIOD OF PERFORMANCE\n\nThe period of performance of the contract is 12 months from date of award.\n\nRESPONSE INSTRUCTIONS\n\nThis Notice of Intent is not a request for competitive proposals; however, interested parties may submit a capability statement that clearly demonstrates the ability to perform the perform Predicted Signal Phase and Timing for Blocked Crossing Mitigation Phase 1without disruption, duplication of cost, or loss of program continuity. Capability statements must be received no later than 15 calendar days from the date of posting, by 2:00 PM Eastern Time. Oral communication will not be accepted.\n\nPOINT OF CONTACT (POC)\n\nAkwasi Kankam\n\nContract Specialist, Federal Railroad Administration\n\nEmail: akwasi.kankam@dot.gov\n\nDISCLAIMER\n\nThis Notice does not obligate the Government to award a contract or otherwise pay for information provided in response. No solicitation document exists.",
+  "published_date": "2026-06-10",
+  "due_date": "2026-06-29T14:00:00-04:00",
+  "contact_name": "Akwasi Kankam",
+  "contact_email": "akwasi.kankam@dot.gov",
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-9fcf9fc8a08d43f09d2a41d45190af5e-ca6eb279acb4",
+  "metadata": {
+    "event_type": "Special Notice",
+    "solicitation_number": null,
+    "ui_link": "https://sam.gov/workspace/contract/opp/9fcf9fc8a08d43f09d2a41d45190af5e/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": "AS11",
+    "set_aside": "NONE",
+    "set_aside_description": "No Set aside used",
+    "place_of_performance": {
+      "city": {
+        "code": "10740",
+        "name": "Cary"
+      },
+      "state": {
+        "code": "NC",
+        "name": "North Carolina"
+      },
+      "zip": "27513",
+      "country": {
+        "code": "USA",
+        "name": "UNITED STATES"
+      }
+    },
+    "office_address": {
+      "zipcode": "20590",
+      "city": "WASHINGTON",
+      "countryCode": "USA",
+      "state": "DC"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "akwasi.kankam@dot.gov",
+        "phone": "",
+        "title": null,
+        "fullName": "Akwasi Kankam"
+      }
+    ]
+  }
+}

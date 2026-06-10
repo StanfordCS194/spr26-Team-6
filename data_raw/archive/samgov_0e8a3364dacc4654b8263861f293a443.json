@@ -1,0 +1,94 @@
+{
+  "source": "SAM.gov",
+  "external_id": "0e8a3364dacc4654b8263861f293a443",
+  "title": "Microsoft Unified Support Services",
+  "dept": "DEPT OF DEFENSE.DEPT OF THE NAVY.NAVSUP.NAVSUP GLOBAL LOGISTICS SUPPORT.NAVSUP FLC NORFOLK.NAVSUP FLT LOG CTR NORFOLK",
+  "description": "NOTE: The solicitation is being amended to change from a sole source solicitation to a limited source solicitation to authroized resellers of Microsoft Corporation. Please find the updated solicitation attached.\n\nThe Naval Supply Systems Command (NAVSUP) Fleet Logistics Center (FLC) Norfolk Contracting Department, Fleet Directorate intends to solicit on behalf of the Naval Oceanographic Office (NAVOCEANO) on a limited source basis to auhorized resellers of Microsoft Corporation (CAGE: 60128) in accordance with FAR 12.102(a). The instant requirement is for Microsoft Unified Support Services at the Naval Oceanographic Office (NAVOCEANO). As part of the instant requirement, the contractor shall provide all personnel, equipment, transportation, tools and materials necessary to provide comprehensive Microsoft Unified Enterprise support including Tiered, Critical Escalation Support as well as Power BI Modeling and Data Architecture Support by “fully qualified Microsoft Subject Matter Experts”. The resultant contract will be issued on a firm-fixed-price (FFP) basis and contain one (1) 12-month performance period:\n\n29 September 2026 through 28 September 2027\n\nNOTE: The solicitation has been amended to extend the closing date to 29 May 2026 at 11:00am EDT.  All other terms and conditions remain unchanged.",
+  "published_date": "2026-06-10",
+  "due_date": "2026-06-24T11:00:00-04:00",
+  "contact_name": "Rachel Appleby",
+  "contact_email": "rachel.a.appleby.civ@us.navy.mil",
+  "contact_phone": "7712293608",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-0e8a3364dacc4654b8263861f293a443-909d0195ebc1",
+  "metadata": {
+    "event_type": "Combined Synopsis/Solicitation",
+    "solicitation_number": "N0018926QL140",
+    "ui_link": "https://sam.gov/workspace/contract/opp/0e8a3364dacc4654b8263861f293a443/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": "DG01",
+    "set_aside": "NONE",
+    "set_aside_description": "No Set aside used",
+    "place_of_performance": {
+      "country": {
+        "code": "USA",
+        "name": "UNITED STATES"
+      }
+    },
+    "office_address": {
+      "zipcode": "23511-3392",
+      "city": "NORFOLK",
+      "countryCode": "USA",
+      "state": "VA"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "Amended Combined Synopsis N0018926QL140.pdf",
+        "url": "https://drive.google.com/file/d/1SuTmNhg4gC_Ce66Z_f8AbdDnfhCkXExZ/view?usp=drivesdk",
+        "type": "primary_spec",
+        "original_extension": "pdf",
+        "size_bytes": 148640,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/92832b1d0a374922b0f1037c06b0b9b8/download"
+      },
+      {
+        "label": "Amended Combined Synopsis Solicitation N0018926QL14000002.pdf",
+        "url": "https://drive.google.com/file/d/15sq23KRILYnG9nX3KuVCZD37iO1DvfHE/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 181044,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/537f195a7d5a4ceebc07d54b3805058c/download"
+      },
+      {
+        "label": "Attachment 1 - Pricing Spreadsheet (Microsoft).xlsx",
+        "url": "https://docs.google.com/spreadsheets/d/1s-_f8uzGG_-gNgQ2xrzaxsYMdCtH7jog/edit?usp=drivesdk&ouid=111173456564026853807&rtpof=true&sd=true",
+        "type": "attachment",
+        "original_extension": "xlsx",
+        "size_bytes": 22329,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/2263285f4ab74c189e35454ce44647b7/download"
+      },
+      {
+        "label": "Combined Synopsis Solicitation N0018926QL140.pdf",
+        "url": "https://drive.google.com/file/d/1E_vKPQoTOV5RVJGF6VXHR8bH1Go4bHK-/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 313895,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/0c23524b7d6e4a83ac4241a3c01903e7/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "rachel.a.appleby.civ@us.navy.mil",
+        "phone": "7712293608",
+        "title": null,
+        "fullName": "Rachel Appleby"
+      },
+      {
+        "fax": "",
+        "type": "secondary",
+        "email": "stephanie.r.lent.civ@us.navy.mil",
+        "phone": "7712290253",
+        "title": null,
+        "fullName": "Stephanie Lent"
+      }
+    ]
+  }
+}

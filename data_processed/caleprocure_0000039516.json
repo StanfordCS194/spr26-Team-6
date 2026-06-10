@@ -1,0 +1,50 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "0000039516",
+  "title": "*Certified SB Only* 75450673 Splunk Cloud Renewal",
+  "name": "*Certified SB Only* 75450673 Splunk Cloud Renewal",
+  "statement_of_work": "The California Health and Human Services Agency, Office of Technology and Solutions Integration (CalHHS OTSI) is releasing Request for Quote (RFQ) # 75450673 for Splunk Cloud Renewal. CalHHS OTSI has elected to use the SB Option for this RFQ, and participation is limited to only California certified Small Businesses. For information on how to become a certified Small Business please visit the DGS OSDS website at: https://www.dgs.ca.gov/PD/Services/Page-Content/Procurement-Division-Services-List-Folder/Apply-for-or-Re-apply-as-Small-Business-Disabled-Veteran-Business-Enterprise.",
+  "deliverables": [
+    "Execute scope of work described in the *Certified SB Only* 75450673 Splunk Cloud Renewal solicitation",
+    "Deliver milestones, status reporting, and acceptance documentation",
+    "Provide final handoff and post-deployment support per RFP terms"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Medical Imaging",
+    "Software",
+    "California"
+  ],
+  "dept": "Office of Technology and Solutions Integration (OTSI)",
+  "description": "The California Health and Human Services Agency, Office of Technology and Solutions Integration (CalHHS OTSI) is releasing Request for Quote (RFQ) # 75450673 for Splunk Cloud Renewal. CalHHS OTSI has elected to use the SB Option for this RFQ, and participation is limited to only California certified Small Businesses. For information on how to become a certified Small Business please visit the DGS OSDS website at: https://www.dgs.ca.gov/PD/Services/Page-Content/Procurement-Division-Services-List-Folder/Apply-for-or-Re-apply-as-Small-Business-Disabled-Veteran-Business-Enterprise.",
+  "published_date": "2026-06-09T16:00:00-07:00",
+  "due_date": "2026-06-12T17:00:00-07:00",
+  "contact_name": "Nicole Gottardo",
+  "contact_email": "nicole.gottardo@otsi.ca.gov",
+  "contact_phone": "916-263-5634",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-0000039516-83e5030ae190",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "75450673_Solicitation_SBOption.pdf",
+        "url": "https://drive.google.com/file/d/1RMf9MRzamc_fU6WBbwXvThVbpeuhtMnJ/view?usp=drivesdk",
+        "type": "primary_spec",
+        "attachment_description": ""
+      }
+    ],
+    "unspsc_codes": [
+      {
+        "code": "81112200",
+        "description": "Computer services - Software maintenance & support"
+      }
+    ]
+  }
+}

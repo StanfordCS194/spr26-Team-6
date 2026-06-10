@@ -1,0 +1,59 @@
+{
+  "source": "Cal eProcure",
+  "external_id": "0000039282",
+  "title": "IFB FTB-2627-00076 Genesys Software Subscriptions and Application Support Services",
+  "name": "Genesys Software Subscriptions and Application Support Services",
+  "statement_of_work": "The California Franchise Tax Board (FTB) is seeking to contract with a vendor to renew and procure various Genesys Software Subscriptions and Application Support Services (i.e. Professional Services) in support of FTB's Enterprise Service Platform II Contract Center Platform (CCP). Last Day to Submit Final Bids is May 29, 2026, by 5:00 PM Pacific Time (PT). The Event End Date of June 30, 2026, allows FTB to post the Notice of Intent to Award on this advertisement.",
+  "deliverables": [
+    "Provide software maintenance & support",
+    "Provide helpdesk or call center software"
+  ],
+  "location_level": "state",
+  "location": "California",
+  "tags": [
+    "Software",
+    "Finance",
+    "California"
+  ],
+  "dept": "California Franchise Tax Board",
+  "description": "The California Franchise Tax Board (FTB) is seeking to contract with a vendor to renew and procure various Genesys Software Subscriptions and Application Support Services (i.e. Professional Services) in support of FTB's Enterprise Service Platform II Contract Center Platform (CCP). Last Day to Submit Final Bids is May 29, 2026, by 5:00 PM Pacific Time (PT). The Event End Date of June 30, 2026, allows FTB to post the Notice of Intent to Award on this advertisement. Question and Answer Set uploaded to advertisement.",
+  "published_date": "2026-05-14T16:16:00-07:00",
+  "due_date": "2026-06-30T17:00:00-07:00",
+  "contact_name": "Tanita Guereca",
+  "contact_email": "tanita.guereca@ftb.ca.gov",
+  "contact_phone": "916-845-7199",
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-0000039282-a09696c59acd",
+  "metadata": {
+    "event_type": "Sell Event / RFx",
+    "event_version": 1,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "Addendum_1_Cover_Letter.pdf",
+        "url": "https://drive.google.com/file/d/1rfWO6ym4Sjy-fQTPcWIITABv0CekNRyL/view?usp=drivesdk",
+        "type": "primary_spec",
+        "attachment_description": ""
+      },
+      {
+        "label": "IFB_FTB-2627-00076_Q_A_Set.pdf",
+        "url": "https://drive.google.com/file/d/1vE5i9qiZsvVT-sU273WzxOMwLfKi6kw_/view?usp=drivesdk",
+        "type": "attachment",
+        "attachment_description": ""
+      }
+    ],
+    "unspsc_codes": [
+      {
+        "code": "81112200",
+        "description": "Computer services - Software maintenance & support"
+      },
+      {
+        "code": "43231501",
+        "description": "Business function specific software - Helpdesk or call center software"
+      }
+    ]
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "source": "SAM.gov",
+  "external_id": "3fca535e0fb14952b1edf119b9e9a976",
+  "title": "ReadyOp Subscription Renewal",
+  "dept": "NATIONAL AERONAUTICS AND SPACE ADMINISTRATION.NATIONAL AERONAUTICS AND SPACE ADMINISTRATION.NASA SHARED SERVICES CENTER",
+  "description": "Please see the attached documents for details.",
+  "published_date": "2026-06-10",
+  "due_date": "2026-06-15T13:00:00-05:00",
+  "contact_name": "Cara Craft",
+  "contact_email": "cara.s.craft@nasa.gov",
+  "contact_phone": null,
+  "status": "active",
+  "is_relevant": true,
+  "content_hash": "v1-3fca535e0fb14952b1edf119b9e9a976-549ad859ce1d",
+  "metadata": {
+    "event_type": "Combined Synopsis/Solicitation",
+    "solicitation_number": "80NSSC26935010Q",
+    "ui_link": "https://sam.gov/workspace/contract/opp/3fca535e0fb14952b1edf119b9e9a976/view",
+    "naics_codes": [
+      "541511"
+    ],
+    "classification_code": "DA10",
+    "set_aside": null,
+    "set_aside_description": null,
+    "place_of_performance": {
+      "city": {
+        "code": "35000",
+        "name": "Houston"
+      },
+      "state": {
+        "code": "TX",
+        "name": "Texas"
+      },
+      "zip": "77058",
+      "country": {
+        "code": "USA",
+        "name": "UNITED STATES"
+      }
+    },
+    "office_address": {
+      "zipcode": "39529",
+      "city": "STENNIS SPACE CENTER",
+      "countryCode": "USA",
+      "state": "MS"
+    },
+    "additional_info_link": null,
+    "mandatory_bidder_conference": {
+      "required": false
+    },
+    "documents": [
+      {
+        "label": "SATPC0041336 Tab 04 4 SOW_Redacted.pdf",
+        "url": "https://drive.google.com/file/d/1dOeR95i_Gj0TB6BiawfUVAu75rx20cMa/view?usp=drivesdk",
+        "type": "primary_spec",
+        "original_extension": "pdf",
+        "size_bytes": 136705,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/f32f40000a5f4a43b3b21bc579d73ac6/download"
+      },
+      {
+        "label": "SATPC0041336 Tab 07 Capability Statement.pdf",
+        "url": "https://drive.google.com/file/d/1aAQjvNYaBOYittKYC-4N-1rn8bpl00EE/view?usp=drivesdk",
+        "type": "attachment",
+        "original_extension": "pdf",
+        "size_bytes": 253697,
+        "source_url": "https://sam.gov/api/prod/opps/v3/opportunities/resources/files/821147ec47f340a78290fd4385337905/download"
+      }
+    ],
+    "all_points_of_contact": [
+      {
+        "fax": "",
+        "type": "primary",
+        "email": "cara.s.craft@nasa.gov",
+        "phone": "",
+        "title": null,
+        "fullName": "Cara Craft"
+      }
+    ]
+  }
+}
