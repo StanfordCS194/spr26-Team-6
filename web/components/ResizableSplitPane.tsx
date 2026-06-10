@@ -168,7 +168,7 @@ export function ResizableSplitPane({
       <div
         className={`flex min-h-0 min-w-0 flex-1 flex-col lg:hidden ${className}`}
       >
-        {leading}
+        <div className="flex min-h-0 min-w-0 flex-1 flex-col">{leading}</div>
         {trailing}
       </div>
 
@@ -194,7 +194,7 @@ export function ResizableSplitPane({
           onPointerDown={onDividerPointerDown}
           onPointerUp={onDividerPointerUp}
           onKeyDown={onDividerKeyDown}
-          className="group relative z-10 shrink-0 cursor-col-resize touch-none focus:outline-none"
+          className="group relative z-30 shrink-0 cursor-col-resize touch-none focus:outline-none"
           style={{ width: DIVIDER_WIDTH_PX }}
         >
           <div className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-govbid-border transition-colors group-hover:bg-govbid-primary/70 group-active:bg-govbid-primary group-focus-visible:bg-govbid-primary" />

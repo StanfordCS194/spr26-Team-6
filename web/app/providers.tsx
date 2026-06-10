@@ -12,7 +12,9 @@ export function Providers({ children }: { children: ReactNode }) {
       <ABTestProvider>
         <DashboardProvider>
           <NotificationProvider>
-            <div className="flex min-h-dvh w-full min-w-0 flex-1 flex-col">{children}</div>
+            <div className="flex h-full min-h-0 w-full min-w-0 flex-1 flex-col">
+              {children}
+            </div>
           </NotificationProvider>
         </DashboardProvider>
       </ABTestProvider>
