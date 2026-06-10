@@ -181,6 +181,10 @@ export async function POST(req: Request) {
       id: rfpRow.id,
       title: rfpRow.title,
       description: rfpRow.description,
+      statement_of_work: rfpRow.statement_of_work,
+      deliverables: rfpRow.deliverables,
+      metadata: rfpRow.metadata,
+      raw_data: rfpRow.raw_data,
     });
     const { updated } = await ensurePastProjectsEmbedded(admin, contractor_id);
     if (updated > 0) {

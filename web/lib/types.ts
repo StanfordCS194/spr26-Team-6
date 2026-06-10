@@ -20,9 +20,8 @@ export type Rfp = {
   /** Placeholder gap analysis for the AI tab */
   aiAnalysisMarkdown: string;
   /**
-   * LLM-generated structured summary (scope of work, deadlines, eval
-   * criteria), formatted as markdown. Null until the user clicks
-   * "Generate summary" or a cached row in `rfp_summaries` is loaded.
+   * Stored structured summary. New rows are JSON encoded `RfpSummary` objects;
+   * legacy rows may be markdown and are rendered as a fallback.
    */
   summaryMarkdown: string | null;
 };
