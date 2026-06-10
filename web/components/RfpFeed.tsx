@@ -96,6 +96,17 @@ export function RfpFeed() {
     return () => window.cancelAnimationFrame(frame);
   }, [tourTargetRfpId, currentPage, paginatedRfps]);
 
+  if (activeNav === "history") {
+    return (
+      <div className="flex min-h-[200px] flex-1 flex-col items-center justify-center gap-2 bg-govbid-surface px-6 py-12 text-center">
+        <p className="max-w-sm text-sm font-medium text-govbid-text">History</p>
+        <p className="max-w-sm text-sm text-govbid-text-muted">
+          Recently viewed RFPs will appear here once session tracking is connected.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div
       id="rfp-feed"
