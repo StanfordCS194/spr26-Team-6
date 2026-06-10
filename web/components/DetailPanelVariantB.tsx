@@ -113,7 +113,7 @@ function DocumentTabContentB({
               onClick={() => setActivePdfIndex(i)}
               className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
                 idx === i
-                  ? "bg-govbid-primary text-white"
+                  ? "bg-govbid-primary text-govbid-surface"
                   : "bg-govbid-elevated text-govbid-text-muted hover:bg-govbid-border hover:text-govbid-text"
               }`}
             >
@@ -316,7 +316,7 @@ function DetailPanelBodyB({ rfp }: { rfp: Rfp }) {
               type="button"
               onClick={handleSummary}
               disabled={generating}
-              className="flex h-8 items-center gap-1.5 rounded-lg bg-govbid-primary px-3 text-xs font-semibold text-white transition hover:bg-govbid-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
+              className="flex h-8 items-center gap-1.5 rounded-lg bg-govbid-primary px-3 text-xs font-semibold text-govbid-surface transition hover:bg-govbid-primary-hover disabled:cursor-not-allowed disabled:opacity-60"
               title="Generate AI summary"
             >
               <svg
@@ -353,7 +353,7 @@ function DetailPanelBodyB({ rfp }: { rfp: Rfp }) {
               }}
               className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition ${
                 tab === id
-                  ? "bg-govbid-primary text-white"
+                  ? "bg-govbid-primary text-govbid-surface"
                   : "bg-govbid-elevated text-govbid-text-muted hover:bg-govbid-border hover:text-govbid-text"
               }`}
             >

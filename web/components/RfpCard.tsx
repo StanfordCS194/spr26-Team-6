@@ -6,17 +6,17 @@ import { shortenAgencyName } from "@/lib/formatAgency";
 import type { Rfp } from "@/lib/types";
 import { ScoreRing } from "./ScoreRing";
 
-// Simple color palette for tags
+// Curated dark-friendly palette for tags
 const TAG_COLORS = [
-  "#e57373", // red
-  "#64b5f6", // blue
-  "#81c784", // green
-  "#ffd54f", // yellow
-  "#ba68c8", // purple
-  "#4db6ac", // teal
-  "#ffb74d", // orange
-  "#a1887f", // brown
-  "#90a4ae", // gray
+  "#f0918f", // coral
+  "#7eb8f7", // blue
+  "#85d99a", // green
+  "#f2cf6b", // gold
+  "#c79bf2", // lavender
+  "#63cfc3", // teal
+  "#f5af72", // orange
+  "#c7a392", // taupe
+  "#a3b4c2", // steel
 ];
 
 // Deterministic color for a tag string
@@ -29,13 +29,14 @@ function getTagColor(tag: string) {
 }
 
 export function TagBubble({ tag }: { tag: string }) {
+  const color = getTagColor(tag);
   return (
     <span
       className="inline-block rounded-md px-2 py-0.5 text-xs font-semibold mr-1 mb-1 border"
       style={{
-        background: getTagColor(tag) + "22", // faded bg
-        color: getTagColor(tag),
-        borderColor: getTagColor(tag),
+        background: color + "1a", // faded bg
+        color,
+        borderColor: color + "4d",
         minWidth: 0,
       }}
     >
@@ -70,10 +71,10 @@ function daysUntilDeadline(iso: string): number {
 }
 
 function getDeadlineStatus(days: number): { text: string; color: string; bgColor: string } {
-  if (days <= 0) return { text: "Expired", color: "text-red-700", bgColor: "bg-red-50 border-red-200" };
-  if (days <= 3) return { text: `${days} day${days !== 1 ? "s" : ""} left`, color: "text-red-700", bgColor: "bg-red-50 border-red-200" };
-  if (days <= 7) return { text: `${days} day${days !== 1 ? "s" : ""} left`, color: "text-yellow-700", bgColor: "bg-yellow-50 border-yellow-200" };
-  return { text: `${days} day${days !== 1 ? "s" : ""} left`, color: "text-govbid-text-muted", bgColor: "bg-govbid-primary-muted" };
+  if (days <= 0) return { text: "Expired", color: "text-govbid-danger", bgColor: "bg-govbid-danger-bg border-govbid-danger-border" };
+  if (days <= 3) return { text: `${days} day${days !== 1 ? "s" : ""} left`, color: "text-govbid-danger", bgColor: "bg-govbid-danger-bg border-govbid-danger-border" };
+  if (days <= 7) return { text: `${days} day${days !== 1 ? "s" : ""} left`, color: "text-govbid-warning", bgColor: "bg-govbid-warning-bg border-govbid-warning-border" };
+  return { text: `${days} day${days !== 1 ? "s" : ""} left`, color: "text-govbid-text-muted", bgColor: "bg-govbid-primary-muted border-transparent" };
 }
 
 function PinIcon() {
@@ -125,10 +126,10 @@ function HeadlineFirstCard({
     <button
       type="button"
       onClick={onSelect}
-      className={`flex w-full gap-4 rounded-xl border bg-govbid-surface p-4 text-left shadow-[var(--govbid-shadow)] transition md:gap-5 md:p-5 ${
+      className={`flex w-full gap-4 rounded-xl border bg-govbid-elevated p-4 text-left shadow-[var(--govbid-shadow)] transition md:gap-5 md:p-5 ${
         active
-          ? "border-govbid-primary/45 bg-govbid-primary-soft/60 shadow-[0_1px_3px_rgb(79_70_229/0.12)]"
-          : "border-govbid-border hover:border-govbid-border-strong"
+          ? "border-govbid-primary/60 shadow-[0_0_0_1px_rgb(124_137_255/0.25),0_4px_24px_rgb(124_137_255/0.08)]"
+          : "border-govbid-border hover:border-govbid-border-strong hover:bg-govbid-elevated/80"
       }`}
     >
       <div className="flex shrink-0 flex-col items-center border-r border-govbid-border/80 pr-4 text-center md:pr-5">
@@ -184,8 +185,8 @@ function HeadlineFirstCard({
             }}
             className={`rounded p-1 transition ${
               isFavorited
-                ? "text-yellow-500 hover:text-yellow-600"
-                : "text-govbid-text-muted hover:text-yellow-400"
+                ? "text-govbid-warning hover:text-govbid-warning/80"
+                : "text-govbid-text-muted hover:text-govbid-warning"
             }`}
             aria-label={isFavorited ? "Remove from favorites" : "Add to favorites"}
             title={isFavorited ? "Remove from favorites" : "Add to favorites"}
@@ -223,10 +224,10 @@ function ScoreFirstCard({
     <button
       type="button"
       onClick={onSelect}
-      className={`flex w-full gap-3 rounded-xl border bg-govbid-surface p-4 text-left shadow-[var(--govbid-shadow)] transition md:gap-4 md:p-5 ${
+      className={`flex w-full gap-3 rounded-xl border bg-govbid-elevated p-4 text-left shadow-[var(--govbid-shadow)] transition md:gap-4 md:p-5 ${
         active
-          ? "border-govbid-primary/45 bg-govbid-primary-soft/60 shadow-[0_1px_3px_rgb(79_70_229/0.12)]"
-          : "border-govbid-border hover:border-govbid-border-strong"
+          ? "border-govbid-primary/60 shadow-[0_0_0_1px_rgb(124_137_255/0.25),0_4px_24px_rgb(124_137_255/0.08)]"
+          : "border-govbid-border hover:border-govbid-border-strong hover:bg-govbid-elevated/80"
       }`}
     >
       <div className="flex shrink-0 flex-col items-center gap-1">

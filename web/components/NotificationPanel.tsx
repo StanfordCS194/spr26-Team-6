@@ -63,13 +63,13 @@ export function NotificationPanel() {
   const getNotificationStyles = (type: string) => {
     switch (type) {
       case "success":
-        return { icon: CheckCircleIcon, bg: "bg-green-50", text: "text-green-700", border: "border-green-200" };
+        return { icon: CheckCircleIcon, bg: "bg-govbid-success-bg", text: "text-govbid-success", border: "border-govbid-success-border" };
       case "warning":
-        return { icon: AlertCircleIcon, bg: "bg-yellow-50", text: "text-yellow-700", border: "border-yellow-200" };
+        return { icon: AlertCircleIcon, bg: "bg-govbid-warning-bg", text: "text-govbid-warning", border: "border-govbid-warning-border" };
       case "error":
-        return { icon: AlertCircleIcon, bg: "bg-red-50", text: "text-red-700", border: "border-red-200" };
+        return { icon: AlertCircleIcon, bg: "bg-govbid-danger-bg", text: "text-govbid-danger", border: "border-govbid-danger-border" };
       default:
-        return { icon: InfoIcon, bg: "bg-blue-50", text: "text-blue-700", border: "border-blue-200" };
+        return { icon: InfoIcon, bg: "bg-govbid-info-bg", text: "text-govbid-info", border: "border-govbid-info-border" };
     }
   };
 
@@ -90,7 +90,7 @@ export function NotificationPanel() {
           <path d="M13.73 21a2 2 0 0 1-3.46 0" />
         </svg>
         {unreadCount > 0 && (
-          <span className="absolute right-1 top-1 flex size-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white">
+          <span className="absolute right-1 top-1 flex size-5 items-center justify-center rounded-full bg-govbid-danger text-[10px] font-bold text-govbid-surface">
             {unreadCount > 9 ? "9+" : unreadCount}
           </span>
         )}
@@ -109,7 +109,7 @@ export function NotificationPanel() {
           {/* Panel */}
           <div
             id="notification-panel"
-            className="absolute right-0 top-12 z-40 w-96 max-w-[calc(100vw-1rem)] rounded-xl border border-govbid-border bg-govbid-surface shadow-lg"
+            className="absolute right-0 top-12 z-40 w-96 max-w-[calc(100vw-1rem)] rounded-xl border border-govbid-border-strong bg-govbid-elevated shadow-[0_16px_48px_rgb(0_0_0/0.5)]"
           >
             {/* Header */}
             <div className="border-b border-govbid-border p-4">
@@ -119,7 +119,7 @@ export function NotificationPanel() {
                   {unreadCount > 0 && (
                     <button
                       onClick={markAllAsRead}
-                      className="text-xs font-medium text-govbid-primary transition hover:text-govbid-primary-dark"
+                      className="text-xs font-medium text-govbid-primary transition hover:text-govbid-primary-hover"
                     >
                       Mark all as read
                     </button>

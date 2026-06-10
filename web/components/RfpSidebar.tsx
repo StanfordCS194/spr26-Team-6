@@ -77,7 +77,7 @@ function FiltersPanelToggle({
         {expanded ? "Hide" : "Filters"}
       </span>
       {!expanded && activeFilterCount > 0 && (
-        <span className="flex size-5 items-center justify-center rounded-full bg-govbid-primary text-[10px] font-bold text-white">
+        <span className="flex size-5 items-center justify-center rounded-full bg-govbid-primary text-[10px] font-bold text-govbid-surface">
           {activeFilterCount}
         </span>
       )}
@@ -154,7 +154,7 @@ export function RfpSidebar() {
               <FunnelIcon />
               Search &amp; filters
               {activeFilterCount > 0 && (
-                <span className="flex size-5 items-center justify-center rounded-full bg-govbid-primary text-xs font-bold text-white">
+                <span className="flex size-5 items-center justify-center rounded-full bg-govbid-primary text-xs font-bold text-govbid-surface">
                   {activeFilterCount}
                 </span>
               )}
@@ -198,7 +198,7 @@ className="hidden rounded-xl border border-govbid-border bg-govbid-surface p-4 l
           <FunnelIcon />
           <span>Search &amp; filters</span>
           {activeFilterCount > 0 && (
-            <span className="flex size-5 items-center justify-center rounded-full bg-govbid-primary text-xs font-bold text-white">
+            <span className="flex size-5 items-center justify-center rounded-full bg-govbid-primary text-xs font-bold text-govbid-surface">
               {activeFilterCount}
             </span>
           )}
@@ -256,7 +256,7 @@ function SearchCardBody({
 }) {
   const sortButtonClass = (active: boolean) =>
     active
-      ? "flex-1 rounded-lg border border-govbid-primary bg-govbid-primary px-3 py-2 text-xs font-semibold text-white transition"
+      ? "flex-1 rounded-lg border border-govbid-primary bg-govbid-primary px-3 py-2 text-xs font-semibold text-govbid-surface transition"
       : "flex-1 rounded-lg border border-govbid-border bg-govbid-surface px-3 py-2 text-xs font-semibold text-govbid-text-muted transition hover:border-govbid-primary/40 hover:text-govbid-text";
   return (
     <div className="space-y-4">

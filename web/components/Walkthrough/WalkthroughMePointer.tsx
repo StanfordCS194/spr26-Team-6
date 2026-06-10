@@ -54,7 +54,7 @@ export function WalkthroughMePointer({ active }: { active: boolean }) {
     >
       <div className="flex flex-col items-center gap-1.5">
         <WalkthroughBounceArrow direction="up" size={52} />
-        <span className="rounded-full bg-govbid-primary px-2.5 py-0.5 text-[10px] font-bold tracking-wide text-white shadow-md">
+        <span className="rounded-full bg-govbid-primary px-2.5 py-0.5 text-[10px] font-bold tracking-wide text-govbid-surface shadow-md">
           Me
         </span>
       </div>

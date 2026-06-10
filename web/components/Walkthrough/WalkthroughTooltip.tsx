@@ -122,7 +122,7 @@ export function WalkthroughTooltip({
         <button
           onClick={onNext}
           disabled={nextDisabled}
-          className="rounded-lg px-3 py-1.5 text-sm font-medium bg-govbid-primary text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-lg px-3 py-1.5 text-sm font-medium bg-govbid-primary text-govbid-surface transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {nextLabel ??
             (currentStep === totalSteps - 1 ? "Finish" : "Next →")}

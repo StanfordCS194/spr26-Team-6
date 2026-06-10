@@ -72,7 +72,7 @@ export function ProfileDrawer() {
 
   const chipClass = (active: boolean) =>
     active
-      ? "rounded-full border border-govbid-primary bg-govbid-primary px-3 py-1 text-xs font-semibold text-white transition"
+      ? "rounded-full border border-govbid-primary bg-govbid-primary px-3 py-1 text-xs font-semibold text-govbid-surface transition"
       : "rounded-full border border-govbid-border bg-govbid-surface px-3 py-1 text-xs font-medium text-govbid-text-muted transition hover:border-govbid-primary/40 hover:text-govbid-text";
 
   const tabClass = (active: boolean) =>

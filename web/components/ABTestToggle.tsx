@@ -28,7 +28,7 @@ function ToggleSwitch({
           <span
             className={`flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold transition-all ${
               variant === "B"
-                ? "translate-x-5 bg-govbid-primary text-white"
+                ? "translate-x-5 bg-govbid-primary text-govbid-surface"
                 : "translate-x-0 bg-govbid-border-strong text-govbid-text-muted"
             }`}
           >
@@ -101,7 +101,7 @@ export function ABTestToggle() {
       <button
         type="button"
         onClick={() => setIsExpanded(!isExpanded)}
-        className="flex h-10 w-10 items-center justify-center rounded-full border border-govbid-border bg-govbid-primary text-white shadow-lg transition-transform hover:scale-105"
+        className="flex h-10 w-10 items-center justify-center rounded-full border border-govbid-border bg-govbid-primary text-govbid-surface shadow-lg transition-transform hover:scale-105"
         aria-label={isExpanded ? "Close UI variants panel" : "Open UI variants panel"}
       >
         <svg

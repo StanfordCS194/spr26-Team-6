@@ -2,21 +2,43 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  --govbid-surface: #ffffff;
-  --govbid-shell: #ffffff;
-  --govbid-elevated: #fafafc;
-  --govbid-border: #f0eef6;
-  --govbid-border-strong: #e6e2ef;
-  --govbid-primary: #4f46e5;
-  --govbid-primary-hover: #4338ca;
-  --govbid-primary-muted: #eef2ff;
-  --govbid-primary-soft: #f5f5ff;
-  --govbid-text: #1e1b4b;
-  --govbid-text-muted: #64748b;
-  --govbid-amber: #d97706;
-  --govbid-amber-bg: #fffbeb;
-  --govbid-overlay: rgb(30 27 75 / 0.45);
-  --govbid-shadow: 0 1px 2px rgb(30 27 75 / 0.04);
+  /* Core surfaces — dark, Linear/Vercel-grade */
+  --govbid-surface: #0b0b0f;
+  --govbid-shell: #0e0e14;
+  --govbid-elevated: #14141c;
+  --govbid-border: #232331;
+  --govbid-border-strong: #32324a;
+
+  /* Brand */
+  --govbid-primary: #7c89ff;
+  --govbid-primary-hover: #97a1ff;
+  --govbid-primary-muted: rgb(124 137 255 / 0.14);
+  --govbid-primary-soft: rgb(124 137 255 / 0.07);
+
+  /* Text */
+  --govbid-text: #ededf2;
+  --govbid-text-muted: #9b9bad;
+
+  /* Status */
+  --govbid-success: #4ade80;
+  --govbid-success-bg: rgb(74 222 128 / 0.1);
+  --govbid-success-border: rgb(74 222 128 / 0.3);
+  --govbid-warning: #fbbf24;
+  --govbid-warning-bg: rgb(251 191 36 / 0.1);
+  --govbid-warning-border: rgb(251 191 36 / 0.3);
+  --govbid-danger: #fb7185;
+  --govbid-danger-bg: rgb(251 113 133 / 0.1);
+  --govbid-danger-border: rgb(251 113 133 / 0.3);
+  --govbid-info: #60a5fa;
+  --govbid-info-bg: rgb(96 165 250 / 0.1);
+  --govbid-info-border: rgb(96 165 250 / 0.3);
+
+  /* Legacy amber aliases (kept for existing components) */
+  --govbid-amber: var(--govbid-warning);
+  --govbid-amber-bg: var(--govbid-warning-bg);
+
+  --govbid-overlay: rgb(0 0 0 / 0.65);
+  --govbid-shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 0 0 1px rgb(255 255 255 / 0.02);
 }
 
 @theme inline {
@@ -31,6 +53,18 @@
   --color-govbid-primary-soft: var(--govbid-primary-soft);
   --color-govbid-text: var(--govbid-text);
   --color-govbid-text-muted: var(--govbid-text-muted);
+  --color-govbid-success: var(--govbid-success);
+  --color-govbid-success-bg: var(--govbid-success-bg);
+  --color-govbid-success-border: var(--govbid-success-border);
+  --color-govbid-warning: var(--govbid-warning);
+  --color-govbid-warning-bg: var(--govbid-warning-bg);
+  --color-govbid-warning-border: var(--govbid-warning-border);
+  --color-govbid-danger: var(--govbid-danger);
+  --color-govbid-danger-bg: var(--govbid-danger-bg);
+  --color-govbid-danger-border: var(--govbid-danger-border);
+  --color-govbid-info: var(--govbid-info);
+  --color-govbid-info-bg: var(--govbid-info-bg);
+  --color-govbid-info-border: var(--govbid-info-border);
   --color-govbid-amber: var(--govbid-amber);
   --color-govbid-amber-bg: var(--govbid-amber-bg);
   --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
@@ -46,6 +80,7 @@ html {
   padding: 0;
   overflow-x: hidden;
   background: var(--govbid-surface);
+  color-scheme: dark;
 }
 
 body {
@@ -59,13 +94,58 @@ body {
   font-family: var(--font-sans);
 }
 
+/* Refined dark scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--govbid-border-strong) transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--govbid-border-strong);
+  border-radius: 4px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Typography plugin: map prose colors to the dark theme */
+.prose {
+  --tw-prose-body: var(--govbid-text);
+  --tw-prose-headings: var(--govbid-text);
+  --tw-prose-lead: var(--govbid-text-muted);
+  --tw-prose-links: var(--govbid-primary);
+  --tw-prose-bold: var(--govbid-text);
+  --tw-prose-counters: var(--govbid-text-muted);
+  --tw-prose-bullets: var(--govbid-text-muted);
+  --tw-prose-hr: var(--govbid-border);
+  --tw-prose-quotes: var(--govbid-text);
+  --tw-prose-quote-borders: var(--govbid-border-strong);
+  --tw-prose-captions: var(--govbid-text-muted);
+  --tw-prose-code: var(--govbid-text);
+  --tw-prose-pre-code: var(--govbid-text);
+  --tw-prose-pre-bg: var(--govbid-elevated);
+  --tw-prose-th-borders: var(--govbid-border-strong);
+  --tw-prose-td-borders: var(--govbid-border);
+}
+
 .govbid-btn-primary {
-  color: #ffffff;
+  color: #0b0b0f;
   font-weight: 600;
   background-color: var(--govbid-primary);
-  transition: background-color 0.15s ease;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 0 0 1px rgb(124 137 255 / 0.35), 0 4px 16px rgb(124 137 255 / 0.18);
 }
 
 .govbid-btn-primary:hover {
   background-color: var(--govbid-primary-hover);
+}
+
+/* Subtle radial glow used on the login page and empty states */
+.govbid-glow {
+  background:
+    radial-gradient(ellipse 60% 45% at 50% 0%, rgb(124 137 255 / 0.13), transparent 70%),
+    var(--govbid-surface);
 }

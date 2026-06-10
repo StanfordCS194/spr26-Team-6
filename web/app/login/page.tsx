@@ -109,15 +109,31 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col items-center justify-center overflow-y-auto bg-govbid-surface px-6 py-12">
-      <div className="w-full max-w-sm rounded-2xl border border-govbid-border bg-govbid-elevated p-8 shadow-[var(--govbid-shadow)]">
-        <h1 className="text-center text-xl font-bold text-govbid-text">
-          {mode === "signin" ? "Sign in to GovBid" : "Create a GovBid account"}
+    <div className="govbid-glow flex min-h-0 flex-1 flex-col items-center justify-center overflow-y-auto px-6 py-12">
+      <div className="mb-8 flex flex-col items-center gap-3">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/govbid-logo.svg"
+          alt=""
+          width={56}
+          height={56}
+          className="size-14 rounded-xl"
+        />
+        <div className="text-center">
+          <p className="text-2xl font-bold tracking-tight text-govbid-text">GovBid</p>
+          <p className="mt-1 text-xs font-medium uppercase tracking-[0.2em] text-govbid-text-muted">
+            RFP discovery, matched to you
+          </p>
+        </div>
+      </div>
+      <div className="w-full max-w-sm rounded-2xl border border-govbid-border bg-govbid-elevated/90 p-8 shadow-[0_16px_48px_rgb(0_0_0/0.45)] backdrop-blur">
+        <h1 className="text-center text-xl font-bold text-balance text-govbid-text">
+          {mode === "signin" ? "Welcome back" : "Create your account"}
         </h1>
-        <p className="mt-2 text-center text-sm text-govbid-text-muted">
+        <p className="mt-2 text-center text-sm leading-relaxed text-govbid-text-muted">
           {mode === "signin"
-            ? "Use the email and password for your Supabase auth account."
-            : "Supabase uses your email as the account id. Choose a strong password."}
+            ? "Sign in to see today's matched opportunities."
+            : "Start discovering government contracts that fit your business."}
         </p>
 
         <div className="mt-6 flex rounded-lg border border-govbid-border bg-govbid-surface p-0.5 text-xs font-semibold">
@@ -125,7 +141,7 @@ export default function LoginPage() {
             type="button"
             className={`flex-1 rounded-md py-2 transition ${
               mode === "signin"
-                ? "bg-govbid-primary text-white"
+                ? "bg-govbid-primary text-govbid-surface"
                 : "text-govbid-text-muted hover:text-govbid-text"
             }`}
             onClick={() => {
@@ -140,7 +156,7 @@ export default function LoginPage() {
             type="button"
             className={`flex-1 rounded-md py-2 transition ${
               mode === "signup"
-                ? "bg-govbid-primary text-white"
+                ? "bg-govbid-primary text-govbid-surface"
                 : "text-govbid-text-muted hover:text-govbid-text"
             }`}
             onClick={() => {
@@ -199,7 +215,7 @@ export default function LoginPage() {
         {message && (
           <div
             className={`mt-4 text-sm ${
-              error ? "text-red-600" : "text-govbid-text-muted"
+              error ? "text-govbid-danger" : "text-govbid-text-muted"
             }`}
             role={error ? "alert" : "status"}
           >

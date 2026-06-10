@@ -120,7 +120,7 @@ export function GlobalHeader() {
   };
 
   return (
-    <header className="flex shrink-0 flex-col gap-2 border-b border-govbid-border bg-govbid-surface px-3 py-2 md:gap-3 md:px-6 md:py-3">
+    <header className="flex shrink-0 flex-col gap-2 border-b border-govbid-border bg-govbid-shell px-3 py-2 md:gap-3 md:px-6 md:py-3">
       <div className="flex w-full min-w-0 items-center gap-2 md:gap-3">
         <div className="flex min-w-0 shrink-0 items-center gap-2">
           <Image
@@ -159,7 +159,7 @@ export function GlobalHeader() {
             <button
               type="button"
               onClick={launchWalkthrough}
-              className="flex size-9 items-center justify-center rounded-full border border-govbid-border bg-govbid-surface text-base font-bold leading-none text-govbid-text-muted transition hover:border-govbid-border-strong hover:bg-govbid-primary-muted/60 hover:text-govbid-primary md:size-10"
+              className="flex size-9 items-center justify-center rounded-full border border-govbid-border bg-govbid-elevated text-base font-bold leading-none text-govbid-text-muted transition hover:border-govbid-border-strong hover:bg-govbid-primary-muted/60 hover:text-govbid-primary md:size-10"
               aria-describedby="walkthrough-help-tooltip"
               aria-label="Launch walkthrough tutorial"
             >

@@ -52,10 +52,10 @@ function DeadlineCountdown({ dueDate }: { dueDate: string }) {
   }, [dueDate]);
 
   const getColor = () => {
-    if (daysLeft <= 0) return "bg-red-50 border-red-200 text-red-700";
-    if (daysLeft <= 3) return "bg-red-50 border-red-200 text-red-700";
-    if (daysLeft <= 7) return "bg-yellow-50 border-yellow-200 text-yellow-700";
-    return "bg-blue-50 border-blue-200 text-blue-700";
+    if (daysLeft <= 0) return "bg-govbid-danger-bg border-govbid-danger-border text-govbid-danger";
+    if (daysLeft <= 3) return "bg-govbid-danger-bg border-govbid-danger-border text-govbid-danger";
+    if (daysLeft <= 7) return "bg-govbid-warning-bg border-govbid-warning-border text-govbid-warning";
+    return "bg-govbid-info-bg border-govbid-info-border text-govbid-info";
   };
 
   return (
@@ -440,7 +440,7 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
         )}
 
         {tab === "ai" && (
-          <div className="prose prose-sm prose-slate mx-auto max-w-5xl text-govbid-text">
+          <div className="prose prose-sm mx-auto max-w-5xl text-govbid-text">
             <ReactMarkdown>{rfp.aiAnalysisMarkdown}</ReactMarkdown>
           </div>
         )}
