@@ -14,6 +14,7 @@ import { TagBubble } from "./RfpCard";
 import { trackABTestEvent } from "@/app/posthog-provider";
 import { shortenAgencyName } from "@/lib/formatAgency";
 import { WALKTHROUGH_SHOW_DETAIL_OVERVIEW_EVENT } from "@/lib/walkthroughEvents";
+import { AddToCalendarButton } from "./AddToCalendarButton";
 import { SavedRfpNotes } from "./SavedRfpNotes";
 
 const RfpPdfViewer = dynamic(
@@ -315,6 +316,7 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
         >
           {saved ? "Unsave" : "Save to profile"}
         </button>
+        <AddToCalendarButton rfp={rfp} />
         <button
           type="button"
           onClick={handleSummary}
