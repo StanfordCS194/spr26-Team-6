@@ -466,7 +466,7 @@ function DetailPanelBodyB({ rfp }: { rfp: Rfp }) {
         )}
 
         {tab === "notes" && (
-          <SavedRfpNotes rfpId={rfp.id} saved={saved} />
+          <SavedRfpNotes key={rfp.id} rfpId={rfp.id} saved={saved} />
         )}
       </div>
     </section>

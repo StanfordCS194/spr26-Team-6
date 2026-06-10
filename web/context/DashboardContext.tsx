@@ -36,7 +36,10 @@ import {
 } from "@/lib/rfpSummary";
 import {
   buildSavedRfpRecordsInOrder,
+  DEFAULT_SAVED_RFP_BID_STATUS,
+  getSavedRfpBidStatusMeta,
   nextSortPosition,
+  type SavedRfpBidStatus,
   type SavedRfpRecord,
 } from "@/lib/savedRfpSort";
 
@@ -81,6 +84,10 @@ type DashboardContextValue = {
   isSaved: (id: string) => boolean;
   toggleSaveRfp: (id: string) => Promise<void>;
   updateSavedRfpNotes: (id: string, notes: string) => Promise<boolean>;
+  updateSavedRfpBidStatus: (
+    id: string,
+    status: SavedRfpBidStatus,
+  ) => Promise<boolean>;
   /** Persist custom drag order (profile sort = custom). */
   reorderSavedRfps: (orderedIds: string[]) => Promise<void>;
   profile: ContractorProfile;
@@ -265,7 +272,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
 
         const { data: savedRows } = await supabase
           .from("saved_rfps")
-          .select("rfp_id, saved_at, sort_position, notes")
+          .select("rfp_id, saved_at, sort_position, notes, bid_status")
           .eq("contractor_id", cid)
           .order("sort_position", { ascending: true, nullsFirst: false })
           .order("saved_at", { ascending: true });
@@ -275,6 +282,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
             savedAt: r.saved_at,
             sortPosition: r.sort_position,
             notes: r.notes ?? "",
+            bidStatus: r.bid_status ?? DEFAULT_SAVED_RFP_BID_STATUS,
           })),
         );
 
@@ -382,15 +390,29 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     const supabase = createClient();
 
     const init = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (user) {
-        await loadWorkspace(user.id, user.email ?? undefined);
-      } else {
+      try {
+        const {
+          data: { user },
+          error,
+        } = await supabase.auth.getUser();
+        if (error) throw error;
+
+        if (user) {
+          await loadWorkspace(user.id, user.email ?? undefined);
+        } else {
+          clearWorkspace();
+        }
+      } catch (error) {
+        console.error("Dashboard authentication failed:", error);
         clearWorkspace();
+        showToast(
+          error instanceof Error
+            ? error.message
+            : "Could not load your account. Please refresh and try again.",
+        );
+      } finally {
+        startTransition(() => setAuthReady(true));
       }
-      startTransition(() => setAuthReady(true));
     };
 
     void init();
@@ -400,21 +422,32 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     } = supabase.auth.onAuthStateChange((_event, session) => {
       startTransition(() => {
         void (async () => {
-          if (session?.user) {
-            await loadWorkspace(
-              session.user.id,
-              session.user.email ?? undefined,
-            );
-          } else {
+          try {
+            if (session?.user) {
+              await loadWorkspace(
+                session.user.id,
+                session.user.email ?? undefined,
+              );
+            } else {
+              clearWorkspace();
+            }
+          } catch (error) {
+            console.error("Dashboard auth state update failed:", error);
             clearWorkspace();
+            showToast(
+              error instanceof Error
+                ? error.message
+                : "Could not refresh your account.",
+            );
+          } finally {
+            setAuthReady(true);
           }
-          setAuthReady(true);
         })();
       });
     });
 
     return () => subscription.unsubscribe();
-  }, [loadWorkspace, clearWorkspace]);
+  }, [loadWorkspace, clearWorkspace, showToast]);
 
   const savedRfpIds = useMemo(
     () => savedRfpRecords.map((r) => r.rfpId),
@@ -659,7 +692,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
             rfp_id: id,
             sort_position: sortPosition,
           })
-          .select("rfp_id, saved_at, sort_position, notes")
+          .select("rfp_id, saved_at, sort_position, notes, bid_status")
           .single();
         if (error) {
           showToast(error.message);
@@ -673,6 +706,8 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
               savedAt: inserted.saved_at,
               sortPosition: inserted.sort_position,
               notes: inserted.notes ?? "",
+              bidStatus:
+                inserted.bid_status ?? DEFAULT_SAVED_RFP_BID_STATUS,
             },
           ]);
         }
@@ -724,6 +759,50 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
         has_notes: normalizedNotes.length > 0,
       });
       showToast(normalizedNotes ? "Note saved." : "Note removed.");
+      return true;
+    },
+    [contractorId, savedRfpIds, showToast],
+  );
+
+  const updateSavedRfpBidStatus = useCallback(
+    async (id: string, status: SavedRfpBidStatus) => {
+      if (!contractorId) {
+        showToast("Profile not ready yet.");
+        return false;
+      }
+      if (!savedRfpIds.includes(id)) {
+        showToast("Save this opportunity before changing its bid status.");
+        return false;
+      }
+
+      const supabase = createClient();
+      const { data: updated, error } = await supabase
+        .from("saved_rfps")
+        .update({ bid_status: status })
+        .eq("contractor_id", contractorId)
+        .eq("rfp_id", id)
+        .select("rfp_id")
+        .maybeSingle();
+
+      if (error) {
+        showToast(error.message);
+        return false;
+      }
+      if (!updated) {
+        showToast("This opportunity is no longer saved.");
+        return false;
+      }
+
+      setSavedRfpRecords((prev) =>
+        prev.map((record) =>
+          record.rfpId === id ? { ...record, bidStatus: status } : record,
+        ),
+      );
+      captureEvent("saved_rfp_bid_status_updated", {
+        rfp_id: id,
+        bid_status: status,
+      });
+      showToast(`Bid status changed to ${getSavedRfpBidStatusMeta(status).label}.`);
       return true;
     },
     [contractorId, savedRfpIds, showToast],
@@ -989,6 +1068,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       isSaved,
       toggleSaveRfp,
       updateSavedRfpNotes,
+      updateSavedRfpBidStatus,
       reorderSavedRfps,
       profile,
       setProfile,
@@ -1032,6 +1112,7 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
       isSaved,
       toggleSaveRfp,
       updateSavedRfpNotes,
+      updateSavedRfpBidStatus,
       reorderSavedRfps,
       profile,
       setProfile,

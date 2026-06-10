@@ -1,10 +1,67 @@
 import type { Rfp } from "@/lib/types";
 
+export type SavedRfpBidStatus =
+  | "reviewing"
+  | "pursuing"
+  | "no_bid"
+  | "submitted";
+
+export const DEFAULT_SAVED_RFP_BID_STATUS: SavedRfpBidStatus = "reviewing";
+
+export const SAVED_RFP_BID_STATUSES: {
+  value: SavedRfpBidStatus;
+  label: string;
+  description: string;
+  badgeClassName: string;
+  activeClassName: string;
+}[] = [
+  {
+    value: "reviewing",
+    label: "Reviewing",
+    description: "Evaluating fit and requirements",
+    badgeClassName: "border-blue-200 bg-blue-50 text-blue-700",
+    activeClassName: "border-blue-400 bg-blue-50 text-blue-800",
+  },
+  {
+    value: "pursuing",
+    label: "Pursuing",
+    description: "Preparing a response",
+    badgeClassName:
+      "border-govbid-primary/30 bg-govbid-primary-muted text-govbid-primary",
+    activeClassName:
+      "border-govbid-primary bg-govbid-primary-muted text-govbid-primary",
+  },
+  {
+    value: "no_bid",
+    label: "No Bid",
+    description: "Decided not to respond",
+    badgeClassName:
+      "border-govbid-border bg-govbid-elevated text-govbid-text-muted",
+    activeClassName:
+      "border-govbid-border-strong bg-govbid-elevated text-govbid-text",
+  },
+  {
+    value: "submitted",
+    label: "Submitted",
+    description: "Response delivered",
+    badgeClassName: "border-green-200 bg-green-50 text-green-700",
+    activeClassName: "border-green-400 bg-green-50 text-green-800",
+  },
+];
+
+export function getSavedRfpBidStatusMeta(status: SavedRfpBidStatus) {
+  return (
+    SAVED_RFP_BID_STATUSES.find((option) => option.value === status) ??
+    SAVED_RFP_BID_STATUSES[0]
+  );
+}
+
 export type SavedRfpRecord = {
   rfpId: string;
   savedAt: string;
   sortPosition: number | null;
   notes: string;
+  bidStatus: SavedRfpBidStatus;
 };
 
 export type SavedRfpSortMode =

@@ -461,7 +461,7 @@ function DetailPanelBody({ rfp }: { rfp: Rfp }) {
 
         {tab === "notes" && (
           <div className="mx-auto w-full max-w-3xl">
-            <SavedRfpNotes rfpId={rfp.id} saved={saved} />
+            <SavedRfpNotes key={rfp.id} rfpId={rfp.id} saved={saved} />
           </div>
         )}
         </div>
