@@ -11,6 +11,7 @@ import { SummaryBrief } from "./SummaryBrief";
 import { TagBubble } from "./RfpCard";
 import { trackABTestEvent } from "@/app/posthog-provider";
 import { shortenAgencyName } from "@/lib/formatAgency";
+import { AddToCalendarButton } from "./AddToCalendarButton";
 
 const RfpPdfViewer = dynamic(
   () => import("./RfpPdfViewer").then((m) => m.RfpPdfViewer),
@@ -299,6 +300,7 @@ function DetailPanelBodyB({ rfp }: { rfp: Rfp }) {
                 <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
               </svg>
             </button>
+            <AddToCalendarButton rfp={rfp} compact />
             <button
               type="button"
               onClick={handleSummary}
