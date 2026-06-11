@@ -42,9 +42,16 @@ import {
   type SavedRfpBidStatus,
   type SavedRfpRecord,
 } from "@/lib/savedRfpSort";
+import {
+  rfpMatchesIndustryFilter,
+  rfpMatchesLocationFilter,
+  rfpMatchesTopicFilter,
+} from "@/lib/rfpFilterTaxonomy";
 
 export type RfpFilter = {
-  tag?: string;
+  location?: string;
+  industry?: string;
+  topic?: string;
   dateFrom?: string;
   dateTo?: string;
   priceMin?: number;
@@ -476,12 +483,20 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
         if (!hay.includes(q)) return false;
       }
 
-      if (rfpFilter.tag && rfpFilter.tag !== "") {
-        if (
-          !r.tags.some(
-            (tag) => tag.toLowerCase() === rfpFilter.tag?.toLowerCase(),
-          )
-        ) {
+      if (rfpFilter.location && rfpFilter.location !== "") {
+        if (!rfpMatchesLocationFilter(r, rfpFilter.location)) {
+          return false;
+        }
+      }
+
+      if (rfpFilter.industry && rfpFilter.industry !== "") {
+        if (!rfpMatchesIndustryFilter(r, rfpFilter.industry)) {
+          return false;
+        }
+      }
+
+      if (rfpFilter.topic && rfpFilter.topic !== "") {
+        if (!rfpMatchesTopicFilter(r, rfpFilter.topic)) {
           return false;
         }
       }

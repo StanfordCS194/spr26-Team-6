@@ -5,6 +5,7 @@ import {
   type RfpFilter,
   type RfpSortBy,
 } from "@/context/DashboardContext";
+import { filterOptionsFromRfps } from "@/lib/rfpFilterTaxonomy";
 
 function FunnelIcon() {
   return (
@@ -107,9 +108,7 @@ export function RfpSidebar() {
     (v) => v !== undefined && v !== "",
   ).length;
 
-  const allTags = Array.from(
-    new Set(loadedRfps.flatMap((rfp) => rfp.tags)),
-  ).sort();
+  const { locations, industries, topics } = filterOptionsFromRfps(loadedRfps);
 
   const mergeRfpFilter = (patch: Partial<RfpFilter>) => {
     setRfpFilter({ ...rfpFilter, ...patch });
@@ -178,7 +177,9 @@ export function RfpSidebar() {
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             rfpFilter={rfpFilter}
-            allTags={allTags}
+            allLocations={locations}
+            allIndustries={industries}
+            allTopics={topics}
             sortBy={sortBy}
             setSortBy={setSortBy}
             mergeRfpFilter={mergeRfpFilter}
@@ -214,7 +215,9 @@ className="hidden rounded-xl border border-govbid-border bg-govbid-surface p-4 l
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
             rfpFilter={rfpFilter}
-            allTags={allTags}
+            allLocations={locations}
+            allIndustries={industries}
+            allTopics={topics}
             sortBy={sortBy}
             setSortBy={setSortBy}
             mergeRfpFilter={mergeRfpFilter}
@@ -233,7 +236,9 @@ function SearchCardBody({
   searchQuery,
   setSearchQuery,
   rfpFilter,
-  allTags,
+  allLocations,
+  allIndustries,
+  allTopics,
   sortBy,
   setSortBy,
   mergeRfpFilter,
@@ -245,7 +250,9 @@ function SearchCardBody({
   searchQuery: string;
   setSearchQuery: (q: string) => void;
   rfpFilter: RfpFilter;
-  allTags: string[];
+  allLocations: string[];
+  allIndustries: string[];
+  allTopics: string[];
   sortBy: RfpSortBy;
   setSortBy: (sort: RfpSortBy) => void;
   mergeRfpFilter: (patch: Partial<RfpFilter>) => void;
@@ -304,14 +311,40 @@ function SearchCardBody({
         <div className="space-y-2 border-t border-govbid-border pt-3">
           <p className="text-xs font-medium text-govbid-text-muted">Active filters:</p>
           <div className="flex flex-wrap gap-2">
-            {rfpFilter.tag && (
+            {rfpFilter.location && (
               <div className="inline-flex items-center gap-2 rounded-full bg-govbid-primary-muted px-3 py-1 text-sm">
-                <span className="text-govbid-text">{rfpFilter.tag}</span>
+                <span className="text-govbid-text">Location: {rfpFilter.location}</span>
                 <button
                   type="button"
-                  onClick={() => removeFilter("tag")}
+                  onClick={() => removeFilter("location")}
                   className="text-govbid-text-muted hover:text-govbid-text"
-                  aria-label={`Remove ${rfpFilter.tag} filter`}
+                  aria-label={`Remove ${rfpFilter.location} location filter`}
+                >
+                  <XIcon />
+                </button>
+              </div>
+            )}
+            {rfpFilter.industry && (
+              <div className="inline-flex items-center gap-2 rounded-full bg-govbid-primary-muted px-3 py-1 text-sm">
+                <span className="text-govbid-text">Industry: {rfpFilter.industry}</span>
+                <button
+                  type="button"
+                  onClick={() => removeFilter("industry")}
+                  className="text-govbid-text-muted hover:text-govbid-text"
+                  aria-label={`Remove ${rfpFilter.industry} industry filter`}
+                >
+                  <XIcon />
+                </button>
+              </div>
+            )}
+            {rfpFilter.topic && (
+              <div className="inline-flex items-center gap-2 rounded-full bg-govbid-primary-muted px-3 py-1 text-sm">
+                <span className="text-govbid-text">Topic: {rfpFilter.topic}</span>
+                <button
+                  type="button"
+                  onClick={() => removeFilter("topic")}
+                  className="text-govbid-text-muted hover:text-govbid-text"
+                  aria-label={`Remove ${rfpFilter.topic} topic filter`}
                 >
                   <XIcon />
                 </button>
@@ -377,21 +410,56 @@ function SearchCardBody({
       <div className="space-y-3 border-t border-govbid-border pt-3">
         <p className="text-xs font-medium text-govbid-text-muted">Filter by</p>
 
-        {/* Topic Tag */}
         <label className="block text-xs font-medium text-govbid-text-muted">
-          Topic tag
+          Location
           <select
             id="filter-button"
-            value={rfpFilter.tag ?? ""}
+            value={rfpFilter.location ?? ""}
             onChange={(event) =>
-              mergeRfpFilter({ tag: event.target.value || undefined })
+              mergeRfpFilter({ location: event.target.value || undefined })
+            }
+            className={inputClass}
+          >
+            <option value="">Any location</option>
+            {allLocations.map((location) => (
+              <option key={location} value={location}>
+                {location}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="block text-xs font-medium text-govbid-text-muted">
+          Industry
+          <select
+            value={rfpFilter.industry ?? ""}
+            onChange={(event) =>
+              mergeRfpFilter({ industry: event.target.value || undefined })
+            }
+            className={inputClass}
+          >
+            <option value="">Any industry</option>
+            {allIndustries.map((industry) => (
+              <option key={industry} value={industry}>
+                {industry}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="block text-xs font-medium text-govbid-text-muted">
+          Topic
+          <select
+            value={rfpFilter.topic ?? ""}
+            onChange={(event) =>
+              mergeRfpFilter({ topic: event.target.value || undefined })
             }
             className={inputClass}
           >
             <option value="">Any topic</option>
-            {allTags.map((tag) => (
-              <option key={tag} value={tag}>
-                {tag}
+            {allTopics.map((topic) => (
+              <option key={topic} value={topic}>
+                {topic}
               </option>
             ))}
           </select>

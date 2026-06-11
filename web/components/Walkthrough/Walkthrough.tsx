@@ -53,7 +53,7 @@ const EXPLORE_DASHBOARD_PHASES: {
     ],
     title: EXPLORE_STEP_TITLE,
     description:
-      "Use the sidebar to search keywords and narrow results by tag, due date, or contract size. Active filters appear as chips you can remove.",
+      "Use the sidebar to search keywords and narrow results by location, industry, topic, due date, or contract size. Active filters appear as chips you can remove.",
   },
   {
     id: "feed",
