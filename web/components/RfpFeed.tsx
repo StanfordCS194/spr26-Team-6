@@ -15,7 +15,9 @@ type PageSize = (typeof PAGE_SIZE_OPTIONS)[number];
 function filtersActive(
   q: string,
   filter: {
-    tag?: string;
+    location?: string;
+    industry?: string;
+    topic?: string;
     dateFrom?: string;
     dateTo?: string;
     priceMin?: number;
@@ -24,7 +26,9 @@ function filtersActive(
 ) {
   return (
     q.trim() !== "" ||
-    Boolean(filter.tag) ||
+    Boolean(filter.location) ||
+    Boolean(filter.industry) ||
+    Boolean(filter.topic) ||
     Boolean(filter.dateFrom) ||
     Boolean(filter.dateTo) ||
     typeof filter.priceMin === "number" ||
