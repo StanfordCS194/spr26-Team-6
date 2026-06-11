@@ -598,15 +598,32 @@ export function DashboardProvider({ children }: { children: ReactNode }) {
     [contractorId],
   );
 
-  const selectRfp = useCallback((id: string | null) => {
-    if (id) {
-      captureEvent("rfp_selected", { rfp_id: id });
-    }
-    // No scoring on selection: scores are computed once on page load and
-    // refreshed whenever the contractor profile is saved. Clicking an RFP
-    // just reads the cached breakdown.
-    setSelectedRfpId(id);
-  }, []);
+  const selectRfp = useCallback(
+    (id: string | null) => {
+      if (id) {
+        captureEvent("rfp_selected", { rfp_id: id });
+        setRecentlyViewedIds((prev) =>
+          [id, ...prev.filter((x) => x !== id)].slice(0, 50),
+        );
+        if (contractorId) {
+          const supabase = createClient();
+          void supabase.from("viewed_rfps").upsert(
+            {
+              contractor_id: contractorId,
+              rfp_id: id,
+              viewed_at: new Date().toISOString(),
+            },
+            { onConflict: "contractor_id,rfp_id" },
+          );
+        }
+      }
+      // No scoring on selection: scores are computed once on page load and
+      // refreshed whenever the contractor profile is saved. Clicking an RFP
+      // just reads the cached breakdown.
+      setSelectedRfpId(id);
+    },
+    [contractorId],
+  );
 
   const isSaved = useCallback(
     (id: string) => savedRfpIds.includes(id),
